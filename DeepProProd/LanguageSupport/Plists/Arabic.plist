@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>LoginPage_Title</key>
+	<dict>
+		<key>value</key>
+		<string>أهلا بك
+</string>
+		<key>comments</key>
+		<string></string>
+	</dict>
+	<key>Level_Basic</key>
+	<dict>
+		<key>value</key>
+		<string>الأساسية</string>
+	</dict>
+	<key>Level_Intermediate</key>
+	<dict>
+		<key>value</key>
+		<string>متوسط</string>
+	</dict>
+	<key>Level_Advance</key>
+	<dict>
+		<key>value</key>
+		<string>تقدم</string>
+	</dict>
+	<key>LoginPage_ForgotPassword</key>
+	<dict>
+		<key>value</key>
+		<string>هل نسيت كلمة المرور</string>
+	</dict>
+	<key>LoginPage_SignUp</key>
+	<dict>
+		<key>value</key>
+		<string>سجل</string>
+	</dict>
+	<key>LoginPage_Login</key>
+	<dict>
+		<key>value</key>
+		<string>تسجيل الدخول
+</string>
+	</dict>
+</dict>
+</plist>

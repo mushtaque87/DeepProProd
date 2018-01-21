@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>LoginPage_Login</key>
+	<dict>
+		<key>value</key>
+		<string>Login</string>
+	</dict>
+	<key>LoginPage_Title</key>
+	<dict>
+		<key>value</key>
+		<string>Welcome</string>
+		<key>comment</key>
+		<string></string>
+	</dict>
+	<key>LoginPage_ForgotPassword</key>
+	<dict>
+		<key>value</key>
+		<string>Forgot Password</string>
+	</dict>
+	<key>LoginPage_SignUp</key>
+	<dict>
+		<key>value</key>
+		<string>Signup</string>
+	</dict>
+	<key>Level_Basic</key>
+	<dict>
+		<key>value</key>
+		<string>Basic</string>
+	</dict>
+	<key>Level_Intermediate</key>
+	<dict>
+		<key>value</key>
+		<string>Intermediate</string>
+	</dict>
+	<key>Level_Advance</key>
+	<dict>
+		<key>value</key>
+		<string>Advance</string>
+	</dict>
+</dict>
+</plist>

@@ -1,0 +1,70 @@
+
+{
+"courses": {
+"levels": [{
+"levelname": "Advanced",
+"chapters": [{
+"name": "Sentences",
+"isLocked": true,
+"completedPercentage": 0
+}]
+
+},
+{
+"levelname": "Intermediate",
+"chapters": [{
+"name": "Vowel",
+"isLocked": true,
+"completedPercentage": 0
+},
+{
+"name": "Proverb",
+"isLocked": true,
+"completedPercentage": 0
+},
+{
+"name": "Verbs",
+"isLocked": true,
+"completedPercentage": 0
+
+},
+{
+"name": "Noun",
+"isLocked": true,
+"completedPercentage": 0
+}
+]
+
+},
+{
+"levelname": "Basic",
+"chapters": [{
+"name": "Relationship",
+"isLocked": true,
+"completedPercentage": 0
+}, {
+"name": "Places",
+"isLocked": true,
+"completedPercentage": 0
+},
+{
+"name": "Animal",
+"isLocked": true,
+"completedPercentage": 0
+},
+{
+"name": "Number",
+"isLocked": false,
+"completedPercentage": 50
+},
+{
+"name": "Alphabets",
+"isLocked": false,
+"completedPercentage": 100
+}
+]
+
+}
+]
+}
+}
