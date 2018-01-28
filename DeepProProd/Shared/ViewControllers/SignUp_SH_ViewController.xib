@@ -97,6 +97,10 @@
                 </textField>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q5a-m7-f1S">
                     <rect key="frame" x="15" y="37" width="35" height="35"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="35" id="jsm-Oh-Fbi"/>
+                        <constraint firstAttribute="height" constant="35" id="xcm-Tm-bDo"/>
+                    </constraints>
                     <state key="normal" image="close">
                         <color key="titleColor" red="0.99382070099999997" green="1" blue="0.99640714470000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                     </state>
@@ -160,7 +164,6 @@
                 <constraint firstItem="po3-16-I5u" firstAttribute="leading" secondItem="m3D-EI-DHy" secondAttribute="leading" constant="178" id="cn2-2N-GXb"/>
                 <constraint firstItem="po3-16-I5u" firstAttribute="leading" secondItem="ECk-fL-zbO" secondAttribute="trailing" constant="30" id="fv8-ng-H1t"/>
                 <constraint firstItem="IkC-Kl-hAc" firstAttribute="top" secondItem="NqO-Iy-vmv" secondAttribute="bottom" constant="10" id="gEo-tL-e64"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="q5a-m7-f1S" secondAttribute="trailing" constant="325" id="iPt-M8-Agh"/>
                 <constraint firstItem="ECk-fL-zbO" firstAttribute="top" secondItem="eKB-qX-x7o" secondAttribute="bottom" constant="13" id="iXJ-eZ-kvm"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="EyJ-Nx-RHv" secondAttribute="trailing" constant="30" id="nKF-xb-sCm"/>
                 <constraint firstItem="m3D-EI-DHy" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="40" id="nLG-JP-m6K"/>

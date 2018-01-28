@@ -11,10 +11,21 @@ import UIKit
 class LevelViewModel: NSObject, UITableViewDelegate , UITableViewDataSource {
 
     var parentController: Level_SHViewController?
-    let levelArray = ["Level_Basic".localized,"Level_Intermediate".localized,"Level_Advance".localized]
+    var levelArray : LevelList? // = ["Level_Basic".localized,"Level_Intermediate".localized,"Level_Advance".localized]
     
     // Mark: - UITable View Delegate and Data Source
     
+    
+    override init() {
+        do {
+             levelArray  = try Helper.parseJson()
+            
+        } catch  {
+            print(error)
+        }
+        
+
+    }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -33,7 +44,9 @@ class LevelViewModel: NSObject, UITableViewDelegate , UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "content", for: indexPath) as! ChapterContentCell
        // cell.contentLabel.textColor = UIColor.white
-        cell.contentLabel.text  = levelArray[indexPath.row]
+        let level = levelArray?.levels[indexPath.row]
+        
+        cell.contentLabel.text  = level?.levelname.rawValue
         cell.backgroundColor = UIColor.clear
         return cell
     }

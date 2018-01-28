@@ -8,7 +8,12 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController {
+protocol SettingProtocols: class {
+    func logOut(_ sender: Any)
+    func reloadTable()
+}
+
+class SettingsViewController: UIViewController,SettingProtocols {
 
     @IBOutlet var viewModel: SettingsViewModel!
     @IBOutlet weak var settingTableView: UITableView!
@@ -20,7 +25,12 @@ class SettingsViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         self.navigationItem.title = "Setting"
+        self.settingTableView.register(UINib(nibName: "LogOutCell", bundle: nil), forCellReuseIdentifier: "logout")
+        self.settingTableView.register(UINib(nibName: "LabelTableViewCell", bundle: nil), forCellReuseIdentifier: "labelCell")
+        self.settingTableView.register(UINib(nibName: "LanguageTableViewCell", bundle: nil), forCellReuseIdentifier: "language")
+        self.settingTableView.register(UINib(nibName: "ThemeCell", bundle: nil), forCellReuseIdentifier: "theme")
         
+        viewModel.delegate = self 
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -33,7 +43,7 @@ class SettingsViewController: UIViewController {
     }
     
    
-    @IBAction func logOut(_ sender: Any) {
+     func logOut(_ sender: Any) {
         
         Settings.sharedInstance.setValue(key: "isLoggedIn", value: false as AnyObject)
         Settings.sharedInstance.reloadSettingsDictionary()
@@ -44,6 +54,8 @@ class SettingsViewController: UIViewController {
         }
     }
     
+    
+    
     /*
     // MARK: - Navigation
 
@@ -53,7 +65,10 @@ class SettingsViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    func reloadTable(){
+        settingTableView.reloadData()
+    }
+    
     func refreshUI() {
         backgroundImg.setBackGroundimage()
     }

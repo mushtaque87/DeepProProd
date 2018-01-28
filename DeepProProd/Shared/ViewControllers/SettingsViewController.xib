@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait">
+    <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -13,7 +13,6 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SettingsViewController" customModule="DeepProProd" customModuleProvider="target">
             <connections>
                 <outlet property="backgroundImg" destination="XiP-Qz-GHP" id="o1D-Hm-fUM"/>
-                <outlet property="logOutBtn" destination="j92-Qa-PLb" id="eTA-Fa-Pfo"/>
                 <outlet property="settingTableView" destination="c5w-Ci-nx8" id="e8i-t2-Fpk"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="viewModel" destination="MJ6-V7-y0U" id="bTY-wV-pYR"/>
@@ -22,42 +21,31 @@
         <customObject id="MJ6-V7-y0U" customClass="SettingsViewModel" customModule="DeepProProd" customModuleProvider="target"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="XiP-Qz-GHP">
-                    <rect key="frame" x="0.0" y="20" width="375" height="627"/>
+                    <rect key="frame" x="-20" y="20" width="340" height="548"/>
                 </imageView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j92-Qa-PLb">
-                    <rect key="frame" x="40" y="537" width="295" height="30"/>
-                    <state key="normal" title="LogOut"/>
-                    <connections>
-                        <action selector="logOut:" destination="-1" eventType="touchUpInside" id="iYc-uT-QoI"/>
-                    </connections>
-                </button>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="c5w-Ci-nx8">
-                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <connections>
+                        <outlet property="dataSource" destination="MJ6-V7-y0U" id="UrK-8R-gHd"/>
+                        <outlet property="delegate" destination="MJ6-V7-y0U" id="DSM-xu-Skg"/>
+                    </connections>
                 </tableView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="c5w-Ci-nx8" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="1ia-Vn-Zli"/>
-                <constraint firstItem="c5w-Ci-nx8" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Igu-uS-aDo"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="j92-Qa-PLb" secondAttribute="bottom" constant="100" id="RQ8-jt-5UW"/>
-                <constraint firstItem="XiP-Qz-GHP" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="SEW-hu-1en"/>
-                <constraint firstItem="XiP-Qz-GHP" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="SKw-sb-8rc"/>
-                <constraint firstItem="c5w-Ci-nx8" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="T9B-gn-9Xt"/>
-                <constraint firstItem="XiP-Qz-GHP" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="TSb-m7-hgd"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="j92-Qa-PLb" secondAttribute="trailing" constant="40" id="e8x-em-RRZ"/>
-                <constraint firstItem="c5w-Ci-nx8" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="eZb-lq-No4"/>
-                <constraint firstItem="c5w-Ci-nx8" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="fAg-Ez-6eZ"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="c5w-Ci-nx8" secondAttribute="bottom" id="iIY-hd-cDT"/>
-                <constraint firstItem="XiP-Qz-GHP" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="iPt-r7-gXe"/>
-                <constraint firstItem="j92-Qa-PLb" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="iYY-sg-l0I"/>
-                <constraint firstItem="j92-Qa-PLb" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="40" id="ot1-9s-FRh"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="XiP-Qz-GHP" secondAttribute="trailing" id="sja-gU-GVx"/>
-                <constraint firstItem="c5w-Ci-nx8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="yjJ-4T-OLI"/>
+                <constraint firstItem="XiP-Qz-GHP" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="7cx-f7-PSk"/>
+                <constraint firstItem="c5w-Ci-nx8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="GGH-fO-o2X"/>
+                <constraint firstItem="XiP-Qz-GHP" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="OYd-s7-Mtf"/>
+                <constraint firstItem="c5w-Ci-nx8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Wpl-wb-K4H"/>
+                <constraint firstItem="XiP-Qz-GHP" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="-20" id="X3a-R4-lg4"/>
+                <constraint firstItem="c5w-Ci-nx8" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="YhY-e8-k5i"/>
+                <constraint firstItem="c5w-Ci-nx8" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="vW3-au-4bZ"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="XiP-Qz-GHP" secondAttribute="bottom" id="wPm-hp-2wh"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="33.5" y="155.5"/>

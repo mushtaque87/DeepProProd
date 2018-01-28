@@ -39,5 +39,51 @@
 		<key>value</key>
 		<string>Advance</string>
 	</dict>
+	<key>Language</key>
+	<dict>
+		<key>value</key>
+		<string>Language</string>
+	</dict>
+	<key>My_Account</key>
+	<dict>
+		<key>value</key>
+		<string>My Account</string>
+	</dict>
+	<key>Announcements</key>
+	<dict>
+		<key>value</key>
+		<string>Announcements</string>
+	</dict>
+	<key>Aboutus</key>
+	<dict>
+		<key>value</key>
+		<string>About us</string>
+	</dict>
+	<key>Logout</key>
+	<dict>
+		<key>value</key>
+		<string>Logout</string>
+	</dict>
+	<key>MainPage</key>
+	<dict>
+		<key>value</key>
+		<string>Home Screen</string>
+	</dict>
+	<key>GraphType</key>
+	<dict>
+		<key>value</key>
+		<string>Graph Type</string>
+	</dict>
+	<key>Settings</key>
+	<dict>
+		<key>value</key>
+		<string>Settings</string>
+	</dict>
+	<key>Theme</key>
+	<dict>
+		<key>value</key>
+		<string>Theme</string>
+	</dict>
+
 </dict>
 </plist>

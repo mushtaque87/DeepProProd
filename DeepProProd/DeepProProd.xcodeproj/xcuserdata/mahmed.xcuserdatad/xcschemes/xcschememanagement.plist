@@ -4,10 +4,33 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>DeepProDemo.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 		<key>DeepProProd.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
-			<integer>4</integer>
+			<integer>2</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>50E76ACC20037E2A009420F9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>50E76AE020037E2A009420F9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>50E76AEB20037E2A009420F9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

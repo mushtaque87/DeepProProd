@@ -11,6 +11,7 @@ import Alamofire
 import Foundation
 
 
+
 class ServiceManager: NSObject {
     
     weak var delegate: ServiceProtocols?
@@ -41,6 +42,8 @@ class ServiceManager: NSObject {
             return (disposition, credential)
         }
     }
+    
+    
     func sendAudioForPrediction(file: URL , text: String) {
        // let urlString = "https://192.168.8.18:8500/audio/predict"
         ignoreSSL()
@@ -52,7 +55,9 @@ class ServiceManager: NSObject {
         var url: URLRequest?
         if(Settings.sharedInstance.language == "English")
         {
-         url = try! URLRequest(url: URL(string:"https://ainfinity.dyndns.org:8500/audio/predict")!, method: .post, headers: nil)
+            url = try! URLRequest(url: URL(string:Constants.api.baseUrl+Constants.api.engPort+Constants.api.speechApi)!, method: .post, headers: nil)
+
+        // url = try! URLRequest(url: URL(string:"https://ainfinity.dyndns.org:8500/audio/predict")!, method: .post, headers: nil)
         }else{
          url = try! URLRequest(url: URL(string:"https://ainfinity.dyndns.org:8400/audio/predict")!, method: .post, headers: nil)
 
@@ -80,7 +85,7 @@ class ServiceManager: NSObject {
             case .success(let upload, _, _):
                 upload.responseJSON { response in
                     if((response.result.value) != nil) {
-                        print(response.result.value)
+                        print(response.result.value as Any)
                        // type(of: response.result.value)
                        // let pred: Prediction_Model = Prediction_Model.init(text: <#T##String#>, numPred: <#T##Int#>)
                        

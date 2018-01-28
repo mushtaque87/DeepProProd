@@ -11,7 +11,7 @@ import UIKit
 class ForgotPassword_SH_ViewController: UIViewController {
 
     @IBOutlet weak var backgroundImage: UIImageView!
-    @IBOutlet weak var titleLbl: UILabel!
+    @IBOutlet weak var                                                                                                                                        titleLbl: UILabel!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet var viewModel: ForgetPasswordViewModel!
     

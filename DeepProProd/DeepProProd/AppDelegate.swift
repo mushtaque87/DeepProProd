@@ -18,10 +18,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         //Copy Files to Document Directory
-        Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "Settings", ofType: "plist")
+        Helper.updateFileFromBundle(to: Helper.getDocumentDirectory, filename: "Settings", ofType: "plist")
         Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "Arabic", ofType: "plist")
         Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "English", ofType: "plist")
-        Helper.readJsonFile(at: "LevelJson", ofType: "txt")
+      //  Helper.readJsonFile(at: "LevelJson", ofType: "txt")
+        do {
+            try Helper.parseJson()
+        } catch  {
+            print(error)
+        }
         return true
         
         
@@ -50,6 +55,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 
+    enum courseLevel : String, Codable {
+        case Basic
+        case Intermediate
+        case Advanced
+        // ...
+    }
+    
+    struct Level: Codable {
+        let levelname: courseLevel
+    }
+    
+    struct LevelList : Codable {
+        let courses: Dictionary<String,[Level]>
+    }
+    
+    func parseJson() throws {
+        let filePath = Bundle.main.url(forResource: "level", withExtension: "txt")
+       
+        let data: Data = try Data.init(contentsOf: filePath!)
+       
+        let decoder = JSONDecoder()
+        let level = try! decoder.decode(LevelList.self, from: data)
+        print(level)
+    }
 
 }
 

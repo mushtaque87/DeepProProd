@@ -13,6 +13,10 @@ class Settings: NSObject {
     var language : String?
     var firstLogIn : Bool?
     var isLoggedIn : Bool?
+    var isDemo : Bool?
+    var mainPage : Int?
+    var graphType : Int?
+    var themeType : Int?
     static let sharedInstance = Settings()
     var settingsDict : NSMutableDictionary?
     private var settingsPath : String?
@@ -20,7 +24,7 @@ class Settings: NSObject {
     private override  init()  {
         settingsDict  = NSMutableDictionary();
         settingsPath = Helper.getDocumentDirectory().appendingPathComponent("Settings.plist")
-        Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "Settings", ofType: "plist")
+       // Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "Settings", ofType: "plist")
         super.init()
         reloadSettingsDictionary()
         
@@ -33,10 +37,13 @@ class Settings: NSObject {
         language = settingsDict!["Language"] as? String
         firstLogIn = settingsDict!["FirstLogin"] as? Bool
         isLoggedIn = settingsDict!["isLoggedIn"] as? Bool
+        isDemo = settingsDict!["isDemo"] as? Bool
+        mainPage = settingsDict!["mainPage"] as? Int
+        graphType = settingsDict!["GraphType"] as? Int
         print("Saved GameData.plist file is --> \(settingsDict?.description ?? "")")
         }
         else{
-            Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "Settings", ofType: "plist")
+            Helper.updateFileFromBundle(to: Helper.getDocumentDirectory, filename: "Settings", ofType: "plist")
             reloadSettingsDictionary()
         }
     }

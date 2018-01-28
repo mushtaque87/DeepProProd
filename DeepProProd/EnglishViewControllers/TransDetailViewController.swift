@@ -11,6 +11,10 @@ import Charts
 import AVFoundation
 import  Alamofire
 
+
+
+
+
 class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerDelegate, CAAnimationDelegate, ServiceProtocols {
 
     @IBOutlet var vc_DataModel: TranslationVC_DataModel!
@@ -72,7 +76,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
         wordTextView.addGestureRecognizer(leftswipeGesture)
 
         barProgressView.backgroundColor = UIColor.white
-        
+        graphProgressView.backgroundColor = UIColor.white
         
          wordResultView = wordResult_View(frame: CGRect(x: 10, y: wordLabel.frame.origin.y + wordLabel.frame.size.height/2 + 70 , width: 350, height: 400))
         
@@ -111,36 +115,31 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
          //setChart(dataPoints: months, values: accuracy)
         
         
-        if(Settings.sharedInstance.language == "English")
-        {
-        commentsLabel.text = "Record the above statement and we will help you pronunce it better !!"
-        }
-        else{
-        commentsLabel.text = "تسجيل البيان أعلاه ونحن سوف تساعدك برونونس ذلك أفضل !!"
-        }
-        scoreLabel.text = "0 %"
+        
+       
         vc_DataModel.parentObject = self
         
         activityIndicator.isHidden = true
         //wordLabel.text = vc_DataModel.wordArray?[0]
         
         wordTextView.backgroundColor = UIColor.clear
-        let word : Word = (vc_DataModel.wordArray?[0])!
-
-        wordTextView.text  = word.word
-        vc_DataModel.resetTextViewContent(textView: wordTextView)
+       
+       
         
         typeTextView.backgroundColor = UIColor.clear
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showPhenomeTable(sender:)))
         wordTextView.isUserInteractionEnabled = true
         wordTextView.addGestureRecognizer(tapGesture)
+        graphProgressView.isHidden = true
         
          refreshUI()
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        vc_DataModel.reloadScreen()
         refreshUI()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -150,65 +149,23 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
     
     func refreshUI() {
         backgroundImage.setBackGroundimage()
-    }
-    
-   // MARK: - UI Events and Actions
-    
-    @objc func changeWord(sender:UISwipeGestureRecognizer){
-        if(sender.direction == .right &&  vc_DataModel.wordIndex > 0) {
-            vc_DataModel.wordIndex -= 1
-           // wordLabel.slideInFromLeft()
-            wordTextView.slideInFromLeft()
+        
+        if(Settings.sharedInstance.language == "English")
+        {
+            commentsLabel.text = "Record the above statement and we will help you pronunce it better !!"
         }
-        else if (sender.direction == .left &&  vc_DataModel.wordIndex <= (vc_DataModel.wordArray?.count)! - 2) {
-           // wordLabel.slideInFromRight()
-            wordTextView.slideInFromRight()
-            vc_DataModel.wordIndex += 1
+        else{
+            commentsLabel.text = "تسجيل البيان أعلاه ونحن سوف تساعدك برونونس ذلك أفضل !!"
         }
         
-        
-       // wordLabel.text = vc_DataModel.wordArray![vc_DataModel.wordIndex]
-        let word : Word = vc_DataModel.wordArray![vc_DataModel.wordIndex]
-        wordTextView.text = word.word
+        let word : Word = (vc_DataModel.wordArray?[0])!
+        wordTextView.text  = word.word
+        scoreLabel.text = "0 %"
         vc_DataModel.resetTextViewContent(textView: wordTextView)
-        clearData()
-        print(vc_DataModel.wordArray![vc_DataModel.wordIndex])
-    }
-    
-    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-        print("Animation Stopped")
-    }
-    
-@objc func showPhenomeTable(sender:UITapGestureRecognizer){
-        // ...
-    
-    //vc_DataModel.wordToShow =  vc_DataModel.tapResponse(recognizer: sender)
-    if (vc_DataModel.predictionData.words_Result!.count < 1)
-    {
-    return
-    }
-    
-    let tappedWord =  vc_DataModel.tapResponse(recognizer: sender)
-    vc_DataModel.wordToShow = tappedWord.wordtoshow
-    
-    if(vc_DataModel.wordToShow!.count > 0 && tappedWord.word != nil)
-    {
-        wordResultView?.fillDetails(wordToShow: vc_DataModel.wordToShow!, wordscore: (tappedWord.word?.word_score)!)
-    self.view.addSubview(wordResultView!)
-    wordResultView?.wordPhenome_Table.reloadData()
-    wordResultView?.showAnimate()
-    }
     }
     
     
-    func fillDescriptionView(word : String) -> Void {
-       // commentView.isHidden = true
-       // graphProgressView.isHidden = true
-        //correctionView.isHidden = true
-        wordLabel.text = word
-        
-    }
-    
+    // MARK: - Initiate and Refresh Graphs
     func setChart(dataPoints: [Int], values: [Double]) {
         graphProgressView.isHidden = false
         var dataEntries: [ChartDataEntry] = []
@@ -301,6 +258,142 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
         
     }
     
+    func setLineChartData(values: [Double])-> LineChartData {
+        //barChartView.noDataText = "You need to provide data for the chart."
+        
+        //var yVals1 : NSMutableArray = NSMutableArray()
+        
+        var dataEntries: [ChartDataEntry] = []
+        for i in 0..<values.count
+        {
+            // let mult:Double = 100.0 / 2.0;
+            // let val:Double = (Double) (arc4random_uniform(UInt32(mult))) + 50;
+            //yVals1.add(ChartDataEntry.init(x: Double(i), y: values[i]))
+            dataEntries.append(ChartDataEntry.init(x: Double(i), y: values[i]))
+        }
+        
+        //data set 1
+        let set1: LineChartDataSet = LineChartDataSet.init(values: dataEntries , label: "Accuracy")
+        set1.axisDependency = .left;
+        set1.setColor(UIColor(red:51.0/255.0, green:181.0/255.0 , blue:229.0/255.0, alpha:1.0))
+        set1.setCircleColor(UIColor.black)
+        
+        set1.lineWidth = 2.0;
+        set1.circleRadius = 5.0;
+        set1.fillAlpha = 65/255.0;
+        set1.fillColor = UIColor(red:51.0/255.0, green:181.0/255.0 , blue:229.0/255.0, alpha:1.0)
+        set1.highlightColor = UIColor(red:10.0/255.0, green:117.0/255.0 , blue:117.0/255.0, alpha:1.0)
+        set1.drawCircleHoleEnabled = false;
+        
+        
+        let data:LineChartData = LineChartData.init(dataSets: [set1])
+        data.setValueTextColor(UIColor.white)
+        data.setValueFont(UIFont.systemFont(ofSize: 9.0))
+        
+        return data
+    }
+    
+    func setLinegraph() -> Void {
+
+        //barProgressView.isHidden = true
+        //graphProgressView.isHidden = false
+        let l: Legend = graphProgressView.legend;
+        l.form = .line;
+        l.font = UIFont(name: "HelveticaNeue-Light", size: 11.0)!
+        l.textColor = UIColor.black;
+        l.horizontalAlignment = .left;
+        l.verticalAlignment = .bottom;
+        l.orientation = .horizontal;
+        l.drawInside = false;
+        
+        let xAxis:XAxis = graphProgressView.xAxis;
+        xAxis.labelFont = UIFont(name: "HelveticaNeue-Light", size: 11.0)!
+        xAxis.labelTextColor = UIColor.black;
+        xAxis.drawGridLinesEnabled = false;
+        xAxis.drawAxisLineEnabled = true;
+        
+        let leftAxis:YAxis = graphProgressView.leftAxis;
+        leftAxis.labelTextColor = UIColor.black
+        leftAxis.axisMaximum = 100.0;
+        leftAxis.axisMinimum = 0.0;
+        leftAxis.drawGridLinesEnabled = true;
+        leftAxis.drawZeroLineEnabled = false;
+        leftAxis.granularityEnabled = false;
+        
+        
+        
+        let rightAxis:YAxis = graphProgressView.rightAxis;
+        rightAxis.labelTextColor = UIColor.red;
+        rightAxis.axisMaximum = 100.0;
+        rightAxis.axisMinimum = 0.0;
+        rightAxis.drawGridLinesEnabled = false;
+        rightAxis.granularityEnabled = false;
+       
+        
+        
+        
+        graphProgressView.drawGridBackgroundEnabled = true;
+        graphProgressView.data = setLineChartData(values: accuracy)
+    }
+    
+   // MARK: - UI Events and Actions
+    
+    @objc func changeWord(sender:UISwipeGestureRecognizer){
+        if(sender.direction == .right &&  vc_DataModel.wordIndex > 0) {
+            vc_DataModel.wordIndex -= 1
+           // wordLabel.slideInFromLeft()
+            wordTextView.slideInFromLeft()
+        }
+        else if (sender.direction == .left &&  vc_DataModel.wordIndex <= (vc_DataModel.wordArray?.count)! - 2) {
+           // wordLabel.slideInFromRight()
+            wordTextView.slideInFromRight()
+            vc_DataModel.wordIndex += 1
+        }
+        
+        
+       // wordLabel.text = vc_DataModel.wordArray![vc_DataModel.wordIndex]
+        let word : Word = vc_DataModel.wordArray![vc_DataModel.wordIndex]
+        wordTextView.text = word.word
+        vc_DataModel.resetTextViewContent(textView: wordTextView)
+        clearData()
+        print(vc_DataModel.wordArray![vc_DataModel.wordIndex])
+    }
+    
+    func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+        print("Animation Stopped")
+    }
+    
+@objc func showPhenomeTable(sender:UITapGestureRecognizer){
+        // ...
+    
+    //vc_DataModel.wordToShow =  vc_DataModel.tapResponse(recognizer: sender)
+    if (vc_DataModel.predictionData.words_Result!.count < 1)
+    {
+    return
+    }
+    
+    let tappedWord =  vc_DataModel.tapResponse(recognizer: sender)
+    vc_DataModel.wordToShow = tappedWord.wordtoshow
+    
+    if(vc_DataModel.wordToShow!.count > 0 && tappedWord.word != nil)
+    {
+        wordResultView?.fillDetails(wordToShow: vc_DataModel.wordToShow!, wordscore: (tappedWord.word?.word_score)!)
+    self.view.addSubview(wordResultView!)
+    wordResultView?.wordPhenome_Table.reloadData()
+    wordResultView?.showAnimate()
+    }
+    }
+    
+    
+    func fillDescriptionView(word : String) -> Void {
+       // commentView.isHidden = true
+       // graphProgressView.isHidden = true
+        //correctionView.isHidden = true
+        wordLabel.text = word
+        
+    }
+    
+   
     
     @IBAction func closeScreen()
     {
@@ -362,7 +455,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
         audioRecorder.stop()
         audioRecorder = nil
         commentView.isHidden = false
-        graphProgressView.isHidden = false
+       // graphProgressView.isHidden = false
         
         if success {
             //recordButton.setTitle("Tap to Re-record", for: .normal)
@@ -388,11 +481,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
     
     
     func verifyRecording()  {
-        //  var services:ServiceManager = ServiceManager()
-        //  services.testThatUploadingMultipartForm(file:getDocumentsDirectory().appendingPathComponent("recording.wav"))
-
-        
-      
+       
             activityIndicator.isHidden = false
             activityIndicator.startAnimating()
             let serviceManager = ServiceManager()
@@ -402,109 +491,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
         }
     
     
-    func returnPredictionValue(response: DataResponse<Any>) {
-        activityIndicator.stopAnimating()
-        activityIndicator.isHidden = true
-        
-        do {
-            
-            if (response.result.isFailure) {
-                let alert = UIAlertController(title: "Alert", message: "The server didnt respond back. Can you please try again.", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
-            }
-            else{
-    
-                // Dummy Data
-//                let filePath = Bundle.main.url(forResource: "Json", withExtension: "")
-//                let data: Data = try Data.init(contentsOf: filePath!)
-//                let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String: AnyObject]
-//                print(json)
-      
-            
-                //Uncomment for server
-                let json = response.result.value as! NSDictionary
-
-                if let rating = json["rating"] as? [String: Any], let word_results: Array<[String: Any]> = rating["word_results"] as? Array<[String: Any]>  {
-                
-                vc_DataModel.predictionData.total_score =  rating["total_score"] as! Float
-//
-//                print(word_results.count)
-//                print(word_results[0])
-//                print(word_results[0]["word"])
-//                print(word_results[0]["word_score"])
-//                print(word_results[0]["predicted_phonemes"])
-//                print(word_results[0]["word_phonemes"])
-                
-                
-                //Fill the Data
-                vc_DataModel.predictionData.words_Result?.removeAll()
-                for word in word_results {
-                    let wordScore : Word_Prediction = Word_Prediction()
-                    wordScore.word  = word["word"] as? String
-                    wordScore.word_score  = word["word_score"] as! Float
-                    wordScore.word_phonemes = word["word_phonemes"] as? Array<String>
-                    wordScore.predicted_phonemes = word["predicted_phonemes"] as? Array<String>
-                    vc_DataModel.predictionData.words_Result?.append(wordScore)
-                    
-                }
-                
-                
-                //Color the Words
-                    let attributedText = NSMutableAttributedString.init(string: (wordTextView.text?.lowercased())!)
-                for wordResult in (vc_DataModel.predictionData.words_Result)! {
-                    let range = (wordTextView.text!.lowercased() as NSString).range(of: wordResult.word!)
-                    if (wordResult.word_score > 70) {
-                        attributedText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor(red: 0/255.0, green: 124/255.0, blue: 0/255.0, alpha: 1.0) , range: range)
-                    } else if (wordResult.word_score < 30) {
-                        attributedText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor(red: 180.0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0) , range: range)
-                    }
-                    else{
-                        attributedText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.blue , range: range)
-                    }
-                    
-                }
-                wordTextView.attributedText = attributedText
-                wordTextView.font = UIFont.boldSystemFont(ofSize: 28.0)
-                wordTextView.textAlignment = NSTextAlignment.center
-                vc_DataModel.resetTextViewContent(textView: wordTextView)
-                
-                
-                //Show the total Score
-                commentView.isHidden = false
-                scoreLabel.text = String.init(format: "%.1f ", (vc_DataModel.predictionData.total_score))
-                let comment = vc_DataModel.fetchComment(score: Int(vc_DataModel.predictionData.total_score))
-                commentsLabel.text = comment.comment
-                commentsLabel.textColor = comment.color
-                
-                //Fill Line Graph
-                trialCount += 1
-                trials.append(trialCount)
-                let totalScore: Double = rating["total_score"] as! Double
-                accuracy.append(totalScore)
-                
-                
-                
-                //setChart(dataPoints: trials, values: accuracy)
-                setBarGraph()
-                
-                
-                //Show the Word Report
-                //VC_DataModel.predictionData = pronunce_Prediction!;
-                //correctionView.isHidden = true
-                // correctionView.reloadData()
-            }
-            
-            //let word_result: Array = (json["rating"]!["word_results"])
-            //print(word_result)
-            
-            
-            } //else
-        
-        } catch let error as NSError {
-           // print("Failed reading from URL: \(filePath), Error: " + error.localizedDescription)
-    }
-    }
+  
     
     @IBAction func showTextField()
     {
@@ -601,13 +588,28 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
     
     @IBAction func showTheGraph()
     {
-        if(barProgressView.isHidden){
-            barProgressView.isHidden = false
-            barProgressView.slideInFromRight()
-            self.view.bringSubview(toFront: barProgressView)
-        } else {
-            barProgressView.slideInFromLeft()
-            barProgressView.isHidden = true
+        if(Settings.sharedInstance.graphType == 0)
+        {
+            if(barProgressView.isHidden){
+                graphProgressView.isHidden = true
+                barProgressView.isHidden = false
+                barProgressView.slideInFromRight()
+                self.view.bringSubview(toFront: barProgressView)
+            } else {
+                barProgressView.slideInFromLeft()
+                barProgressView.isHidden = true
+            }
+        }
+        else{
+            if(graphProgressView.isHidden){
+                barProgressView.isHidden = true
+                graphProgressView.isHidden = false
+                graphProgressView.slideInFromRight()
+                self.view.bringSubview(toFront: graphProgressView)
+            } else {
+                graphProgressView.slideInFromLeft()
+                graphProgressView.isHidden = true
+            }
         }
     }
     
@@ -629,5 +631,118 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
         // Pass the selected object to the new view controller.
     }
     */
+    
+    // MARK: - Server Connectivity and Delegate
+    func returnPredictionValue(response: DataResponse<Any>) {
+        activityIndicator.stopAnimating()
+        activityIndicator.isHidden = true
+        
+        do {
+            
+            if (response.result.isFailure) {
+                let alert = UIAlertController(title: "Alert", message: "The server didnt respond back. Can you please try again.", preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+            else{
+                
+                // Dummy Data
+                //                let filePath = Bundle.main.url(forResource: "Json", withExtension: "")
+                //                let data: Data = try Data.init(contentsOf: filePath!)
+                //                let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String: AnyObject]
+                //                print(json)
+                
+                
+                //Uncomment for server
+                let json = response.result.value as! NSDictionary
+                
+                if let rating = json["rating"] as? [String: Any], let word_results: Array<[String: Any]> = rating["word_results"] as? Array<[String: Any]>  {
+                    
+                    vc_DataModel.predictionData.total_score =  rating["total_score"] as! Float
+                    //
+                    //                print(word_results.count)
+                    //                print(word_results[0])
+                    //                print(word_results[0]["word"])
+                    //                print(word_results[0]["word_score"])
+                    //                print(word_results[0]["predicted_phonemes"])
+                    //                print(word_results[0]["word_phonemes"])
+                    
+                    
+                    //Fill the Data
+                    vc_DataModel.predictionData.words_Result?.removeAll()
+                    for word in word_results {
+                        let wordScore : Word_Prediction = Word_Prediction()
+                        wordScore.word  = word["word"] as? String
+                        wordScore.word_score  = word["word_score"] as! Float
+                        wordScore.word_phonemes = word["word_phonemes"] as? Array<String>
+                        wordScore.predicted_phonemes = word["predicted_phonemes"] as? Array<String>
+                        vc_DataModel.predictionData.words_Result?.append(wordScore)
+                        
+                    }
+                    
+                    
+                    //Color the Words
+                    let attributedText = NSMutableAttributedString.init(string: (wordTextView.text?.lowercased())!)
+                    for wordResult in (vc_DataModel.predictionData.words_Result)! {
+                        let range = (wordTextView.text!.lowercased() as NSString).range(of: wordResult.word!)
+                        if (wordResult.word_score > 70) {
+                            attributedText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor(red: 0/255.0, green: 124/255.0, blue: 0/255.0, alpha: 1.0) , range: range)
+                        } else if (wordResult.word_score < 30) {
+                            attributedText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor(red: 180.0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0) , range: range)
+                        }
+                        else{
+                            attributedText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor.blue , range: range)
+                        }
+                        
+                    }
+                    wordTextView.attributedText = attributedText
+                    wordTextView.font = UIFont.boldSystemFont(ofSize: 28.0)
+                    wordTextView.textAlignment = NSTextAlignment.center
+                    vc_DataModel.resetTextViewContent(textView: wordTextView)
+                    
+                    
+                    //Show the total Score
+                    commentView.isHidden = false
+                    scoreLabel.text = String.init(format: "%.1f ", (vc_DataModel.predictionData.total_score))
+                    let comment = vc_DataModel.fetchComment(score: Int(vc_DataModel.predictionData.total_score))
+                    commentsLabel.text = comment.comment
+                    commentsLabel.textColor = comment.color
+                    
+                    //Fill Line Graph
+                    trialCount += 1
+                    trials.append(trialCount)
+                    let totalScore: Double = rating["total_score"] as! Double
+                    accuracy.append(totalScore)
+                    
+                    /*
+                    #if GRAPH_TYPE
+                       setBarGraph()
+                    #else
+                       setLinegraph()
+                    #endif
+                    */
+                    
+                    setBarGraph()
+                    
+                    //setChart(dataPoints: trials, values: accuracy)
+                    
+                    //
+                    
+                    //Show the Word Report
+                    //VC_DataModel.predictionData = pronunce_Prediction!;
+                    //correctionView.isHidden = true
+                    // correctionView.reloadData()
+                }
+                
+                //let word_result: Array = (json["rating"]!["word_results"])
+                //print(word_result)
+                
+                
+            } //else
+            
+        } catch let error as NSError {
+            // print("Failed reading from URL: \(filePath), Error: " + error.localizedDescription)
+        }
+    }
 
 }

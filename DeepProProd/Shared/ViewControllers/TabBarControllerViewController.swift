@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TabBarControllerViewController: UITabBarController {
+class TabBarControllerViewController: UITabBarController , UITabBarControllerDelegate {
 
     @IBOutlet weak var newButton: UIButton!
     
@@ -22,8 +22,19 @@ class TabBarControllerViewController: UITabBarController {
 //        myFirstButton.frame = CGRect(x: 20, y: 80, width: 50, height: 40)
 //        myFirstButton.addTarget(self, action: #selector(progbutton), for: .touchUpInside)
 //        self.view.addSubview(myFirstButton)
+        var tabBarViewControllers = [UIViewController]()
+        if(Settings.sharedInstance.isDemo)!
+       {
+        let transDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
+        transDetailViewController.tabBarItem = UITabBarItem(title: "Practice Board", image:UIImage(named: "homeTab.png"), tag: 1)
+
+        let settingsViewController = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
+        settingsViewController.tabBarItem = UITabBarItem(title: "Settings", image:UIImage(named: "homeTab.png"), tag: 2)
         
-       
+        tabBarViewControllers  = [transDetailViewController,settingsViewController]
+
+        }
+        else{
         let levelViewController : Level_SHViewController =  Level_SHViewController(nibName: "Level_SHViewController", bundle: nil)
         levelViewController.tabBarItem = UITabBarItem(title: "Menu", image: UIImage(named: "homeTab.png"), tag: 0)
         
@@ -33,9 +44,13 @@ class TabBarControllerViewController: UITabBarController {
         let settingsViewController = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
         settingsViewController.tabBarItem = UITabBarItem(title: "Settings", image:UIImage(named: "homeTab.png"), tag: 2)
    
-        let tabBarViewControllers = [levelViewController,transDetailViewController,settingsViewController]
+       tabBarViewControllers  = [levelViewController,transDetailViewController,settingsViewController]
         
+        }
         viewControllers = tabBarViewControllers
+        if let tabindex = Settings.sharedInstance.mainPage {
+            self.selectedIndex = tabindex
+        }
         
     }
 

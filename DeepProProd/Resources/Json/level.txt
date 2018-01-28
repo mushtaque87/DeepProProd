@@ -1,0 +1,14 @@
+{
+"courses": {
+"level": [{
+"levelname": "Advanced"
+},
+{
+"levelname": "Intermediate"
+},
+{
+"levelname": "Basic"
+}
+]
+}
+}

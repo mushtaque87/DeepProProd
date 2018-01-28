@@ -1,6 +1,5 @@
 
 {
-"courses": {
 "levels": [{
 "levelname": "Advanced",
 "chapters": [{
@@ -66,5 +65,5 @@
 
 }
 ]
-}
+
 }

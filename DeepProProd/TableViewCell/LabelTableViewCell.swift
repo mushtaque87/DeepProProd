@@ -9,11 +9,11 @@
 import UIKit
 
 class LabelTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var titleLbl: NSLayoutConstraint!
+    @IBOutlet weak var titleLbl: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        titleLbl.alignText()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

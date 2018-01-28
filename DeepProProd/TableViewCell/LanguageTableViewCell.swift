@@ -10,9 +10,12 @@ import UIKit
 
 class LanguageTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var titlLbl: UILabel!
+    @IBOutlet weak var languageSwitch: UISegmentedControl!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        titlLbl.alignText()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -20,5 +23,7 @@ class LanguageTableViewCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+    
+ 
     
 }

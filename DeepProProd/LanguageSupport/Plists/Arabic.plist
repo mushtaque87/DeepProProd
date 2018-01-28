@@ -41,5 +41,51 @@
 		<string>تسجيل الدخول
 </string>
 	</dict>
+	<key>Language</key>
+	<dict>
+		<key>value</key>
+		<string>لغة</string>
+	</dict>
+	<key>My_Account</key>
+	<dict>
+		<key>value</key>
+		<string> حسابي </string>
+	</dict>
+	<key>Announcements</key>
+	<dict>
+		<key>value</key>
+		<string> الإعلانات </string>
+	</dict>
+	<key>Aboutus</key>
+	<dict>
+		<key>value</key>
+		<string>معلومات عنا</string>
+	</dict>
+	<key>Logout</key>
+	<dict>
+		<key>value</key>
+		<string> الخروج </string>
+	</dict>
+	<key>MainPage</key>
+	<dict>
+		<key>value</key>
+		<string>الشاشة الرئيسية</string>
+	</dict>
+	<key>GraphType</key>
+	<dict>
+		<key>value</key>
+		<string>نوع الرسم البياني</string>
+	</dict>
+	<key>Settings</key>
+	<dict>
+		<key>value</key>
+		<string> إعدادات</string>
+	</dict>
+	<key>Theme</key>
+	<dict>
+		<key>value</key>
+		<string> موضوع</string>
+	</dict>
+
 </dict>
 </plist>
