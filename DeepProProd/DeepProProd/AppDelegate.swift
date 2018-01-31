@@ -22,11 +22,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "Arabic", ofType: "plist")
         Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "English", ofType: "plist")
       //  Helper.readJsonFile(at: "LevelJson", ofType: "txt")
-        do {
+        
+        /*do {
             try Helper.parseJson()
         } catch  {
             print(error)
-        }
+        }*/
         return true
         
         

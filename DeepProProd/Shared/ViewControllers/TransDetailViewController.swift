@@ -13,7 +13,11 @@ import  Alamofire
 
 
 
-
+enum BoardType  :  Int {
+    case practice
+    case account
+    // ...
+}
 
 class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerDelegate, CAAnimationDelegate, ServiceProtocols {
 
@@ -30,14 +34,11 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
     @IBOutlet weak var wordTextView: UITextView!
     @IBOutlet weak var typeTextView: UITextView!
     @IBOutlet weak var backgroundImage: UIImageView!
-    
+    @IBOutlet weak var closeBtn: UIButton!
     @IBOutlet weak var wordTextField: UITextField!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var wordResultView : wordResult_View?
-    
-    
-    
     var months : [String]!
     var accuracy : [Double]! = []
     var trialCount : Int = 0
@@ -46,7 +47,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
     var recordingSession: AVAudioSession!
     var audioRecorder: AVAudioRecorder!
     var player: AVAudioPlayer?
-    
+    var boardType : BoardType?
     
    
     
@@ -133,23 +134,9 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
         wordTextView.addGestureRecognizer(tapGesture)
         graphProgressView.isHidden = true
         
-         refreshUI()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        vc_DataModel.reloadScreen()
-        refreshUI()
-        
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    func refreshUI() {
-        backgroundImage.setBackGroundimage()
-        
+        let word : Word = (vc_DataModel.wordArray?[0])!
+        wordTextView.text = word.word
+        scoreLabel.text = "0 %"
         if(Settings.sharedInstance.language == "English")
         {
             commentsLabel.text = "Record the above statement and we will help you pronunce it better !!"
@@ -158,9 +145,30 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
             commentsLabel.text = "تسجيل البيان أعلاه ونحن سوف تساعدك برونونس ذلك أفضل !!"
         }
         
-        let word : Word = (vc_DataModel.wordArray?[0])!
-        wordTextView.text  = word.word
-        scoreLabel.text = "0 %"
+         refreshUI()
+        
+        if(boardType == .account)
+        {
+            closeBtn.isHidden = true
+        }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        vc_DataModel.reloadScreen()
+        refreshUI()
+        
+    }
+
+   
+    
+    func refreshUI() {
+        backgroundImage.setBackGroundimage()
+        
+       
+        
+       // let word : Word = (vc_DataModel.wordArray?[0])!
+       // wordTextView.attributedText  = createAttributedText()
+       
         vc_DataModel.resetTextViewContent(textView: wordTextView)
     }
     
@@ -338,6 +346,106 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
     
    // MARK: - UI Events and Actions
     
+    @IBAction func closeScreen()
+    {
+        dismiss(animated: true, completion: nil)
+        
+    }
+    
+    @IBAction func record()
+    {
+        
+        if audioRecorder == nil {
+            startRecording()
+        } else {
+            finishRecording(success: true)
+        }
+        
+        
+    }
+    
+    @IBAction func playTheText()
+    {
+        let word: Word = vc_DataModel.wordArray![vc_DataModel.wordIndex]
+        if(word.word.lowercased() == wordTextView.text.lowercased() )
+        {
+            let alertSound = URL(fileURLWithPath: Bundle.main.path(forResource: word.voice, ofType: "wav")!)
+            print(alertSound)
+            
+            try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try! AVAudioSession.sharedInstance().setActive(true)
+            
+            try! player = AVAudioPlayer(contentsOf: alertSound)
+            player!.prepareToPlay()
+            player!.play()
+        }
+        
+    }
+    
+    
+    
+    @IBAction func playTheRecording()
+    {
+        
+        //  guard let url = Bundle.main.url(forResource: "soundName", withExtension: "mp3") else { return }
+        let url = vc_DataModel.getDocumentsDirectory().appendingPathComponent("recording.wav")
+        print(url)
+        if FileManager.default.fileExists(atPath: url.path) {
+            do {
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+                try AVAudioSession.sharedInstance().setActive(true)
+                //  try AVAudioSession.overrideOutputAudioPort(AVAudioSession.sharedInstance())
+                
+                try! player = AVAudioPlayer(contentsOf: url)
+                player!.prepareToPlay()
+                player!.play()
+                
+                // let player = try AVAudioPlayer(contentsOf: url)
+                // guard let player = player else { return }
+                //player.prepareToPlay()
+                //player.delegate = self
+                // player.play()
+                
+            } catch let error {
+                print(error.localizedDescription)
+            }
+        } else {
+            let alert = UIAlertController(title: "Alert", message: "Please record the word using the record button first and then play.", preferredStyle: UIAlertControllerStyle.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+            
+        }
+        
+        
+    }
+    
+    @IBAction func showTheGraph()
+    {
+        if(Settings.sharedInstance.graphType == 0)
+        {
+            if(barProgressView.isHidden){
+                graphProgressView.isHidden = true
+                barProgressView.isHidden = false
+                barProgressView.slideInFromRight()
+                self.view.bringSubview(toFront: barProgressView)
+            } else {
+                barProgressView.slideInFromLeft()
+                barProgressView.isHidden = true
+            }
+        }
+        else{
+            if(graphProgressView.isHidden){
+                barProgressView.isHidden = true
+                graphProgressView.isHidden = false
+                graphProgressView.slideInFromRight()
+                self.view.bringSubview(toFront: graphProgressView)
+            } else {
+                graphProgressView.slideInFromLeft()
+                graphProgressView.isHidden = true
+            }
+        }
+    }
+    
     @objc func changeWord(sender:UISwipeGestureRecognizer){
         if(sender.direction == .right &&  vc_DataModel.wordIndex > 0) {
             vc_DataModel.wordIndex -= 1
@@ -373,11 +481,11 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
     }
     
     let tappedWord =  vc_DataModel.tapResponse(recognizer: sender)
-    vc_DataModel.wordToShow = tappedWord.wordtoshow
+    vc_DataModel.tappedWord = tappedWord.wordtoshow
     
-    if(vc_DataModel.wordToShow!.count > 0 && tappedWord.word != nil)
+    if(vc_DataModel.tappedWord!.word.count > 0 && tappedWord.word != nil)
     {
-        wordResultView?.fillDetails(wordToShow: vc_DataModel.wordToShow!, wordscore: (tappedWord.word?.word_score)!)
+        wordResultView?.fillDetails(wordToShow: (vc_DataModel.tappedWord?.word)!, wordscore: (tappedWord.word?.word_score)!)
     self.view.addSubview(wordResultView!)
     wordResultView?.wordPhenome_Table.reloadData()
     wordResultView?.showAnimate()
@@ -395,11 +503,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
     
    
     
-    @IBAction func closeScreen()
-    {
-        dismiss(animated: true, completion: nil)
-
-    }
+   
     
 //    func loadRecordingUI() {
 //        recordButton = UIButton(frame: CGRect(x: 64, y: 64, width: 128, height: 64))
@@ -409,17 +513,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
 //        view.addSubview(recordButton)
 //    }
 //
-    @IBAction func record()
-    {
-        
-        if audioRecorder == nil {
-            startRecording()
-        } else {
-            finishRecording(success: true)
-        }
-        
-        
-    }
+   
     
     func startRecording() {
         let audioFilename = vc_DataModel.getDocumentsDirectory().appendingPathComponent("recording.wav")
@@ -516,58 +610,31 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
     
     
     
-    @IBAction func playTheText()
-    {
-        let word: Word = vc_DataModel.wordArray![vc_DataModel.wordIndex]
-        if(word.word.lowercased() == wordTextView.text.lowercased() )
-        {
-        let alertSound = URL(fileURLWithPath: Bundle.main.path(forResource: word.voice, ofType: "wav")!)
-        print(alertSound)
-        
-        try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-        try! AVAudioSession.sharedInstance().setActive(true)
-        
-        try! player = AVAudioPlayer(contentsOf: alertSound)
-        player!.prepareToPlay()
-        player!.play()
-        }
-
-        }
-        
-
+   
     
-    @IBAction func playTheRecording()
+    func createAttributedText() -> NSMutableAttributedString
     {
-       
-          //  guard let url = Bundle.main.url(forResource: "soundName", withExtension: "mp3") else { return }
-            let url = vc_DataModel.getDocumentsDirectory().appendingPathComponent("recording.wav")
-            print(url)
-            if FileManager.default.fileExists(atPath: url.path) {
-            do {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-                try AVAudioSession.sharedInstance().setActive(true)
-              //  try AVAudioSession.overrideOutputAudioPort(AVAudioSession.sharedInstance())
-                
-                try! player = AVAudioPlayer(contentsOf: url)
-                player!.prepareToPlay()
-                player!.play()
-                
-               // let player = try AVAudioPlayer(contentsOf: url)
-               // guard let player = player else { return }
-                //player.prepareToPlay()
-                //player.delegate = self
-               // player.play()
-                
-            } catch let error {
-                print(error.localizedDescription)
+        
+        let attributedString = NSMutableAttributedString()
+        for wordResult in (vc_DataModel.predictionData.words_Result)! {
+            
+            var color: UIColor = UIColor.white
+            if (wordResult.word_score > 70) {
+                color = UIColor(red: 0/255.0, green: 124/255.0, blue: 0/255.0, alpha: 1.0)
+            } else if (wordResult.word_score < 30) {
+                color = UIColor(red: 180.0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0)
             }
-            } else {
-                let alert = UIAlertController(title: "Alert", message: "Please record the word using the record button first and then play.", preferredStyle: UIAlertControllerStyle.alert)
-                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
-                self.present(alert, animated: true, completion: nil)
+            else{
+                color = UIColor.blue
                 
+            }
+            let attributedSubString = NSAttributedString(string: wordResult.word!, attributes: [NSAttributedStringKey.foregroundColor : color])
+            
+            attributedString.append(attributedSubString)
+            attributedString.append(NSAttributedString.init(string: " "))
         }
         
+        return attributedString
         
     }
     
@@ -586,32 +653,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
         }
     }
     
-    @IBAction func showTheGraph()
-    {
-        if(Settings.sharedInstance.graphType == 0)
-        {
-            if(barProgressView.isHidden){
-                graphProgressView.isHidden = true
-                barProgressView.isHidden = false
-                barProgressView.slideInFromRight()
-                self.view.bringSubview(toFront: barProgressView)
-            } else {
-                barProgressView.slideInFromLeft()
-                barProgressView.isHidden = true
-            }
-        }
-        else{
-            if(graphProgressView.isHidden){
-                barProgressView.isHidden = true
-                graphProgressView.isHidden = false
-                graphProgressView.slideInFromRight()
-                self.view.bringSubview(toFront: graphProgressView)
-            } else {
-                graphProgressView.slideInFromLeft()
-                graphProgressView.isHidden = true
-            }
-        }
-    }
+   
     
     public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool)
     {
@@ -682,9 +724,13 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
                     
                     
                     //Color the Words
+                    /*
                     let attributedText = NSMutableAttributedString.init(string: (wordTextView.text?.lowercased())!)
+                    
                     for wordResult in (vc_DataModel.predictionData.words_Result)! {
+                     
                         let range = (wordTextView.text!.lowercased() as NSString).range(of: wordResult.word!)
+                     
                         if (wordResult.word_score > 70) {
                             attributedText.addAttribute(NSAttributedStringKey.foregroundColor, value: UIColor(red: 0/255.0, green: 124/255.0, blue: 0/255.0, alpha: 1.0) , range: range)
                         } else if (wordResult.word_score < 30) {
@@ -695,7 +741,11 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
                         }
                         
                     }
-                    wordTextView.attributedText = attributedText
+                    */
+                    
+                    
+                    
+                    wordTextView.attributedText = createAttributedText()
                     wordTextView.font = UIFont.boldSystemFont(ofSize: 28.0)
                     wordTextView.textAlignment = NSTextAlignment.center
                     vc_DataModel.resetTextViewContent(textView: wordTextView)
@@ -703,7 +753,8 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
                     
                     //Show the total Score
                     commentView.isHidden = false
-                    scoreLabel.text = String.init(format: "%.1f ", (vc_DataModel.predictionData.total_score))
+                    scoreLabel.text = "\(Int(vc_DataModel.predictionData.total_score)) %"
+                        //String(format: "%.1f %", (vc_DataModel.predictionData.total_score))
                     let comment = vc_DataModel.fetchComment(score: Int(vc_DataModel.predictionData.total_score))
                     commentsLabel.text = comment.comment
                     commentsLabel.textColor = comment.color
@@ -722,7 +773,9 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
                     #endif
                     */
                     
+                  
                     setBarGraph()
+                    setLinegraph()
                     
                     //setChart(dataPoints: trials, values: accuracy)
                     
@@ -743,6 +796,12 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
         } catch let error as NSError {
             // print("Failed reading from URL: \(filePath), Error: " + error.localizedDescription)
         }
+    }
+    
+    // MARK: - Memory Management
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
 
 }

@@ -26,6 +26,7 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
         if(Settings.sharedInstance.isDemo)!
        {
         let transDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
+        transDetailViewController.boardType = BoardType.account
         transDetailViewController.tabBarItem = UITabBarItem(title: "Practice Board", image:UIImage(named: "homeTab.png"), tag: 1)
 
         let settingsViewController = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
@@ -39,6 +40,7 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
         levelViewController.tabBarItem = UITabBarItem(title: "Menu", image: UIImage(named: "homeTab.png"), tag: 0)
         
         let transDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
+        transDetailViewController.boardType = BoardType.account
         transDetailViewController.tabBarItem = UITabBarItem(title: "Speech", image: UIImage(named: "homeTab.png"), tag: 1)
         
         let settingsViewController = SettingsViewController(nibName: "SettingsViewController", bundle: nil)

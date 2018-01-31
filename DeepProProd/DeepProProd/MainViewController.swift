@@ -74,7 +74,7 @@ class MainViewController: UIViewController, MainViewControllerProtocols {
     
     func addLoginViewController() {
         let login_ViewController: Login_SH_ViewController = Login_SH_ViewController(nibName: "Login_SH_ViewController", bundle: nil)
-        
+        login_ViewController.view.frame = self.view.frame
        // let navigation_Controller = UINavigationController()
        // navigation_Controller.viewControllers = [login_ViewController]
         

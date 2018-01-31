@@ -1,0 +1,108 @@
+{
+"predictions": {
+"prd_3": "HH AW / W OW N D / AH L OW",
+"prd_1": "HH AW / W OW N / AA L OW",
+"prd_4": "HH AW / W OW N D / AA L OW",
+"prd_0": "HH AW / W OW N / AH L OW",
+"prd_2": "HH AW / W OW N / EH L OW"
+},
+"debug_mode": true,
+"prediction_distances": {
+"prd_3": 9,
+"prd_1": 11,
+"prd_4": 10,
+"prd_0": 10,
+"prd_2": 11
+},
+"original": "HH EH L OW / W ER L D / HH AH L OW",
+"close_match_key": "prd_3",
+"rating": {
+"total_score": 70.625,
+"word_results": [{
+"un_matched_phonemes": [{
+"mis_match_with": "AW",
+"phoneme": "EH",
+"index": 1,
+"distance": 10.0
+}, {
+"mis_match_with": "/",
+"phoneme": "L",
+"index": 2,
+"distance": 2.0
+}, {
+"mis_match_with": "/",
+"phoneme": "OW",
+"index": 3,
+"distance": 26.0
+}],
+"word_score": 50.0,
+"word_phonemes": ["HH", "EH", "L", "OW"],
+"act_text": "HH AW",
+"predicted_phonemes": ["HH", "AW"],
+"matched_phonemes": [{
+"phoneme": "HH",
+"index": 0,
+"distance": 0
+}],
+"exp_text": "HH EH L OW",
+"word": "hello"
+}, {
+"un_matched_phonemes": [{
+"mis_match_with": "OW",
+"phoneme": "ER",
+"index": 1,
+"distance": 1.0
+}, {
+"mis_match_with": "N",
+"phoneme": "L",
+"index": 2,
+"distance": 20.0
+}],
+"word_score": 86.875,
+"word_phonemes": ["W", "ER", "L", "D"],
+"act_text": "W OW N D",
+"predicted_phonemes": ["W", "OW", "N", "D"],
+"matched_phonemes": [{
+"phoneme": "W",
+"index": 0,
+"distance": 0
+}, {
+"phoneme": "D",
+"index": 3,
+"distance": 0
+}],
+"exp_text": "W ER L D",
+"word": "world"
+}, {
+"un_matched_phonemes": [{
+"mis_match_with": "AH",
+"phoneme": "HH",
+"index": 0,
+"distance": 34.0
+}, {
+"mis_match_with": "L",
+"phoneme": "AH",
+"index": 1,
+"distance": 33.0
+}, {
+"mis_match_with": "OW",
+"phoneme": "L",
+"index": 2,
+"distance": 24.0
+}, {
+"mis_match_with": "/",
+"phoneme": "OW",
+"index": 3,
+"distance": 26.0
+}],
+"word_score": 75.0,
+"word_phonemes": ["HH", "AH", "L", "OW"],
+"act_text": "AH L OW",
+"predicted_phonemes": ["AH", "L", "OW"],
+"matched_phonemes": [],
+"exp_text": "HH AH L OW",
+"word": "hello"
+}]
+},
+"prediction": "HH AW / W OW N D / AH L OW"
+}

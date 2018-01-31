@@ -61,9 +61,21 @@ class wordResult_View: UIView {
     }
     
     func fillDetails(wordToShow: String , wordscore: Float) -> Void {
-        wordLabel?.text = wordToShow
-        wordScoreLabel?.text = String(format: "%2.f", wordscore)
         
+        
+        var color: UIColor = UIColor.white
+        if (wordscore > 70) {
+            color = UIColor(red: 0/255.0, green: 124/255.0, blue: 0/255.0, alpha: 1.0)
+        } else if (wordscore  < 30) {
+            color = UIColor(red: 180.0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0)
+        }
+        else{
+            color = UIColor.blue
+        }
+      wordLabel?.text = wordToShow
+      wordScoreLabel?.text = String(format: "%2.f", wordscore)
+      wordScoreLabel?.textColor = color
+      wordLabel?.textColor = color
         
     }
     

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		505B75C62020B2C700A5A0B2 /* json.txt in Resources */ = {isa = PBXBuildFile; fileRef = 505B75C42020B2C700A5A0B2 /* json.txt */; };
 		5095C68E20064108003207AD /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5099C221200640CC00898B0A /* Charts.framework */; };
 		5095C68F20064108003207AD /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5099C221200640CC00898B0A /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5095C69920064314003207AD /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5095C69820064314003207AD /* ServiceManager.swift */; };
@@ -149,6 +150,7 @@
 
 /* Begin PBXFileReference section */
 		29281F83558DA47BDE96940E /* Pods-DeepProProd.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeepProProd.release.xcconfig"; path = "Pods/Target Support Files/Pods-DeepProProd/Pods-DeepProProd.release.xcconfig"; sourceTree = "<group>"; };
+		505B75C42020B2C700A5A0B2 /* json.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json.txt; sourceTree = "<group>"; };
 		5095C69820064314003207AD /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
 		5095C69A20064339003207AD /* ChapterVC_DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChapterVC_DataModel.swift; sourceTree = "<group>"; };
 		5095C69B20064339003207AD /* TranslationVC_DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationVC_DataModel.swift; sourceTree = "<group>"; };
@@ -359,6 +361,7 @@
 		5095C6CC20065203003207AD /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				5095C69B20064339003207AD /* TranslationVC_DataModel.swift */,
 				50E76B382004F5B5009420F9 /* LoginViewModel.swift */,
 				5095C6CD20065282003207AD /* LevelViewModel.swift */,
 				50E7B331200B769C00DB9DB0 /* SignupViewModel.swift */,
@@ -461,8 +464,6 @@
 		50E76AFF20037E5E009420F9 /* EnglishViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				5099C20C20063EAB00898B0A /* TransDetailViewController.swift */,
-				5099C20D20063EAB00898B0A /* TransDetailViewController.xib */,
 				5099C20B20063EAA00898B0A /* WordsViewController.swift */,
 				5099C20A20063EAA00898B0A /* WordsViewController.xib */,
 			);
@@ -532,6 +533,8 @@
 				5099C20920063EAA00898B0A /* SettingsViewController.xib */,
 				50F83CE82017696000690DCF /* Accounts_SH_ViewController.swift */,
 				50F83CE92017696000690DCF /* Accounts_SH_ViewController.xib */,
+				5099C20C20063EAB00898B0A /* TransDetailViewController.swift */,
+				5099C20D20063EAB00898B0A /* TransDetailViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -569,7 +572,6 @@
 			children = (
 				5095C69A20064339003207AD /* ChapterVC_DataModel.swift */,
 				5095C69C2006433A003207AD /* MenuVC_DataModel.swift */,
-				5095C69B20064339003207AD /* TranslationVC_DataModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -577,6 +579,7 @@
 		50E7B337200CA28600DB9DB0 /* Json */ = {
 			isa = PBXGroup;
 			children = (
+				505B75C42020B2C700A5A0B2 /* json.txt */,
 				50E7B33C200CE3DA00DB9DB0 /* LevelJson.txt */,
 				50F83CE220161BAC00690DCF /* level.txt */,
 			);
@@ -769,6 +772,7 @@
 				50E79DD620050CF200327016 /* TabBarControllerViewController.xib in Resources */,
 				5095C6AA20064396003207AD /* ReportCell.xib in Resources */,
 				50E7B349200DD2A100DB9DB0 /* LanguageTableViewCell.xib in Resources */,
+				505B75C62020B2C700A5A0B2 /* json.txt in Resources */,
 				5095C6A420064381003207AD /* Menu_Cell.xib in Resources */,
 				50F83CE320161BAC00690DCF /* level.txt in Resources */,
 				5095C6D72006552C003207AD /* Menu_SH_ViewController.xib in Resources */,
@@ -1078,7 +1082,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C6UNXYYV66;
 				INFOPLIST_FILE = DeepProProd/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = algorythma.ScreenTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1099,7 +1103,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C6UNXYYV66;
 				INFOPLIST_FILE = DeepProProd/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = algorythma.ScreenTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";

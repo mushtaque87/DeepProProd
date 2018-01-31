@@ -12,8 +12,6 @@
 	<false/>
 	<key>mainPage</key>
 	<integer>0</integer>
-	<key>TestKey</key>
-	<string>TestValue</string>
 	<key>GraphType</key>
 	<integer>0</integer>
 	<key>ThemeType</key>

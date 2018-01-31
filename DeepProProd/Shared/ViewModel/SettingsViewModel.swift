@@ -212,7 +212,7 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
         
         Settings.sharedInstance.themeType = sender.tag
         Settings.sharedInstance.setValue(key: "ThemeType", value: sender.tag as AnyObject)
-        Localizator.sharedInstance.reloadLocalisationDictionary()
+        //Localizator.sharedInstance.reloadLocalisationDictionary()
         //delegate?.reloadTable()
     }
     

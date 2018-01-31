@@ -28,15 +28,19 @@ struct VoiceTime {
     let endTime : Double
 }
 
+struct TappedWord {
+    let word : String
+    let apperenceCount: Int
+}
+
 class TranslationVC_DataModel: NSObject, UITableViewDataSource,UITableViewDelegate, UITextFieldDelegate , UITextViewDelegate{
     
     
     var parentObject: TransDetailViewController!
-    
     var wordArray : Array<Word>?
     var comments : Array<Comment>?
     var wordIndex: Int = 0
-    var wordToShow:String?
+    var tappedWord : TappedWord?
     var wordResult : Word_Prediction?
     var player: AVAudioPlayer?
     var playTimer : Timer?
@@ -111,7 +115,7 @@ class TranslationVC_DataModel: NSObject, UITableViewDataSource,UITableViewDelega
 //            }
 //        }
         
-        if let wordData = getWordDataFromString(wordString: self.wordToShow!)
+        if let wordData = getWordDataFromString(tappedWord: self.tappedWord!)
         {
             self.wordResult = wordData
             return max((wordData.predicted_phonemes?.count)!, (wordData.word_phonemes?.count)!)
@@ -187,6 +191,7 @@ class TranslationVC_DataModel: NSObject, UITableViewDataSource,UITableViewDelega
         return cell
     }
     
+    
     @objc func playVoice(sender: UIButton) -> Void {
         if(sender.tag == 1)
         {
@@ -204,13 +209,18 @@ class TranslationVC_DataModel: NSObject, UITableViewDataSource,UITableViewDelega
                     //wordToShow
                     let wordArray  = word.word.components(separatedBy: " ")
                     var wordIndex = 0
-                    if(!wordArray.contains(where: {(($0 as? String)?.localizedCaseInsensitiveCompare(wordToShow!) ?? .orderedAscending) == .orderedSame }))
+                   // if(!wordArray.contains(where: {(($0 as? String)?.localizedCaseInsensitiveCompare(tappedWord?.word!) ?? .orderedAscending) == .orderedSame }))
+                    
+                    
+                   /*
+                    if(wordArray.contains(where: {(($0 as? String)?.localizedCaseInsensitiveCompare(tappedWord?.word!) ?? .orderedAscending) == .orderedSame }))
                     {
                         return
-                    }
+                    }*/
+                    
                     for word in wordArray
                     {
-                        if(word.lowercased() == wordToShow)
+                        if(word.lowercased() == tappedWord?.word)
                         {
                             break;
                         }
@@ -267,9 +277,9 @@ class TranslationVC_DataModel: NSObject, UITableViewDataSource,UITableViewDelega
         textView.contentOffset = CGPoint.init(x: 0, y: -topCorrect)
     }
     
-    func tapResponse(recognizer: UITapGestureRecognizer) -> (wordtoshow: String, word: Word_Prediction?)
+    func tapResponse(recognizer: UITapGestureRecognizer) -> (wordtoshow: TappedWord, word: Word_Prediction?)
     {
-        var tappedWord = ""
+       // var tappedWord = ""
         let textView:UITextView =  recognizer.view as! UITextView
         let location: CGPoint = recognizer.location(in: textView)
         
@@ -278,33 +288,65 @@ class TranslationVC_DataModel: NSObject, UITableViewDataSource,UITableViewDelega
         //get location in text from textposition at point
         let tapPosition: UITextPosition = textView.closestPosition(to: position )!
         
+        var tappedWord : TappedWord = TappedWord(word: "", apperenceCount: 0)
         //fetch the word at this position (or nil, if not available)
         if let textRange = textView.tokenizer.rangeEnclosingPosition(tapPosition, with: UITextGranularity.word, inDirection: UITextLayoutDirection.right.rawValue)
         {
      //   let textRange: UITextRange = textView.tokenizer.rangeEnclosingPosition(tapPosition, with: UITextGranularity.word, inDirection: UITextLayoutDirection.right.rawValue)
             
-            tappedWord  = textView.text(in: textRange)!
-            print(tappedWord)
-            
+           // tappedWord  = textView.text(in: textRange)!
+            print(textView.text(in: textRange)!)
+            tappedWord = TappedWord(word: textView.text(in: textRange)!, apperenceCount: getTheAppreanceCount(for: textView.text(in: textRange)!, in: textRange))
+            return(tappedWord,getWordDataFromString(tappedWord: tappedWord))
         }
 //        if let word = getWordDataFromString(wordString: tappedWord)
 //        {
 //            return (tappedWord , word)
 //        }
         
-        return(tappedWord,getWordDataFromString(wordString: tappedWord))
+        
+        return(tappedWord,getWordDataFromString(tappedWord: tappedWord))
     }
     
     
-    func getWordDataFromString(wordString:String) -> Word_Prediction?
+    func getWordDataFromString(tappedWord:TappedWord) -> Word_Prediction?
     {
+        var count = 0
         for wordData in predictionData.words_Result! {
-            if(wordData.word == wordString)
+            if(wordData.word == tappedWord.word)
             {
+               
+                if(tappedWord.apperenceCount == count){
                 return wordData
+                }
+                count += 1
             }
+            
         }
       return nil
+    }
+    
+    
+    func getTheAppreanceCount(for text:String, in range:UITextRange) -> Int
+    {
+        
+        // let start : UITextRange =
+        let end =  parentObject.wordTextView.offset(from: parentObject.wordTextView.beginningOfDocument, to: range.start)
+        let fullText = parentObject.wordTextView.text as NSString
+        let subString = fullText.substring(with:NSRange(location: 0, length: end))
+        print("Substring : \(subString)")
+        
+        let wordArray = subString.components(separatedBy: " ")
+        var appreanceCount = 0
+        for word in wordArray
+        {
+            if(word.count > 0 && word == text){
+                print(word)
+                appreanceCount += 1
+            }
+        }
+        print("AppereanceCount \(appreanceCount)")
+        return appreanceCount
     }
     
     func getDocumentsDirectory() -> URL {

@@ -40,6 +40,7 @@ class Settings: NSObject {
         isDemo = settingsDict!["isDemo"] as? Bool
         mainPage = settingsDict!["mainPage"] as? Int
         graphType = settingsDict!["GraphType"] as? Int
+        themeType = settingsDict!["ThemeType"] as? Int
         print("Saved GameData.plist file is --> \(settingsDict?.description ?? "")")
         }
         else{

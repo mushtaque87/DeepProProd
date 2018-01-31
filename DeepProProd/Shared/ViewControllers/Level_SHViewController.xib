@@ -23,9 +23,8 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="Arb_Background" translatesAutoresizingMaskIntoConstraints="NO" id="ET6-8P-OPN">
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Arb_Background" translatesAutoresizingMaskIntoConstraints="NO" id="ET6-8P-OPN">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </imageView>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="0yC-2Q-srN">
                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
@@ -47,12 +46,18 @@
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
+                <constraint firstItem="ET6-8P-OPN" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="3jf-xT-A86"/>
+                <constraint firstItem="ET6-8P-OPN" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="9cy-WB-sZn"/>
+                <constraint firstAttribute="bottom" secondItem="ET6-8P-OPN" secondAttribute="bottom" id="BQb-RH-vNX"/>
                 <constraint firstItem="0yC-2Q-srN" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="JT6-Nr-5Ed"/>
                 <constraint firstItem="0yC-2Q-srN" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Jzm-qj-coW"/>
+                <constraint firstItem="ET6-8P-OPN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Muv-ox-TcV"/>
                 <constraint firstItem="0yC-2Q-srN" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="Vou-dV-cCL"/>
                 <constraint firstItem="0yC-2Q-srN" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="Vx3-G3-73a"/>
+                <constraint firstAttribute="trailing" secondItem="ET6-8P-OPN" secondAttribute="trailing" id="Zqy-AP-KWw"/>
                 <constraint firstItem="0yC-2Q-srN" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="mbr-vU-9Wd"/>
                 <constraint firstItem="0yC-2Q-srN" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="ol3-2h-GbM"/>
+                <constraint firstItem="ET6-8P-OPN" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="rjV-UI-QSc"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <point key="canvasLocation" x="33.5" y="77.5"/>
