@@ -50,7 +50,8 @@ class SettingsViewController: UIViewController,SettingProtocols {
         if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
         {
             rootVc.remove(viewController: self.parent!, from: rootVc)
-            rootVc.addLoginViewController()
+           // rootVc.removeAllVCFromParentViewController()
+            rootVc.showLoginViewController()
         }
     }
     

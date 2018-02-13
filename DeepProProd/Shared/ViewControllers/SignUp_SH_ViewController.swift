@@ -13,7 +13,8 @@ class SignUp_SH_ViewController: UIViewController {
     @IBOutlet weak var closeBtn: UIButton!
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var informationLbl: UILabel!
-    @IBOutlet weak var nameTxtField: UITextField!
+    @IBOutlet weak var firstNameTxtField: UITextField!
+    @IBOutlet weak var lastNameTxtField: UITextField!
     @IBOutlet weak var emailTxtField: UITextField!
     @IBOutlet weak var passwordTxtField: UITextField!
     @IBOutlet weak var confirmPasswordTxtField: UITextField!
@@ -40,6 +41,32 @@ class SignUp_SH_ViewController: UIViewController {
         self.dismiss(animated: true) {
             print("Dismmised")
         }
+        
+       /* if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+        {
+            rootVc.showLoginViewController()
+        }*/
+    }
+    
+    
+    @IBAction func signUp(_ sender: Any) {
+        
+        let requestComplete: (UserDetails) -> Void = { result in
+           
+            Settings.sharedInstance.setValue(key: "isLoggedIn", value: true as AnyObject)
+            self.dismiss(animated: true) {
+                if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+                {
+                   
+                    rootVc.remove(viewController: rootVc.login_ViewController!, from: rootVc)
+                    rootVc.addTabBarControllers()
+                
+                }
+            }
+            
+        }
+        ServiceManager().doSignUp(with: emailTxtField.text!, firstName: firstNameTxtField.text!, lastName: lastNameTxtField.text!, password: confirmPasswordTxtField.text!, with: requestComplete)
+        print("end of signup")
     }
     
     /*

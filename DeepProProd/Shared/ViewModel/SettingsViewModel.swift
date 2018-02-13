@@ -158,7 +158,21 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                     
                 case .language: break
                     
-                case .profile: break
+                case .profile:
+                    
+                    let requestComplete: (ProfileDetails?) -> Void = { result in
+                        
+                        guard let details = result else
+                       {
+                        //Alert View
+                        
+                        return
+                        }
+                        print(details.name)
+                        // Show the Profile Screen
+                    }
+                    ServiceManager().getProfile(of: (UserInfo.sharedInstance.userDetails?.uid)!, with: requestComplete)
+                    break
                 case .mainPage: break
                 case .graphtype: break
                 case .themetype: break

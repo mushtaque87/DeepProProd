@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Alamofire
 class Login_SH_ViewController: UIViewController {
 
 
@@ -19,7 +19,9 @@ class Login_SH_ViewController: UIViewController {
     @IBOutlet weak var languageSegment: UISegmentedControl!
     @IBOutlet weak var signUpBtn: UIButton!
     @IBOutlet weak var forgotPasswordBtn: UIButton!
+    @IBOutlet weak var userNameTextField: UITextField!
     
+    @IBOutlet weak var passwordTextField: UITextField!
     
     // MARK: - UIView Design
     override func viewDidLoad() {
@@ -66,15 +68,24 @@ class Login_SH_ViewController: UIViewController {
     @IBAction func login(_ sender: Any) {
       //  super.remove(viewController: self, from: s)
         
-        
-        Settings.sharedInstance.setValue(key: "isLoggedIn", value: true as AnyObject)
-        //print(self.parent?.parent)
-        //print(UIApplication.rootViewController())
-        if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
-        {
-            rootVc.remove(viewController: self, from: rootVc)
-            rootVc.addTabBarControllers()
+         let requestComplete: (UserDetails) -> Void = { result in
+            print("requestComplete")
+            print("UID : \(String(describing: UserInfo.sharedInstance.userDetails?.uid))")
+            
+            Settings.sharedInstance.setValue(key: "isLoggedIn", value: true as AnyObject)
+            //print(self.parent?.parent)
+            //print(UIApplication.rootViewController())
+            if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+            {
+                rootVc.remove(viewController: self, from: rootVc)
+                rootVc.addTabBarControllers()
+            }
+            
         }
+        ServiceManager().doLogin(for: userNameTextField.text!, and: passwordTextField.text!, with: requestComplete)
+      print("end of login")
+        //return
+      
         
     }
     
@@ -84,9 +95,14 @@ class Login_SH_ViewController: UIViewController {
     
     @IBAction func signUp(_ sender: Any) {
         
-    let signUp_ViewController: SignUp_SH_ViewController = SignUp_SH_ViewController(nibName: "SignUp_SH_ViewController", bundle: nil)
-    //self.addSubView(addChildViewController: signUp_ViewController, on: self)
-        self.present(signUp_ViewController, animated: true, completion: nil)
+   // let signUp_ViewController: SignUp_SH_ViewController = SignUp_SH_ViewController(nibName: "SignUp_SH_ViewController", bundle: nil)
+        if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+        {
+          //  rootVc.addSubView(addChildViewController: signUp_ViewController, on: rootVc)
+          //  rootVc.remove(viewController: self, from: rootVc)
+            rootVc.showSignUpViewController()
+        }
+        //UIApplication.rootViewController().present(signUp_ViewController, animated: true, completion: nil)
         
     }
     

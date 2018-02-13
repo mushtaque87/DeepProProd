@@ -18,7 +18,9 @@
                 <outlet property="languageSwitch" destination="oUe-2K-gWU" id="Tvm-Bi-lso"/>
                 <outlet property="loginBtn" destination="9AX-io-bgS" id="iex-q1-j8d"/>
                 <outlet property="loginTitleLbl" destination="Nwy-dh-nYX" id="26U-hg-kib"/>
+                <outlet property="passwordTextField" destination="iGr-Op-Cr9" id="Si3-cN-3X4"/>
                 <outlet property="signUpBtn" destination="0EB-gN-u3e" id="prN-18-Wji"/>
+                <outlet property="userNameTextField" destination="fqU-4v-JaB" id="rWf-Ks-Vud"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
                 <outlet property="viewModel" destination="R2e-WG-PQc" id="uum-vk-Gf0"/>
             </connections>

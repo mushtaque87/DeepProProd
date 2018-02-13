@@ -1,15 +1,15 @@
 //
-//  LoginViewModelTest.swift
+//  ServerIntegration.swift
 //  DeepProProdTests
 //
-//  Created by Mushtaque Ahmed on 1/24/18.
+//  Created by Mushtaque Ahmed on 2/7/18.
 //  Copyright © 2018 Mushtaque Ahmed. All rights reserved.
 //
 
 import XCTest
 @testable import DeepProProd
 
-class LoginViewModelTest: XCTestCase {
+class ServerIntegrationTest: XCTestCase {
     
     override func setUp() {
         super.setUp()
@@ -20,13 +20,10 @@ class LoginViewModelTest: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-    
- func testSwitch_changesValue()
- {
-    let loginVC =  LoginViewModel()
-    let switchUI : UISwitch = UISwitch()
-    switchUI.setOn(true, animated:false)
-    loginVC.switchValueChanged(switchUI)
-    XCTAssertEqual(Settings.sharedInstance.language, "Arabic")
- }
+
+    func test_SuccessfulLogin()
+    {
+        let si = ServiceManager()
+        si.trialLogin()
+    }
 }

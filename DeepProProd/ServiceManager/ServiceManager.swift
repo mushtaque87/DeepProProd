@@ -15,7 +15,7 @@ import Foundation
 class ServiceManager: NSObject {
     
     weak var delegate: ServiceProtocols?
-    var manager : SessionManager?
+    var manager : SessionManager? = Alamofire.SessionManager()
 
     func ignoreSSL() -> Void {
         manager = Alamofire.SessionManager()
@@ -107,7 +107,106 @@ class ServiceManager: NSObject {
 
 }
     
+    func doSignUp(with wmail : String ,firstName : String ,lastName: String , password:String , with completionHandler: @escaping (UserDetails) -> Void)
+    {
+        
+        Alamofire.request("https://9b2ea2a7-b268-45d0-906b-1bb3c5341088.mock.pstmn.io/uam/v1/users/login").responseString(queue: DispatchQueue.global(qos: .default), encoding:String.Encoding(rawValue: String.Encoding.utf8.rawValue) , completionHandler: {response in
+            
+            print("responseString")
+            switch response.result {
+            case .success:
+                print("Success")
+                
+                // Convert the response to NSData to handle with SwiftyJSON
+                if (response.result.value?.data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue))) != nil {
+                    //            let json = JSON(data: data)
+                    
+                    let decoder = JSONDecoder()
+                    let userdetails = try! decoder.decode(UserDetails.self, from: (response.result.value?.data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue)))!)
+                    print("userdetails \(userdetails)")
+                    DispatchQueue.main.async {
+                        UserInfo.sharedInstance.userDetails = userdetails
+                        completionHandler(userdetails)
+                        
+                    }
+                    print("after completion is called")
+                }
+                break
+            case .failure:
+                print("failure : \(response.error?.localizedDescription ?? "Please Login Again")")
+                DispatchQueue.main.async {
+                    self.showLoginScreen(with: (response.error?.localizedDescription)!)
+                }
+                break
+            }
+        
+    })
+}
     
+    func doLogin(for username: String, and password:String , with completionHandler: @escaping (UserDetails) -> Void) {
+    //"https://9b2ea2a7-b268-45d0-906b-1bb3c5341088.mock.pstmn.io/uam/v1/users/login"
+    
+   /* Alamofire.request("https://9b2ea2a7-b268-45d0-906b-1bb3c5341088.mock.pstmn.io/uam/v1/users/login", method: .get, parameters: [:], encoding: JSONEncoding.default, headers: nil).responseJSON(queue: DispatchQueue.global(qos: .userInitiated), options: JSONSerialization.ReadingOptions.allowFragments, completionHandler:{ response in
+        
+        print(response)
+    }
+    )*/
+   
+     //  try manager?.request("https://9b2ea2a7-b268-45d0-906b-1bb3c5341088.mock.pstmn.io/uam/v1/users/login".asURL(), method: .get, parameters: [:], encoding:JSONEncoding.default , headers: [:])
+    
+    
+//    let url = try! URLRequest(url: URL(string:"https://9b2ea2a7-b268-45d0-906b-1bb3c5341088.mock.pstmn.io/uam/v1/users/login")!, method: .post, headers: nil) as! URLConvertible
+    
+    
+        Alamofire.request("https://9b2ea2a7-b268-45d0-906b-1bb3c5341088.mock.pstmn.io/uam/v1/users/login").responseString(queue: DispatchQueue.global(qos: .default), encoding:String.Encoding(rawValue: String.Encoding.utf8.rawValue) , completionHandler: {response in
+      
+        print("responseString")
+           switch response.result {
+           case .success:
+              print("Success")
+              
+              // Convert the response to NSData to handle with SwiftyJSON
+              if (response.result.value?.data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue))) != nil {
+                //            let json = JSON(data: data)
+                
+                let decoder = JSONDecoder()
+                let userdetails = try! decoder.decode(UserDetails.self, from: (response.result.value?.data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue)))!)
+                print("userdetails \(userdetails)")
+                DispatchQueue.main.async {
+                    UserInfo.sharedInstance.userDetails = userdetails
+                    completionHandler(userdetails)
+                    
+                }
+                print("after completion is called")
+              }
+            break
+            case .failure:
+                print("failure : \(response.error?.localizedDescription ?? "Please Login Again")")
+                DispatchQueue.main.async {
+                self.showLoginScreen(with: (response.error?.localizedDescription)!)
+                }
+            break
+            }
+      
+   // https://9b2ea2a7-b268-45d0-906b-1bb3c5341088.mock.pstmn.io/uam/v1/users/login
+})
+   print("end of trialLogin")
+}
+
+func getProfile(of uid : String , with completionHandler: @escaping (ProfileDetails) -> Void)
+{
+    
+    }
+    
+    
+func showLoginScreen(with message: String = "Please Login Again")
+{
+    if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+    {
+        rootVc.showLoginViewController()
+    }
+    
+}
     
 /*func sendAudioForPrediction(file: Any)
 {

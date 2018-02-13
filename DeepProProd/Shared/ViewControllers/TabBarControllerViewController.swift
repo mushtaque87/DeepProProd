@@ -50,11 +50,16 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
         
         }
         viewControllers = tabBarViewControllers
+       
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
         if let tabindex = Settings.sharedInstance.mainPage {
             self.selectedIndex = tabindex
         }
-        
     }
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

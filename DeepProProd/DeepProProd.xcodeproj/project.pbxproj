@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		505B75C62020B2C700A5A0B2 /* json.txt in Resources */ = {isa = PBXBuildFile; fileRef = 505B75C42020B2C700A5A0B2 /* json.txt */; };
+		505B75CC202AEFC200A5A0B2 /* ServerIntegrationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B75CB202AEFC200A5A0B2 /* ServerIntegrationTest.swift */; };
+		505B75CE202AF3F400A5A0B2 /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B75CD202AF3F400A5A0B2 /* UserDetails.swift */; };
 		5095C68E20064108003207AD /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5099C221200640CC00898B0A /* Charts.framework */; };
 		5095C68F20064108003207AD /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5099C221200640CC00898B0A /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5095C69920064314003207AD /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5095C69820064314003207AD /* ServiceManager.swift */; };
@@ -48,6 +50,9 @@
 		50BEA274201896D2007F1899 /* LoginViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BEA273201896D2007F1899 /* LoginViewModelTest.swift */; };
 		50BEA27B201DE31B007F1899 /* ThemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BEA279201DE31B007F1899 /* ThemeCell.swift */; };
 		50BEA27C201DE31B007F1899 /* ThemeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50BEA27A201DE31B007F1899 /* ThemeCell.xib */; };
+		50CBA0BB20307555001ABC95 /* TestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CBA0BA20307555001ABC95 /* TestManager.swift */; };
+		50CBA0EA2032FEE1001ABC95 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CBA0E92032FEE1001ABC95 /* UserInfo.swift */; };
+		50CBA0EC20331FB9001ABC95 /* ProfileDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CBA0EB20331FB9001ABC95 /* ProfileDetails.swift */; };
 		50E76AD120037E2A009420F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E76AD020037E2A009420F9 /* AppDelegate.swift */; };
 		50E76AD320037E2A009420F9 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E76AD220037E2A009420F9 /* MainViewController.swift */; };
 		50E76AD620037E2A009420F9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 50E76AD420037E2A009420F9 /* Main.storyboard */; };
@@ -151,6 +156,8 @@
 /* Begin PBXFileReference section */
 		29281F83558DA47BDE96940E /* Pods-DeepProProd.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeepProProd.release.xcconfig"; path = "Pods/Target Support Files/Pods-DeepProProd/Pods-DeepProProd.release.xcconfig"; sourceTree = "<group>"; };
 		505B75C42020B2C700A5A0B2 /* json.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json.txt; sourceTree = "<group>"; };
+		505B75CB202AEFC200A5A0B2 /* ServerIntegrationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerIntegrationTest.swift; sourceTree = "<group>"; };
+		505B75CD202AF3F400A5A0B2 /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
 		5095C69820064314003207AD /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
 		5095C69A20064339003207AD /* ChapterVC_DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChapterVC_DataModel.swift; sourceTree = "<group>"; };
 		5095C69B20064339003207AD /* TranslationVC_DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationVC_DataModel.swift; sourceTree = "<group>"; };
@@ -191,6 +198,9 @@
 		50BEA275201C728B007F1899 /* DeepProProd-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DeepProProd-Bridging-Header.h"; sourceTree = "<group>"; };
 		50BEA279201DE31B007F1899 /* ThemeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCell.swift; sourceTree = "<group>"; };
 		50BEA27A201DE31B007F1899 /* ThemeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeCell.xib; sourceTree = "<group>"; };
+		50CBA0BA20307555001ABC95 /* TestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestManager.swift; sourceTree = "<group>"; };
+		50CBA0E92032FEE1001ABC95 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
+		50CBA0EB20331FB9001ABC95 /* ProfileDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetails.swift; sourceTree = "<group>"; };
 		50E76ACD20037E2A009420F9 /* DeepProProd.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeepProProd.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50E76AD020037E2A009420F9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		50E76AD220037E2A009420F9 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -288,6 +298,7 @@
 			children = (
 				5095C69820064314003207AD /* ServiceManager.swift */,
 				50E7B33A200CDD3E00DB9DB0 /* LocalJsonService.swift */,
+				50CBA0BA20307555001ABC95 /* TestManager.swift */,
 			);
 			path = ServiceManager;
 			sourceTree = "<group>";
@@ -334,6 +345,7 @@
 				5095C6B3200643E5003207AD /* Prediction_Model.swift */,
 				5095C6B4200643E5003207AD /* Pronunciation_Prediction.swift */,
 				5095C6B2200643E5003207AD /* Word_Prediction.swift */,
+				50CBA0E92032FEE1001ABC95 /* UserInfo.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -441,6 +453,7 @@
 				50E76AE520037E2A009420F9 /* DeepProProdTests.swift */,
 				50E76AE720037E2A009420F9 /* Info.plist */,
 				50BEA273201896D2007F1899 /* LoginViewModelTest.swift */,
+				505B75CB202AEFC200A5A0B2 /* ServerIntegrationTest.swift */,
 			);
 			path = DeepProProdTests;
 			sourceTree = "<group>";
@@ -590,6 +603,8 @@
 			isa = PBXGroup;
 			children = (
 				50F83CE520170DB600690DCF /* Course.swift */,
+				505B75CD202AF3F400A5A0B2 /* UserDetails.swift */,
+				50CBA0EB20331FB9001ABC95 /* ProfileDetails.swift */,
 			);
 			path = JsonModels;
 			sourceTree = "<group>";
@@ -868,6 +883,7 @@
 				5095C6B0200643BF003207AD /* serviceProtocols.swift in Sources */,
 				5099C21320063EAB00898B0A /* WordsViewController.swift in Sources */,
 				50E7B336200B866800DB9DB0 /* SettingsViewModel.swift in Sources */,
+				50CBA0EC20331FB9001ABC95 /* ProfileDetails.swift in Sources */,
 				50E76B232004B28A009420F9 /* Login_SH_ViewController.swift in Sources */,
 				5095C6B6200643E5003207AD /* Prediction_Model.swift in Sources */,
 				50E76B2B2004D64E009420F9 /* Localizator.swift in Sources */,
@@ -875,6 +891,7 @@
 				5095C6C7200644C1003207AD /* UILabel.swift in Sources */,
 				50E76AD320037E2A009420F9 /* MainViewController.swift in Sources */,
 				5095C6B7200643E5003207AD /* Pronunciation_Prediction.swift in Sources */,
+				505B75CE202AF3F400A5A0B2 /* UserDetails.swift in Sources */,
 				5095C69F2006433A003207AD /* MenuVC_DataModel.swift in Sources */,
 				50E76B292004BB2F009420F9 /* ViewControllerExtensions.swift in Sources */,
 				5099C2002005F13A00898B0A /* Helper.swift in Sources */,
@@ -885,6 +902,7 @@
 				50F83CDB2014D8F300690DCF /* Constants.swift in Sources */,
 				5095C6A520064381003207AD /* Menu_Cell.swift in Sources */,
 				5095C6B5200643E5003207AD /* Word_Prediction.swift in Sources */,
+				50CBA0EA2032FEE1001ABC95 /* UserInfo.swift in Sources */,
 				50E7B340200DD09D00DB9DB0 /* LogOutCell.swift in Sources */,
 				50F83CE620170DB600690DCF /* Course.swift in Sources */,
 				5095C6C420064470003207AD /* LargeValueFormatter.swift in Sources */,
@@ -905,6 +923,7 @@
 				5095C6C220064470003207AD /* DayAxisValueFormatter.swift in Sources */,
 				50E7B31C2007829300DB9DB0 /* UIImageView.swift in Sources */,
 				5095C6AC20064396003207AD /* ReportCell.swift in Sources */,
+				50CBA0BB20307555001ABC95 /* TestManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -914,6 +933,7 @@
 			files = (
 				50BEA274201896D2007F1899 /* LoginViewModelTest.swift in Sources */,
 				50E76AE620037E2A009420F9 /* DeepProProdTests.swift in Sources */,
+				505B75CC202AEFC200A5A0B2 /* ServerIntegrationTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1082,7 +1102,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C6UNXYYV66;
 				INFOPLIST_FILE = DeepProProd/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = algorythma.ScreenTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1103,7 +1123,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C6UNXYYV66;
 				INFOPLIST_FILE = DeepProProd/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = algorythma.ScreenTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";

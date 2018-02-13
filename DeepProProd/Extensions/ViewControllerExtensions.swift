@@ -12,20 +12,31 @@ extension MainViewController
 {
     
     func addSubView(addChildViewController childViewController: UIViewController , on parentViewController: UIViewController   ) {
-        self.currentViewController = childViewController
+      
         parentViewController.addChildViewController(childViewController)
         parentViewController.view.addSubview(childViewController.view)
+        self.currentViewController = childViewController
     }
 
     func bringViewController(toFront childViewController: UIViewController , on parentViewController: UIViewController)
     {
-         self.currentViewController = childViewController
+        parentViewController.view.bringSubview(toFront: childViewController.view)
+        self.currentViewController = childViewController
+       
     }
     
     func remove(viewController childViewController: UIViewController , from parentViewController: UIViewController)
     {
         childViewController.view.removeFromSuperview()
         
+    }
+    
+     func removeAllVCFromParentViewController() {
+        
+        for childVc in self.childViewControllers
+        {
+            childVc.view.removeFromSuperview()
+        }
     }
     
 }

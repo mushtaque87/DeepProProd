@@ -21,6 +21,8 @@ class MainViewController: UIViewController, MainViewControllerProtocols {
     
     open var currentViewController : UIViewController?
     open var previousViewController : UIViewController?
+    var     tabBar_ViewController: TabBarControllerViewController?
+    var     login_ViewController: Login_SH_ViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +49,8 @@ class MainViewController: UIViewController, MainViewControllerProtocols {
                 
                // self.addSubView(addChildViewController: navigation_Controller, on: self)
                 
-                addLoginViewController()
+
+                showLoginViewController()
             } else {
                 print("Tab Bar Controller")
                // let tabBar_ViewController: TabBarControllerViewController = TabBarControllerViewController(nibName: "TabBarControllerViewController", bundle: nil)
@@ -65,23 +68,58 @@ class MainViewController: UIViewController, MainViewControllerProtocols {
         
     }
     
-    func addTabBarControllers() {
-        
-        let tabBar_ViewController: TabBarControllerViewController = TabBarControllerViewController(nibName: "TabBarControllerViewController", bundle: nil)
-        self.addSubView(addChildViewController: tabBar_ViewController, on: self)
-
+    override func viewDidAppear(_ animated: Bool) {
+      
     }
     
-    func addLoginViewController() {
-        let login_ViewController: Login_SH_ViewController = Login_SH_ViewController(nibName: "Login_SH_ViewController", bundle: nil)
-        login_ViewController.view.frame = self.view.frame
+    func addTabBarControllers() {
+        
+       /* if let tabBarVC = tabBar_ViewController
+        {
+            self.bringViewController(toFront: tabBarVC, on: self)
+
+        }
+        else {
+             tabBar_ViewController = TabBarControllerViewController(nibName: "TabBarControllerViewController", bundle: nil)
+            self.addSubView(addChildViewController: tabBar_ViewController!, on: self)
+        }*/
+        
+        tabBar_ViewController = TabBarControllerViewController(nibName: "TabBarControllerViewController", bundle: nil)
+        self.addSubView(addChildViewController: tabBar_ViewController!, on: self)
+    }
+    
+    func showLoginViewController() {
+        
+        
+       /*
+        if let loginVC = login_ViewController, self.currentViewController ==  login_ViewController
+        {
+            self.bringViewController(toFront: loginVC, on: self)
+           // self.addSubView(addChildViewController: loginVC, on: self)
+
+          
+        }
+        else {
+         login_ViewController  = Login_SH_ViewController(nibName: "Login_SH_ViewController", bundle: nil)
+            login_ViewController?.view.frame = self.view.frame
        // let navigation_Controller = UINavigationController()
        // navigation_Controller.viewControllers = [login_ViewController]
         
-        self.addSubView(addChildViewController: login_ViewController, on: self)
+            self.addSubView(addChildViewController: login_ViewController!, on: self)
+        }
+        
+        */
+        login_ViewController  = Login_SH_ViewController(nibName: "Login_SH_ViewController", bundle: nil)
+        login_ViewController?.view.frame = self.view.frame
+        self.addSubView(addChildViewController: login_ViewController!, on: self)
+        
         
     }
     
+    func showSignUpViewController() -> Void {
+        let signUp_ViewController: SignUp_SH_ViewController = SignUp_SH_ViewController(nibName: "SignUp_SH_ViewController", bundle: nil)
+        self.present(signUp_ViewController, animated: true, completion: nil)
+    }
     
 
     override func didReceiveMemoryWarning() {
