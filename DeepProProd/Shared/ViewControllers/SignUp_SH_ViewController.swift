@@ -54,15 +54,19 @@ class SignUp_SH_ViewController: UIViewController {
         let requestComplete: (UserDetails) -> Void = { result in
            
             Settings.sharedInstance.setValue(key: "isLoggedIn", value: true as AnyObject)
-            self.dismiss(animated: true) {
+           // self.dismiss(animated: true) {
                 if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
                 {
+                    //rootVc.signUp_ViewController.dismiss(animated: true, completion: {
+                        rootVc.remove(viewController: rootVc.login_ViewController, from: rootVc)
+                        rootVc.remove(viewController: rootVc.signUp_ViewController, from: rootVc)
+
+                        rootVc.addTabBarControllers()
+                   // })
                    
-                    rootVc.remove(viewController: rootVc.login_ViewController!, from: rootVc)
-                    rootVc.addTabBarControllers()
                 
                 }
-            }
+          //  }
             
         }
         ServiceManager().doSignUp(with: emailTxtField.text!, firstName: firstNameTxtField.text!, lastName: lastNameTxtField.text!, password: confirmPasswordTxtField.text!, with: requestComplete)

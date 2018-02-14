@@ -21,8 +21,29 @@ class MainViewController: UIViewController, MainViewControllerProtocols {
     
     open var currentViewController : UIViewController?
     open var previousViewController : UIViewController?
-    var     tabBar_ViewController: TabBarControllerViewController?
-    var     login_ViewController: Login_SH_ViewController?
+    
+    lazy var   tabBar_ViewController: TabBarControllerViewController = {
+       var viewcontroller = TabBarControllerViewController(nibName: "TabBarControllerViewController", bundle: nil)
+        return viewcontroller
+    }()
+    
+   lazy var     login_ViewController: Login_SH_ViewController  = {
+     var viewcontroller   = Login_SH_ViewController(nibName: "Login_SH_ViewController", bundle: nil)
+     return viewcontroller
+    
+    }()
+    
+    lazy var     signUp_ViewController: SignUp_SH_ViewController  = {
+        var viewcontroller   = SignUp_SH_ViewController(nibName: "SignUp_SH_ViewController", bundle: nil)
+        return viewcontroller
+        
+    }()
+    
+    lazy var     infoAlertView: InfromationAlertViewController  = {
+        var viewcontroller   = InfromationAlertViewController(nibName: "InfromationAlertViewController", bundle: nil)
+        return viewcontroller
+        
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,8 +105,8 @@ class MainViewController: UIViewController, MainViewControllerProtocols {
             self.addSubView(addChildViewController: tabBar_ViewController!, on: self)
         }*/
         
-        tabBar_ViewController = TabBarControllerViewController(nibName: "TabBarControllerViewController", bundle: nil)
-        self.addSubView(addChildViewController: tabBar_ViewController!, on: self)
+       // tabBar_ViewController = TabBarControllerViewController(nibName: "TabBarControllerViewController", bundle: nil)
+        self.addSubView(addChildViewController: tabBar_ViewController, on: self)
     }
     
     func showLoginViewController() {
@@ -109,18 +130,24 @@ class MainViewController: UIViewController, MainViewControllerProtocols {
         }
         
         */
-        login_ViewController  = Login_SH_ViewController(nibName: "Login_SH_ViewController", bundle: nil)
-        login_ViewController?.view.frame = self.view.frame
-        self.addSubView(addChildViewController: login_ViewController!, on: self)
+       // login_ViewController  = Login_SH_ViewController(nibName: "Login_SH_ViewController", bundle: nil)
+        //login_ViewController?.view.frame = self.view.frame
+        self.addSubView(addChildViewController: login_ViewController, on: self)
         
         
     }
     
     func showSignUpViewController() -> Void {
-        let signUp_ViewController: SignUp_SH_ViewController = SignUp_SH_ViewController(nibName: "SignUp_SH_ViewController", bundle: nil)
-        self.present(signUp_ViewController, animated: true, completion: nil)
+        //let signUp_ViewController: SignUp_SH_ViewController = SignUp_SH_ViewController(nibName: "SignUp_SH_ViewController", bundle: nil)
+       // self.present(signUp_ViewController, animated: true, completion: nil)
+        self.addSubView(addChildViewController: signUp_ViewController, on: self)
+
     }
     
+    func showInfoAlertView() -> Void {
+        //let signUp_ViewController: SignUp_SH_ViewController = SignUp_SH_ViewController(nibName: "SignUp_SH_ViewController", bundle: nil)
+        self.addSubView(addChildViewController: infoAlertView, on: self)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

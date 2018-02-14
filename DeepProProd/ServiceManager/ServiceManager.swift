@@ -14,6 +14,8 @@ import Foundation
 
 class ServiceManager: NSObject {
     
+    typealias constant = Constants.ServerApi
+    
     weak var delegate: ServiceProtocols?
     var manager : SessionManager? = Alamofire.SessionManager()
 
@@ -107,9 +109,9 @@ class ServiceManager: NSObject {
 
 }
     
-    func doSignUp(with wmail : String ,firstName : String ,lastName: String , password:String , with completionHandler: @escaping (UserDetails) -> Void)
+    func doSignUp(with email : String ,firstName : String ,lastName: String , password:String , with completionHandler: @escaping (UserDetails) -> Void)
     {
-        
+        /*
         Alamofire.request("https://9b2ea2a7-b268-45d0-906b-1bb3c5341088.mock.pstmn.io/uam/v1/users/login").responseString(queue: DispatchQueue.global(qos: .default), encoding:String.Encoding(rawValue: String.Encoding.utf8.rawValue) , completionHandler: {response in
             
             print("responseString")
@@ -140,7 +142,40 @@ class ServiceManager: NSObject {
                 break
             }
         
-    })
+    })*/
+        let parameters: [String: Any] = [
+            "email" : email,
+            "firstname" : firstName,
+            "lastname" : lastName ,
+            "password" : password ,
+        ]
+        
+        Alamofire.request(constant.baseUrl+constant.port+constant.signUp, method: .post, parameters: parameters , encoding: JSONEncoding.default, headers: nil)
+            .responseData { serverResponse in
+                debugPrint(serverResponse)
+                switch serverResponse.result {
+                case .success(let data):
+                    if serverResponse.response!.statusCode == 200 {
+                        let decoder = JSONDecoder()
+                        let userdetails = try! decoder.decode(UserDetails.self, from: data)
+                        print("userdetails \(userdetails)")
+                        
+                        DispatchQueue.main.async {
+                            UserInfo.sharedInstance.userDetails = userdetails
+                            completionHandler(userdetails)
+                            
+                        }
+                    }
+                    else
+                    {
+                        
+                        self.handleHTTPError(from: serverResponse)
+                    }
+                case .failure(let error):
+                    print("Request failed with error: \(error)")
+                    self.showInfoAlertScreen(with: serverResponse.result.error!.localizedDescription, oftype: "INFO")
+                }
+        }
 }
     
     func doLogin(for username: String, and password:String , with completionHandler: @escaping (UserDetails) -> Void) {
@@ -156,15 +191,56 @@ class ServiceManager: NSObject {
     
     
 //    let url = try! URLRequest(url: URL(string:"https://9b2ea2a7-b268-45d0-906b-1bb3c5341088.mock.pstmn.io/uam/v1/users/login")!, method: .post, headers: nil) as! URLConvertible
-    
-    
-        Alamofire.request("https://9b2ea2a7-b268-45d0-906b-1bb3c5341088.mock.pstmn.io/uam/v1/users/login").responseString(queue: DispatchQueue.global(qos: .default), encoding:String.Encoding(rawValue: String.Encoding.utf8.rawValue) , completionHandler: {response in
+        
+        //https://9b2ea2a7-b268-45d0-906b-1bb3c5341088.mock.pstmn.io/uam/v1/users/login
+//        var url : URL?
+//        do {
+//            try  url = "".asURL()
+//        } catch  {
+//            print(error)
+//        }
+//
+//         manager?.request(URLConvertible)
+        
+        
+        Alamofire.request(constant.baseUrl+constant.port+constant.login, method: .post, parameters: [:], encoding: JSONEncoding.default, headers: nil)
+            .responseData { serverResponse in
+                debugPrint(serverResponse)
+                switch serverResponse.result {
+                case .success(let data):
+                    if serverResponse.response!.statusCode == 200 {
+                        let decoder = JSONDecoder()
+                        let userdetails = try! decoder.decode(UserDetails.self, from: data)
+                        print("userdetails \(userdetails)")
+                        
+                        DispatchQueue.main.async {
+                            UserInfo.sharedInstance.userDetails = userdetails
+                            completionHandler(userdetails)
+                            
+                        }
+                    }
+                    else
+                    {
+                     
+                        self.handleHTTPError(from: serverResponse)
+                    }
+                case .failure(let error):
+                    print("Request failed with error: \(error)")
+                    self.showInfoAlertScreen(with: serverResponse.result.error!.localizedDescription, oftype: "INFO")
+                }
+        }
+        
+        
+        /*
+       Alamofire.request("http://localhost:8080/v1/uam/users/login").responseString(queue: DispatchQueue.global(qos: .default), encoding:String.Encoding(rawValue: String.Encoding.utf8.rawValue) , completionHandler: {response in
       
         print("responseString")
            switch response.result {
            case .success:
               print("Success")
               
+              if(response.result.value== 200)
+              {
               // Convert the response to NSData to handle with SwiftyJSON
               if (response.result.value?.data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue))) != nil {
                 //            let json = JSON(data: data)
@@ -178,26 +254,86 @@ class ServiceManager: NSObject {
                     
                 }
                 print("after completion is called")
+                }
               }
             break
             case .failure:
-                print("failure : \(response.error?.localizedDescription ?? "Please Login Again")")
-                DispatchQueue.main.async {
-                self.showLoginScreen(with: (response.error?.localizedDescription)!)
-                }
+                print("failure : \(response.error?.localizedDescription ?? "Some Error Occured, Please tyr Again")")
+                
+                
+//                DispatchQueue.main.async {
+//                self.showLoginScreen(with: (response.error?.localizedDescription)!)
+//                }
+                self.showInfoAlertScreen(with: (response.error?.localizedDescription)!)
             break
             }
       
    // https://9b2ea2a7-b268-45d0-906b-1bb3c5341088.mock.pstmn.io/uam/v1/users/login
 })
-   print("end of trialLogin")
+   print("end of trialLogin")*/
+        
+        
 }
 
 func getProfile(of uid : String , with completionHandler: @escaping (ProfileDetails) -> Void)
 {
     
+}
+    
+func handleHTTPError(from serverResponse: DataResponse<Data>)
+{
+    var httpError: HTTPError?
+    switch serverResponse.response!.statusCode {
+    case 400 , 401 , 405 , 404:
+        let decoder = JSONDecoder()
+        httpError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
+        showInfoAlertScreen(with: httpError, oftype: "HTTPERROR")
+    case 403 :
+        let decoder = JSONDecoder()
+        httpError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
+        self.showLoginScreen(with: (httpError?.message)!)
+        
+    default:
+        showInfoAlertScreen(with: "Server Problem", oftype: "INFO")
+
+        break
     }
     
+    print("Error \(String(describing: httpError))")
+   // return httpError!
+}
+    
+    
+    func showInfoAlertScreen(with alertDetails: Any , oftype alertType:String)
+{
+    DispatchQueue.main.async {
+            if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+            {
+            
+                //rootVc.showInfoAlertView()
+                switch alertType{
+                case "HTTPERROR":
+                    if let alert:HTTPError = alertDetails as? HTTPError
+                   {
+                    let alert = UIAlertController(title: alert.error, message: alert.message, preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                    rootVc.present(alert, animated: true, completion: nil)
+                   }
+                    break
+                case "INFO":
+                    let alert = UIAlertController(title: "Warning", message: alertDetails as? String, preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                    rootVc.present(alert, animated: true, completion: nil)
+                    break
+                default:
+                    break
+                }
+                
+            }
+        
+        }
+        
+}
     
 func showLoginScreen(with message: String = "Please Login Again")
 {

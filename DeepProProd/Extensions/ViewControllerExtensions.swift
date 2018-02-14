@@ -15,6 +15,8 @@ extension MainViewController
       
         parentViewController.addChildViewController(childViewController)
         parentViewController.view.addSubview(childViewController.view)
+        childViewController.didMove(toParentViewController: parentViewController)
+        childViewController.view.frame = parentViewController.view.bounds
         self.currentViewController = childViewController
     }
 
@@ -27,8 +29,10 @@ extension MainViewController
     
     func remove(viewController childViewController: UIViewController , from parentViewController: UIViewController)
     {
+        childViewController.view.layer.removeAllAnimations()
+        childViewController.willMove(toParentViewController: nil)
         childViewController.view.removeFromSuperview()
-        
+        childViewController.removeFromParentViewController()
     }
     
      func removeAllVCFromParentViewController() {
