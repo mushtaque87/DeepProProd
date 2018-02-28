@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxSwift
 
 protocol MainViewControllerProtocols {
     
@@ -21,6 +22,7 @@ class MainViewController: UIViewController, MainViewControllerProtocols {
     
     open var currentViewController : UIViewController?
     open var previousViewController : UIViewController?
+    let disposeBag = DisposeBag()
     
     lazy var   tabBar_ViewController: TabBarControllerViewController = {
        var viewcontroller = TabBarControllerViewController(nibName: "TabBarControllerViewController", bundle: nil)
@@ -144,9 +146,10 @@ class MainViewController: UIViewController, MainViewControllerProtocols {
 
     }
     
-    func showInfoAlertView() -> Void {
+    func showInfoAlertView(with message:String) -> Void {
         //let signUp_ViewController: SignUp_SH_ViewController = SignUp_SH_ViewController(nibName: "SignUp_SH_ViewController", bundle: nil)
         self.addSubView(addChildViewController: infoAlertView, on: self)
+        infoAlertView.infoMessage = message
     }
 
     override func didReceiveMemoryWarning() {

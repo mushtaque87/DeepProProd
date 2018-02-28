@@ -9,12 +9,15 @@
 import UIKit
 import Alamofire
 import Foundation
-
+import RxSwift
 
 
 class ServiceManager: NSObject {
     
     typealias constant = Constants.ServerApi
+    let disposeBag = DisposeBag()
+    
+    
     
     weak var delegate: ServiceProtocols?
     var manager : SessionManager? = Alamofire.SessionManager()
@@ -109,7 +112,7 @@ class ServiceManager: NSObject {
 
 }
     
-    func doSignUp(with email : String ,firstName : String ,lastName: String , password:String , with completionHandler: @escaping (UserDetails) -> Void)
+    func doSignUp(with email : String ,firstName : String ,lastName: String , password:String , with completionHandler: @escaping (Any) -> Void)
     {
         /*
         Alamofire.request("https://9b2ea2a7-b268-45d0-906b-1bb3c5341088.mock.pstmn.io/uam/v1/users/login").responseString(queue: DispatchQueue.global(qos: .default), encoding:String.Encoding(rawValue: String.Encoding.utf8.rawValue) , completionHandler: {response in
@@ -150,21 +153,23 @@ class ServiceManager: NSObject {
             "password" : password ,
         ]
         
-        Alamofire.request(constant.baseUrl+constant.port+constant.signUp, method: .post, parameters: parameters , encoding: JSONEncoding.default, headers: nil)
+        Alamofire.request(constant.baseUrl+constant.signUp, method: .post, parameters: parameters , encoding: JSONEncoding.default, headers: nil)
             .responseData { serverResponse in
                 debugPrint(serverResponse)
                 switch serverResponse.result {
                 case .success(let data):
                     if serverResponse.response!.statusCode == 200 {
                         let decoder = JSONDecoder()
-                        let userdetails = try! decoder.decode(UserDetails.self, from: data)
-                        print("userdetails \(userdetails)")
+                        let signupresponse = try! decoder.decode(SignUpResponse.self, from: data)
+                        print("signupresponse \(signupresponse)")
                         
-                        DispatchQueue.main.async {
+                       // self.doLogin(for: email, and: password, with: completionHandler)
+                        
+                       /* DispatchQueue.main.async {
                             UserInfo.sharedInstance.userDetails = userdetails
                             completionHandler(userdetails)
                             
-                        }
+                        }*/
                     }
                     else
                     {
@@ -178,43 +183,26 @@ class ServiceManager: NSObject {
         }
 }
     
-    func doLogin(for username: String, and password:String , with completionHandler: @escaping (UserDetails) -> Void) {
+    func doLogin(for username: String, and password:String , with completionHandler: @escaping (LoginResponse) -> Void ) {
     //"https://9b2ea2a7-b268-45d0-906b-1bb3c5341088.mock.pstmn.io/uam/v1/users/login"
     
-   /* Alamofire.request("https://9b2ea2a7-b268-45d0-906b-1bb3c5341088.mock.pstmn.io/uam/v1/users/login", method: .get, parameters: [:], encoding: JSONEncoding.default, headers: nil).responseJSON(queue: DispatchQueue.global(qos: .userInitiated), options: JSONSerialization.ReadingOptions.allowFragments, completionHandler:{ response in
+
         
-        print(response)
-    }
-    )*/
-   
-     //  try manager?.request("https://9b2ea2a7-b268-45d0-906b-1bb3c5341088.mock.pstmn.io/uam/v1/users/login".asURL(), method: .get, parameters: [:], encoding:JSONEncoding.default , headers: [:])
-    
-    
-//    let url = try! URLRequest(url: URL(string:"https://9b2ea2a7-b268-45d0-906b-1bb3c5341088.mock.pstmn.io/uam/v1/users/login")!, method: .post, headers: nil) as! URLConvertible
-        
-        //https://9b2ea2a7-b268-45d0-906b-1bb3c5341088.mock.pstmn.io/uam/v1/users/login
-//        var url : URL?
-//        do {
-//            try  url = "".asURL()
-//        } catch  {
-//            print(error)
-//        }
-//
-//         manager?.request(URLConvertible)
-        
-        
-        Alamofire.request(constant.baseUrl+constant.port+constant.login, method: .post, parameters: [:], encoding: JSONEncoding.default, headers: nil)
+        Alamofire.request(constant.baseUrl+constant.login, method: .post, parameters: [:], encoding: JSONEncoding.default, headers: nil)
             .responseData { serverResponse in
                 debugPrint(serverResponse)
                 switch serverResponse.result {
                 case .success(let data):
                     if serverResponse.response!.statusCode == 200 {
                         let decoder = JSONDecoder()
-                        let userdetails = try! decoder.decode(UserDetails.self, from: data)
+                        let userdetails = try! decoder.decode(LoginResponse.self, from: data)
                         print("userdetails \(userdetails)")
                         
+                        TokenManager.shared.storeNewToken(with: userdetails)
+                      //  TokenManager.shared.isRefreshTokenValid()
+                        
                         DispatchQueue.main.async {
-                            UserInfo.sharedInstance.userDetails = userdetails
+                            //UserInfo.shared.userDetails = userdetails
                             completionHandler(userdetails)
                             
                         }
@@ -275,10 +263,130 @@ class ServiceManager: NSObject {
         
 }
 
-func getProfile(of uid : String , with completionHandler: @escaping (ProfileDetails) -> Void)
-{
+    func updateRefreshToken(of uid : String)
+    {
+        
+        Alamofire.request(constant.baseUrl+uid+constant.refreshtoken, method: .post, parameters: [:], encoding: JSONEncoding.default, headers: nil)
+            .responseData { serverResponse in
+                debugPrint(serverResponse)
+                switch serverResponse.result {
+                case .success(let data):
+                    if serverResponse.response!.statusCode == 200 {
+                        let decoder = JSONDecoder()
+                        let userdetails = try! decoder.decode(LoginResponse.self, from: data)
+                        print("userdetails \(userdetails)")
+                        
+                        TokenManager.shared.storeNewToken(with: userdetails)
+
+                    }
+                    else
+                    {
+                        
+                        self.handleHTTPError(from: serverResponse)
+                    }
+                case .failure(let error):
+                    print("Request failed with error: \(error)")
+                    self.showInfoAlertScreen(with: serverResponse.result.error!.localizedDescription, oftype: "INFO")
+                }
+        }
+    }
     
-}
+    func verifyTokenAndProceed(of uid : String, with completionHandler: @escaping () -> Void )
+    {
+        guard TokenManager.shared.isaccessTokenValid() else {
+            guard TokenManager.shared.isRefreshTokenValid() else {
+                if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+                {
+                    rootVc.showLoginViewController()
+                }
+                return
+            }
+            
+            //FIXME: Change the condition from take(2) to actual condition on real time environment
+            UserInfo.shared.accessTokenObserver.take(2).subscribe(onNext: { [weak self] details in
+               // print("AccessToken : \(details!)")
+                completionHandler()
+                
+            }).disposed(by: disposeBag)
+
+            self.updateRefreshToken(of: uid)
+            return
+        }
+        
+    }
+    
+        func getProfile(for uid : String , with completionHandler: @escaping (Any) -> Void)
+        {
+            let startRequest: () -> Void = {  
+                
+                Alamofire.request(constant.baseUrl+constant.port+constant.login, method: .post, parameters: [:], encoding: JSONEncoding.default, headers: nil)
+                    .responseData { serverResponse in
+                        debugPrint(serverResponse)
+                        switch serverResponse.result {
+                        case .success(let data):
+                            if serverResponse.response!.statusCode == 200 {
+                                let decoder = JSONDecoder()
+                                let userdetails = try! decoder.decode(LoginResponse.self, from: data)
+                                print("userdetails \(userdetails)")
+                                
+                                TokenManager.shared.storeNewToken(with: userdetails)
+                                DispatchQueue.main.async {
+                                    completionHandler(userdetails)
+                                    
+                                }
+                            }
+                            else
+                            {
+                                
+                                self.handleHTTPError(from: serverResponse)
+                            }
+                        case .failure(let error):
+                            print("Request failed with error: \(error)")
+                            self.showInfoAlertScreen(with: serverResponse.result.error!.localizedDescription, oftype: "INFO")
+                        }
+              
+                }
+            }
+            verifyTokenAndProceed(of: uid, with: startRequest)
+            
+        }
+    
+    func forgotPassword(for emailId:String , with completionHandler: @escaping (ForgotPasswordResponse) -> Void)
+    {
+        /*
+        let startRequest: () -> Void = {
+            
+            
+        }
+        
+        verifyTokenAndProceed(of: emailId, with: startRequest)
+        */
+        
+        Alamofire.request(constant.baseUrl+constant.forgotpassword, method: .post, parameters: [:], encoding: JSONEncoding.default, headers: nil)
+            .responseData { serverResponse in
+                debugPrint(serverResponse)
+                switch serverResponse.result {
+                case .success(let data):
+                    if serverResponse.response!.statusCode == 200 {
+                        let decoder = JSONDecoder()
+                        let response = try! decoder.decode(ForgotPasswordResponse.self, from: data)
+                        
+                        DispatchQueue.main.async {
+                            completionHandler(response)
+                            
+                        }
+                    }
+                    else
+                    {
+                        
+                        self.handleHTTPError(from: serverResponse)
+                    }
+                case .failure(let error):
+                    print("Request failed with error: \(error)")
+                    self.showInfoAlertScreen(with: serverResponse.result.error!.localizedDescription, oftype: "INFO")
+                }
+        }
+    }
     
 func handleHTTPError(from serverResponse: DataResponse<Data>)
 {
@@ -291,11 +399,10 @@ func handleHTTPError(from serverResponse: DataResponse<Data>)
     case 403 :
         let decoder = JSONDecoder()
         httpError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
-        self.showLoginScreen(with: (httpError?.message)!)
+        self.showLoginScreen(with: (httpError?.description)!)
         
     default:
         showInfoAlertScreen(with: "Server Problem", oftype: "INFO")
-
         break
     }
     
@@ -315,7 +422,7 @@ func handleHTTPError(from serverResponse: DataResponse<Data>)
                 case "HTTPERROR":
                     if let alert:HTTPError = alertDetails as? HTTPError
                    {
-                    let alert = UIAlertController(title: alert.error, message: alert.message, preferredStyle: UIAlertControllerStyle.alert)
+                    let alert = UIAlertController(title: String(alert.error_code), message: alert.description, preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                     rootVc.present(alert, animated: true, completion: nil)
                    }

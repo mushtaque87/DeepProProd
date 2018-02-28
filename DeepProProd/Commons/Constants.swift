@@ -16,12 +16,17 @@ struct Constants {
     }
     
     struct ServerApi {
-        static let baseUrl = "http://localhost"
+        static let baseUrl = "http://localhost:8222/v1/uam/users/"
         static let port = ":8080"
-        static let login = "/v1/uam/users/login"
-        static let signUp = "/v1/uam/users/signup"
+        static let login = "login"
+        static let signUp = "signup"
+        static let forgotpassword = "forget-password"
+        static let refreshtoken = "/token/refresh"
     }
     
+    struct BUILDSETTINGS {
+        static let tokenTest = ProcessInfo.processInfo.environment["TOKENEXPIRYTEST"]
+    }
     
     struct Path {
         static let Documents = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String

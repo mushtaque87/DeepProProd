@@ -1,12 +1,36 @@
 PODS:
   - Alamofire (4.6.0)
+  - DatePickerDialog (2.0)
+  - PromiseKit (6.1.0):
+    - PromiseKit/CorePromise (= 6.1.0)
+    - PromiseKit/Foundation (= 6.1.0)
+    - PromiseKit/UIKit (= 6.1.0)
+  - PromiseKit/CorePromise (6.1.0)
+  - PromiseKit/Foundation (6.1.0):
+    - PromiseKit/CorePromise
+  - PromiseKit/UIKit (6.1.0):
+    - PromiseKit/CorePromise
+  - RxCocoa (4.1.1):
+    - RxSwift (~> 4.0)
+  - RxSwift (4.1.1)
+  - SwiftProtobuf (1.0.2)
 
 DEPENDENCIES:
   - Alamofire (~> 4.5)
+  - DatePickerDialog
+  - PromiseKit (~> 6.0)
+  - RxCocoa (~> 4.0)
+  - RxSwift (~> 4.0)
+  - SwiftProtobuf (~> 1.0)
 
 SPEC CHECKSUMS:
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
+  DatePickerDialog: 5e1c24d9fe6506cd45dbc573eed7b0a251b1c09d
+  PromiseKit: cf84274e6d2bec1d42e21ade146645752b0b7bed
+  RxCocoa: fd0862fd2df95fa55562ad28ffd2522c25eb4a85
+  RxSwift: c6e3b1c7b325c7d121cd4327e9d98b7ed746b570
+  SwiftProtobuf: e41d205c91eac0fb46823f2561712407fefdaf4e
 
-PODFILE CHECKSUM: 33047cd81a01c2eb45f3c341044ba4c0289c41c9
+PODFILE CHECKSUM: 5ebc36043c25e766eeef17cf85238b137579cdbd
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.4.0

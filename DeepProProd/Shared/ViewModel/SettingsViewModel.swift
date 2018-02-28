@@ -160,18 +160,10 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                     
                 case .profile:
                     
-                    let requestComplete: (ProfileDetails?) -> Void = { result in
-                        
-                        guard let details = result else
-                       {
-                        //Alert View
-                        
-                        return
-                        }
-                        print(details.name)
-                        // Show the Profile Screen
+                    let requestComplete: (Any?) -> Void = { result in
+
                     }
-                    ServiceManager().getProfile(of: (UserInfo.sharedInstance.userDetails?.uid)!, with: requestComplete)
+                    ServiceManager().getProfile(for: (UserInfo.shared.userDetails?.uid)!, with: requestComplete)
                     break
                 case .mainPage: break
                 case .graphtype: break
@@ -216,7 +208,7 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
     
     @objc func selectGraphType(_ sender: UISegmentedControl) {
         
-        Settings.sharedInstance.mainPage = sender.selectedSegmentIndex
+        Settings.sharedInstance.graphType = sender.selectedSegmentIndex
         Settings.sharedInstance.setValue(key: "GraphType", value: sender.selectedSegmentIndex as AnyObject)
         Localizator.sharedInstance.reloadLocalisationDictionary()
         //delegate?.reloadTable()

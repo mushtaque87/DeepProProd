@@ -17,6 +17,7 @@ extension MainViewController
         parentViewController.view.addSubview(childViewController.view)
         childViewController.didMove(toParentViewController: parentViewController)
         childViewController.view.frame = parentViewController.view.bounds
+        childViewController.view.autoresizingMask = [.flexibleWidth,.flexibleHeight]
         self.currentViewController = childViewController
     }
 

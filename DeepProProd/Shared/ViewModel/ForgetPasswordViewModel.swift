@@ -7,10 +7,19 @@
 //
 
 import UIKit
+import RxSwift
 
 class ForgetPasswordViewModel: NSObject,UITextFieldDelegate {
 
-    
+    var email = Variable<String>("")
+    var password = Variable<String>("")
+    var isValid : Observable<Bool> {
+
+       return Observable.combineLatest(email.asObservable(),password.asObservable()) { email , password in
+            email.count > 0 && email.contains("@") && email.contains(".com")
+            
+        }
+    }
     // MARK: - TextField Delegate
     func textFieldDidBeginEditing(_ textField: UITextField) {    //delegate method
         

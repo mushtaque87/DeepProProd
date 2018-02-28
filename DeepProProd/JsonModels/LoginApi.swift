@@ -8,12 +8,12 @@
 
 import Foundation
 
-struct UserDetails: Codable {
+struct LoginResponse: Codable {
     
     let uid: String
-    let auth_token : String
+    let access_token : String
     let refresh_token : String
-    let expires_in : Int
-    let refresh_expires_in : Int
+    let expires_in : TimeInterval
+    let refresh_expires_in : TimeInterval
 }
 

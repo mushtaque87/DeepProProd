@@ -7,14 +7,18 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class ForgotPassword_SH_ViewController: UIViewController {
 
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var                                                                                                                                        titleLbl: UILabel!
     @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet var viewModel: ForgetPasswordViewModel!
+    @IBOutlet weak var restButton: UIButton!
     
+    @IBOutlet var viewModel: ForgetPasswordViewModel!
+    var forgotViewModel = ForgetPasswordViewModel()
     
     
     override func viewDidLoad() {
@@ -22,6 +26,8 @@ class ForgotPassword_SH_ViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         refreshUI()
+        _ =  emailTextField.rx.text.map {$0 ?? ""}.bind(to:forgotViewModel.email)
+        _ = forgotViewModel.isValid.bind(to: resetBtn.rx.isEnabled)
     }
     @IBOutlet weak var resetBtn: UIButton!
     
@@ -33,14 +39,32 @@ class ForgotPassword_SH_ViewController: UIViewController {
 
     @IBAction func reset(_ sender: Any) {
         
+        
+        let requestComplete: (ForgotPasswordResponse) -> Void = { result in
+            
+            if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+            {
+                
+
+                rootVc.showInfoAlertView(with: result.success == true ? "Password Reset Successful!!!  Check email." : "Password Reset failed. Please try again.")
+            }
+        }
+
+        ServiceManager().forgotPassword(for: self.emailTextField.text!, with: requestComplete)
     }
     
     @IBAction func close(_ sender: Any) {
-       
-        self.dismiss(animated: true) {
-            print("Dismmised")
+//
+//        self.dismiss(animated: true) {
+//            print("Dismmised")
+//        }
+//
+        if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+        {
+            
+            rootVc.remove(viewController: self, from: rootVc)
+            
         }
-        
     }
     /*
     // MARK: - Navigation

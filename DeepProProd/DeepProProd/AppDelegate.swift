@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import PromiseKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -48,12 +49,58 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
+        
+       
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+      print("Current Date \(TokenManager.shared.currentDateTime())")
+      //print("token_expire_date \(UserDefaults.standard.string(forKey: "token_expire_date")!)")
+      
+        /*
+        #if DEBUG
+            print("Debugging Mode")
+        #else
+             print("Production Mode")
+        #endif
+        
+        
+      
+        if (ProcessInfo.processInfo.environment["TOKENEXPIRYTEST"] != nil) {
+             print("Test")
+        }
+        else {
+             print("Dont Test")
+        }
+        */
+        guard UserDefaults.standard.string(forKey: "uid") != nil else {
+            print("First Login")
+            return
+        }
+        ServiceManager().verifyTokenAndProceed(of: (UserDefaults.standard.string(forKey: "uid"))!) {
+            print("Token Validated")
+        }
+        
+        
+       /* guard Settings.sharedInstance.firstLogIn == false &&
+             TokenManager.sharedInstance.isRefreshTokenValid() == true else{
+            if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+            {
+               rootVc.showLoginViewController()
+            }
+            return
+        }*/
     }
-
+  
+    /// set orientations you want to be allowed in this property by default
+    var orientationLock = UIInterfaceOrientationMask.all
+    
+    func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
+        return self.orientationLock
+    }
+    
+    
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }

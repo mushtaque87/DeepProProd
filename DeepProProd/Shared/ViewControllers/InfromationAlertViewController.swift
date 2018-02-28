@@ -9,7 +9,8 @@
 import UIKit
 
 class InfromationAlertViewController: UIViewController {
-
+    public var infoMessage: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
        

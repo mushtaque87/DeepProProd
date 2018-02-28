@@ -37,6 +37,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
     @IBOutlet weak var closeBtn: UIButton!
     @IBOutlet weak var wordTextField: UITextField!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var graphSegmentControl: UISegmentedControl!
     
     var wordResultView : wordResult_View?
     var months : [String]!
@@ -663,7 +664,14 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
         
     }
     
-   
+    @IBAction func switchGraph(_ sender: UISegmentedControl) {
+        
+        Settings.sharedInstance.graphType = sender.selectedSegmentIndex
+        Settings.sharedInstance.setValue(key: "GraphType", value: sender.selectedSegmentIndex as AnyObject)
+        showTheGraph()
+        
+    }
+    
     /*
     // MARK: - Navigation
 

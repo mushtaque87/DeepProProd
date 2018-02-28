@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RxSwift
 
 class SignUp_SH_ViewController: UIViewController {
 
@@ -16,19 +17,35 @@ class SignUp_SH_ViewController: UIViewController {
     @IBOutlet weak var firstNameTxtField: UITextField!
     @IBOutlet weak var lastNameTxtField: UITextField!
     @IBOutlet weak var emailTxtField: UITextField!
-    @IBOutlet weak var passwordTxtField: UITextField!
+    @IBOutlet weak var passordTextField: UITextField!
     @IBOutlet weak var confirmPasswordTxtField: UITextField!
     @IBOutlet weak var ageTxtField: UITextField!
     @IBOutlet weak var genderSwitch: UISegmentedControl!
     @IBOutlet weak var signupBtn: UIButton!
     @IBOutlet var viewModel: SignupViewModel!
     
+    //RxSwift
+    private var userinfo = Variable(user())
+    var userObserver:Observable<user> {
+        return userinfo.asObservable()
+    }
+    let disposeBag = DisposeBag()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         refreshUI()
 
-        // Do any additional setup after loading the view.
+        //_ =  ageTxtField.rx.text.map {$0 ?? ""}.bind(to:viewModel.dob)
+
+            viewModel.dobObserver.subscribe(onNext: { [weak self] details in
+                self?.ageTxtField.text = details
+                print("Dob : \(details)")
+                //self?.login(nil)
+            }).disposed(by: disposeBag)
     }
+    
+        // Do any additional setup after loading the view.
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -38,38 +55,44 @@ class SignUp_SH_ViewController: UIViewController {
     // MARK: - UI Event and Action
   
     @IBAction func close(_ sender: Any) {
-        self.dismiss(animated: true) {
+      /*  self.dismiss(animated: true) {
             print("Dismmised")
-        }
+        } */
         
-       /* if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+        if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
         {
-            rootVc.showLoginViewController()
-        }*/
+            rootVc.remove(viewController: rootVc.signUp_ViewController, from: rootVc)
+        }
     }
     
     
     @IBAction func signUp(_ sender: Any) {
-        
-        let requestComplete: (UserDetails) -> Void = { result in
+       
+        //RxSwift
+        self.userinfo.value = user(username: self.emailTxtField.text!, password: self.passordTextField.text!)
+        return
+        let requestComplete: (Any) -> Void = { result in
            
             Settings.sharedInstance.setValue(key: "isLoggedIn", value: true as AnyObject)
-           // self.dismiss(animated: true) {
+           
                 if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
                 {
-                    //rootVc.signUp_ViewController.dismiss(animated: true, completion: {
                         rootVc.remove(viewController: rootVc.login_ViewController, from: rootVc)
                         rootVc.remove(viewController: rootVc.signUp_ViewController, from: rootVc)
 
                         rootVc.addTabBarControllers()
-                   // })
-                   
-                
+               
                 }
-          //  }
+            }
+
+        
+        if(isDetailsFilled())
+        {
+            viewModel.createSignUpBody(firstname: firstNameTxtField.text!, lastname: lastNameTxtField.text!, email: emailTxtField.text!, password: passordTextField.text!, age: ageTxtField.text!, dob: "", gender: genderSwitch.selectedSegmentIndex)
             
+            ServiceManager().doSignUp(with: emailTxtField.text!, firstName: firstNameTxtField.text!, lastName: lastNameTxtField.text!, password: confirmPasswordTxtField.text!, with: requestComplete)
         }
-        ServiceManager().doSignUp(with: emailTxtField.text!, firstName: firstNameTxtField.text!, lastName: lastNameTxtField.text!, password: confirmPasswordTxtField.text!, with: requestComplete)
+        
         print("end of signup")
     }
     
@@ -90,6 +113,40 @@ class SignUp_SH_ViewController: UIViewController {
         
         //loginTitleLbl.alignText()
         
+    }
+    
+    func isDetailsFilled() -> Bool {
+        
+        guard passordTextField.text?.count != 0 &&
+            passordTextField.text?.count != 0 &&
+            confirmPasswordTxtField.text?.count != 0 &&
+            emailTxtField.text?.count != 0 &&
+            firstNameTxtField.text?.count != 0 &&
+            lastNameTxtField.text?.count != 0
+            else {
+                if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+                {
+                    let alert = UIAlertController(title: "Warning", message:"All the Details are not filled properly" , preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                    rootVc.present(alert, animated: true, completion: nil)
+                    
+                }
+            return false
+        }
+        
+        guard passordTextField.text == confirmPasswordTxtField.text else {
+            
+            if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+            {
+                let alert = UIAlertController(title: "Warning", message:"password and confirm password field are not same" , preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                rootVc.present(alert, animated: true, completion: nil)
+                
+            }
+            return false
+        }
+        
+        return true
     }
 
 }

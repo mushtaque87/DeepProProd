@@ -7,9 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		504CCC59203AC9E100EE3CC2 /* pronounce.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504CCC58203AC9E100EE3CC2 /* pronounce.pb.swift */; };
+		504CCC5D203AE10B00EE3CC2 /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504CCC5C203AE10B00EE3CC2 /* SignUp.swift */; };
+		504CCC60203C0A8D00EE3CC2 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504CCC5F203C0A8D00EE3CC2 /* TokenManager.swift */; };
+		504CCC64203C544300EE3CC2 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504CCC63203C544300EE3CC2 /* Date.swift */; };
+		504CCC67203C55C400EE3CC2 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504CCC66203C55C400EE3CC2 /* String.swift */; };
 		505B75C62020B2C700A5A0B2 /* json.txt in Resources */ = {isa = PBXBuildFile; fileRef = 505B75C42020B2C700A5A0B2 /* json.txt */; };
 		505B75CC202AEFC200A5A0B2 /* ServerIntegrationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B75CB202AEFC200A5A0B2 /* ServerIntegrationTest.swift */; };
-		505B75CE202AF3F400A5A0B2 /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B75CD202AF3F400A5A0B2 /* UserDetails.swift */; };
+		505B75CE202AF3F400A5A0B2 /* LoginApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B75CD202AF3F400A5A0B2 /* LoginApi.swift */; };
 		5095C68E20064108003207AD /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5099C221200640CC00898B0A /* Charts.framework */; };
 		5095C68F20064108003207AD /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5099C221200640CC00898B0A /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		5095C69920064314003207AD /* ServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5095C69820064314003207AD /* ServiceManager.swift */; };
@@ -50,9 +55,11 @@
 		50BEA274201896D2007F1899 /* LoginViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BEA273201896D2007F1899 /* LoginViewModelTest.swift */; };
 		50BEA27B201DE31B007F1899 /* ThemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BEA279201DE31B007F1899 /* ThemeCell.swift */; };
 		50BEA27C201DE31B007F1899 /* ThemeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50BEA27A201DE31B007F1899 /* ThemeCell.xib */; };
+		50C8D76A203DD1430028F05D /* DatePickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C8D768203DD1430028F05D /* DatePickerDialog.swift */; };
+		50C8D76C20429B240028F05D /* ForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C8D76B20429B240028F05D /* ForgotPassword.swift */; };
 		50CBA0BB20307555001ABC95 /* TestManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CBA0BA20307555001ABC95 /* TestManager.swift */; };
 		50CBA0EA2032FEE1001ABC95 /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CBA0E92032FEE1001ABC95 /* UserInfo.swift */; };
-		50CBA0EC20331FB9001ABC95 /* ProfileDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CBA0EB20331FB9001ABC95 /* ProfileDetails.swift */; };
+		50CBA0EC20331FB9001ABC95 /* ProfileApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CBA0EB20331FB9001ABC95 /* ProfileApi.swift */; };
 		50CBA0F120342E58001ABC95 /* InfromationAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CBA0EF20342E58001ABC95 /* InfromationAlertViewController.swift */; };
 		50CBA0F220342E58001ABC95 /* InfromationAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50CBA0F020342E58001ABC95 /* InfromationAlertViewController.xib */; };
 		50CBA0F620345A88001ABC95 /* HTTPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CBA0F520345A88001ABC95 /* HTTPError.swift */; };
@@ -158,9 +165,14 @@
 
 /* Begin PBXFileReference section */
 		29281F83558DA47BDE96940E /* Pods-DeepProProd.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeepProProd.release.xcconfig"; path = "Pods/Target Support Files/Pods-DeepProProd/Pods-DeepProProd.release.xcconfig"; sourceTree = "<group>"; };
+		504CCC58203AC9E100EE3CC2 /* pronounce.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = pronounce.pb.swift; sourceTree = "<group>"; };
+		504CCC5C203AE10B00EE3CC2 /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
+		504CCC5F203C0A8D00EE3CC2 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
+		504CCC63203C544300EE3CC2 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
+		504CCC66203C55C400EE3CC2 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		505B75C42020B2C700A5A0B2 /* json.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json.txt; sourceTree = "<group>"; };
 		505B75CB202AEFC200A5A0B2 /* ServerIntegrationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerIntegrationTest.swift; sourceTree = "<group>"; };
-		505B75CD202AF3F400A5A0B2 /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
+		505B75CD202AF3F400A5A0B2 /* LoginApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginApi.swift; sourceTree = "<group>"; };
 		5095C69820064314003207AD /* ServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceManager.swift; sourceTree = "<group>"; };
 		5095C69A20064339003207AD /* ChapterVC_DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChapterVC_DataModel.swift; sourceTree = "<group>"; };
 		5095C69B20064339003207AD /* TranslationVC_DataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TranslationVC_DataModel.swift; sourceTree = "<group>"; };
@@ -201,9 +213,11 @@
 		50BEA275201C728B007F1899 /* DeepProProd-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DeepProProd-Bridging-Header.h"; sourceTree = "<group>"; };
 		50BEA279201DE31B007F1899 /* ThemeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCell.swift; sourceTree = "<group>"; };
 		50BEA27A201DE31B007F1899 /* ThemeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeCell.xib; sourceTree = "<group>"; };
+		50C8D768203DD1430028F05D /* DatePickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerDialog.swift; sourceTree = "<group>"; };
+		50C8D76B20429B240028F05D /* ForgotPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPassword.swift; sourceTree = "<group>"; };
 		50CBA0BA20307555001ABC95 /* TestManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestManager.swift; sourceTree = "<group>"; };
 		50CBA0E92032FEE1001ABC95 /* UserInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
-		50CBA0EB20331FB9001ABC95 /* ProfileDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetails.swift; sourceTree = "<group>"; };
+		50CBA0EB20331FB9001ABC95 /* ProfileApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileApi.swift; sourceTree = "<group>"; };
 		50CBA0EF20342E58001ABC95 /* InfromationAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfromationAlertViewController.swift; sourceTree = "<group>"; };
 		50CBA0F020342E58001ABC95 /* InfromationAlertViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfromationAlertViewController.xib; sourceTree = "<group>"; };
 		50CBA0F520345A88001ABC95 /* HTTPError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPError.swift; sourceTree = "<group>"; };
@@ -299,10 +313,19 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		504CCC56203AC9D000EE3CC2 /* Proto */ = {
+			isa = PBXGroup;
+			children = (
+				504CCC58203AC9E100EE3CC2 /* pronounce.pb.swift */,
+			);
+			path = Proto;
+			sourceTree = "<group>";
+		};
 		5095C69620064302003207AD /* ServiceManager */ = {
 			isa = PBXGroup;
 			children = (
 				5095C69820064314003207AD /* ServiceManager.swift */,
+				504CCC5F203C0A8D00EE3CC2 /* TokenManager.swift */,
 				50E7B33A200CDD3E00DB9DB0 /* LocalJsonService.swift */,
 				50CBA0BA20307555001ABC95 /* TestManager.swift */,
 			);
@@ -359,6 +382,7 @@
 		5095C6B82006443D003207AD /* UIViews */ = {
 			isa = PBXGroup;
 			children = (
+				50C8D768203DD1430028F05D /* DatePickerDialog.swift */,
 				5095C6B92006444D003207AD /* sectionheader.xib */,
 				5095C6BA2006444D003207AD /* wordResult_View.swift */,
 			);
@@ -401,6 +425,7 @@
 		50E76AC420037E2A009420F9 = {
 			isa = PBXGroup;
 			children = (
+				504CCC56203AC9D000EE3CC2 /* Proto */,
 				50F83CE720171D7200690DCF /* JsonParser */,
 				50F83CE420170D7A00690DCF /* JsonModels */,
 				5099C21B200640CC00898B0A /* Charts.xcodeproj */,
@@ -520,6 +545,8 @@
 				50E76B282004BB2F009420F9 /* ViewControllerExtensions.swift */,
 				50E7B31720075B4900DB9DB0 /* UIApplication.swift */,
 				50E7B31B2007829300DB9DB0 /* UIImageView.swift */,
+				504CCC63203C544300EE3CC2 /* Date.swift */,
+				504CCC66203C55C400EE3CC2 /* String.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -611,9 +638,11 @@
 			isa = PBXGroup;
 			children = (
 				50F83CE520170DB600690DCF /* Course.swift */,
-				505B75CD202AF3F400A5A0B2 /* UserDetails.swift */,
-				50CBA0EB20331FB9001ABC95 /* ProfileDetails.swift */,
+				505B75CD202AF3F400A5A0B2 /* LoginApi.swift */,
+				50CBA0EB20331FB9001ABC95 /* ProfileApi.swift */,
 				50CBA0F520345A88001ABC95 /* HTTPError.swift */,
+				504CCC5C203AE10B00EE3CC2 /* SignUp.swift */,
+				50C8D76B20429B240028F05D /* ForgotPassword.swift */,
 			);
 			path = JsonModels;
 			sourceTree = "<group>";
@@ -848,10 +877,20 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-DeepProProd/Pods-DeepProProd-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/DatePickerDialog/DatePickerDialog.framework",
+				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
+				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftProtobuf/SwiftProtobuf.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DatePickerDialog.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftProtobuf.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -883,6 +922,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				504CCC67203C55C400EE3CC2 /* String.swift in Sources */,
 				50BEA27B201DE31B007F1899 /* ThemeCell.swift in Sources */,
 				5095C69D2006433A003207AD /* ChapterVC_DataModel.swift in Sources */,
 				5095C6BC2006444D003207AD /* wordResult_View.swift in Sources */,
@@ -893,16 +933,18 @@
 				5095C6B0200643BF003207AD /* serviceProtocols.swift in Sources */,
 				5099C21320063EAB00898B0A /* WordsViewController.swift in Sources */,
 				50E7B336200B866800DB9DB0 /* SettingsViewModel.swift in Sources */,
-				50CBA0EC20331FB9001ABC95 /* ProfileDetails.swift in Sources */,
+				50CBA0EC20331FB9001ABC95 /* ProfileApi.swift in Sources */,
 				50CBA0F120342E58001ABC95 /* InfromationAlertViewController.swift in Sources */,
 				50E76B232004B28A009420F9 /* Login_SH_ViewController.swift in Sources */,
 				5095C6B6200643E5003207AD /* Prediction_Model.swift in Sources */,
+				504CCC5D203AE10B00EE3CC2 /* SignUp.swift in Sources */,
 				50E76B2B2004D64E009420F9 /* Localizator.swift in Sources */,
+				504CCC64203C544300EE3CC2 /* Date.swift in Sources */,
 				5095C69920064314003207AD /* ServiceManager.swift in Sources */,
 				5095C6C7200644C1003207AD /* UILabel.swift in Sources */,
 				50E76AD320037E2A009420F9 /* MainViewController.swift in Sources */,
 				5095C6B7200643E5003207AD /* Pronunciation_Prediction.swift in Sources */,
-				505B75CE202AF3F400A5A0B2 /* UserDetails.swift in Sources */,
+				505B75CE202AF3F400A5A0B2 /* LoginApi.swift in Sources */,
 				5095C69F2006433A003207AD /* MenuVC_DataModel.swift in Sources */,
 				50CBA0F620345A88001ABC95 /* HTTPError.swift in Sources */,
 				50E76B292004BB2F009420F9 /* ViewControllerExtensions.swift in Sources */,
@@ -917,12 +959,14 @@
 				50CBA0EA2032FEE1001ABC95 /* UserInfo.swift in Sources */,
 				50E7B340200DD09D00DB9DB0 /* LogOutCell.swift in Sources */,
 				50F83CE620170DB600690DCF /* Course.swift in Sources */,
+				50C8D76A203DD1430028F05D /* DatePickerDialog.swift in Sources */,
 				5095C6C420064470003207AD /* LargeValueFormatter.swift in Sources */,
 				50E79DD520050CF200327016 /* TabBarControllerViewController.swift in Sources */,
 				50E7B334200B76AF00DB9DB0 /* ForgetPasswordViewModel.swift in Sources */,
 				5099C21620063EAB00898B0A /* SettingsViewController.swift in Sources */,
 				5095C6AB20064396003207AD /* ChapterContentCell.swift in Sources */,
 				5095C6C520064470003207AD /* IntAxisValueFormatter.swift in Sources */,
+				504CCC60203C0A8D00EE3CC2 /* TokenManager.swift in Sources */,
 				50E7B344200DD23C00DB9DB0 /* LabelTableViewCell.swift in Sources */,
 				50E7B33B200CDD3E00DB9DB0 /* LocalJsonService.swift in Sources */,
 				50E7B332200B769C00DB9DB0 /* SignupViewModel.swift in Sources */,
@@ -933,9 +977,11 @@
 				50E7B348200DD2A100DB9DB0 /* LanguageTableViewCell.swift in Sources */,
 				50E76B392004F5B5009420F9 /* LoginViewModel.swift in Sources */,
 				5095C6C220064470003207AD /* DayAxisValueFormatter.swift in Sources */,
+				504CCC59203AC9E100EE3CC2 /* pronounce.pb.swift in Sources */,
 				50E7B31C2007829300DB9DB0 /* UIImageView.swift in Sources */,
 				5095C6AC20064396003207AD /* ReportCell.swift in Sources */,
 				50CBA0BB20307555001ABC95 /* TestManager.swift in Sources */,
+				50C8D76C20429B240028F05D /* ForgotPassword.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1116,6 +1162,7 @@
 				INFOPLIST_FILE = DeepProProd/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = algorythma.ScreenTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "DeepProProd-Bridging-Header.h";
@@ -1137,6 +1184,7 @@
 				INFOPLIST_FILE = DeepProProd/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = algorythma.ScreenTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "DeepProProd-Bridging-Header.h";

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct ProfileDetails: Codable {
+struct ProfileResponse: Codable {
     
     let name: String
     let age : String
