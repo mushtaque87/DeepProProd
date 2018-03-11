@@ -12,8 +12,6 @@ class LoginViewModel: NSObject, UITextFieldDelegate {
 
 
     func switchValueChanged(_ sender: UISwitch) {
-        
-       // let segmentTab = sender as! UISegmentedControl
         if(sender.isOn)
         {
             Settings.sharedInstance.language = "Arabic"

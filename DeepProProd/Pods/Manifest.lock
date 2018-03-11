@@ -1,24 +1,29 @@
 PODS:
   - Alamofire (4.6.0)
   - DatePickerDialog (2.0)
-  - PromiseKit (6.1.0):
-    - PromiseKit/CorePromise (= 6.1.0)
-    - PromiseKit/Foundation (= 6.1.0)
-    - PromiseKit/UIKit (= 6.1.0)
-  - PromiseKit/CorePromise (6.1.0)
-  - PromiseKit/Foundation (6.1.0):
-    - PromiseKit/CorePromise
-  - PromiseKit/UIKit (6.1.0):
-    - PromiseKit/CorePromise
+  - MBProgressHUD (1.1.0)
+  - Mockingjay (2.0.1):
+    - Mockingjay/Core (= 2.0.1)
+    - Mockingjay/XCTest (= 2.0.1)
+  - Mockingjay/Core (2.0.1):
+    - URITemplate (~> 2.0)
+  - Mockingjay/XCTest (2.0.1):
+    - Mockingjay/Core
+  - Nimble (7.0.3)
+  - Quick (1.2.0)
   - RxCocoa (4.1.1):
     - RxSwift (~> 4.0)
   - RxSwift (4.1.1)
   - SwiftProtobuf (1.0.2)
+  - URITemplate (2.0.3)
 
 DEPENDENCIES:
   - Alamofire (~> 4.5)
   - DatePickerDialog
-  - PromiseKit (~> 6.0)
+  - MBProgressHUD (~> 1.1.0)
+  - Mockingjay
+  - Nimble
+  - Quick
   - RxCocoa (~> 4.0)
   - RxSwift (~> 4.0)
   - SwiftProtobuf (~> 1.0)
@@ -26,11 +31,15 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   Alamofire: f41a599bd63041760b26d393ec1069d9d7b917f4
   DatePickerDialog: 5e1c24d9fe6506cd45dbc573eed7b0a251b1c09d
-  PromiseKit: cf84274e6d2bec1d42e21ade146645752b0b7bed
+  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
+  Mockingjay: 11a621880d2887f1775bdcf824341eb68f218450
+  Nimble: 7f5a9c447a33002645a071bddafbfb24ea70e0ac
+  Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
   RxCocoa: fd0862fd2df95fa55562ad28ffd2522c25eb4a85
   RxSwift: c6e3b1c7b325c7d121cd4327e9d98b7ed746b570
   SwiftProtobuf: e41d205c91eac0fb46823f2561712407fefdaf4e
+  URITemplate: ace0c4c46dcf8afe6e89b4060621852886b15c3b
 
-PODFILE CHECKSUM: 5ebc36043c25e766eeef17cf85238b137579cdbd
+PODFILE CHECKSUM: ae3beb745308a2d1c58318de85cbf3d89d1e2d9e
 
 COCOAPODS: 1.4.0

@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import PromiseKit
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -74,14 +74,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
              print("Dont Test")
         }
         */
-        guard UserDefaults.standard.string(forKey: "uid") != nil else {
+        guard UserDefaults.standard.string(forKey: "uid") != nil && UserDefaults.standard.string(forKey: "refresh_token") != nil else {
             print("First Login")
             return
         }
-        ServiceManager().verifyTokenAndProceed(of: (UserDefaults.standard.string(forKey: "uid"))!) {
-            print("Token Validated")
-        }
         
+        ServiceManager().verifyTokenAndProceed(of: (UserDefaults.standard.string(forKey: "uid"))!, onSuccess: {
+            //Do nothing.
+        }, onError: { error in
+            //Let the user know of the issue.
+        })
         
        /* guard Settings.sharedInstance.firstLogIn == false &&
              TokenManager.sharedInstance.isRefreshTokenValid() == true else{

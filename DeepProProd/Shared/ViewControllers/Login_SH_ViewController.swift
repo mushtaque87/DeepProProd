@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import RxSwift
+import MBProgressHUD
 
 class Login_SH_ViewController: UIViewController {
 
@@ -71,49 +72,43 @@ class Login_SH_ViewController: UIViewController {
     }
     @IBAction func login(_ sender: Any) {
       //  super.remove(viewController: self, from: s)
+        Settings.sharedInstance.setValue(key: "FirstLogin", value: false as AnyObject)
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.mode = MBProgressHUDMode.indeterminate
+        hud.label.text = "Logging in. Please wait"
         
-         let requestComplete: (LoginResponse) -> Void = { result in
-            print("requestComplete")
-            //print("UID : \(String(describing: UserInfo.sharedInstance.userDetails?.uid))")
-            
-            Settings.sharedInstance.setValue(key: "isLoggedIn", value: true as AnyObject)
-            //print(self.parent?.parent)
-            //print(UIApplication.rootViewController())
-            if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
-            {
-                rootVc.remove(viewController: self, from: rootVc)
-                rootVc.addTabBarControllers()
-            }
-                   
-        }
-        ServiceManager().doLogin(for: userNameTextField.text!, and: passwordTextField.text!, with: requestComplete)
-      print("end of login")
-        //return
-      
-        
+        ServiceManager().doLogin(for: userNameTextField.text!, and: passwordTextField.text!,
+                                 onSuccess: { response in
+                                    Settings.sharedInstance.setValue(key: "isLoggedIn", value: true as AnyObject)
+                                    if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+                                    {
+                                        rootVc.remove(viewController: self, from: rootVc)
+                                        rootVc.addTabBarControllers()
+                                        
+                                    }
+                                    
+        }, onHTTPError: { httperror in
+            hud.mode = MBProgressHUDMode.text
+            hud.label.text = httperror.description
+        }, onError: { error in
+            hud.mode = MBProgressHUDMode.text
+            hud.label.text = error.localizedDescription
+        }, onComplete:  {
+            hud.hide(animated: true)
+        })
     }
-    
-    @IBAction func languageChanged(_ sender: Any) {
-        print("lc")
-    }
-    
+
     @IBAction func signUp(_ sender: Any) {
-        
-   // let signUp_ViewController: SignUp_SH_ViewController = SignUp_SH_ViewController(nibName: "SignUp_SH_ViewController", bundle: nil)
+ 
         if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
         {
-          //  rootVc.addSubView(addChildViewController: signUp_ViewController, on: rootVc)
-          //  rootVc.remove(viewController: self, from: rootVc)
             rootVc.showSignUpViewController()
             rootVc.signUp_ViewController.userObserver.subscribe(onNext: { [weak self] details in
                 self?.userNameTextField.text = details.username
                 self?.passwordTextField.text = details.password
-                print("Username : \(details)")
-                //self?.login(nil)
             }).disposed(by: rootVc.disposeBag)
         }
-        //UIApplication.rootViewController().present(signUp_ViewController, animated: true, completion: nil)
-        
+   
     }
     
     @IBOutlet weak var forgotPassword: UIButton!
@@ -123,11 +118,8 @@ class Login_SH_ViewController: UIViewController {
         if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
         {
             rootVc.addSubView(addChildViewController: forgot_ViewController, on: rootVc)
-            forgot_ViewController.view.slideInFromRight()
+            //forgot_ViewController.view.slideInFromRight()
         }
-        //self.addSubView(addChildViewController: signUp_ViewController, on: self)
-        //self.present(forgot_ViewController, animated: true, completion: nil)
-        
     }
     
     @IBAction func showPracticeBoard(_ sender: Any) {

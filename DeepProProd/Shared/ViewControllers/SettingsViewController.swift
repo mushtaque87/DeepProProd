@@ -9,8 +9,10 @@
 import UIKit
 
 protocol SettingProtocols: class {
+    func showProfileScreen()
     func logOut(_ sender: Any)
     func reloadTable()
+    
 }
 
 class SettingsViewController: UIViewController,SettingProtocols {
@@ -42,6 +44,10 @@ class SettingsViewController: UIViewController,SettingProtocols {
         // Dispose of any resources that can be recreated.
     }
     
+    func showProfileScreen() {
+        let profileViewController =     ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+        self.navigationController?.pushViewController(profileViewController, animated: true)
+    }
    
      func logOut(_ sender: Any) {
         
@@ -49,7 +55,7 @@ class SettingsViewController: UIViewController,SettingProtocols {
         Settings.sharedInstance.reloadSettingsDictionary()
         if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
         {
-            rootVc.remove(viewController: self.parent!, from: rootVc)
+            rootVc.remove(viewController: rootVc.tabBar_ViewController , from: rootVc)
            // rootVc.removeAllVCFromParentViewController()
             rootVc.showLoginViewController()
         }

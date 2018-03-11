@@ -25,6 +25,7 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
         var tabBarViewControllers = [UIViewController]()
         if(Settings.sharedInstance.isDemo)!
        {
+        
         let transDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
         transDetailViewController.boardType = BoardType.account
         transDetailViewController.tabBarItem = UITabBarItem(title: "Practice Board", image:UIImage(named: "homeTab.png"), tag: 1)
@@ -36,17 +37,24 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
 
         }
         else{
-        let levelViewController : Level_SHViewController =  Level_SHViewController(nibName: "Level_SHViewController", bundle: nil)
-        levelViewController.tabBarItem = UITabBarItem(title: "Menu", image: UIImage(named: "homeTab.png"), tag: 0)
+            
+            let courseNavigationController = UINavigationController()
+            let levelViewController : Level_SHViewController =  Level_SHViewController(nibName: "Level_SHViewController", bundle: nil)
+            courseNavigationController.viewControllers = [levelViewController]
+            courseNavigationController.tabBarItem = UITabBarItem(title: "Menu", image: UIImage(named: "homeTab.png"), tag: 0)
         
-        let transDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
-        transDetailViewController.boardType = BoardType.account
-        transDetailViewController.tabBarItem = UITabBarItem(title: "Speech", image: UIImage(named: "homeTab.png"), tag: 1)
+            let practiceBoardNavigationController = UINavigationController()
+            let transDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
+            transDetailViewController.boardType = BoardType.account
+            practiceBoardNavigationController.viewControllers = [transDetailViewController]
+            practiceBoardNavigationController.tabBarItem = UITabBarItem(title: "Speech", image: UIImage(named: "homeTab.png"), tag: 1)
         
-        let settingsViewController = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
-        settingsViewController.tabBarItem = UITabBarItem(title: "Settings", image:UIImage(named: "homeTab.png"), tag: 2)
+            let settingNavigationController = UINavigationController()
+            let settingsViewController = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
+            settingNavigationController.viewControllers = [settingsViewController]
+            settingNavigationController.tabBarItem = UITabBarItem(title: "Settings", image:UIImage(named: "homeTab.png"), tag: 2)
    
-       tabBarViewControllers  = [levelViewController,transDetailViewController,settingsViewController]
+            tabBarViewControllers  = [levelViewController,practiceBoardNavigationController,settingNavigationController]
         
         }
         viewControllers = tabBarViewControllers

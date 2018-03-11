@@ -10,10 +10,10 @@ import Foundation
 
 struct LoginResponse: Codable {
     
-    let uid: String
-    let access_token : String
-    let refresh_token : String
-    let expires_in : TimeInterval
-    let refresh_expires_in : TimeInterval
+    var uid: String
+    var access_token : String
+    var refresh_token : String
+    var expires_in : TimeInterval
+    var refresh_expires_in : TimeInterval
 }
 

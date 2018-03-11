@@ -22,7 +22,7 @@ struct SignUpRequest: Codable {
 
 struct User_attributes : Codable{
     let dob: String
-    let gender : Gender
+   // let gender : Gender?
 }
 
 enum Gender : String, Codable {
@@ -35,4 +35,24 @@ enum Gender : String, Codable {
 struct SignUpResponse : Codable {
     let uid: String
     
+}
+
+extension SignUpRequest {
+func toJSON() -> [String: Any] {
+    return [
+        "email": email as Any,
+        "first_name": first_name as Any,
+        "last_name": last_name as Any,
+        "password": password as Any,
+        "user_attributes": user_attributes.toJSON() as Any
+    ]
+}
+}
+
+extension User_attributes {
+    func toJSON() -> [String: Any] {
+        return [
+            "dob": dob as Any,
+        ]
+    }
 }

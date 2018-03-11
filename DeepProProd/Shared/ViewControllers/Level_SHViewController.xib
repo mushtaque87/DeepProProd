@@ -50,7 +50,6 @@
                 <constraint firstItem="ET6-8P-OPN" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="9cy-WB-sZn"/>
                 <constraint firstAttribute="bottom" secondItem="ET6-8P-OPN" secondAttribute="bottom" id="BQb-RH-vNX"/>
                 <constraint firstItem="0yC-2Q-srN" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="JT6-Nr-5Ed"/>
-                <constraint firstItem="0yC-2Q-srN" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="Jzm-qj-coW"/>
                 <constraint firstItem="ET6-8P-OPN" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Muv-ox-TcV"/>
                 <constraint firstItem="0yC-2Q-srN" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="Vou-dV-cCL"/>
                 <constraint firstItem="0yC-2Q-srN" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="Vx3-G3-73a"/>

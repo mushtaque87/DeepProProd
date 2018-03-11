@@ -7,7 +7,7 @@
 //
 
 import UIKit
-
+import Alamofire
 
 
 class Helper: NSObject {
@@ -135,6 +135,30 @@ class Helper: NSObject {
         self.lockOrientation(orientation)
         
         UIDevice.current.setValue(rotateOrientation.rawValue, forKey: "orientation")
+    }
+    
+    //MARK: - HTTPError
+    func handleHTTPError(from serverResponse: DataResponse<Data>)
+    {
+        
+        var httpError: HTTPError?
+        switch serverResponse.response!.statusCode {
+        case 400 , 401 , 405 , 404:
+            let decoder = JSONDecoder()
+            httpError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
+            //showInfoAlertScreen(with: httpError, oftype: "HTTPERROR")
+        case 403 :
+            let decoder = JSONDecoder()
+            httpError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
+            //self.showLoginScreen(with: (httpError?.description)!)
+            
+        default:
+            //showInfoAlertScreen(with: "Server Problem", oftype: "INFO")
+            break
+        }
+        
+        print("Error \(String(describing: httpError))")
+        // return httpError!
     }
     
 }

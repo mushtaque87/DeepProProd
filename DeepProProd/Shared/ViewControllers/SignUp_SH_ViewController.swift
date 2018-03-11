@@ -8,7 +8,7 @@
 
 import UIKit
 import RxSwift
-
+import MBProgressHUD
 class SignUp_SH_ViewController: UIViewController {
 
     @IBOutlet weak var closeBtn: UIButton!
@@ -42,6 +42,8 @@ class SignUp_SH_ViewController: UIViewController {
                 print("Dob : \(details)")
                 //self?.login(nil)
             }).disposed(by: disposeBag)
+        
+         Helper.lockOrientation(.portrait)
     }
     
         // Do any additional setup after loading the view.
@@ -69,28 +71,35 @@ class SignUp_SH_ViewController: UIViewController {
     @IBAction func signUp(_ sender: Any) {
        
         //RxSwift
-        self.userinfo.value = user(username: self.emailTxtField.text!, password: self.passordTextField.text!)
-        return
-        let requestComplete: (Any) -> Void = { result in
-           
-            Settings.sharedInstance.setValue(key: "isLoggedIn", value: true as AnyObject)
-           
-                if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
-                {
-                        rootVc.remove(viewController: rootVc.login_ViewController, from: rootVc)
-                        rootVc.remove(viewController: rootVc.signUp_ViewController, from: rootVc)
+        //self.userinfo.value = user(username: self.emailTxtField.text!, password: self.passordTextField.text!)
+        //return
 
-                        rootVc.addTabBarControllers()
-               
-                }
-            }
-
-        
         if(isDetailsFilled())
         {
-            viewModel.createSignUpBody(firstname: firstNameTxtField.text!, lastname: lastNameTxtField.text!, email: emailTxtField.text!, password: passordTextField.text!, age: ageTxtField.text!, dob: "", gender: genderSwitch.selectedSegmentIndex)
+            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud.mode = MBProgressHUDMode.indeterminate
+            hud.label.text = "Signing up. Please wait"
             
-            ServiceManager().doSignUp(with: emailTxtField.text!, firstName: firstNameTxtField.text!, lastName: lastNameTxtField.text!, password: confirmPasswordTxtField.text!, with: requestComplete)
+            
+            //FIXME: - Use it when real network is available as parameter in request
+          let  requestBody = viewModel.createSignUpBody(firstname: firstNameTxtField.text!, lastname: lastNameTxtField.text!, email: emailTxtField.text!, password: passordTextField.text!, age: ageTxtField.text!, dob: ageTxtField.text!, gender: genderSwitch.selectedSegmentIndex)
+            
+            ServiceManager().doSignUp(withBody: requestBody, onSuccess: { result in
+                if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+                {
+                    //rootVc.remove(viewController: rootVc.login_ViewController, from: rootVc)
+                    rootVc.remove(viewController: rootVc.signUp_ViewController, from: rootVc)
+                    //rootVc.addTabBarControllers()
+                }
+            } , onHTTPError: { httperror in
+                hud.mode = MBProgressHUDMode.text
+                hud.label.text = httperror.description
+            }, onError: { error in
+                hud.mode = MBProgressHUDMode.text
+                hud.label.text = error.localizedDescription
+            }, onComplete:  {
+                hud.hide(animated: true)
+            })
         }
         
         print("end of signup")
@@ -114,6 +123,16 @@ class SignUp_SH_ViewController: UIViewController {
         //loginTitleLbl.alignText()
         
     }
+    
+    
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+    
     
     func isDetailsFilled() -> Bool {
         

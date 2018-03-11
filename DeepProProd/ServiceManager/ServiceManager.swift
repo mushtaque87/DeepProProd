@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import Foundation
 import RxSwift
-
+import MBProgressHUD
 
 class ServiceManager: NSObject {
     
@@ -111,187 +111,240 @@ class ServiceManager: NSObject {
 })
 
 }
-    
-    func doSignUp(with email : String ,firstName : String ,lastName: String , password:String , with completionHandler: @escaping (Any) -> Void)
+  
+    func generateAuthHeaders() -> [String:String]
     {
+        return ["Authorization" : String(format: "%@ %@", "Bearer",UserDefaults.standard.string(forKey: "access_token")!),
+                "Refresh-Token" : UserDefaults.standard.string(forKey: "refresh_token")!]
+    }
+    
+    func createCustomeRequest<T : Encodable>(for apiEndpoint:String , withParameter body:T? = nil,  httpType: HTTPMethod , withAuth authOn:Bool = false) -> URLRequest
+    {
+        var request = URLRequest(url:URL(string: apiEndpoint)! )
+        request.httpMethod = httpType.rawValue
+        request.setValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
+        if(authOn) {
+            request.allHTTPHeaderFields =  generateAuthHeaders()
+       // request.addValue(UserDefaults.value(forKey: "refresh_token") as! String, forHTTPHeaderField: "Refresh-Token")
+       // request.addValue(String(format: "%s %s", "Bearer",UserDefaults.value(forKey: "access_token") as! String), forHTTPHeaderField: "Authorization")
+        }
+        
+        guard body != nil else {
+            return request
+        }
+        var jsonData:Data?
+        let jsonEncoder = JSONEncoder()
+        do {
+            jsonData = try jsonEncoder.encode(body)
+            print("body: " +  String(data: jsonData!, encoding: .utf8)!)
+        }
+        catch {
+        }
+        request.httpBody = jsonData
+        
+        
+        return request
+    }
+ 
+    
+    func doSignUp(withBody body: SignUpRequest,
+                  onSuccess successCompletionHandler: @escaping (SignUpResponse) -> Void,
+                  onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
+                  onError errorHandler: @escaping (Error)-> Void  ,
+                  onComplete completeCompletionHandler: @escaping ()-> Void)
+    {
+     
+        
         /*
-        Alamofire.request("https://9b2ea2a7-b268-45d0-906b-1bb3c5341088.mock.pstmn.io/uam/v1/users/login").responseString(queue: DispatchQueue.global(qos: .default), encoding:String.Encoding(rawValue: String.Encoding.utf8.rawValue) , completionHandler: {response in
-            
-            print("responseString")
-            switch response.result {
-            case .success:
-                print("Success")
-                
-                // Convert the response to NSData to handle with SwiftyJSON
-                if (response.result.value?.data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue))) != nil {
-                    //            let json = JSON(data: data)
-                    
-                    let decoder = JSONDecoder()
-                    let userdetails = try! decoder.decode(UserDetails.self, from: (response.result.value?.data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue)))!)
-                    print("userdetails \(userdetails)")
-                    DispatchQueue.main.async {
-                        UserInfo.sharedInstance.userDetails = userdetails
-                        completionHandler(userdetails)
-                        
-                    }
-                    print("after completion is called")
-                }
-                break
-            case .failure:
-                print("failure : \(response.error?.localizedDescription ?? "Please Login Again")")
-                DispatchQueue.main.async {
-                    self.showLoginScreen(with: (response.error?.localizedDescription)!)
-                }
-                break
-            }
+        var jsonData:Data?
+        let jsonEncoder = JSONEncoder()
+        do {
+            jsonData = try jsonEncoder.encode(body)
+            print("body: " +  String(data: jsonData!, encoding: .utf8)!)
+        }
+        catch {
+        }
         
-    })*/
-        let parameters: [String: Any] = [
-            "email" : email,
-            "firstname" : firstName,
-            "lastname" : lastName ,
-            "password" : password ,
-        ]
-        
-        Alamofire.request(constant.baseUrl+constant.signUp, method: .post, parameters: parameters , encoding: JSONEncoding.default, headers: nil)
-            .responseData { serverResponse in
+        var request = URLRequest(url:URL(string: constant.baseUrl+constant.signUp)! )
+        request.httpMethod = HTTPMethod.post.rawValue
+        request.setValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
+        request.httpBody = jsonData
+        */
+        //print("Body--> \(body.toJSON().description)")
+       // print("Dict--> \(JSONSerialization.jsonObject(with: jsonData!) as? [String:Any])")
+        //var newRequest = createCustomeRequest(for: constant.baseUrl+constant.signUp, withParameter: body, httpType: HTTPMethod.post, withAuth: false)
+        //Alamofire.request(constant.baseUrl+constant.forgotpassword, method: .post, parameters:  jsonData , encoding: JSONEncoding.default, headers: nil)
+       
+        Alamofire.request(createCustomeRequest(for: constant.baseUrl+constant.signUp, withParameter: body, httpType: HTTPMethod.post, withAuth: false)).responseData(completionHandler:  { serverResponse in
                 debugPrint(serverResponse)
+                let decoder = JSONDecoder()
                 switch serverResponse.result {
                 case .success(let data):
                     if serverResponse.response!.statusCode == 200 {
                         let decoder = JSONDecoder()
                         let signupresponse = try! decoder.decode(SignUpResponse.self, from: data)
                         print("signupresponse \(signupresponse)")
-                        
-                       // self.doLogin(for: email, and: password, with: completionHandler)
-                        
-                       /* DispatchQueue.main.async {
-                            UserInfo.sharedInstance.userDetails = userdetails
-                            completionHandler(userdetails)
-                            
-                        }*/
+                         successCompletionHandler(signupresponse)
+                         completeCompletionHandler()
                     }
                     else
                     {
-                        
-                        self.handleHTTPError(from: serverResponse)
+                        print(serverResponse.result.value!)
+                        let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: data)
+                        print(httpError.description)
                     }
                 case .failure(let error):
                     print("Request failed with error: \(error)")
-                    self.showInfoAlertScreen(with: serverResponse.result.error!.localizedDescription, oftype: "INFO")
+                    errorHandler(error)
                 }
-        }
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    completeCompletionHandler()
+                }
+        })
 }
     
-    func doLogin(for username: String, and password:String , with completionHandler: @escaping (LoginResponse) -> Void ) {
-    //"https://9b2ea2a7-b268-45d0-906b-1bb3c5341088.mock.pstmn.io/uam/v1/users/login"
-    
-
-        
-        Alamofire.request(constant.baseUrl+constant.login, method: .post, parameters: [:], encoding: JSONEncoding.default, headers: nil)
-            .responseData { serverResponse in
-                debugPrint(serverResponse)
-                switch serverResponse.result {
-                case .success(let data):
-                    if serverResponse.response!.statusCode == 200 {
-                        let decoder = JSONDecoder()
-                        let userdetails = try! decoder.decode(LoginResponse.self, from: data)
-                        print("userdetails \(userdetails)")
-                        
-                        TokenManager.shared.storeNewToken(with: userdetails)
-                      //  TokenManager.shared.isRefreshTokenValid()
-                        
-                        DispatchQueue.main.async {
-                            //UserInfo.shared.userDetails = userdetails
-                            completionHandler(userdetails)
-                            
-                        }
-                    }
-                    else
-                    {
-                     
-                        self.handleHTTPError(from: serverResponse)
-                    }
-                case .failure(let error):
-                    print("Request failed with error: \(error)")
-                    self.showInfoAlertScreen(with: serverResponse.result.error!.localizedDescription, oftype: "INFO")
-                }
-        }
-        
-        
-        /*
-       Alamofire.request("http://localhost:8080/v1/uam/users/login").responseString(queue: DispatchQueue.global(qos: .default), encoding:String.Encoding(rawValue: String.Encoding.utf8.rawValue) , completionHandler: {response in
-      
-        print("responseString")
-           switch response.result {
-           case .success:
-              print("Success")
-              
-              if(response.result.value== 200)
-              {
-              // Convert the response to NSData to handle with SwiftyJSON
-              if (response.result.value?.data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue))) != nil {
-                //            let json = JSON(data: data)
-                
-                let decoder = JSONDecoder()
-                let userdetails = try! decoder.decode(UserDetails.self, from: (response.result.value?.data(using: String.Encoding(rawValue: String.Encoding.utf8.rawValue)))!)
-                print("userdetails \(userdetails)")
-                DispatchQueue.main.async {
-                    UserInfo.sharedInstance.userDetails = userdetails
-                    completionHandler(userdetails)
-                    
-                }
-                print("after completion is called")
-                }
-              }
-            break
-            case .failure:
-                print("failure : \(response.error?.localizedDescription ?? "Some Error Occured, Please tyr Again")")
-                
-                
-//                DispatchQueue.main.async {
-//                self.showLoginScreen(with: (response.error?.localizedDescription)!)
-//                }
-                self.showInfoAlertScreen(with: (response.error?.localizedDescription)!)
-            break
-            }
-      
-   // https://9b2ea2a7-b268-45d0-906b-1bb3c5341088.mock.pstmn.io/uam/v1/users/login
-})
-   print("end of trialLogin")*/
-        
-        
-}
-
-    func updateRefreshToken(of uid : String)
+    func forgotPassword(for emailId:String ,
+                        onSuccess successCompletionHandler: @escaping (ForgotPasswordResponse) -> Void,
+                        onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
+                        onError errorHandler: @escaping (Error)-> Void  ,
+                        onComplete completeCompletionHandler: @escaping ()-> Void)
     {
-        
-        Alamofire.request(constant.baseUrl+uid+constant.refreshtoken, method: .post, parameters: [:], encoding: JSONEncoding.default, headers: nil)
+        Alamofire.request(constant.baseUrl+constant.forgotpassword, method: .post, parameters: [:], encoding: JSONEncoding.default, headers: nil)
             .responseData { serverResponse in
+                DispatchQueue.main.async {
                 debugPrint(serverResponse)
+                let decoder = JSONDecoder()
                 switch serverResponse.result {
                 case .success(let data):
                     if serverResponse.response!.statusCode == 200 {
                         let decoder = JSONDecoder()
-                        let userdetails = try! decoder.decode(LoginResponse.self, from: data)
-                        print("userdetails \(userdetails)")
-                        
-                        TokenManager.shared.storeNewToken(with: userdetails)
+                        let response = try! decoder.decode(ForgotPasswordResponse.self, from: data)
+                            successCompletionHandler(response)
+                            completeCompletionHandler()
 
                     }
                     else
                     {
-                        
-                        self.handleHTTPError(from: serverResponse)
+                        //   self.handleHTTPError(from: serverResponse)
+                        let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
+                        httpErrorHandler(httpError)
                     }
                 case .failure(let error):
                     print("Request failed with error: \(error)")
-                    self.showInfoAlertScreen(with: serverResponse.result.error!.localizedDescription, oftype: "INFO")
+                     errorHandler(error)
+                    //self.showInfoAlertScreen(with: serverResponse.result.error!.localizedDescription, oftype: "INFO")
+                }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        completeCompletionHandler()
+                    }
+                    
                 }
         }
     }
     
-    func verifyTokenAndProceed(of uid : String, with completionHandler: @escaping () -> Void )
+
+    
+    func doLogin(for username: String, and password:String ,
+                 onSuccess successCompletionHandler: @escaping (LoginResponse) -> Void,
+                 onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
+                 onError errorHandler: @escaping (Error)-> Void  ,
+                 onComplete completeCompletionHandler: @escaping ()-> Void ) {
+        
+        Alamofire.request(constant.baseUrl+constant.login, method: .post, parameters: ["username":username ,"password":password] , encoding: JSONEncoding.default, headers: nil)
+            .responseData { serverResponse in
+                DispatchQueue.main.async {
+                debugPrint(serverResponse)
+                let decoder = JSONDecoder()
+                switch serverResponse.result {
+                case .success(let data):
+                    if serverResponse.response!.statusCode == 200 {
+                        let userdetails = try! decoder.decode(LoginResponse.self, from: data)
+                        print("userdetails \(userdetails)")
+                        
+                            TokenManager.shared.storeNewToken(with: userdetails)
+                            successCompletionHandler(userdetails)
+                    }
+                    else
+                    {
+                        //self.handleHTTPError(from: serverResponse)
+                        let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
+                        httpErrorHandler(httpError)
+                    }
+                case .failure(let error):
+                    print("Request failed with error: \(error)")
+                    errorHandler(error)
+                    //self.showInfoAlertScreen(with: serverResponse.result.error!.localizedDescription, oftype: "INFO")
+                }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                         completeCompletionHandler()
+                    }
+              
+                }
+        }
+}
+    
+
+    func getProfile(for uid : String ,
+                    onSuccess completionHandler: @escaping (Profile) -> Void,
+                    onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
+                    onError  errorHandler: @escaping (Any) -> Void)
+    {
+        verifyTokenAndProceed(of: uid,
+                              onSuccess: {
+                                
+                                Alamofire.request(constant.baseUrl + uid, method: .get, parameters: [:] , encoding: JSONEncoding.default, headers:self.generateAuthHeaders())
+                                    .responseData { serverResponse in
+                                        let decoder = JSONDecoder()
+                                        switch serverResponse.result {
+                                        case .success(let data):
+                                            if serverResponse.response!.statusCode == 200 {
+                                                let profiledetails = try! decoder.decode(Profile.self, from: data)
+                                                completionHandler(profiledetails)
+                                            }
+                                            else
+                                            {
+                                                let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
+                                                httpErrorHandler(httpError)
+                                            }
+                                        case .failure(let error):
+                                            print("Request failed with error: \(error)")
+                                            self.showInfoAlertScreen(with: serverResponse.result.error!.localizedDescription, oftype: "INFO")
+                                        }
+                                        
+                                }
+                                
+        },   onError: { error in
+            errorHandler(error)
+        })
+        
+    }
+    
+    
+    func updateRefreshToken(of uid : String ,
+                            onSuccess completionHandler: @escaping () -> Void ,
+                            onError errorHandler: @escaping (Any) -> Void)
+    {
+        
+        Alamofire.request(constant.baseUrl+uid+constant.refreshtoken, method: .post, parameters: ["refresh-token":(UserDefaults.standard.string(forKey: "refresh_token"))!], encoding: JSONEncoding.default, headers: nil)
+            .responseData { serverResponse in
+                debugPrint(serverResponse)
+                switch serverResponse.result {
+                case .success(let data):
+                    if serverResponse.response!.statusCode == 200 {
+                        let decoder = JSONDecoder()
+                        let userdetails = try! decoder.decode(LoginResponse.self, from: data)
+                        TokenManager.shared.storeNewToken(with: userdetails)
+                        completionHandler()
+                    }
+                case .failure(let error):
+                    errorHandler(error)
+                }
+        }
+    }
+    
+    func verifyTokenAndProceed(of uid : String,
+                               onSuccess successCompletionHandler: @escaping () -> Void ,
+                               onError errorHandler: @escaping (Any) -> Void)
     {
         guard TokenManager.shared.isaccessTokenValid() else {
             guard TokenManager.shared.isRefreshTokenValid() else {
@@ -303,116 +356,28 @@ class ServiceManager: NSObject {
             }
             
             //FIXME: Change the condition from take(2) to actual condition on real time environment
-            UserInfo.shared.accessTokenObserver.take(2).subscribe(onNext: { [weak self] details in
+          /*  UserInfo.shared.accessTokenObserver.take(2).subscribe(onNext: { [weak self] details in
                // print("AccessToken : \(details!)")
                 completionHandler()
                 
             }).disposed(by: disposeBag)
-
-            self.updateRefreshToken(of: uid)
+            */
+            
+            self.updateRefreshToken(of: uid , onSuccess: {
+                successCompletionHandler()
+            }, onError: { error in
+                errorHandler(error)
+            })
             return
         }
-        
+        successCompletionHandler()
     }
     
-        func getProfile(for uid : String , with completionHandler: @escaping (Any) -> Void)
-        {
-            let startRequest: () -> Void = {  
-                
-                Alamofire.request(constant.baseUrl+constant.port+constant.login, method: .post, parameters: [:], encoding: JSONEncoding.default, headers: nil)
-                    .responseData { serverResponse in
-                        debugPrint(serverResponse)
-                        switch serverResponse.result {
-                        case .success(let data):
-                            if serverResponse.response!.statusCode == 200 {
-                                let decoder = JSONDecoder()
-                                let userdetails = try! decoder.decode(LoginResponse.self, from: data)
-                                print("userdetails \(userdetails)")
-                                
-                                TokenManager.shared.storeNewToken(with: userdetails)
-                                DispatchQueue.main.async {
-                                    completionHandler(userdetails)
-                                    
-                                }
-                            }
-                            else
-                            {
-                                
-                                self.handleHTTPError(from: serverResponse)
-                            }
-                        case .failure(let error):
-                            print("Request failed with error: \(error)")
-                            self.showInfoAlertScreen(with: serverResponse.result.error!.localizedDescription, oftype: "INFO")
-                        }
-              
-                }
-            }
-            verifyTokenAndProceed(of: uid, with: startRequest)
-            
-        }
+   
     
-    func forgotPassword(for emailId:String , with completionHandler: @escaping (ForgotPasswordResponse) -> Void)
-    {
-        /*
-        let startRequest: () -> Void = {
-            
-            
-        }
-        
-        verifyTokenAndProceed(of: emailId, with: startRequest)
-        */
-        
-        Alamofire.request(constant.baseUrl+constant.forgotpassword, method: .post, parameters: [:], encoding: JSONEncoding.default, headers: nil)
-            .responseData { serverResponse in
-                debugPrint(serverResponse)
-                switch serverResponse.result {
-                case .success(let data):
-                    if serverResponse.response!.statusCode == 200 {
-                        let decoder = JSONDecoder()
-                        let response = try! decoder.decode(ForgotPasswordResponse.self, from: data)
-                        
-                        DispatchQueue.main.async {
-                            completionHandler(response)
-                            
-                        }
-                    }
-                    else
-                    {
-                        
-                        self.handleHTTPError(from: serverResponse)
-                    }
-                case .failure(let error):
-                    print("Request failed with error: \(error)")
-                    self.showInfoAlertScreen(with: serverResponse.result.error!.localizedDescription, oftype: "INFO")
-                }
-        }
-    }
-    
-func handleHTTPError(from serverResponse: DataResponse<Data>)
-{
-    var httpError: HTTPError?
-    switch serverResponse.response!.statusCode {
-    case 400 , 401 , 405 , 404:
-        let decoder = JSONDecoder()
-        httpError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
-        showInfoAlertScreen(with: httpError, oftype: "HTTPERROR")
-    case 403 :
-        let decoder = JSONDecoder()
-        httpError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
-        self.showLoginScreen(with: (httpError?.description)!)
-        
-    default:
-        showInfoAlertScreen(with: "Server Problem", oftype: "INFO")
-        break
-    }
-    
-    print("Error \(String(describing: httpError))")
-   // return httpError!
-}
-    
-    
+
     func showInfoAlertScreen(with alertDetails: Any , oftype alertType:String)
-{
+    {
     DispatchQueue.main.async {
             if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
             {

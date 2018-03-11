@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 enum SettingType : Int  {
     case language
@@ -26,9 +27,12 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
     weak var delegate: SettingProtocols?
     
     // MARK: - TableView Delegate
+    /*
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 40
     }
+     */
+    /*
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
          let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 40))
@@ -42,7 +46,8 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
         headerView.addSubview(titleLbl)
         headerView.backgroundColor = UIColor(red: 180.0/255.0, green: 180.0/255.0, blue: 180.0/255.0, alpha: 1)
          return headerView
-    }
+    }*/
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if let settingtype = SettingType(rawValue: indexPath.row) {
             switch settingtype {
@@ -159,11 +164,18 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 case .language: break
                     
                 case .profile:
-                    
-                    let requestComplete: (Any?) -> Void = { result in
-
-                    }
-                    ServiceManager().getProfile(for: (UserInfo.shared.userDetails?.uid)!, with: requestComplete)
+                   // let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                   // hud.mode = MBProgressHUDMode.indeterminate
+                   // hud.label.text = "Fetching Profile. Please wait"
+                   
+                    /*ServiceManager().getProfile(for: (UserInfo.shared.userDetails?.uid)!, onSuccess: {response in
+                        
+                    }, onHTTPError: { httperror in
+                        
+                    }, onError: {error in
+                        
+                    })*/
+                    delegate?.showProfileScreen()
                     break
                 case .mainPage: break
                 case .graphtype: break

@@ -10,6 +10,6 @@ import Foundation
 
 struct HTTPError: Codable {
     let description : String
-    let error_code : Int
+    let error_code : String
     
 }

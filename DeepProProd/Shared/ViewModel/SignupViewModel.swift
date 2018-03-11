@@ -21,8 +21,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate {
     {
         return SignUpRequest(email: email,
                              first_name: firstname, last_name: lastname,
-                             password: password, user_attributes:User_attributes(dob: dob,
-                                                                                 gender: (gender == 0  ? Gender.Male:Gender.Female)))
+                             password: password, user_attributes:User_attributes(dob: dob))
     }
     
     // MARK: - TextField Delegate
@@ -46,7 +45,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate {
                         datePickerMode: .date) { (date) in
                             if let dt = date {
                                 let formatter = DateFormatter()
-                                formatter.dateFormat = "MM/dd/yyyy"
+                                formatter.dateFormat = "dd-MM-YYYY"
                                 self.dob.value = formatter.string(from: dt)
                             }
         }

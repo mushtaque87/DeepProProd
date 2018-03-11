@@ -9,17 +9,19 @@
 import UIKit
 import RxSwift
 import RxCocoa
+import MBProgressHUD
 
-class ForgotPassword_SH_ViewController: UIViewController {
+class ForgotPassword_SH_ViewController: UIViewController , CAAnimationDelegate {
 
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var                                                                                                                                        titleLbl: UILabel!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var restButton: UIButton!
-    
+    @IBOutlet weak var resetBtn: UIButton!
     @IBOutlet var viewModel: ForgetPasswordViewModel!
     var forgotViewModel = ForgetPasswordViewModel()
-    
+    weak var delegate: ViewControllerDelegate?
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,8 +30,10 @@ class ForgotPassword_SH_ViewController: UIViewController {
         refreshUI()
         _ =  emailTextField.rx.text.map {$0 ?? ""}.bind(to:forgotViewModel.email)
         _ = forgotViewModel.isValid.bind(to: resetBtn.rx.isEnabled)
+        
+        Helper.lockOrientation(.portrait)
     }
-    @IBOutlet weak var resetBtn: UIButton!
+   
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -38,33 +42,48 @@ class ForgotPassword_SH_ViewController: UIViewController {
     // MARK: - UIActions and Events
 
     @IBAction func reset(_ sender: Any) {
-        
-        
-        let requestComplete: (ForgotPasswordResponse) -> Void = { result in
-            
+       
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.mode = MBProgressHUDMode.indeterminate
+        hud.label.text = "Resetting Password.."
+        /*
+        let onSuccess: (ForgotPasswordResponse) -> Void = { result in
             if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
             {
-                
-
                 rootVc.showInfoAlertView(with: result.success == true ? "Password Reset Successful!!!  Check email." : "Password Reset failed. Please try again.")
             }
         }
-
-        ServiceManager().forgotPassword(for: self.emailTextField.text!, with: requestComplete)
+ 
+        let onComplete: () -> Void =  {
+            hud.hide(animated: true)
+        }
+         */
+        
+        ServiceManager().forgotPassword(for: self.emailTextField.text!, onSuccess: { result in
+            if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+            {
+                rootVc.showInfoAlertView(with: result.success == true ? "Password Reset Successful!!!  Check email." : "Password Reset failed. Please try again.")
+            }
+        }, onHTTPError: { httperror in
+            hud.mode = MBProgressHUDMode.text
+            hud.label.text = httperror.description
+        }, onError: { error in
+            hud.mode = MBProgressHUDMode.text
+            hud.label.text = error.localizedDescription
+        }, onComplete:  {
+            hud.hide(animated: true)
+        })
     }
     
     @IBAction func close(_ sender: Any) {
-//
-//        self.dismiss(animated: true) {
-//            print("Dismmised")
-//        }
-//
-        if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
-        {
-            
-            rootVc.remove(viewController: self, from: rootVc)
-            
+    self.view.slideBackToLeft(duration:1.0 , completionDelegate: self)
+    }
+    
+    public func animationDidStop(_ anim: CAAnimation, finished flag: Bool){
+        if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController {
+                    rootVc.remove(viewController: self, from: rootVc)
         }
+        
     }
     /*
     // MARK: - Navigation
@@ -83,6 +102,20 @@ class ForgotPassword_SH_ViewController: UIViewController {
         
         //loginTitleLbl.alignText()
         
+    }
+    
+    func removeViewController() {
+        if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+        {
+            rootVc.remove(viewController: self, from: rootVc)
+        }
+    }
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
     }
     
 

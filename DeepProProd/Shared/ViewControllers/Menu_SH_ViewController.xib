@@ -29,11 +29,9 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="EdR-od-97Y" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="CiI-V5-cXr"/>
-                <constraint firstItem="EdR-od-97Y" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="FBA-bg-XJP"/>
                 <constraint firstAttribute="trailing" secondItem="EdR-od-97Y" secondAttribute="trailing" id="U0y-Il-rM0"/>
                 <constraint firstItem="EdR-od-97Y" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="gfC-FD-WJp"/>
                 <constraint firstItem="EdR-od-97Y" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="qtR-UH-B8m"/>
-                <constraint firstItem="EdR-od-97Y" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" id="wsg-VS-DkX"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="33.5" y="142.5"/>
