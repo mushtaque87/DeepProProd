@@ -27,6 +27,8 @@ struct Constants {
     
     struct BUILDSETTINGS {
         static let tokenTest = ProcessInfo.processInfo.environment["TOKENEXPIRYTEST"]
+        static let grpcTest = ProcessInfo.processInfo.environment["GRPCON"]
+        
     }
     
     struct Path {

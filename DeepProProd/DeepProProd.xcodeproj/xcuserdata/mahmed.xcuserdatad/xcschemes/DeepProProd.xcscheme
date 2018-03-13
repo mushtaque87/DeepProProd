@@ -86,8 +86,13 @@
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "TOKENEXPIRYTEST"
-            value = "1"
+            value = "0"
             isEnabled = "NO">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "GRPCON"
+            value = "1"
+            isEnabled = "YES">
          </EnvironmentVariable>
       </EnvironmentVariables>
       <AdditionalOptions>

@@ -1,108 +1,100 @@
 {
-"predictions": {
-"prd_3": "HH AW / W OW N D / AH L OW",
-"prd_1": "HH AW / W OW N / AA L OW",
-"prd_4": "HH AW / W OW N D / AA L OW",
-"prd_0": "HH AW / W OW N / AH L OW",
-"prd_2": "HH AW / W OW N / EH L OW"
-},
-"debug_mode": true,
-"prediction_distances": {
-"prd_3": 9,
-"prd_1": 11,
-"prd_4": 10,
-"prd_0": 10,
-"prd_2": 11
-},
-"original": "HH EH L OW / W ER L D / HH AH L OW",
-"close_match_key": "prd_3",
-"rating": {
-"total_score": 70.625,
-"word_results": [{
-"un_matched_phonemes": [{
-"mis_match_with": "AW",
-"phoneme": "EH",
-"index": 1,
-"distance": 10.0
-}, {
-"mis_match_with": "/",
-"phoneme": "L",
-"index": 2,
-"distance": 2.0
-}, {
-"mis_match_with": "/",
-"phoneme": "OW",
-"index": 3,
-"distance": 26.0
-}],
-"word_score": 50.0,
-"word_phonemes": ["HH", "EH", "L", "OW"],
-"act_text": "HH AW",
-"predicted_phonemes": ["HH", "AW"],
-"matched_phonemes": [{
+"wordResults": [{
+"score": 42.857142857142854,
+"matched": [{
 "phoneme": "HH",
-"index": 0,
-"distance": 0
-}],
-"exp_text": "HH EH L OW",
-"word": "hello"
+"comparedPhoneme": "HH",
+"distance": 0.0,
+"index": 0
 }, {
-"un_matched_phonemes": [{
-"mis_match_with": "OW",
-"phoneme": "ER",
-"index": 1,
-"distance": 1.0
-}, {
-"mis_match_with": "N",
 "phoneme": "L",
-"index": 2,
-"distance": 20.0
+"comparedPhoneme": "L",
+"distance": 0.0,
+"index": 4
+}, {
+"phoneme": "OW",
+"comparedPhoneme": "OW",
+"distance": 0.0,
+"index": 5
 }],
-"word_score": 86.875,
-"word_phonemes": ["W", "ER", "L", "D"],
-"act_text": "W OW N D",
-"predicted_phonemes": ["W", "OW", "N", "D"],
-"matched_phonemes": [{
+"actual": "HH AH _ _ L OW _",
+"notMatched": [{
+"phoneme": "AH",
+"comparedPhoneme": "_",
+"distance": 41.0,
+"index": 1
+}, {
+"phoneme": "_",
+"comparedPhoneme": "AE",
+"distance": 41.0,
+"index": 2
+}, {
+"phoneme": "_",
+"comparedPhoneme": "/",
+"distance": 41.0,
+"index": 3
+}, {
+"phoneme": "_",
+"comparedPhoneme": "L",
+"distance": 41.0,
+"index": 6
+}],
+"word": "hello",
+"predicted": "HH _ AE / L OW L"
+}, {
+"score": 50.0,
+"matched": [{
 "phoneme": "W",
-"index": 0,
-"distance": 0
+"comparedPhoneme": "W",
+"distance": 0.0,
+"index": 0
+}, {
+"phoneme": "ER",
+"comparedPhoneme": "ER",
+"distance": 0.0,
+"index": 1
+}],
+"actual": "W ER L D",
+"notMatched": [{
+"phoneme": "L",
+"comparedPhoneme": "_",
+"distance": 41.0,
+"index": 2
 }, {
 "phoneme": "D",
-"index": 3,
-"distance": 0
+"comparedPhoneme": "_",
+"distance": 41.0,
+"index": 3
 }],
-"exp_text": "W ER L D",
-"word": "world"
-}, {
-"un_matched_phonemes": [{
-"mis_match_with": "AH",
-"phoneme": "HH",
-"index": 0,
-"distance": 34.0
-}, {
-"mis_match_with": "L",
-"phoneme": "AH",
-"index": 1,
-"distance": 33.0
-}, {
-"mis_match_with": "OW",
-"phoneme": "L",
-"index": 2,
-"distance": 24.0
-}, {
-"mis_match_with": "/",
-"phoneme": "OW",
-"index": 3,
-"distance": 26.0
+"word": "world",
+"predicted": "W ER _ _"
 }],
-"word_score": 75.0,
-"word_phonemes": ["HH", "AH", "L", "OW"],
-"act_text": "AH L OW",
-"predicted_phonemes": ["AH", "L", "OW"],
-"matched_phonemes": [],
-"exp_text": "HH AH L OW",
-"word": "hello"
-}]
+"predicted": "HH AE / L OW L / W ER",
+"actual": "HH AH L OW / W ER L D",
+"topPredictions": [{
+"distance": 6.0,
+"closeMatch": false,
+"text": "HH AE / L OW L / W EH"
+}, {
+"distance": 6.0,
+"closeMatch": false,
+"text": "HH AE / L AO L / W ER"
+}, {
+"distance": 5.0,
+"closeMatch": true,
+"text": "HH AE / L OW L / W ER"
+}, {
+"distance": 5.0,
+"closeMatch": false,
+"text": "HH AE / L OW N / W ER"
+}, {
+"distance": 7.0,
+"closeMatch": false,
+"text": "HH AE / L AO L / W EH"
+}],
+"alignment": {
+"predicted": "HH _ AE / L OW L / W ER _ _",
+"actual": "HH AH _ _ L OW _ / W ER L D"
 },
-"prediction": "HH AW / W OW N D / AH L OW"
+"score": 46.42857142857143
 }

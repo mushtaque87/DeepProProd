@@ -11,6 +11,7 @@ import Alamofire
 import RxSwift
 import MBProgressHUD
 
+
 class Login_SH_ViewController: UIViewController {
 
 
@@ -25,7 +26,8 @@ class Login_SH_ViewController: UIViewController {
     @IBOutlet weak var userNameTextField: UITextField!
     
     @IBOutlet weak var passwordTextField: UITextField!
-  
+   
+
     
     // MARK: - UIView Design
     override func viewDidLoad() {
@@ -43,6 +45,8 @@ class Login_SH_ViewController: UIViewController {
         
         self.navigationController?.navigationBar.backgroundColor =  UIColor.clear
          Helper.lockOrientation(.portrait)
+        
+       
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -155,6 +159,9 @@ class Login_SH_ViewController: UIViewController {
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
+    
+    
+   
     
 }
 

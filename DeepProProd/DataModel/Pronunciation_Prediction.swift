@@ -11,9 +11,9 @@ import UIKit
 class Pronunciation_Prediction: NSObject {
 
     var total_score: Float = 0.00
-    var words_Result: Array<Word_Prediction>?
+    var words_Result: [Word_Prediction]?
     
     override init() {
-            words_Result = Array<Word_Prediction> ();
+            words_Result = [Word_Prediction] ();
         }
 }

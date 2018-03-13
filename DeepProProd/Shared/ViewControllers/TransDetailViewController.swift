@@ -10,7 +10,7 @@ import UIKit
 import Charts
 import AVFoundation
 import  Alamofire
-
+import gRPC
 
 
 enum BoardType  :  Int {
@@ -50,7 +50,8 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
     var player: AVAudioPlayer?
     var boardType : BoardType?
     
-   
+    typealias BUILDSETTINGS = Constants.BUILDSETTINGS
+    
     
     
     
@@ -517,6 +518,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
    
     
     func startRecording() {
+        print(vc_DataModel.getDocumentsDirectory())
         let audioFilename = vc_DataModel.getDocumentsDirectory().appendingPathComponent("recording.wav")
        print(audioFilename)
         do {
@@ -529,7 +531,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
         AVFormatIDKey: Int(kAudioFormatLinearPCM),
         AVSampleRateKey: 16000,
         AVNumberOfChannelsKey: 1,
-        AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
+        AVEncoderAudioQualityKey: AVAudioQuality.medium.rawValue
         ]
         
         do {
@@ -546,6 +548,8 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
         }
     }
     
+   
+    
     func finishRecording(success: Bool) {
         audioRecorder.stop()
         audioRecorder = nil
@@ -555,7 +559,75 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
         if success {
             //recordButton.setTitle("Tap to Re-record", for: .normal)
             recordButton.setImage(UIImage(named: "microphonedisabled.png")!, for: UIControlState.normal)
-            verifyRecording()
+        
+            
+            let audioData =  try? Data(contentsOf: vc_DataModel.getDocumentsDirectory().appendingPathComponent("recording.wav"))
+            
+            print("data \(audioData!)")
+            print("Size \((audioData?.count)!)")
+           // print(" Byte : \(String(describing: audioData?.sizeString()))")
+            
+            let encodedString = audioData?.base64EncodedString()
+           // print(" data \(encodedString!)")
+            //"AAAAGGZ0eXBtcDQyAAAAAG1wNDJpc29t"
+            
+ 
+            
+            if(BUILDSETTINGS.grpcTest != nil)
+            {
+                prepareService(address: "localhost:6565", host: "localhost")
+                do {
+                    try getWordPredictionFromGRPC(for: audioData!, and: wordTextView.text!, onSuccess: { (response) in
+                        print(type(of: response))
+                        
+                        //Fill the Data
+                        self.vc_DataModel.predictionData.words_Result?.removeAll()
+                            for word in response.wordResults {
+                                let wordScore : Word_Prediction = Word_Prediction()
+                                wordScore.word  = word.word
+                                wordScore.word_score  = word.score
+                                wordScore.word_phonemes = word.wordPhonemes
+                                wordScore.predicted_phonemes = word.predictedPhonemes
+                                self.vc_DataModel.predictionData.words_Result?.append(wordScore)
+                        }
+                        
+                                DispatchQueue.main.async {
+                                //Show the total Score
+                                self.commentView.isHidden = false
+                                self.scoreLabel.text = "\(Int(response.score)) %"
+                                //String(format: "%.1f %", (vc_DataModel.predictionData.total_score))
+                                let comment = self.vc_DataModel.fetchComment(score: Int(response.score))
+                                self.commentsLabel.text = comment.comment
+                                self.commentsLabel.textColor = comment.color
+                                
+                                //Adjust the textview
+                                self.wordTextView.attributedText = self.createAttributedText()
+                                self.wordTextView.font = UIFont.boldSystemFont(ofSize: 28.0)
+                                self.wordTextView.textAlignment = NSTextAlignment.center
+                                self.vc_DataModel.resetTextViewContent(textView: self.wordTextView)
+                                    
+                                    
+                                    //Fill Line Graph
+                                    self.trialCount += 1
+                                    self.trials.append(self.trialCount)
+                                    let totalScore: Double = Double(exactly: response.score)!
+                                    self.accuracy.append(totalScore)
+                                    
+                                    //Draw the Graph
+                                    self.setBarGraph()
+                                    self.setLinegraph()
+                            
+                            }
+
+                    })
+                } catch (let error) {
+                    print(error)
+                }
+                
+            }
+            else{
+             verifyRecording()
+            }
         } else {
             //recordButton.setTitle("Tap to Record", for: .normal)
             recordButton.setImage(UIImage(named: "microphonedisabled.png")!, for: UIControlState.normal)
@@ -643,6 +715,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
     {
         accuracy.removeAll()
         setBarGraph()
+        setLinegraph()
         
         vc_DataModel.predictionData.words_Result?.removeAll()
         wordTextView.textColor = UIColor.white
@@ -672,52 +745,60 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
         
     }
     
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+   
     
     // MARK: - Server Connectivity and Delegate
     func returnPredictionValue(response: DataResponse<Any>) {
         activityIndicator.stopAnimating()
         activityIndicator.isHidden = true
         
-        do {
-            
+       
+        
             if (response.result.isFailure) {
                 let alert = UIAlertController(title: "Alert", message: "The server didnt respond back. Can you please try again.", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             }
             else{
-                
-                // Dummy Data
-                //                let filePath = Bundle.main.url(forResource: "Json", withExtension: "")
-                //                let data: Data = try Data.init(contentsOf: filePath!)
-                //                let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String: AnyObject]
-                //                print(json)
-                
-                
+ /*
+                 //Dummy Data
+                            do {
+                                let filePath = Bundle.main.url(forResource: "json", withExtension: "txt")
+                                let data: Data = try Data.init(contentsOf: filePath!)
+                               // let json = try JSONSerialization.jsonObject(with: data, options: []) as! [String: AnyObject]
+                               // print(json)
+                                let jsonDecoder = JSONDecoder()
+                                let responseModel = try jsonDecoder.decode(PredictionResponse.self, from: data)
+                                
+                            }
+                            catch let error as NSError {
+                                    // print("Failed reading from URL: \(filePath), Error: " + error.localizedDescription)
+                                }
+                */
+                let decoder = JSONDecoder()
+                let predition = try! decoder.decode(PredictionResponse.self, from: response.data!)
+
+            
+                vc_DataModel.predictionData.words_Result?.removeAll()
+                for word in predition.wordResults! {
+                    let wordScore : Word_Prediction = Word_Prediction()
+                    wordScore.word  = word.word
+                    wordScore.word_score  = word.score!
+                    wordScore.word_phonemes = word.actual?.components(separatedBy: " ")
+                    wordScore.predicted_phonemes = word.predicted?.components(separatedBy: " ")
+                    vc_DataModel.predictionData.words_Result?.append(wordScore)
+                    
+                }
+                /*
                 //Uncomment for server
                 let json = response.result.value as! NSDictionary
                 
                 if let rating = json["rating"] as? [String: Any], let word_results: Array<[String: Any]> = rating["word_results"] as? Array<[String: Any]>  {
                     
+                    //Get the Score
                     vc_DataModel.predictionData.total_score =  rating["total_score"] as! Float
-                    //
-                    //                print(word_results.count)
-                    //                print(word_results[0])
-                    //                print(word_results[0]["word"])
-                    //                print(word_results[0]["word_score"])
-                    //                print(word_results[0]["predicted_phonemes"])
-                    //                print(word_results[0]["word_phonemes"])
-                    
-                    
+          
                     //Fill the Data
                     vc_DataModel.predictionData.words_Result?.removeAll()
                     for word in word_results {
@@ -729,7 +810,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
                         vc_DataModel.predictionData.words_Result?.append(wordScore)
                         
                     }
-                    
+                  */
                     
                     //Color the Words
                     /*
@@ -752,7 +833,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
                     */
                     
                     
-                    
+                    //Adjust the textview
                     wordTextView.attributedText = createAttributedText()
                     wordTextView.font = UIFont.boldSystemFont(ofSize: 28.0)
                     wordTextView.textAlignment = NSTextAlignment.center
@@ -761,49 +842,29 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
                     
                     //Show the total Score
                     commentView.isHidden = false
-                    scoreLabel.text = "\(Int(vc_DataModel.predictionData.total_score)) %"
+                scoreLabel.text = "\(Int(predition.score!)) %"
                         //String(format: "%.1f %", (vc_DataModel.predictionData.total_score))
-                    let comment = vc_DataModel.fetchComment(score: Int(vc_DataModel.predictionData.total_score))
+                    let comment = vc_DataModel.fetchComment(score: Int(predition.score!))
                     commentsLabel.text = comment.comment
                     commentsLabel.textColor = comment.color
                     
                     //Fill Line Graph
                     trialCount += 1
                     trials.append(trialCount)
-                    let totalScore: Double = rating["total_score"] as! Double
+                    let totalScore: Double = Double(exactly: predition.score!)!
                     accuracy.append(totalScore)
                     
-                    /*
-                    #if GRAPH_TYPE
-                       setBarGraph()
-                    #else
-                       setLinegraph()
-                    #endif
-                    */
-                    
-                  
+                    //Draw the Graph
                     setBarGraph()
                     setLinegraph()
                     
-                    //setChart(dataPoints: trials, values: accuracy)
-                    
-                    //
-                    
-                    //Show the Word Report
-                    //VC_DataModel.predictionData = pronunce_Prediction!;
-                    //correctionView.isHidden = true
-                    // correctionView.reloadData()
-                }
-                
-                //let word_result: Array = (json["rating"]!["word_results"])
-                //print(word_result)
-                
+                  
+              //  }
+        
                 
             } //else
             
-        } catch let error as NSError {
-            // print("Failed reading from URL: \(filePath), Error: " + error.localizedDescription)
-        }
+        //}
     }
     
     // MARK: - Memory Management

@@ -11,7 +11,7 @@ import UIKit
 class Word_Prediction: NSObject {
     var word: String?
     var word_score: Float = 0.0
-    var word_phonemes: Array<String>?
-    var predicted_phonemes: Array<String>?
+    var word_phonemes: [String]?
+    var predicted_phonemes:[String]?
     
 }

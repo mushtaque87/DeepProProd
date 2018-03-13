@@ -90,7 +90,7 @@ class ServiceManager: NSObject {
             case .success(let upload, _, _):
                 upload.responseJSON { response in
                     if((response.result.value) != nil) {
-                        print(response.result.value as Any)
+                        print(response.result.value!)
                        // type(of: response.result.value)
                        // let pred: Prediction_Model = Prediction_Model.init(text: <#T##String#>, numPred: <#T##Int#>)
                        
@@ -181,7 +181,7 @@ class ServiceManager: NSObject {
                 switch serverResponse.result {
                 case .success(let data):
                     if serverResponse.response!.statusCode == 200 {
-                        let decoder = JSONDecoder()
+                       // let decoder = JSONDecoder()
                         let signupresponse = try! decoder.decode(SignUpResponse.self, from: data)
                         print("signupresponse \(signupresponse)")
                          successCompletionHandler(signupresponse)

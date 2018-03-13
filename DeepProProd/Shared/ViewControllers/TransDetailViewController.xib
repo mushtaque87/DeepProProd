@@ -239,7 +239,7 @@
                                 <constraint firstAttribute="width" constant="80" id="D3n-jd-bJT"/>
                             </constraints>
                             <segments>
-                                <segment title="First"/>
+                                <segment title="Bar"/>
                                 <segment title="Line"/>
                             </segments>
                             <connections>
