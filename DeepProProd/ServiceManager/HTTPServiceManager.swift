@@ -192,6 +192,7 @@ class ServiceManager: NSObject {
                         print(serverResponse.result.value!)
                         let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: data)
                         print(httpError.description)
+                        print("HTTP error: \(httpError.description)")
                     }
                 case .failure(let error):
                     print("Request failed with error: \(error)")
@@ -228,6 +229,7 @@ class ServiceManager: NSObject {
                         //   self.handleHTTPError(from: serverResponse)
                         let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
                         httpErrorHandler(httpError)
+                        print("HTTP error: \(httpError.description)")
                     }
                 case .failure(let error):
                     print("Request failed with error: \(error)")
@@ -269,6 +271,7 @@ class ServiceManager: NSObject {
                         //self.handleHTTPError(from: serverResponse)
                         let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
                         httpErrorHandler(httpError)
+                        print("HTTP error: \(httpError.description)")
                     }
                 case .failure(let error):
                     print("Request failed with error: \(error)")
@@ -305,6 +308,7 @@ class ServiceManager: NSObject {
                                             {
                                                 let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
                                                 httpErrorHandler(httpError)
+                                                print("HTTP error: \(httpError.description)")
                                             }
                                         case .failure(let error):
                                             print("Request failed with error: \(error)")

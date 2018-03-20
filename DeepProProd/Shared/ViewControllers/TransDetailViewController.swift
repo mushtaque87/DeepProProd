@@ -49,7 +49,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
     var audioRecorder: AVAudioRecorder!
     var player: AVAudioPlayer?
     var boardType : BoardType?
-    
+    let grpcService = GRPCServiceManager()
     typealias BUILDSETTINGS = Constants.BUILDSETTINGS
     
     
@@ -547,119 +547,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
             finishRecording(success: false)
         }
     }
-    
-   
-    
-    func finishRecording(success: Bool) {
-        audioRecorder.stop()
-        audioRecorder = nil
-        commentView.isHidden = false
-       // graphProgressView.isHidden = false
-        
-        if success {
-            //recordButton.setTitle("Tap to Re-record", for: .normal)
-            recordButton.setImage(UIImage(named: "microphonedisabled.png")!, for: UIControlState.normal)
-        
-            
-            let audioData =  try? Data(contentsOf: vc_DataModel.getDocumentsDirectory().appendingPathComponent("recording.wav"))
-            
-            print("data \(audioData!)")
-            print("Size \((audioData?.count)!)")
-           // print(" Byte : \(String(describing: audioData?.sizeString()))")
-            
-            let encodedString = audioData?.base64EncodedString()
-           // print(" data \(encodedString!)")
-            //"AAAAGGZ0eXBtcDQyAAAAAG1wNDJpc29t"
-            
- 
-            
-            if(BUILDSETTINGS.grpcTest != nil)
-            {
-                prepareService(address: "localhost:6565", host: "localhost")
-                do {
-                    try getWordPredictionFromGRPC(for: audioData!, and: wordTextView.text!, onSuccess: { (response) in
-                        print(type(of: response))
-                        
-                        //Fill the Data
-                        self.vc_DataModel.predictionData.words_Result?.removeAll()
-                            for word in response.wordResults {
-                                let wordScore : Word_Prediction = Word_Prediction()
-                                wordScore.word  = word.word
-                                wordScore.word_score  = word.score
-                                wordScore.word_phonemes = word.wordPhonemes
-                                wordScore.predicted_phonemes = word.predictedPhonemes
-                                self.vc_DataModel.predictionData.words_Result?.append(wordScore)
-                        }
-                        
-                                DispatchQueue.main.async {
-                                //Show the total Score
-                                self.commentView.isHidden = false
-                                self.scoreLabel.text = "\(Int(response.score)) %"
-                                //String(format: "%.1f %", (vc_DataModel.predictionData.total_score))
-                                let comment = self.vc_DataModel.fetchComment(score: Int(response.score))
-                                self.commentsLabel.text = comment.comment
-                                self.commentsLabel.textColor = comment.color
-                                
-                                //Adjust the textview
-                                self.wordTextView.attributedText = self.createAttributedText()
-                                self.wordTextView.font = UIFont.boldSystemFont(ofSize: 28.0)
-                                self.wordTextView.textAlignment = NSTextAlignment.center
-                                self.vc_DataModel.resetTextViewContent(textView: self.wordTextView)
-                                    
-                                    
-                                    //Fill Line Graph
-                                    self.trialCount += 1
-                                    self.trials.append(self.trialCount)
-                                    let totalScore: Double = Double(exactly: response.score)!
-                                    self.accuracy.append(totalScore)
-                                    
-                                    //Draw the Graph
-                                    self.setBarGraph()
-                                    self.setLinegraph()
-                            
-                            }
 
-                    })
-                } catch (let error) {
-                    print(error)
-                }
-                
-            }
-            else{
-             verifyRecording()
-            }
-        } else {
-            //recordButton.setTitle("Tap to Record", for: .normal)
-            recordButton.setImage(UIImage(named: "microphonedisabled.png")!, for: UIControlState.normal)
-
-            // recording failed :(
-        }
-    }
-    
-    
-    
-    
-    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
-        if !flag {
-            finishRecording(success: false)
-        }
-    }
-    
-    
-    
-    func verifyRecording()  {
-       
-            activityIndicator.isHidden = false
-            activityIndicator.startAnimating()
-            let serviceManager = ServiceManager()
-            serviceManager.delegate = self
-            serviceManager.sendAudioForPrediction(file:vc_DataModel.getDocumentsDirectory().appendingPathComponent("recording.wav") , text: wordTextView.text!)
-            
-        }
-    
-    
-  
-    
     @IBAction func showTextField()
     {
         if (typeTextView.isHidden) {
@@ -678,12 +566,6 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
             
         }
     }
-    
-    
-    
-    
-    
-   
     
     func createAttributedText() -> NSMutableAttributedString
     {
@@ -749,13 +631,120 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
    
     
     // MARK: - Server Connectivity and Delegate
+    
+    
+    func audioRecorderDidFinishRecording(_ recorder: AVAudioRecorder, successfully flag: Bool) {
+        if !flag {
+            finishRecording(success: false)
+        }
+    }
+    
+    func finishRecording(success: Bool) {
+        audioRecorder.stop()
+        audioRecorder = nil
+        commentView.isHidden = false
+        
+        if success {
+            //recordButton.setTitle("Tap to Re-record", for: .normal)
+            recordButton.setImage(UIImage(named: "microphonedisabled.png")!, for: UIControlState.normal)
+            
+            if(BUILDSETTINGS.grpcTest != nil)
+            {
+                callGRPCService()
+            }
+            else{
+                callHTTPService()
+            }
+        } else {
+            recordButton.setImage(UIImage(named: "microphonedisabled.png")!, for: UIControlState.normal)
+            
+        }
+    }
+
+    func callGRPCService()
+    {
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+       
+        
+        do {
+            
+            let audioData =  try? Data(contentsOf: vc_DataModel.getDocumentsDirectory().appendingPathComponent("recording.wav"))
+            //let encodedString = audioData?.base64EncodedString()
+            
+            try grpcService.getWordPredictionFromGRPC(for: audioData!, and: wordTextView.text!, onSuccess: {(response) in
+                
+                self.activityIndicator.isHidden = true
+                self.activityIndicator.stopAnimating()
+                
+                print(type(of: response))
+                
+                //Fill the Data
+                self.vc_DataModel.predictionData.words_Result?.removeAll()
+                for word in response.wordResults {
+                    let wordScore : Word_Prediction = Word_Prediction()
+                    wordScore.word  = word.word
+                    wordScore.word_score  = word.score
+                    wordScore.word_phonemes = word.wordPhonemes
+                    wordScore.predicted_phonemes = word.predictedPhonemes
+                    self.vc_DataModel.predictionData.words_Result?.append(wordScore)
+                }
+                
+                DispatchQueue.main.async {
+                    //Show the total Score
+                    self.commentView.isHidden = false
+                    self.scoreLabel.text = "\(Int(response.score)) %"
+                    //String(format: "%.1f %", (vc_DataModel.predictionData.total_score))
+                    let comment = self.vc_DataModel.fetchComment(score: Int(response.score))
+                    self.commentsLabel.text = comment.comment
+                    self.commentsLabel.textColor = comment.color
+                    
+                    //Adjust the textview
+                    self.wordTextView.attributedText = self.createAttributedText()
+                    self.wordTextView.font = UIFont.boldSystemFont(ofSize: 28.0)
+                    self.wordTextView.textAlignment = NSTextAlignment.center
+                    self.vc_DataModel.resetTextViewContent(textView: self.wordTextView)
+                    
+                    
+                    //Fill Line Graph
+                    self.trialCount += 1
+                    self.trials.append(self.trialCount)
+                    let totalScore: Double = Double(exactly: response.score)!
+                    self.accuracy.append(totalScore)
+                    
+                    //Draw the Graph
+                    self.setBarGraph()
+                    self.setLinegraph()
+                    
+                }
+                
+            }, onFailure: {
+                
+                self.activityIndicator.isHidden = true
+                self.activityIndicator.stopAnimating()
+                
+            })
+        } catch (let error) {
+            print(error)
+        }
+        
+    }
+    
+    func callHTTPService()  {
+        
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        let serviceManager = ServiceManager()
+        serviceManager.delegate = self
+        serviceManager.sendAudioForPrediction(file:vc_DataModel.getDocumentsDirectory().appendingPathComponent("recording.wav") , text: wordTextView.text!)
+        
+    }
+    
     func returnPredictionValue(response: DataResponse<Any>) {
         activityIndicator.stopAnimating()
         activityIndicator.isHidden = true
         
-       
-        
-            if (response.result.isFailure) {
+        if (response.result.isFailure) {
                 let alert = UIAlertController(title: "Alert", message: "The server didnt respond back. Can you please try again.", preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
@@ -777,7 +766,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
                                 }
                 */
                 let decoder = JSONDecoder()
-                let predition = try! decoder.decode(PredictionResponse.self, from: response.data!)
+                let predition = try! decoder.decode(PredictionResponse.self, from:response.data!)
 
             
                 vc_DataModel.predictionData.words_Result?.removeAll()
@@ -842,7 +831,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
                     
                     //Show the total Score
                     commentView.isHidden = false
-                scoreLabel.text = "\(Int(predition.score!)) %"
+                    scoreLabel.text = "\(Int(predition.score!)) %"
                         //String(format: "%.1f %", (vc_DataModel.predictionData.total_score))
                     let comment = vc_DataModel.fetchComment(score: Int(predition.score!))
                     commentsLabel.text = comment.comment

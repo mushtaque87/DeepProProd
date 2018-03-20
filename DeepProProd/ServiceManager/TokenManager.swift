@@ -66,21 +66,20 @@ class TokenManager: NSObject {
 //
     
     func isaccessTokenValid() -> Bool {
-        let accesTokenExpiryDate = UserDefaults.standard.string(forKey: "token_expire_date")
-        let currentDate = currentDateTime()
-        print("acess token expiry date :\(accesTokenExpiryDate!) \n currentDate:\(currentDate)")
-       
+        
         if (BUILDSETTINGS.tokenTest != nil) {
             return false
         }
+        
+        guard UserDefaults.standard.string(forKey: "token_expire_date")  != nil else {
+            return false
+        }
+        let accesTokenExpiryDate = UserDefaults.standard.string(forKey: "token_expire_date")
+        let currentDate = currentDateTime()
+        print("acess token expiry date :\(accesTokenExpiryDate!) \n currentDate:\(currentDate)")
         if(currentDate.compare((accesTokenExpiryDate?.toDate())!) == ComparisonResult.orderedAscending)
         {
-            //FIXME: Change false to true for correct implementation
-           
-         
-               return true
-           
-            
+            return true
         }
         return false
     }
