@@ -224,7 +224,7 @@
                             <color key="textColor" red="0.96186739206314087" green="0.97414988279342651" blue="0.89893800020217896" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Well tried !!! But your accuracy can still be improved. Try Again  " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eb9-sZ-sgc">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Eb9-sZ-sgc">
                             <rect key="frame" x="112" y="20" width="255" height="127"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="255" id="hQC-AI-ipu"/>
@@ -234,10 +234,7 @@
                             <nil key="highlightedColor"/>
                         </label>
                         <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Ltf-xi-jcl">
-                            <rect key="frame" x="24" y="125" width="80" height="29"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="80" id="D3n-jd-bJT"/>
-                            </constraints>
+                            <rect key="frame" x="24" y="125" width="81" height="29"/>
                             <segments>
                                 <segment title="Bar"/>
                                 <segment title="Line"/>
@@ -251,7 +248,7 @@
                     <constraints>
                         <constraint firstItem="VXN-Xw-yat" firstAttribute="leading" secondItem="Pgp-g5-RV5" secondAttribute="leading" id="0dS-ks-y9H"/>
                         <constraint firstItem="Eb9-sZ-sgc" firstAttribute="top" secondItem="Pgp-g5-RV5" secondAttribute="top" constant="20" id="EBl-NH-jxg"/>
-                        <constraint firstAttribute="bottom" secondItem="Ltf-xi-jcl" secondAttribute="bottom" constant="17" id="HvB-bu-sM0"/>
+                        <constraint firstItem="Ltf-xi-jcl" firstAttribute="bottom" secondItem="Eb9-sZ-sgc" secondAttribute="bottom" constant="6" id="HvB-bu-sM0"/>
                         <constraint firstItem="VXN-Xw-yat" firstAttribute="top" secondItem="Pgp-g5-RV5" secondAttribute="top" constant="88" id="SYL-7b-Yx8"/>
                         <constraint firstItem="Eb9-sZ-sgc" firstAttribute="trailing" secondItem="Pgp-g5-RV5" secondAttribute="trailingMargin" id="UHu-dr-QeR"/>
                         <constraint firstAttribute="bottom" secondItem="Eb9-sZ-sgc" secondAttribute="bottom" constant="23" id="fHL-8Y-K82"/>
@@ -285,7 +282,6 @@
                 <constraint firstItem="XsG-dT-Mbb" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ZaA-j0-5dD"/>
                 <constraint firstItem="Xol-lY-QwA" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="bdw-4e-VfD"/>
                 <constraint firstItem="XsG-dT-Mbb" firstAttribute="trailing" secondItem="Pgp-g5-RV5" secondAttribute="trailing" id="duH-6B-a2D"/>
-                <constraint firstItem="Pgp-g5-RV5" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="eJe-T5-5M0"/>
                 <constraint firstItem="Qav-sS-WHe" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="-1" id="h1C-6N-tZd"/>
                 <constraint firstItem="XsG-dT-Mbb" firstAttribute="top" secondItem="Pgp-g5-RV5" secondAttribute="top" id="hK4-iD-adB"/>
                 <constraint firstItem="Xol-lY-QwA" firstAttribute="bottom" secondItem="i5M-Pr-FkT" secondAttribute="bottom" id="jI8-so-NpH"/>

@@ -47,14 +47,14 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
             let transDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
             transDetailViewController.boardType = BoardType.account
             practiceBoardNavigationController.viewControllers = [transDetailViewController]
-            practiceBoardNavigationController.tabBarItem = UITabBarItem(title: "Speech", image: UIImage(named: "homeTab.png"), tag: 1)
+            practiceBoardNavigationController.tabBarItem = UITabBarItem(title: "Speech", image: UIImage(named: "assignmentTab.png"), tag: 1)
         
             let settingNavigationController = UINavigationController()
             let settingsViewController = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
             settingNavigationController.viewControllers = [settingsViewController]
-            settingNavigationController.tabBarItem = UITabBarItem(title: "Settings", image:UIImage(named: "homeTab.png"), tag: 2)
+            settingNavigationController.tabBarItem = UITabBarItem(title: "Settings", image:UIImage(named: "settingsTab.png"), tag: 2)
    
-            tabBarViewControllers  = [levelViewController,practiceBoardNavigationController,settingNavigationController]
+            tabBarViewControllers  = [courseNavigationController,practiceBoardNavigationController,settingNavigationController]
         
         }
         viewControllers = tabBarViewControllers

@@ -44,7 +44,6 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
     var accuracy : [Double]! = []
     var trialCount : Int = 0
     var trials: [Int]! = []
-   // var isGraphVisible: Bool = false
     var recordingSession: AVAudioSession!
     var audioRecorder: AVAudioRecorder!
     var player: AVAudioPlayer?
@@ -449,6 +448,10 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
     }
     
     @objc func changeWord(sender:UISwipeGestureRecognizer){
+        guard wordResultView?.isPhenomeTableVisible != true else {
+            return
+        }
+        
         if(sender.direction == .right &&  vc_DataModel.wordIndex > 0) {
             vc_DataModel.wordIndex -= 1
            // wordLabel.slideInFromLeft()
@@ -607,6 +610,18 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
         } catch let error as NSError {
             print("Error: \(error.domain)")
         }
+        
+        self.commentView.isHidden = false
+        if(Settings.sharedInstance.language == "English")
+        {
+            commentsLabel.text = "Record the above statement and we will help you pronunce it better !!"
+        }
+        else{
+            commentsLabel.text = "تسجيل البيان أعلاه ونحن سوف تساعدك برونونس ذلك أفضل !!"
+        }
+        self.commentsLabel.textColor = UIColor.white
+        self.scoreLabel.text = "0 %"
+        
     }
     
    

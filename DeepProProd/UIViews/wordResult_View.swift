@@ -13,7 +13,7 @@ class wordResult_View: UIView {
     var shouldSetupConstraints = true
     var close : UIButton!
     var wordPhenome_Table: UITableView!
-    var phenomeTableVisible = false
+    var isPhenomeTableVisible = false
     //var wordToShow: String?
     var wordLabel: UILabel?
     var wordScoreLabel: UILabel?
@@ -81,7 +81,7 @@ class wordResult_View: UIView {
     
     func showAnimate()
     {
-        if(self.phenomeTableVisible == false)
+        if(self.isPhenomeTableVisible == false)
         {
         self.transform = CGAffineTransform(scaleX: 0.5, y: 0.5)
         self.alpha = 0.0;
@@ -90,7 +90,7 @@ class wordResult_View: UIView {
             self.transform = CGAffineTransform(scaleX: 1, y: 1)
            
         });
-        self.phenomeTableVisible = true
+        self.isPhenomeTableVisible = true
         }
         else{
             removeAnimate()
@@ -117,7 +117,7 @@ class wordResult_View: UIView {
                 
             }
         });
-        self.phenomeTableVisible = false
+        self.isPhenomeTableVisible = false
     }
     
     
