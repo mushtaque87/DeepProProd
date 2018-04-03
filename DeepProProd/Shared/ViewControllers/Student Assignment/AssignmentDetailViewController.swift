@@ -1,30 +1,19 @@
 //
-//  Level_SHViewController.swift
+//  AssignmentDetailViewController.swift
 //  DeepProProd
 //
-//  Created by Mushtaque Ahmed on 1/10/18.
+//  Created by Mushtaque Ahmed on 3/27/18.
 //  Copyright © 2018 Mushtaque Ahmed. All rights reserved.
 //
 
 import UIKit
 
-class Level_SHViewController: UIViewController {
+class AssignmentDetailViewController: UIViewController {
 
-    @IBOutlet weak var backgroundImage: UIImageView!
-    @IBOutlet var viewModel: LevelViewModel!
-    @IBOutlet weak var levelTableView: UITableView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-        self.levelTableView.register(UINib(nibName: "ChapterContentCell", bundle: nil), forCellReuseIdentifier: "content")
-        viewModel.parentController = self
-        levelTableView.backgroundColor = UIColor.clear
-        
-        self.navigationItem.title = "Courses"
-
     }
 
     override func didReceiveMemoryWarning() {
@@ -32,9 +21,6 @@ class Level_SHViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        refreshUI()
-    }
 
     /*
     // MARK: - Navigation
@@ -45,9 +31,5 @@ class Level_SHViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    
-    func refreshUI() {
-        backgroundImage.setBackGroundimage()
-    }
 
 }

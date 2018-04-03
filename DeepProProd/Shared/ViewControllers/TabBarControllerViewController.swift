@@ -43,18 +43,24 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
             courseNavigationController.viewControllers = [levelViewController]
             courseNavigationController.tabBarItem = UITabBarItem(title: "Menu", image: UIImage(named: "homeTab.png"), tag: 0)
         
+            let studentAssignmentNavigationController = UINavigationController()
+            let studentDashboard = AssignmnetDasboardViewController(nibName:"AssignmnetDasboardViewController",bundle:nil)
+            studentAssignmentNavigationController.viewControllers = [studentDashboard]
+            studentAssignmentNavigationController.tabBarItem = UITabBarItem(title: "Assignment", image: UIImage(named: "assignmentTab.png"), tag: 1)
+            
+            
             let practiceBoardNavigationController = UINavigationController()
             let transDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
             transDetailViewController.boardType = BoardType.account
             practiceBoardNavigationController.viewControllers = [transDetailViewController]
-            practiceBoardNavigationController.tabBarItem = UITabBarItem(title: "Speech", image: UIImage(named: "assignmentTab.png"), tag: 1)
+            practiceBoardNavigationController.tabBarItem = UITabBarItem(title: "Speech", image: UIImage(named: "assignmentTab.png"), tag: 2)
         
             let settingNavigationController = UINavigationController()
             let settingsViewController = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
             settingNavigationController.viewControllers = [settingsViewController]
-            settingNavigationController.tabBarItem = UITabBarItem(title: "Settings", image:UIImage(named: "settingsTab.png"), tag: 2)
+            settingNavigationController.tabBarItem = UITabBarItem(title: "Settings", image:UIImage(named: "settingsTab.png"), tag: 3)
    
-            tabBarViewControllers  = [courseNavigationController,practiceBoardNavigationController,settingNavigationController]
+            tabBarViewControllers  = [courseNavigationController,studentAssignmentNavigationController,practiceBoardNavigationController,settingNavigationController]
         
         }
         viewControllers = tabBarViewControllers

@@ -152,6 +152,9 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
         {
             closeBtn.isHidden = true
         }
+        
+        self.navigationItem.title = "Practice Board"
+
     }
     
     override func viewDidAppear(_ animated: Bool) {

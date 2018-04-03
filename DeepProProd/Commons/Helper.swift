@@ -107,7 +107,7 @@ class Helper: NSObject {
     }
 
     
- static func parseJson() throws -> LevelList  {
+ static func parseLevelJson() throws -> LevelList  {
     let filePath = Bundle.main.url(forResource: "LevelJson", withExtension: "txt")
         
         let data: Data = try Data.init(contentsOf: filePath!)
@@ -120,6 +120,20 @@ class Helper: NSObject {
     return levels
     }
     
+    /*
+ static func getAssignmentList() throws -> Assignments  {
+        let filePath = Bundle.main.url(forResource: "AssignmentList", withExtension: "txt")
+        
+        let data: Data = try Data.init(contentsOf: filePath!)
+        
+        let decoder = JSONDecoder()
+        let assignments = try! decoder.decode(Assignments.self, from: data)
+        
+        // let levelsList  = levels
+        print(assignments)
+        return assignments
+    }
+    */
     // MARK: -  AutoRotion Codes
     
     static func lockOrientation(_ orientation: UIInterfaceOrientationMask) {

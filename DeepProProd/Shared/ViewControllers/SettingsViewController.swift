@@ -19,7 +19,7 @@ class SettingsViewController: UIViewController,SettingProtocols {
 
     @IBOutlet var viewModel: SettingsViewModel!
     @IBOutlet weak var settingTableView: UITableView!
-    @IBOutlet weak var backgroundImg: UIImageView!
+   
     @IBOutlet weak var logOutBtn: UIButton!
     @IBOutlet weak var languageControl: UISegmentedControl!
     override func viewDidLoad() {
@@ -77,6 +77,6 @@ class SettingsViewController: UIViewController,SettingProtocols {
     }
     
     func refreshUI() {
-        backgroundImg.setBackGroundimage()
+       
     }
 }

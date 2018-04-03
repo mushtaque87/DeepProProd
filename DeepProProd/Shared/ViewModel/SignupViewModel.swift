@@ -11,8 +11,9 @@ import RxSwift
 
 class SignupViewModel: NSObject,UITextFieldDelegate {
 
+    var currentTextField: UITextField?
+    lazy  var dob = Variable("")
     
-   lazy  var dob = Variable("")
     var dobObserver:Observable<String> {
         return dob.asObservable()
     }
@@ -28,6 +29,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {    //delegate method
         
         if(textField.tag == 6){
+        currentTextField?.resignFirstResponder()
         let currentDate = Date()
         var dateComponents = DateComponents()
         dateComponents.year = 100
@@ -48,12 +50,13 @@ class SignupViewModel: NSObject,UITextFieldDelegate {
                                 formatter.dateFormat = "dd-MM-YYYY"
                                 self.dob.value = formatter.string(from: dt)
                             }
+          }
         }
-        }
-    
+        currentTextField = textField
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {  //delegate method
+        //currentTextField?.resignFirstResponder()
         return true
     }
     

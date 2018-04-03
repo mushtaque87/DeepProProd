@@ -1,0 +1,50 @@
+{
+"Assignments": {
+"New": [{
+"id": 1,
+"assignmentName": "Animal",
+"createdBy": "Hatem Odeh",
+"createdDate": "21-06-2018",
+"submissionDate": "21-06-2018",
+"assignmentStatus": "New",
+"assignmentScore": 0
+}, {
+"id": 2,
+"assignmentName": "Building",
+"createdBy": "Pranjal ",
+"createdDate": "21-06-2018",
+"submissionDate": "21-06-2018",
+"assignmentStatus": "New",
+"assignmentScore": 0
+}],
+"inProgress": [{
+"id": 3,
+"assignmentName": "Plants",
+"createdBy": "Shahin",
+"createdDate": "21-06-2018",
+"submissionDate": "21-06-2018",
+"assignmentStatus": "InProgress",
+"assignmentScore": 0
+},
+{
+"id": 4,
+"assignmentName": "Building",
+"createdBy": "Shahin",
+"createdDate": "21-06-2018",
+"submissionDate": "21-06-2018",
+"assignmentStatus": "InProgress",
+"assignmentScore": 0
+}
+],
+"Submitted": [{
+"id": 5,
+"assignmentName": "Building",
+"createdBy": "Pranjal ",
+"createdDate": "21-06-2018",
+"submissionDate": "21-06-2018",
+"assignmentStatus": "Submitted",
+"assignmentScore": 0
+}]
+}
+
+}

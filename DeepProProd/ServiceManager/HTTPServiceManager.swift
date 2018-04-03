@@ -175,7 +175,7 @@ class ServiceManager: NSObject {
         //var newRequest = createCustomeRequest(for: constant.baseUrl+constant.signUp, withParameter: body, httpType: HTTPMethod.post, withAuth: false)
         //Alamofire.request(constant.baseUrl+constant.forgotpassword, method: .post, parameters:  jsonData , encoding: JSONEncoding.default, headers: nil)
        
-        Alamofire.request(createCustomeRequest(for: constant.baseUrl+constant.signUp, withParameter: body, httpType: HTTPMethod.post, withAuth: false)).responseData(completionHandler:  { serverResponse in
+        Alamofire.request(createCustomeRequest(for: constant.baseUrl+constant.useridentity+constant.signUp, withParameter: body, httpType: HTTPMethod.post, withAuth: false)).responseData(completionHandler:  { serverResponse in
                 debugPrint(serverResponse)
                 let decoder = JSONDecoder()
                 switch serverResponse.result {
@@ -210,7 +210,7 @@ class ServiceManager: NSObject {
                         onError errorHandler: @escaping (Error)-> Void  ,
                         onComplete completeCompletionHandler: @escaping ()-> Void)
     {
-        Alamofire.request(constant.baseUrl+constant.forgotpassword, method: .post, parameters: [:], encoding: JSONEncoding.default, headers: nil)
+        Alamofire.request(constant.baseUrl + constant.useridentity + constant.forgotpassword, method: .post, parameters: [:], encoding: JSONEncoding.default, headers: nil)
             .responseData { serverResponse in
                 DispatchQueue.main.async {
                 debugPrint(serverResponse)
@@ -252,7 +252,7 @@ class ServiceManager: NSObject {
                  onError errorHandler: @escaping (Error)-> Void  ,
                  onComplete completeCompletionHandler: @escaping ()-> Void ) {
         
-        Alamofire.request(constant.baseUrl+constant.login, method: .post, parameters: ["username":username ,"password":password] , encoding: JSONEncoding.default, headers: nil)
+        Alamofire.request(constant.baseUrl + constant.useridentity+constant.login, method: .post, parameters: ["username":username ,"password":password] , encoding: JSONEncoding.default, headers: nil)
             .responseData { serverResponse in
                 DispatchQueue.main.async {
                 debugPrint(serverResponse)
@@ -295,7 +295,7 @@ class ServiceManager: NSObject {
         verifyTokenAndProceed(of: uid,
                               onSuccess: {
                                 
-                                Alamofire.request(constant.baseUrl + uid, method: .get, parameters: [:] , encoding: JSONEncoding.default, headers:self.generateAuthHeaders())
+                                Alamofire.request(constant.baseUrl + constant.useridentity + uid, method: .get, parameters: [:] , encoding: JSONEncoding.default, headers:self.generateAuthHeaders())
                                     .responseData { serverResponse in
                                         let decoder = JSONDecoder()
                                         switch serverResponse.result {
@@ -329,7 +329,7 @@ class ServiceManager: NSObject {
                             onError errorHandler: @escaping (Any) -> Void)
     {
         
-        Alamofire.request(constant.baseUrl+uid+constant.refreshtoken, method: .post, parameters: ["refresh-token":(UserDefaults.standard.string(forKey: "refresh_token"))!], encoding: JSONEncoding.default, headers: nil)
+        Alamofire.request(constant.baseUrl + constant.useridentity + uid + constant.refreshtoken, method: .post, parameters: ["refresh-token":(UserDefaults.standard.string(forKey: "refresh_token"))!], encoding: JSONEncoding.default, headers: nil)
             .responseData { serverResponse in
                 debugPrint(serverResponse)
                 switch serverResponse.result {

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		4FB2D613F5231058FD5832BE /* Pods_DeepProProdTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16658320066D22BF5A1B9D18 /* Pods_DeepProProdTests.framework */; };
+		50025FFB20693AB200942A72 /* AssignmentList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 50025FFA20693AB200942A72 /* AssignmentList.txt */; };
+		500260082069706C00942A72 /* FailableDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500260072069706C00942A72 /* FailableDecodable.swift */; };
 		500327AF204D0B4300D39194 /* LoginErrorJson in Resources */ = {isa = PBXBuildFile; fileRef = 500327AE204D0B4300D39194 /* LoginErrorJson */; };
 		500327BA204D666F00D39194 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500327B8204D666F00D39194 /* ProfileViewController.swift */; };
 		500327BB204D666F00D39194 /* ProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500327B9204D666F00D39194 /* ProfileViewController.xib */; };
@@ -15,6 +17,11 @@
 		500327BD204D6BB100D39194 /* MyProfileEdit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500327B6204D5DC300D39194 /* MyProfileEdit.swift */; };
 		500327BF204D774000D39194 /* MyProfileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 500327BE204D774000D39194 /* MyProfileView.xib */; };
 		500327C1204D8AD600D39194 /* NibView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500327C0204D8AD600D39194 /* NibView.swift */; };
+		500648932072244E00B7C13D /* Poppins-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5006488E2072244D00B7C13D /* Poppins-Italic.ttf */; };
+		500648942072244E00B7C13D /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5006488F2072244D00B7C13D /* Poppins-Regular.ttf */; };
+		500648952072244E00B7C13D /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 500648902072244D00B7C13D /* Poppins-SemiBold.ttf */; };
+		500648962072244E00B7C13D /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 500648912072244D00B7C13D /* Poppins-Bold.ttf */; };
+		500648972072244E00B7C13D /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 500648922072244D00B7C13D /* Poppins-Medium.ttf */; };
 		501B48C32057BE40005D6C63 /* PredictionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501B48BD2057BE35005D6C63 /* PredictionResponse.swift */; };
 		501B48C42057BE40005D6C63 /* TopPredictions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501B48BE2057BE36005D6C63 /* TopPredictions.swift */; };
 		501B48C52057BE40005D6C63 /* Alignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501B48BF2057BE37005D6C63 /* Alignment.swift */; };
@@ -30,6 +37,10 @@
 		505B75C62020B2C700A5A0B2 /* json.txt in Resources */ = {isa = PBXBuildFile; fileRef = 505B75C42020B2C700A5A0B2 /* json.txt */; };
 		505B75CC202AEFC200A5A0B2 /* ServerIntegrationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B75CB202AEFC200A5A0B2 /* ServerIntegrationTest.swift */; };
 		505B75CE202AF3F400A5A0B2 /* LoginApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B75CD202AF3F400A5A0B2 /* LoginApi.swift */; };
+		508987BE206D13DD004566B4 /* Assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A325CF206D0BA50003FF5C /* Assignment.swift */; };
+		508987CF206D4C0F004566B4 /* Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508987CC206D3668004566B4 /* Units.swift */; };
+		508987D0206D4C3A004566B4 /* AssignmentsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A325C9206CD5660003FF5C /* AssignmentsTest.swift */; };
+		508987D1206D4C7E004566B4 /* getUnits.txt in Resources */ = {isa = PBXBuildFile; fileRef = 508987CA206D3601004566B4 /* getUnits.txt */; };
 		508FE5A420566ACC0051941F /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508FE5A320566ACC0051941F /* Data.swift */; };
 		508FE5A620568C710051941F /* GRPCServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508FE5A520568C710051941F /* GRPCServiceManager.swift */; };
 		5095C68E20064108003207AD /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5099C221200640CC00898B0A /* Charts.framework */; };
@@ -69,10 +80,15 @@
 		5099C21420063EAB00898B0A /* TransDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5099C20C20063EAB00898B0A /* TransDetailViewController.swift */; };
 		5099C21520063EAB00898B0A /* TransDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5099C20D20063EAB00898B0A /* TransDetailViewController.xib */; };
 		5099C21620063EAB00898B0A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5099C20E20063EAB00898B0A /* SettingsViewController.swift */; };
+		50A325CD206CFE790003FF5C /* getAssignments.txt in Resources */ = {isa = PBXBuildFile; fileRef = 50A325CC206CFE780003FF5C /* getAssignments.txt */; };
+		50A325CE206D082B0003FF5C /* getAssignments.txt in Resources */ = {isa = PBXBuildFile; fileRef = 50A325CC206CFE780003FF5C /* getAssignments.txt */; };
 		50A5EFC0205566B30083F28C /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A5EFBF205566B30083F28C /* Profile.swift */; };
 		50BEA274201896D2007F1899 /* LoginViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BEA273201896D2007F1899 /* LoginViewModelTest.swift */; };
 		50BEA27B201DE31B007F1899 /* ThemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BEA279201DE31B007F1899 /* ThemeCell.swift */; };
 		50BEA27C201DE31B007F1899 /* ThemeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50BEA27A201DE31B007F1899 /* ThemeCell.xib */; };
+		50C36C0020691B7B001C604B /* StudentAssignmentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C36BFF20691B7B001C604B /* StudentAssignmentModel.swift */; };
+		50C36C03206922CA001C604B /* AssignmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C36C01206922CA001C604B /* AssignmentTableViewCell.swift */; };
+		50C36C04206922CA001C604B /* AssignmentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50C36C02206922CA001C604B /* AssignmentTableViewCell.xib */; };
 		50C8D76A203DD1430028F05D /* DatePickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C8D768203DD1430028F05D /* DatePickerDialog.swift */; };
 		50C8D76C20429B240028F05D /* ForgotPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C8D76B20429B240028F05D /* ForgotPassword.swift */; };
 		50C8D7E2204811E50028F05D /* ViewControllerProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C8D7E1204811E50028F05D /* ViewControllerProtocols.swift */; };
@@ -83,6 +99,10 @@
 		50CBA0F120342E58001ABC95 /* InfromationAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CBA0EF20342E58001ABC95 /* InfromationAlertViewController.swift */; };
 		50CBA0F220342E58001ABC95 /* InfromationAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50CBA0F020342E58001ABC95 /* InfromationAlertViewController.xib */; };
 		50CBA0F620345A88001ABC95 /* HTTPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CBA0F520345A88001ABC95 /* HTTPError.swift */; };
+		50D8ABA0206A4E3600BA5F85 /* AssignmentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8AB9E206A4E3600BA5F85 /* AssignmentDetailViewController.swift */; };
+		50D8ABA1206A4E3600BA5F85 /* AssignmentDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50D8AB9F206A4E3600BA5F85 /* AssignmentDetailViewController.xib */; };
+		50E4DA74206A388200C17A12 /* AssignmnetDasboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E4DA72206A388200C17A12 /* AssignmnetDasboardViewController.swift */; };
+		50E4DA75206A388200C17A12 /* AssignmnetDasboardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50E4DA73206A388200C17A12 /* AssignmnetDasboardViewController.xib */; };
 		50E7580720612D8400DA0473 /* gRPC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E757F020612D4600DA0473 /* gRPC.framework */; };
 		50E7580820612D8400DA0473 /* gRPC.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 50E757F020612D4600DA0473 /* gRPC.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		50E7580B20612D8400DA0473 /* CgRPC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E757F220612D4600DA0473 /* CgRPC.framework */; };
@@ -336,6 +356,8 @@
 /* Begin PBXFileReference section */
 		16658320066D22BF5A1B9D18 /* Pods_DeepProProdTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DeepProProdTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29281F83558DA47BDE96940E /* Pods-DeepProProd.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeepProProd.release.xcconfig"; path = "Pods/Target Support Files/Pods-DeepProProd/Pods-DeepProProd.release.xcconfig"; sourceTree = "<group>"; };
+		50025FFA20693AB200942A72 /* AssignmentList.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = AssignmentList.txt; sourceTree = "<group>"; };
+		500260072069706C00942A72 /* FailableDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailableDecodable.swift; sourceTree = "<group>"; };
 		500327AE204D0B4300D39194 /* LoginErrorJson */ = {isa = PBXFileReference; lastKnownFileType = text; path = LoginErrorJson; sourceTree = "<group>"; };
 		500327B4204D5DB000D39194 /* MyProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileView.swift; sourceTree = "<group>"; };
 		500327B6204D5DC300D39194 /* MyProfileEdit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyProfileEdit.swift; sourceTree = "<group>"; };
@@ -343,6 +365,11 @@
 		500327B9204D666F00D39194 /* ProfileViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileViewController.xib; sourceTree = "<group>"; };
 		500327BE204D774000D39194 /* MyProfileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MyProfileView.xib; sourceTree = "<group>"; };
 		500327C0204D8AD600D39194 /* NibView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NibView.swift; sourceTree = "<group>"; };
+		5006488E2072244D00B7C13D /* Poppins-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Italic.ttf"; sourceTree = "<group>"; };
+		5006488F2072244D00B7C13D /* Poppins-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Regular.ttf"; sourceTree = "<group>"; };
+		500648902072244D00B7C13D /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
+		500648912072244D00B7C13D /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
+		500648922072244D00B7C13D /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
 		501B48BD2057BE35005D6C63 /* PredictionResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredictionResponse.swift; sourceTree = "<group>"; };
 		501B48BE2057BE36005D6C63 /* TopPredictions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopPredictions.swift; sourceTree = "<group>"; };
 		501B48BF2057BE37005D6C63 /* Alignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alignment.swift; sourceTree = "<group>"; };
@@ -359,6 +386,8 @@
 		505B75C42020B2C700A5A0B2 /* json.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json.txt; sourceTree = "<group>"; };
 		505B75CB202AEFC200A5A0B2 /* ServerIntegrationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerIntegrationTest.swift; sourceTree = "<group>"; };
 		505B75CD202AF3F400A5A0B2 /* LoginApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginApi.swift; sourceTree = "<group>"; };
+		508987CA206D3601004566B4 /* getUnits.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = getUnits.txt; sourceTree = "<group>"; };
+		508987CC206D3668004566B4 /* Units.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Units.swift; sourceTree = "<group>"; };
 		508FE5A320566ACC0051941F /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		508FE5A520568C710051941F /* GRPCServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRPCServiceManager.swift; sourceTree = "<group>"; };
 		5095C69820064314003207AD /* HTTPServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPServiceManager.swift; sourceTree = "<group>"; };
@@ -397,11 +426,17 @@
 		5099C20D20063EAB00898B0A /* TransDetailViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TransDetailViewController.xib; sourceTree = "<group>"; };
 		5099C20E20063EAB00898B0A /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		5099C21B200640CC00898B0A /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = "../../../../Downloads/Charts-master/Charts.xcodeproj"; sourceTree = "<group>"; };
+		50A325C9206CD5660003FF5C /* AssignmentsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentsTest.swift; sourceTree = "<group>"; };
+		50A325CC206CFE780003FF5C /* getAssignments.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = getAssignments.txt; sourceTree = "<group>"; };
+		50A325CF206D0BA50003FF5C /* Assignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
 		50A5EFBF205566B30083F28C /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		50BEA273201896D2007F1899 /* LoginViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelTest.swift; sourceTree = "<group>"; };
 		50BEA275201C728B007F1899 /* DeepProProd-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DeepProProd-Bridging-Header.h"; sourceTree = "<group>"; };
 		50BEA279201DE31B007F1899 /* ThemeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCell.swift; sourceTree = "<group>"; };
 		50BEA27A201DE31B007F1899 /* ThemeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeCell.xib; sourceTree = "<group>"; };
+		50C36BFF20691B7B001C604B /* StudentAssignmentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentAssignmentModel.swift; sourceTree = "<group>"; };
+		50C36C01206922CA001C604B /* AssignmentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentTableViewCell.swift; sourceTree = "<group>"; };
+		50C36C02206922CA001C604B /* AssignmentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignmentTableViewCell.xib; sourceTree = "<group>"; };
 		50C8D768203DD1430028F05D /* DatePickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerDialog.swift; sourceTree = "<group>"; };
 		50C8D76B20429B240028F05D /* ForgotPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPassword.swift; sourceTree = "<group>"; };
 		50C8D7E1204811E50028F05D /* ViewControllerProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerProtocols.swift; sourceTree = "<group>"; };
@@ -412,6 +447,10 @@
 		50CBA0EF20342E58001ABC95 /* InfromationAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfromationAlertViewController.swift; sourceTree = "<group>"; };
 		50CBA0F020342E58001ABC95 /* InfromationAlertViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfromationAlertViewController.xib; sourceTree = "<group>"; };
 		50CBA0F520345A88001ABC95 /* HTTPError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPError.swift; sourceTree = "<group>"; };
+		50D8AB9E206A4E3600BA5F85 /* AssignmentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentDetailViewController.swift; sourceTree = "<group>"; };
+		50D8AB9F206A4E3600BA5F85 /* AssignmentDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignmentDetailViewController.xib; sourceTree = "<group>"; };
+		50E4DA72206A388200C17A12 /* AssignmnetDasboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmnetDasboardViewController.swift; sourceTree = "<group>"; };
+		50E4DA73206A388200C17A12 /* AssignmnetDasboardViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignmnetDasboardViewController.xib; sourceTree = "<group>"; };
 		50E757E320612D4600DA0473 /* SwiftGRPC.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftGRPC.xcodeproj; path = "../../../../Downloads/grpc-swift-master/SwiftGRPC.xcodeproj"; sourceTree = "<group>"; };
 		50E76ACD20037E2A009420F9 /* DeepProProd.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeepProProd.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		50E76AD020037E2A009420F9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -518,9 +557,31 @@
 		500327AB204D0ACA00D39194 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
+				508987CA206D3601004566B4 /* getUnits.txt */,
+				50A325CC206CFE780003FF5C /* getAssignments.txt */,
 				500327AE204D0B4300D39194 /* LoginErrorJson */,
 			);
 			path = Fixtures;
+			sourceTree = "<group>";
+		};
+		500648822072241D00B7C13D /* Poppins */ = {
+			isa = PBXGroup;
+			children = (
+				500648912072244D00B7C13D /* Poppins-Bold.ttf */,
+				5006488E2072244D00B7C13D /* Poppins-Italic.ttf */,
+				500648922072244D00B7C13D /* Poppins-Medium.ttf */,
+				5006488F2072244D00B7C13D /* Poppins-Regular.ttf */,
+				500648902072244D00B7C13D /* Poppins-SemiBold.ttf */,
+			);
+			path = Poppins;
+			sourceTree = "<group>";
+		};
+		500648982072245400B7C13D /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				500648822072241D00B7C13D /* Poppins */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 		5041993E2060EA8B009C5432 /* Products */ = {
@@ -544,6 +605,17 @@
 				5041995A2060EB36009C5432 /* pronunciation.pb.swift */,
 			);
 			path = Proto;
+			sourceTree = "<group>";
+		};
+		5083E2322068F6EE001015A0 /* Student Assignment */ = {
+			isa = PBXGroup;
+			children = (
+				50E4DA72206A388200C17A12 /* AssignmnetDasboardViewController.swift */,
+				50E4DA73206A388200C17A12 /* AssignmnetDasboardViewController.xib */,
+				50D8AB9E206A4E3600BA5F85 /* AssignmentDetailViewController.swift */,
+				50D8AB9F206A4E3600BA5F85 /* AssignmentDetailViewController.xib */,
+			);
+			path = "Student Assignment";
 			sourceTree = "<group>";
 		};
 		5095C69620064302003207AD /* ServiceManager */ = {
@@ -573,6 +645,8 @@
 				50E7B347200DD2A100DB9DB0 /* LanguageTableViewCell.xib */,
 				50BEA279201DE31B007F1899 /* ThemeCell.swift */,
 				50BEA27A201DE31B007F1899 /* ThemeCell.xib */,
+				50C36C01206922CA001C604B /* AssignmentTableViewCell.swift */,
+				50C36C02206922CA001C604B /* AssignmentTableViewCell.xib */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -640,6 +714,7 @@
 				50E7B331200B769C00DB9DB0 /* SignupViewModel.swift */,
 				50E7B333200B76AF00DB9DB0 /* ForgetPasswordViewModel.swift */,
 				50E7B335200B866800DB9DB0 /* SettingsViewModel.swift */,
+				50C36BFF20691B7B001C604B /* StudentAssignmentModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -746,6 +821,7 @@
 				50BEA273201896D2007F1899 /* LoginViewModelTest.swift */,
 				505B75CB202AEFC200A5A0B2 /* ServerIntegrationTest.swift */,
 				50C8D7E520482E260028F05D /* SignUpViewModel.swift */,
+				50A325C9206CD5660003FF5C /* AssignmentsTest.swift */,
 			);
 			path = DeepProProdTests;
 			sourceTree = "<group>";
@@ -778,6 +854,7 @@
 		50E76B0020037EA5009420F9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				500648982072245400B7C13D /* Fonts */,
 				50E7B337200CA28600DB9DB0 /* Json */,
 				50E7B31D20078A6F00DB9DB0 /* happy_christmas.wav */,
 				50E7B31F20078A6F00DB9DB0 /* good_morning.wav */,
@@ -825,6 +902,7 @@
 		50E76B062003972E009420F9 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				5083E2322068F6EE001015A0 /* Student Assignment */,
 				5095C6D42006552C003207AD /* Menu_SH_ViewController.swift */,
 				5095C6D52006552C003207AD /* Menu_SH_ViewController.xib */,
 				50E76B212004B28A009420F9 /* Login_SH_ViewController.swift */,
@@ -894,6 +972,7 @@
 				505B75C42020B2C700A5A0B2 /* json.txt */,
 				50E7B33C200CE3DA00DB9DB0 /* LevelJson.txt */,
 				50F83CE220161BAC00690DCF /* level.txt */,
+				50025FFA20693AB200942A72 /* AssignmentList.txt */,
 			);
 			path = Json;
 			sourceTree = "<group>";
@@ -909,6 +988,9 @@
 				504CCC5C203AE10B00EE3CC2 /* SignUp.swift */,
 				50C8D76B20429B240028F05D /* ForgotPassword.swift */,
 				50A5EFBF205566B30083F28C /* Profile.swift */,
+				50A325CF206D0BA50003FF5C /* Assignment.swift */,
+				508987CC206D3668004566B4 /* Units.swift */,
+				500260072069706C00942A72 /* FailableDecodable.swift */,
 			);
 			path = JsonModels;
 			sourceTree = "<group>";
@@ -1179,6 +1261,8 @@
 				5099C204200622C600898B0A /* English.plist in Resources */,
 				5099C21120063EAB00898B0A /* SettingsViewController.xib in Resources */,
 				50E7B32420078A7000DB9DB0 /* good_night.wav in Resources */,
+				50E4DA75206A388200C17A12 /* AssignmnetDasboardViewController.xib in Resources */,
+				50025FFB20693AB200942A72 /* AssignmentList.txt in Resources */,
 				50E7B32320078A7000DB9DB0 /* happy_christmas.wav in Resources */,
 				50E7B32820078A7000DB9DB0 /* happy_birthday.wav in Resources */,
 				50F83CEB2017696000690DCF /* Accounts_SH_ViewController.xib in Resources */,
@@ -1190,11 +1274,18 @@
 				50E76B0220037EC7009420F9 /* Settings.plist in Resources */,
 				50E7B3302008CDEC00DB9DB0 /* ForgotPassword_SH_ViewController.xib in Resources */,
 				50E76B242004B28A009420F9 /* Login_SH_ViewController.xib in Resources */,
+				500648932072244E00B7C13D /* Poppins-Italic.ttf in Resources */,
+				50C36C04206922CA001C604B /* AssignmentTableViewCell.xib in Resources */,
+				500648962072244E00B7C13D /* Poppins-Bold.ttf in Resources */,
+				500648972072244E00B7C13D /* Poppins-Medium.ttf in Resources */,
 				5095C6D3200652DC003207AD /* Level_SHViewController.xib in Resources */,
+				500648952072244E00B7C13D /* Poppins-SemiBold.ttf in Resources */,
 				50E7B33D200CE3DA00DB9DB0 /* LevelJson.txt in Resources */,
 				500327BB204D666F00D39194 /* ProfileViewController.xib in Resources */,
+				50A325CE206D082B0003FF5C /* getAssignments.txt in Resources */,
 				50E7B32C2008CDD200DB9DB0 /* SignUp_SH_ViewController.xib in Resources */,
 				50E76AD820037E2A009420F9 /* Assets.xcassets in Resources */,
+				50D8ABA1206A4E3600BA5F85 /* AssignmentDetailViewController.xib in Resources */,
 				50E7B345200DD23C00DB9DB0 /* LabelTableViewCell.xib in Resources */,
 				5095C6AD20064396003207AD /* ChapterContentCell.xib in Resources */,
 				50BEA27C201DE31B007F1899 /* ThemeCell.xib in Resources */,
@@ -1206,6 +1297,8 @@
 				50F83CE320161BAC00690DCF /* level.txt in Resources */,
 				5095C6D72006552C003207AD /* Menu_SH_ViewController.xib in Resources */,
 				5095C6BB2006444D003207AD /* sectionheader.xib in Resources */,
+				508987D1206D4C7E004566B4 /* getUnits.txt in Resources */,
+				500648942072244E00B7C13D /* Poppins-Regular.ttf in Resources */,
 				500327BF204D774000D39194 /* MyProfileView.xib in Resources */,
 				50E7B341200DD09D00DB9DB0 /* LogOutCell.xib in Resources */,
 				5099C21220063EAB00898B0A /* WordsViewController.xib in Resources */,
@@ -1218,6 +1311,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50A325CD206CFE790003FF5C /* getAssignments.txt in Resources */,
 				500327AF204D0B4300D39194 /* LoginErrorJson in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1366,6 +1460,8 @@
 				5095C6D1200652C0003207AD /* Level_SHViewController.swift in Sources */,
 				50E7B31820075B4900DB9DB0 /* UIApplication.swift in Sources */,
 				50E76B1E2003A121009420F9 /* Settings.swift in Sources */,
+				50E4DA74206A388200C17A12 /* AssignmnetDasboardViewController.swift in Sources */,
+				50D8ABA0206A4E3600BA5F85 /* AssignmentDetailViewController.swift in Sources */,
 				5095C6D62006552C003207AD /* Menu_SH_ViewController.swift in Sources */,
 				508FE5A620568C710051941F /* GRPCServiceManager.swift in Sources */,
 				5095C6B0200643BF003207AD /* serviceProtocols.swift in Sources */,
@@ -1385,10 +1481,13 @@
 				5095C6C7200644C1003207AD /* UIView.swift in Sources */,
 				50E76AD320037E2A009420F9 /* MainViewController.swift in Sources */,
 				5095C6B7200643E5003207AD /* Pronunciation_Prediction.swift in Sources */,
+				500260082069706C00942A72 /* FailableDecodable.swift in Sources */,
+				50C36C03206922CA001C604B /* AssignmentTableViewCell.swift in Sources */,
 				505B75CE202AF3F400A5A0B2 /* LoginApi.swift in Sources */,
 				5095C69F2006433A003207AD /* MenuVC_DataModel.swift in Sources */,
 				5041995C2060EB37009C5432 /* pronunciation.pb.swift in Sources */,
 				50CBA0F620345A88001ABC95 /* HTTPError.swift in Sources */,
+				508987BE206D13DD004566B4 /* Assignment.swift in Sources */,
 				50E76B292004BB2F009420F9 /* ViewControllerExtensions.swift in Sources */,
 				5041995D2060EB37009C5432 /* pronunciation.grpc.swift in Sources */,
 				5099C2002005F13A00898B0A /* Helper.swift in Sources */,
@@ -1416,6 +1515,7 @@
 				5095C6C520064470003207AD /* IntAxisValueFormatter.swift in Sources */,
 				504CCC60203C0A8D00EE3CC2 /* TokenManager.swift in Sources */,
 				500327BC204D6BAC00D39194 /* MyProfileView.swift in Sources */,
+				508987CF206D4C0F004566B4 /* Units.swift in Sources */,
 				50E7B344200DD23C00DB9DB0 /* LabelTableViewCell.swift in Sources */,
 				500327C1204D8AD600D39194 /* NibView.swift in Sources */,
 				50E7B33B200CDD3E00DB9DB0 /* LocalJsonService.swift in Sources */,
@@ -1425,6 +1525,7 @@
 				50E7B32B2008CDD200DB9DB0 /* SignUp_SH_ViewController.swift in Sources */,
 				5095C6C320064470003207AD /* DateValueFormatter.swift in Sources */,
 				50E7B348200DD2A100DB9DB0 /* LanguageTableViewCell.swift in Sources */,
+				50C36C0020691B7B001C604B /* StudentAssignmentModel.swift in Sources */,
 				50E76B392004F5B5009420F9 /* LoginViewModel.swift in Sources */,
 				5095C6C220064470003207AD /* DayAxisValueFormatter.swift in Sources */,
 				50C8D7E2204811E50028F05D /* ViewControllerProtocols.swift in Sources */,
@@ -1442,6 +1543,7 @@
 				50BEA274201896D2007F1899 /* LoginViewModelTest.swift in Sources */,
 				50E76AE620037E2A009420F9 /* DeepProProdTests.swift in Sources */,
 				50C8D7E620482E260028F05D /* SignUpViewModel.swift in Sources */,
+				508987D0206D4C3A004566B4 /* AssignmentsTest.swift in Sources */,
 				505B75CC202AEFC200A5A0B2 /* ServerIntegrationTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
