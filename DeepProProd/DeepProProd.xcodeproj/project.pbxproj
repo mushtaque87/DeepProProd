@@ -83,6 +83,7 @@
 		50A325CD206CFE790003FF5C /* getAssignments.txt in Resources */ = {isa = PBXBuildFile; fileRef = 50A325CC206CFE780003FF5C /* getAssignments.txt */; };
 		50A325CE206D082B0003FF5C /* getAssignments.txt in Resources */ = {isa = PBXBuildFile; fileRef = 50A325CC206CFE780003FF5C /* getAssignments.txt */; };
 		50A5EFC0205566B30083F28C /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A5EFBF205566B30083F28C /* Profile.swift */; };
+		50B7D3BD207A0DFE0058662F /* AssignmentsUnitsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B7D3BC207A0DFE0058662F /* AssignmentsUnitsModel.swift */; };
 		50BEA274201896D2007F1899 /* LoginViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BEA273201896D2007F1899 /* LoginViewModelTest.swift */; };
 		50BEA27B201DE31B007F1899 /* ThemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BEA279201DE31B007F1899 /* ThemeCell.swift */; };
 		50BEA27C201DE31B007F1899 /* ThemeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50BEA27A201DE31B007F1899 /* ThemeCell.xib */; };
@@ -99,8 +100,8 @@
 		50CBA0F120342E58001ABC95 /* InfromationAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CBA0EF20342E58001ABC95 /* InfromationAlertViewController.swift */; };
 		50CBA0F220342E58001ABC95 /* InfromationAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50CBA0F020342E58001ABC95 /* InfromationAlertViewController.xib */; };
 		50CBA0F620345A88001ABC95 /* HTTPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CBA0F520345A88001ABC95 /* HTTPError.swift */; };
-		50D8ABA0206A4E3600BA5F85 /* AssignmentDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8AB9E206A4E3600BA5F85 /* AssignmentDetailViewController.swift */; };
-		50D8ABA1206A4E3600BA5F85 /* AssignmentDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50D8AB9F206A4E3600BA5F85 /* AssignmentDetailViewController.xib */; };
+		50D8ABA0206A4E3600BA5F85 /* UnitListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8AB9E206A4E3600BA5F85 /* UnitListViewController.swift */; };
+		50D8ABA1206A4E3600BA5F85 /* UnitListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50D8AB9F206A4E3600BA5F85 /* UnitListViewController.xib */; };
 		50E4DA74206A388200C17A12 /* AssignmnetDasboardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E4DA72206A388200C17A12 /* AssignmnetDasboardViewController.swift */; };
 		50E4DA75206A388200C17A12 /* AssignmnetDasboardViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50E4DA73206A388200C17A12 /* AssignmnetDasboardViewController.xib */; };
 		50E7580720612D8400DA0473 /* gRPC.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50E757F020612D4600DA0473 /* gRPC.framework */; };
@@ -155,6 +156,8 @@
 		50E7B345200DD23C00DB9DB0 /* LabelTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50E7B343200DD23C00DB9DB0 /* LabelTableViewCell.xib */; };
 		50E7B348200DD2A100DB9DB0 /* LanguageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E7B346200DD2A100DB9DB0 /* LanguageTableViewCell.swift */; };
 		50E7B349200DD2A100DB9DB0 /* LanguageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50E7B347200DD2A100DB9DB0 /* LanguageTableViewCell.xib */; };
+		50EF61AB207B7D0D00166162 /* UnitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EF61A9207B7D0D00166162 /* UnitTableViewCell.swift */; };
+		50EF61AC207B7D0D00166162 /* UnitTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50EF61AA207B7D0D00166162 /* UnitTableViewCell.xib */; };
 		50F83CDB2014D8F300690DCF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F83CDA2014D8F300690DCF /* Constants.swift */; };
 		50F83CE320161BAC00690DCF /* level.txt in Resources */ = {isa = PBXBuildFile; fileRef = 50F83CE220161BAC00690DCF /* level.txt */; };
 		50F83CE620170DB600690DCF /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F83CE520170DB600690DCF /* Course.swift */; };
@@ -430,6 +433,7 @@
 		50A325CC206CFE780003FF5C /* getAssignments.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = getAssignments.txt; sourceTree = "<group>"; };
 		50A325CF206D0BA50003FF5C /* Assignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
 		50A5EFBF205566B30083F28C /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		50B7D3BC207A0DFE0058662F /* AssignmentsUnitsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentsUnitsModel.swift; sourceTree = "<group>"; };
 		50BEA273201896D2007F1899 /* LoginViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelTest.swift; sourceTree = "<group>"; };
 		50BEA275201C728B007F1899 /* DeepProProd-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DeepProProd-Bridging-Header.h"; sourceTree = "<group>"; };
 		50BEA279201DE31B007F1899 /* ThemeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCell.swift; sourceTree = "<group>"; };
@@ -447,8 +451,8 @@
 		50CBA0EF20342E58001ABC95 /* InfromationAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfromationAlertViewController.swift; sourceTree = "<group>"; };
 		50CBA0F020342E58001ABC95 /* InfromationAlertViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfromationAlertViewController.xib; sourceTree = "<group>"; };
 		50CBA0F520345A88001ABC95 /* HTTPError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPError.swift; sourceTree = "<group>"; };
-		50D8AB9E206A4E3600BA5F85 /* AssignmentDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentDetailViewController.swift; sourceTree = "<group>"; };
-		50D8AB9F206A4E3600BA5F85 /* AssignmentDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignmentDetailViewController.xib; sourceTree = "<group>"; };
+		50D8AB9E206A4E3600BA5F85 /* UnitListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitListViewController.swift; sourceTree = "<group>"; };
+		50D8AB9F206A4E3600BA5F85 /* UnitListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnitListViewController.xib; sourceTree = "<group>"; };
 		50E4DA72206A388200C17A12 /* AssignmnetDasboardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmnetDasboardViewController.swift; sourceTree = "<group>"; };
 		50E4DA73206A388200C17A12 /* AssignmnetDasboardViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignmnetDasboardViewController.xib; sourceTree = "<group>"; };
 		50E757E320612D4600DA0473 /* SwiftGRPC.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftGRPC.xcodeproj; path = "../../../../Downloads/grpc-swift-master/SwiftGRPC.xcodeproj"; sourceTree = "<group>"; };
@@ -499,6 +503,8 @@
 		50E7B343200DD23C00DB9DB0 /* LabelTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LabelTableViewCell.xib; sourceTree = "<group>"; };
 		50E7B346200DD2A100DB9DB0 /* LanguageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LanguageTableViewCell.swift; sourceTree = "<group>"; };
 		50E7B347200DD2A100DB9DB0 /* LanguageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LanguageTableViewCell.xib; sourceTree = "<group>"; };
+		50EF61A9207B7D0D00166162 /* UnitTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTableViewCell.swift; sourceTree = "<group>"; };
+		50EF61AA207B7D0D00166162 /* UnitTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnitTableViewCell.xib; sourceTree = "<group>"; };
 		50F83CDA2014D8F300690DCF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		50F83CE220161BAC00690DCF /* level.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = level.txt; sourceTree = "<group>"; };
 		50F83CE520170DB600690DCF /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
@@ -612,8 +618,8 @@
 			children = (
 				50E4DA72206A388200C17A12 /* AssignmnetDasboardViewController.swift */,
 				50E4DA73206A388200C17A12 /* AssignmnetDasboardViewController.xib */,
-				50D8AB9E206A4E3600BA5F85 /* AssignmentDetailViewController.swift */,
-				50D8AB9F206A4E3600BA5F85 /* AssignmentDetailViewController.xib */,
+				50D8AB9E206A4E3600BA5F85 /* UnitListViewController.swift */,
+				50D8AB9F206A4E3600BA5F85 /* UnitListViewController.xib */,
 			);
 			path = "Student Assignment";
 			sourceTree = "<group>";
@@ -647,6 +653,8 @@
 				50BEA27A201DE31B007F1899 /* ThemeCell.xib */,
 				50C36C01206922CA001C604B /* AssignmentTableViewCell.swift */,
 				50C36C02206922CA001C604B /* AssignmentTableViewCell.xib */,
+				50EF61A9207B7D0D00166162 /* UnitTableViewCell.swift */,
+				50EF61AA207B7D0D00166162 /* UnitTableViewCell.xib */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -715,6 +723,7 @@
 				50E7B333200B76AF00DB9DB0 /* ForgetPasswordViewModel.swift */,
 				50E7B335200B866800DB9DB0 /* SettingsViewModel.swift */,
 				50C36BFF20691B7B001C604B /* StudentAssignmentModel.swift */,
+				50B7D3BC207A0DFE0058662F /* AssignmentsUnitsModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1285,7 +1294,7 @@
 				50A325CE206D082B0003FF5C /* getAssignments.txt in Resources */,
 				50E7B32C2008CDD200DB9DB0 /* SignUp_SH_ViewController.xib in Resources */,
 				50E76AD820037E2A009420F9 /* Assets.xcassets in Resources */,
-				50D8ABA1206A4E3600BA5F85 /* AssignmentDetailViewController.xib in Resources */,
+				50D8ABA1206A4E3600BA5F85 /* UnitListViewController.xib in Resources */,
 				50E7B345200DD23C00DB9DB0 /* LabelTableViewCell.xib in Resources */,
 				5095C6AD20064396003207AD /* ChapterContentCell.xib in Resources */,
 				50BEA27C201DE31B007F1899 /* ThemeCell.xib in Resources */,
@@ -1294,6 +1303,7 @@
 				50E7B349200DD2A100DB9DB0 /* LanguageTableViewCell.xib in Resources */,
 				505B75C62020B2C700A5A0B2 /* json.txt in Resources */,
 				5095C6A420064381003207AD /* Menu_Cell.xib in Resources */,
+				50EF61AC207B7D0D00166162 /* UnitTableViewCell.xib in Resources */,
 				50F83CE320161BAC00690DCF /* level.txt in Resources */,
 				5095C6D72006552C003207AD /* Menu_SH_ViewController.xib in Resources */,
 				5095C6BB2006444D003207AD /* sectionheader.xib in Resources */,
@@ -1461,12 +1471,13 @@
 				50E7B31820075B4900DB9DB0 /* UIApplication.swift in Sources */,
 				50E76B1E2003A121009420F9 /* Settings.swift in Sources */,
 				50E4DA74206A388200C17A12 /* AssignmnetDasboardViewController.swift in Sources */,
-				50D8ABA0206A4E3600BA5F85 /* AssignmentDetailViewController.swift in Sources */,
+				50D8ABA0206A4E3600BA5F85 /* UnitListViewController.swift in Sources */,
 				5095C6D62006552C003207AD /* Menu_SH_ViewController.swift in Sources */,
 				508FE5A620568C710051941F /* GRPCServiceManager.swift in Sources */,
 				5095C6B0200643BF003207AD /* serviceProtocols.swift in Sources */,
 				5099C21320063EAB00898B0A /* WordsViewController.swift in Sources */,
 				50E7B336200B866800DB9DB0 /* SettingsViewModel.swift in Sources */,
+				50B7D3BD207A0DFE0058662F /* AssignmentsUnitsModel.swift in Sources */,
 				500327BD204D6BB100D39194 /* MyProfileEdit.swift in Sources */,
 				50CBA0EC20331FB9001ABC95 /* ProfileApi.swift in Sources */,
 				500327BA204D666F00D39194 /* ProfileViewController.swift in Sources */,
@@ -1479,6 +1490,7 @@
 				504CCC64203C544300EE3CC2 /* Date.swift in Sources */,
 				5095C69920064314003207AD /* HTTPServiceManager.swift in Sources */,
 				5095C6C7200644C1003207AD /* UIView.swift in Sources */,
+				50EF61AB207B7D0D00166162 /* UnitTableViewCell.swift in Sources */,
 				50E76AD320037E2A009420F9 /* MainViewController.swift in Sources */,
 				5095C6B7200643E5003207AD /* Pronunciation_Prediction.swift in Sources */,
 				500260082069706C00942A72 /* FailableDecodable.swift in Sources */,

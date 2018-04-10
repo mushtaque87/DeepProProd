@@ -30,7 +30,7 @@ class AssignmnetDasboardViewController: UIViewController,assignmentsProtocols  {
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        assignmentListTableView.reloadData()
+       // assignmentListTableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -39,8 +39,8 @@ class AssignmnetDasboardViewController: UIViewController,assignmentsProtocols  {
     }
     
     func showAssignmentDetailsScreen() {
-        let assignmentDetailsViewController =     AssignmentDetailViewController(nibName: "AssignmentDetailViewController", bundle: nil)
-        self.navigationController?.pushViewController(assignmentDetailsViewController, animated: true)
+        let unitListViewController =     UnitListViewController(nibName: "UnitListViewController", bundle: nil)
+        self.navigationController?.pushViewController(unitListViewController, animated: true)
     }
     
    func reloadtable()

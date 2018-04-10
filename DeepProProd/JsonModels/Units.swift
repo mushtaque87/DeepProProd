@@ -17,6 +17,8 @@ struct Units : Codable {
 	let creation_date : Int?
 	let description : String?
 	let question_text : String?
+    let unit_status : String?
+    
 
 	enum CodingKeys: String, CodingKey {
 
@@ -24,6 +26,7 @@ struct Units : Codable {
 		case creation_date = "creation_date"
 		case description = "description"
 		case question_text = "question_text"
+        case unit_status = "unit_status"
 	}
 
 	init(from decoder: Decoder) throws {
@@ -32,6 +35,7 @@ struct Units : Codable {
 		creation_date = try values.decodeIfPresent(Int.self, forKey: .creation_date)
 		description = try values.decodeIfPresent(String.self, forKey: .description)
 		question_text = try values.decodeIfPresent(String.self, forKey: .question_text)
+        unit_status = try values.decodeIfPresent(String.self, forKey: .unit_status)
 	}
 
 }

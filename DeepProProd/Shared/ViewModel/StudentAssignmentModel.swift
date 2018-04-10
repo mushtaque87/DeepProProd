@@ -19,7 +19,8 @@ enum AssignmentType : String   {
 class StudentAssignmentModel: NSObject, UITableViewDataSource, UITableViewDelegate {
     weak var delegate: assignmentsProtocols?
     var assignmnetList =  Array<FailableDecodable<Assignment>>()
-    
+    var sectionHeaders = Array<String>()
+    var assignmentsForSection = Dictionary<String, Array<FailableDecodable<Assignment>>>()
    // var totalAssignmentList : Assignments?
     //var newAssignmentlist = Array<AssignmentsList.Assignments>()
     
@@ -35,7 +36,10 @@ class StudentAssignmentModel: NSObject, UITableViewDataSource, UITableViewDelega
    
                 print(assignmnetList)
                 sortAssignmentByDueDate()
-            
+                fetchUniqueDates()
+            for section in sectionHeaders{
+                assignmentsForSection.updateValue(fetchListOfAssignmentsForDate(for: section), forKey: section)
+            }
         } catch  {
             print(error)
         }
@@ -62,7 +66,7 @@ class StudentAssignmentModel: NSObject, UITableViewDataSource, UITableViewDelega
     */
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        return sectionHeaders.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -85,7 +89,7 @@ class StudentAssignmentModel: NSObject, UITableViewDataSource, UITableViewDelega
             }
         }
         */
-        return assignmnetList.count
+        return fetchNumberOfRowsForSection(for: sectionHeaders[section])
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -95,7 +99,7 @@ class StudentAssignmentModel: NSObject, UITableViewDataSource, UITableViewDelega
         let titleLbl : UILabel =  UILabel(frame: CGRect(x: 5, y: 0, width: headerView.frame.size.width, height: headerView.frame.size.height/2))
         titleLbl.font = UIFont.boldSystemFont(ofSize: 12)
         titleLbl.textColor = UIColor.white
-        titleLbl.text = "Date"
+        titleLbl.text = sectionHeaders[section]
         titleLbl.alignText()
         titleLbl.backgroundColor = UIColor.clear
         headerView.addSubview(titleLbl)
@@ -107,24 +111,28 @@ class StudentAssignmentModel: NSObject, UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        let cell = tableView.dequeueReusableCell(withIdentifier: "assignmentListCell", for: indexPath) as! AssignmentTableViewCell
        
-       
-        let assignment = assignmnetList[indexPath.row]
-        cell.assignmentName.text = assignment.base?.short_name
-        cell.descriptionView.text =  assignment.base?.description
-        cell.submissionDate.text =  String(format:"Due Date: %@",(Date().dateFromEpoc((assignment.base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy")))
-        cell.creationDate.text = String(format:"Assigned on: %@",(Date().dateFromEpoc((assignment.base?.creation_date)!).toString(dateFormat: "EEEE, d MMM, yyyy")))
+        //let assignment =  fetchListOfAssignmentsForDate(for: sectionHeaders[indexPath.section])[indexPath.row]
+        //let assignment = assignmentsForSection[sectionHeaders[indexPath.section]]![indexPath.row]
+        let assignments = assignmnetList.filter ({(assignment: FailableDecodable<Assignment>) -> Bool in
+            return Date().dateFromEpoc((assignment.base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy") == sectionHeaders[indexPath.section]
+        })
+        
+        cell.assignmentName.text = assignments[indexPath.row].base?.short_name
+        cell.descriptionView.text =  assignments[indexPath.row].base?.description
+        cell.submissionDate.text =  String(format:"Due Date: %@",(Date().dateFromEpoc((assignments[indexPath.row].base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy")))
+        cell.creationDate.text = String(format:"Assigned on: %@",(Date().dateFromEpoc((assignments[indexPath.row].base?.creation_date)!).toString(dateFormat: "EEEE, d MMM, yyyy")))
         
         //let formatteddate  = date.dateFromEpoc(1522580569)
        // print(formatteddate.toString(dateFormat: "EEEE,d MMM,yyyy"))
         
         
-        if let assignmentStatus =  AssignmentType(rawValue:(assignment.base?.assignment_status)!) {
-            cell.assignmentStatus.text = (assignment.base?.assignment_status)!
+        if let assignmentStatus =  AssignmentType(rawValue:(assignments[indexPath.row].base?.assignment_status)!) {
+            cell.assignmentStatus.text = (assignments[indexPath.row].base?.assignment_status)!
             switch assignmentStatus {
             case .assigned :
-                cell.detailsView.backgroundColor = UIColor(red: 205/255, green: 129/255, blue: 129/255, alpha: 0.9)
+                cell.detailsView.backgroundColor = UIColor(red: 254/255, green: 143/255, blue: 136/255, alpha: 0.9)
             case .inProgress:
-                cell.detailsView.backgroundColor = UIColor(red: 236/255, green: 184/255, blue: 107/255, alpha: 0.9)
+                cell.detailsView.backgroundColor = UIColor(red: 248/255, green: 182/255, blue: 130/255, alpha: 0.9)
             case .submitted :
                 cell.detailsView.backgroundColor = UIColor(red: 159/255, green: 210/255, blue: 144/255, alpha: 0.9)
           
@@ -145,6 +153,42 @@ class StudentAssignmentModel: NSObject, UITableViewDataSource, UITableViewDelega
             ($0.base?.due_date)!  < ($1.base?.due_date)!
         }
     }
+    
+    func fetchUniqueDates()
+    {
+        sectionHeaders.removeAll()
+        for assignment in assignmnetList
+        {
+            if (!sectionHeaders.contains((Date().dateFromEpoc((assignment.base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy"))) )
+            {
+                sectionHeaders.append(Date().dateFromEpoc((assignment.base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy"))
+            }
+        }
+    }
    
+    func fetchNumberOfRowsForSection(for date:String) -> Int
+    {
+        var rowCount = 0
+        for assignment in assignmnetList
+        {
+            if(Date().dateFromEpoc((assignment.base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy") == date)
+            {
+                rowCount += 1
+            }
+        }
+        return rowCount
+    }
 
+    func fetchListOfAssignmentsForDate(for date:String) -> Array<FailableDecodable<Assignment>>
+    {
+        var assignmentListForDate = Array<FailableDecodable<Assignment>>()
+        for assignment in assignmnetList
+        {
+            if(Date().dateFromEpoc((assignment.base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy") == date)
+            {
+                assignmentListForDate.append(assignment)
+            }
+        }
+        return assignmentListForDate
+    }
 }

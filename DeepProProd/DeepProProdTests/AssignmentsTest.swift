@@ -78,7 +78,7 @@ class AssignmentsTest: XCTestCase {
         print(formatteddate.toString(dateFormat: "EEEE,d MMM,yyyy"))
     }
     
-    func testUniqueDates_fetchSetOfDatesForSection()
+    func testSortDates_datesSortedInAscendingOrderByDueDates()
     {
         
         let studentAssignmentModel = StudentAssignmentModel()
@@ -87,4 +87,26 @@ class AssignmentsTest: XCTestCase {
         XCTAssertEqual(studentAssignmentModel.assignmnetList[0].base?.short_name , "SWO 2")
    
     }
+    
+    func testUniqueDates_fetchSetOfDatesForSection()
+    {
+        let studentAssignmentModel = StudentAssignmentModel()
+        studentAssignmentModel.fetchUniqueDates()
+        print(studentAssignmentModel.sectionHeaders)
+        
+    }
+    
+    func testNoOfRowsInSection_fetchTheRowCount()
+    {
+        let studentAssignmentModel = StudentAssignmentModel()
+        studentAssignmentModel.fetchUniqueDates()
+        for date in studentAssignmentModel.sectionHeaders{
+            print("For Dates: \(date)")
+           let rowCount = studentAssignmentModel.fetchNumberOfRowsForSection(for: date)
+            print(rowCount)
+        }
+        
+    }
+    
+
 }
