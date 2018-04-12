@@ -25,31 +25,38 @@ class SignupViewModel: NSObject,UITextFieldDelegate {
     }
     
     // MARK: - TextField Delegate
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        if(textField.tag == 6){
+            
+                let currentDate = Date()
+                var dateComponents = DateComponents()
+                dateComponents.year = 100
+                let threeMonthAgo = Calendar.current.date(byAdding: dateComponents, to: currentDate)
+                
+                let datePicker = DatePickerDialog(textColor: .black,
+                                                  buttonColor: .black,
+                                                  font: UIFont.boldSystemFont(ofSize: 17),
+                                                  showCancelButton: true)
+                datePicker.show("Date of Birth",
+                                doneButtonTitle: "Done",
+                                cancelButtonTitle: "Cancel",
+                                minimumDate: threeMonthAgo,
+                                maximumDate: currentDate,
+                                datePickerMode: .date) { (date) in
+                                    if let dt = date {
+                                        let formatter = DateFormatter()
+                                        formatter.dateFormat = "dd-MM-YYYY"
+                                        self.dob.value = formatter.string(from: dt)
+                                    }
+                }
+            
+            return false
+        }
+        return true
+    }
     func textFieldDidBeginEditing(_ textField: UITextField) {    //delegate method
         
-        if(textField.tag == 6){
-        let currentDate = Date()
-        var dateComponents = DateComponents()
-        dateComponents.year = 100
-        let threeMonthAgo = Calendar.current.date(byAdding: dateComponents, to: currentDate)
-        
-        let datePicker = DatePickerDialog(textColor: .black,
-                                          buttonColor: .black,
-                                          font: UIFont.boldSystemFont(ofSize: 17),
-                                          showCancelButton: true)
-        datePicker.show("Date of Birth",
-                        doneButtonTitle: "Done",
-                        cancelButtonTitle: "Cancel",
-                        minimumDate: threeMonthAgo,
-                        maximumDate: currentDate,
-                        datePickerMode: .date) { (date) in
-                            if let dt = date {
-                                let formatter = DateFormatter()
-                                formatter.dateFormat = "dd-MM-YYYY"
-                                self.dob.value = formatter.string(from: dt)
-                            }
-        }
-        }
+       
     
     }
     

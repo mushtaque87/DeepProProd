@@ -21,8 +21,6 @@
 		501B48C62057BE40005D6C63 /* Matched.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501B48C02057BE3A005D6C63 /* Matched.swift */; };
 		501B48C72057BE40005D6C63 /* NotMatched.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501B48C12057BE3C005D6C63 /* NotMatched.swift */; };
 		501B48C82057BE40005D6C63 /* WordResults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501B48C22057BE3E005D6C63 /* WordResults.swift */; };
-		5041995C2060EB37009C5432 /* pronunciation.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5041995A2060EB36009C5432 /* pronunciation.pb.swift */; };
-		5041995D2060EB37009C5432 /* pronunciation.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5041995B2060EB37009C5432 /* pronunciation.grpc.swift */; };
 		504CCC5D203AE10B00EE3CC2 /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504CCC5C203AE10B00EE3CC2 /* SignUp.swift */; };
 		504CCC60203C0A8D00EE3CC2 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504CCC5F203C0A8D00EE3CC2 /* TokenManager.swift */; };
 		504CCC64203C544300EE3CC2 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504CCC63203C544300EE3CC2 /* Date.swift */; };
@@ -110,6 +108,8 @@
 		50E76B292004BB2F009420F9 /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E76B282004BB2F009420F9 /* ViewControllerExtensions.swift */; };
 		50E76B2B2004D64E009420F9 /* Localizator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E76B2A2004D64E009420F9 /* Localizator.swift */; };
 		50E76B392004F5B5009420F9 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E76B382004F5B5009420F9 /* LoginViewModel.swift */; };
+		50E793CE207DF470002854E5 /* pronunciation.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E793CC207DF46F002854E5 /* pronunciation.grpc.swift */; };
+		50E793CF207DF470002854E5 /* pronunciation.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E793CD207DF470002854E5 /* pronunciation.pb.swift */; };
 		50E79DD520050CF200327016 /* TabBarControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E79DD320050CF200327016 /* TabBarControllerViewController.swift */; };
 		50E79DD620050CF200327016 /* TabBarControllerViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50E79DD420050CF200327016 /* TabBarControllerViewController.xib */; };
 		50E7B31820075B4900DB9DB0 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E7B31720075B4900DB9DB0 /* UIApplication.swift */; };
@@ -350,8 +350,6 @@
 		501B48C12057BE3C005D6C63 /* NotMatched.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotMatched.swift; sourceTree = "<group>"; };
 		501B48C22057BE3E005D6C63 /* WordResults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WordResults.swift; sourceTree = "<group>"; };
 		5041993D2060EA8B009C5432 /* SwiftProtobuf.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftProtobuf.xcodeproj; path = "../../../../Downloads/swift-protobuf-master/SwiftProtobuf.xcodeproj"; sourceTree = "<group>"; };
-		5041995A2060EB36009C5432 /* pronunciation.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = pronunciation.pb.swift; sourceTree = "<group>"; };
-		5041995B2060EB37009C5432 /* pronunciation.grpc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = pronunciation.grpc.swift; sourceTree = "<group>"; };
 		504CCC5C203AE10B00EE3CC2 /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
 		504CCC5F203C0A8D00EE3CC2 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
 		504CCC63203C544300EE3CC2 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
@@ -435,6 +433,8 @@
 		50E76B282004BB2F009420F9 /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
 		50E76B2A2004D64E009420F9 /* Localizator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizator.swift; sourceTree = "<group>"; };
 		50E76B382004F5B5009420F9 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
+		50E793CC207DF46F002854E5 /* pronunciation.grpc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = pronunciation.grpc.swift; sourceTree = "<group>"; };
+		50E793CD207DF470002854E5 /* pronunciation.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = pronunciation.pb.swift; sourceTree = "<group>"; };
 		50E79DD320050CF200327016 /* TabBarControllerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarControllerViewController.swift; sourceTree = "<group>"; };
 		50E79DD420050CF200327016 /* TabBarControllerViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TabBarControllerViewController.xib; sourceTree = "<group>"; };
 		50E7B31720075B4900DB9DB0 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
@@ -540,8 +540,8 @@
 		504CCC56203AC9D000EE3CC2 /* Proto */ = {
 			isa = PBXGroup;
 			children = (
-				5041995B2060EB37009C5432 /* pronunciation.grpc.swift */,
-				5041995A2060EB36009C5432 /* pronunciation.pb.swift */,
+				50E793CC207DF46F002854E5 /* pronunciation.grpc.swift */,
+				50E793CD207DF470002854E5 /* pronunciation.pb.swift */,
 			);
 			path = Proto;
 			sourceTree = "<group>";
@@ -1366,6 +1366,7 @@
 				5095C6D1200652C0003207AD /* Level_SHViewController.swift in Sources */,
 				50E7B31820075B4900DB9DB0 /* UIApplication.swift in Sources */,
 				50E76B1E2003A121009420F9 /* Settings.swift in Sources */,
+				50E793CF207DF470002854E5 /* pronunciation.pb.swift in Sources */,
 				5095C6D62006552C003207AD /* Menu_SH_ViewController.swift in Sources */,
 				508FE5A620568C710051941F /* GRPCServiceManager.swift in Sources */,
 				5095C6B0200643BF003207AD /* serviceProtocols.swift in Sources */,
@@ -1387,10 +1388,8 @@
 				5095C6B7200643E5003207AD /* Pronunciation_Prediction.swift in Sources */,
 				505B75CE202AF3F400A5A0B2 /* LoginApi.swift in Sources */,
 				5095C69F2006433A003207AD /* MenuVC_DataModel.swift in Sources */,
-				5041995C2060EB37009C5432 /* pronunciation.pb.swift in Sources */,
 				50CBA0F620345A88001ABC95 /* HTTPError.swift in Sources */,
 				50E76B292004BB2F009420F9 /* ViewControllerExtensions.swift in Sources */,
-				5041995D2060EB37009C5432 /* pronunciation.grpc.swift in Sources */,
 				5099C2002005F13A00898B0A /* Helper.swift in Sources */,
 				5095C69E2006433A003207AD /* TranslationVC_DataModel.swift in Sources */,
 				50E76AD120037E2A009420F9 /* AppDelegate.swift in Sources */,
@@ -1427,6 +1426,7 @@
 				50E7B348200DD2A100DB9DB0 /* LanguageTableViewCell.swift in Sources */,
 				50E76B392004F5B5009420F9 /* LoginViewModel.swift in Sources */,
 				5095C6C220064470003207AD /* DayAxisValueFormatter.swift in Sources */,
+				50E793CE207DF470002854E5 /* pronunciation.grpc.swift in Sources */,
 				50C8D7E2204811E50028F05D /* ViewControllerProtocols.swift in Sources */,
 				50E7B31C2007829300DB9DB0 /* UIImageView.swift in Sources */,
 				5095C6AC20064396003207AD /* ReportCell.swift in Sources */,

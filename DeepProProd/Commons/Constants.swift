@@ -16,13 +16,13 @@ struct Constants {
     }
     
     struct ServerApi {
-        static let baseUrl = "http://192.168.32.24:8777/v1/uam/users/"
+        static let baseUrl = "http://192.168.71.10:10000/v1/uam/users/"
         static let port = ":8080"
         static let login = "login"
         static let signUp = "signup"
         static let forgotpassword = "forget-password"
         static let refreshtoken = "/token/refresh"
-        static let grpcBaseUrl = "192.168.32.24:6565"
+        static let grpcBaseUrl = "192.168.71.10:10007"
     }
     
     struct BUILDSETTINGS {

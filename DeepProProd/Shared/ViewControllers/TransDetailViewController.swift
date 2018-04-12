@@ -11,7 +11,7 @@ import Charts
 import AVFoundation
 import  Alamofire
 import gRPC
-
+import MBProgressHUD
 
 enum BoardType  :  Int {
     case practice
@@ -678,16 +678,18 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
 
     func callGRPCService()
     {
-        activityIndicator.isHidden = false
-        activityIndicator.startAnimating()
-       
+       // activityIndicator.isHidden = false
+       // activityIndicator.startAnimating()
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.mode = MBProgressHUDMode.indeterminate
+       // hud.label.text = "Predicting Score"
         
         do {
             
             let audioData =  try? Data(contentsOf: vc_DataModel.getDocumentsDirectory().appendingPathComponent("recording.wav"))
             //let encodedString = audioData?.base64EncodedString()
             
-            try grpcService.getWordPredictionFromGRPC(for: audioData!, and: wordTextView.text!, onSuccess: {(response) in
+            try grpcService.getWordPredictionFromGRPC(for:UserDefaults.standard.string(forKey: "uid")! , with: audioData!, and: wordTextView.text!, onSuccess: {(response) in
                 
                 self.activityIndicator.isHidden = true
                 self.activityIndicator.stopAnimating()
@@ -732,14 +734,21 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
                     self.setLinegraph()
                     
                 }
-                
-            }, onFailure: {
+                hud.hide(animated: true)
+            }, onFailure: { error in
                 
                 self.activityIndicator.isHidden = true
                 self.activityIndicator.stopAnimating()
                 
-            })
+                hud.mode = MBProgressHUDMode.text
+                hud.label.text = error as? String
+                
+            }, onComplete:  {
+                hud.hide(animated: true)
+                })
         } catch (let error) {
+            hud.mode = MBProgressHUDMode.text
+            hud.label.text = error.localizedDescription
             print(error)
         }
         

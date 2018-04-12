@@ -42,7 +42,7 @@ class ForgotPassword_SH_ViewController: UIViewController , CAAnimationDelegate {
     // MARK: - UIActions and Events
 
     @IBAction func reset(_ sender: Any) {
-       
+        emailTextField.resignFirstResponder()
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud.mode = MBProgressHUDMode.indeterminate
         hud.label.text = "Resetting Password.."
@@ -60,10 +60,13 @@ class ForgotPassword_SH_ViewController: UIViewController , CAAnimationDelegate {
          */
         
         ServiceManager().forgotPassword(for: self.emailTextField.text!, onSuccess: { result in
-            if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+           /* if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
             {
                 rootVc.showInfoAlertView(with: result.success == true ? "Password Reset Successful!!!  Check email." : "Password Reset failed. Please try again.")
-            }
+              
+            }*/
+            hud.mode = MBProgressHUDMode.text
+            hud.label.text = "Password Reset Successful!!!  Check email"
         }, onHTTPError: { httperror in
             hud.mode = MBProgressHUDMode.text
             hud.label.text = httperror.description

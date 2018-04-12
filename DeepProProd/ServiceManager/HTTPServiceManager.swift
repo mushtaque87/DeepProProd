@@ -192,6 +192,7 @@ class ServiceManager: NSObject {
                         print(serverResponse.result.value!)
                         let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: data)
                         print(httpError.description)
+                        httpErrorHandler(httpError)
                         print("HTTP error: \(httpError.description)")
                     }
                 case .failure(let error):
@@ -210,7 +211,7 @@ class ServiceManager: NSObject {
                         onError errorHandler: @escaping (Error)-> Void  ,
                         onComplete completeCompletionHandler: @escaping ()-> Void)
     {
-        Alamofire.request(constant.baseUrl+constant.forgotpassword, method: .post, parameters: [:], encoding: JSONEncoding.default, headers: nil)
+        Alamofire.request(constant.baseUrl+constant.forgotpassword, method: .post, parameters: ["email":emailId], encoding: JSONEncoding.default, headers: nil)
             .responseData { serverResponse in
                 DispatchQueue.main.async {
                 debugPrint(serverResponse)
@@ -221,7 +222,7 @@ class ServiceManager: NSObject {
                         let decoder = JSONDecoder()
                         let response = try! decoder.decode(ForgotPasswordResponse.self, from: data)
                             successCompletionHandler(response)
-                            completeCompletionHandler()
+                           // completeCompletionHandler()
 
                     }
                     else
@@ -348,7 +349,7 @@ class ServiceManager: NSObject {
     
     func verifyTokenAndProceed(of uid : String,
                                onSuccess successCompletionHandler: @escaping () -> Void ,
-                               onError errorHandler: @escaping (Any) -> Void)
+                               onError errorHandler: @escaping (Any) -> Void) 
     {
         guard TokenManager.shared.isaccessTokenValid() else {
             guard TokenManager.shared.isRefreshTokenValid() else {

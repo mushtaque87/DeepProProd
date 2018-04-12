@@ -28,6 +28,10 @@ struct Pronounce_PronounceRequest {
 
   var text: String = String()
 
+  var userID: String = String()
+
+  var authToken: String = String()
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -156,6 +160,8 @@ extension Pronounce_PronounceRequest: SwiftProtobuf.Message, SwiftProtobuf._Mess
   static let _protobuf_nameMap: SwiftProtobuf._NameMap = [
     1: .same(proto: "speech"),
     2: .same(proto: "text"),
+    3: .same(proto: "userId"),
+    4: .same(proto: "authToken"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -163,6 +169,8 @@ extension Pronounce_PronounceRequest: SwiftProtobuf.Message, SwiftProtobuf._Mess
       switch fieldNumber {
       case 1: try decoder.decodeSingularBytesField(value: &self.speech)
       case 2: try decoder.decodeSingularStringField(value: &self.text)
+      case 3: try decoder.decodeSingularStringField(value: &self.userID)
+      case 4: try decoder.decodeSingularStringField(value: &self.authToken)
       default: break
       }
     }
@@ -175,12 +183,20 @@ extension Pronounce_PronounceRequest: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if !self.text.isEmpty {
       try visitor.visitSingularStringField(value: self.text, fieldNumber: 2)
     }
+    if !self.userID.isEmpty {
+      try visitor.visitSingularStringField(value: self.userID, fieldNumber: 3)
+    }
+    if !self.authToken.isEmpty {
+      try visitor.visitSingularStringField(value: self.authToken, fieldNumber: 4)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
   func _protobuf_generated_isEqualTo(other: Pronounce_PronounceRequest) -> Bool {
     if self.speech != other.speech {return false}
     if self.text != other.text {return false}
+    if self.userID != other.userID {return false}
+    if self.authToken != other.authToken {return false}
     if unknownFields != other.unknownFields {return false}
     return true
   }

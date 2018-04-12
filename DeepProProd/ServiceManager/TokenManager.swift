@@ -35,10 +35,22 @@ class TokenManager: NSObject {
     
         func currentDateTime() -> Date {
             let date = Date()
-    //        let calendar = Calendar.current
-    //        let hour = calendar.component(.hour, from: date)
-    //        let minutes = calendar.component(.minute, from: date)
-            return date
+            let calendar = Calendar.current
+            /* let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            dateFormatter.calendar = Calendar.current
+            dateFormatter.timeZone =  TimeZone.current
+            dateFormatter.date
+ */
+            
+       
+            let currentdatetime = calendar.date(from: DateComponents(calendar: calendar , timeZone: TimeZone.current,  year: calendar.component(.year, from: date), month: calendar.component(.month, from: date), day: calendar.component(.day, from: date), hour: calendar.component(.hour, from: date), minute: calendar.component(.minute, from: date), second: calendar.component(.second, from: date)))!
+ 
+            
+            
+            
+            return currentdatetime
+            //return  Calendar.current.dateComponents(in: TimeZone.autoupdatingCurrent, from: Date())
         }
     
     func  tokenExpiresAt(add seconds:TimeInterval) -> String {

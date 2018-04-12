@@ -25,27 +25,53 @@ typealias constant = Constants.ServerApi
         service = Pronounce_PronounceServiceClient(address: Constants.ServerApi.grpcBaseUrl, secure: false)
     }
 
-    func getWordPredictionFromGRPC(for audio: Data, and text: String , onSuccess successCompletionHandler: @escaping (Pronounce_PronounceResponse) -> Void , onFailure  failureCompletionHandler: @escaping () -> Void) throws
+    func getWordPredictionFromGRPC(for uid:String , with audio: Data, and text: String ,
+                                   onSuccess successCompletionHandler: @escaping (Pronounce_PronounceResponse) -> Void ,
+                                   onFailure  failureCompletionHandler: @escaping (Any) -> Void,
+                                   onComplete completeCompletionHandler: @escaping ()-> Void )
     {
+       ServiceManager().verifyTokenAndProceed(of: uid, onSuccess: {
+            
+                
+                var requestMessage = Pronounce_PronounceRequest()
+                requestMessage.text = text
+                requestMessage.speech = audio
+                requestMessage.userID = uid
+                requestMessage.authToken =  UserDefaults.standard.string(forKey: "access_token")!
         
-        var requestMessage = Pronounce_PronounceRequest()
-        requestMessage.text = text
-        requestMessage.speech = audio
-      
-        _ = try service?.predict(requestMessage, completion: { (response, callresult) in
-            
-            print(response)
-            print(callresult)
-            DispatchQueue.main.async {
-            
-            guard response != nil else{
-                failureCompletionHandler()
-                return
+        do {
+                _ = try self.service?.predict(requestMessage, completion: { (response, callresult) in
+                    
+                    print(response)
+                    print(callresult.statusMessage)
+                    DispatchQueue.main.async {
+                        
+                        switch callresult.statusCode {
+                        case .ok:
+                            successCompletionHandler(response!)
+                            break
+                        case .unauthenticated:
+                            failureCompletionHandler("Unauthenticated. Please Log in Again.")
+                            break
+                        default :
+                            failureCompletionHandler("Server Error. Please retry!!! ")
+                            break
+                        }
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                            completeCompletionHandler()
+                        }
+                        
+                    }
+                })
+        } catch {
+            print("Catch \(error)")
             }
-            successCompletionHandler(response!)
-            }
+        
+ 
+            } , onError: { error in
+            failureCompletionHandler("Unauthenticated. Please Log in Again.")
         })
-        
 }
 
 }
