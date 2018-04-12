@@ -66,7 +66,7 @@ class ForgotPassword_SH_ViewController: UIViewController , CAAnimationDelegate {
               
             }*/
             hud.mode = MBProgressHUDMode.text
-            hud.label.text = "Password Reset Successful!!!  Check email"
+            hud.label.text = "Password Reset Successfully"
         }, onHTTPError: { httperror in
             hud.mode = MBProgressHUDMode.text
             hud.label.text = httperror.description

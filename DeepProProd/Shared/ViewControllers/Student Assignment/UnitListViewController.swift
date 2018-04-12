@@ -1,40 +1,39 @@
 //
-//  Level_SHViewController.swift
+//  AssignmentDetailViewController.swift
 //  DeepProProd
 //
-//  Created by Mushtaque Ahmed on 1/10/18.
+//  Created by Mushtaque Ahmed on 3/27/18.
 //  Copyright © 2018 Mushtaque Ahmed. All rights reserved.
 //
 
 import UIKit
 
-class Level_SHViewController: UIViewController {
+class UnitListViewController: UIViewController {
 
-    @IBOutlet weak var backgroundImage: UIImageView!
-    @IBOutlet var viewModel: LevelViewModel!
-    @IBOutlet weak var levelTableView: UITableView!
-    
+    @IBOutlet weak var unitTableView: UITableView!
+    @IBOutlet var viewModel: AssignmentsUnitsModel!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
-        self.levelTableView.register(UINib(nibName: "ChapterContentCell", bundle: nil), forCellReuseIdentifier: "content")
-        viewModel.parentController = self
-        levelTableView.backgroundColor = UIColor.clear
-        
-        self.navigationItem.title = "Courses"
-
+          self.unitTableView.register(UINib(nibName: "UnitTableViewCell", bundle: nil), forCellReuseIdentifier: "unitCell")
+        self.navigationItem.title = "unit List"
+        unitTableView.backgroundColor = UIColor.clear
+        self.view.backgroundColor = UIColor(red: 112/255, green: 127/255, blue: 134/255, alpha: 0.9)
     }
 
+    func DLog(message: String, function: String = #function) {
+        #if DEBUG
+            print("\(function): \(message)")
+        #endif
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        refreshUI()
-    }
 
     /*
     // MARK: - Navigation
@@ -45,9 +44,5 @@ class Level_SHViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-    
-    func refreshUI() {
-        backgroundImage.setBackGroundimage()
-    }
 
 }

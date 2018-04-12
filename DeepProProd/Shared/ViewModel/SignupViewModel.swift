@@ -11,8 +11,9 @@ import RxSwift
 
 class SignupViewModel: NSObject,UITextFieldDelegate {
 
+    var currentTextField: UITextField?
+    lazy  var dob = Variable("")
     
-   lazy  var dob = Variable("")
     var dobObserver:Observable<String> {
         return dob.asObservable()
     }
@@ -27,6 +28,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate {
     // MARK: - TextField Delegate
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         if(textField.tag == 6){
+
             
                 let currentDate = Date()
                 var dateComponents = DateComponents()
@@ -55,12 +57,11 @@ class SignupViewModel: NSObject,UITextFieldDelegate {
         return true
     }
     func textFieldDidBeginEditing(_ textField: UITextField) {    //delegate method
-        
-       
-    
+
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {  //delegate method
+        //currentTextField?.resignFirstResponder()
         return true
     }
     

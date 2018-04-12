@@ -154,7 +154,7 @@
                   moduleName = "DeepProProd"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mahmed/Documents/iOS_Codes/DeepProProd/DeepProProd/Extensions/UIApplication.swift"
-                  timestampString = "545237177.4602309"
+                  timestampString = "545245353.4296089"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "14"
@@ -169,7 +169,7 @@
                   moduleName = "DeepProProd"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mahmed/Documents/iOS_Codes/DeepProProd/DeepProProd/Extensions/UIApplication.swift"
-                  timestampString = "545237177.463135"
+                  timestampString = "545245353.432435"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "15"
@@ -1672,13 +1672,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/ViewControllers/Login_SH_ViewController.swift"
-            timestampString = "545223107.938535"
+            timestampString = "545245353.014796"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "118"
-            endingLineNumber = "118"
-            landmarkName = "Login_SH_ViewController"
-            landmarkType = "3">
+            startingLineNumber = "119"
+            endingLineNumber = "119"
+            landmarkName = "signUp(_:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -1832,12 +1832,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/ViewControllers/Login_SH_ViewController.swift"
-            timestampString = "545223107.938783"
+            timestampString = "545245353.015244"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "121"
-            endingLineNumber = "121"
-            landmarkName = "forgotPassword(_:)"
+            startingLineNumber = "122"
+            endingLineNumber = "122"
+            landmarkName = "signUp(_:)"
             landmarkType = "7">
             <Locations>
                <Location
@@ -1896,7 +1896,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/ViewControllers/SignUp_SH_ViewController.swift"
-            timestampString = "545237177.087396"
+            timestampString = "545245353.015496"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "87"
@@ -1912,7 +1912,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/ViewControllers/SignUp_SH_ViewController.swift"
-            timestampString = "545237177.087749"
+            timestampString = "545245353.015764"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "139"
@@ -1960,7 +1960,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ServiceManager/TokenManager.swift"
-            timestampString = "545237177.088021"
+            timestampString = "545245353.016018"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "34"
@@ -1976,7 +1976,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ServiceManager/TokenManager.swift"
-            timestampString = "545237177.08829"
+            timestampString = "545245353.016261"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "96"
@@ -1992,7 +1992,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ServiceManager/TokenManager.swift"
-            timestampString = "545237177.088506"
+            timestampString = "545245353.016458"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "77"
@@ -2024,7 +2024,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ServiceManager/TokenManager.swift"
-            timestampString = "545237177.088735"
+            timestampString = "545245353.0166841"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "97"
@@ -2040,7 +2040,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ServiceManager/TokenManager.swift"
-            timestampString = "545237177.088953"
+            timestampString = "545245353.016897"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "61"
@@ -2056,7 +2056,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ServiceManager/TokenManager.swift"
-            timestampString = "545237177.089164"
+            timestampString = "545245353.017094"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "57"
@@ -2215,7 +2215,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ServiceManager/TokenManager.swift"
-            timestampString = "545237177.0894459"
+            timestampString = "545245353.017359"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "30"
@@ -2231,12 +2231,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/ViewControllers/Login_SH_ViewController.swift"
-            timestampString = "545223107.939329"
+            timestampString = "545245353.0175591"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "122"
-            endingLineNumber = "122"
-            landmarkName = "forgotPassword(_:)"
+            startingLineNumber = "123"
+            endingLineNumber = "123"
+            landmarkName = "signUp(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2295,7 +2295,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/ViewControllers/ForgotPassword_SH_ViewController.swift"
-            timestampString = "545237177.089752"
+            timestampString = "545245353.017836"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "62"
@@ -2343,7 +2343,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/ViewControllers/ForgotPassword_SH_ViewController.swift"
-            timestampString = "545237177.089801"
+            timestampString = "545245353.017885"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "51"
@@ -2359,12 +2359,12 @@
                   moduleName = "DeepProProd"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mahmed/Documents/iOS_Codes/DeepProProd/DeepProProd/Shared/ViewControllers/ForgotPassword_SH_ViewController.swift"
-                  timestampString = "545237177.552433"
+                  timestampString = "545245353.504722"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "62"
                   endingLineNumber = "62"
-                  offsetFromSymbolStart = "484">
+                  offsetFromSymbolStart = "660">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -2374,7 +2374,7 @@
                   moduleName = "DeepProProd"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mahmed/Documents/iOS_Codes/DeepProProd/DeepProProd/Shared/ViewControllers/ForgotPassword_SH_ViewController.swift"
-                  timestampString = "545237177.554408"
+                  timestampString = "545245353.506907"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "68"
@@ -2695,13 +2695,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/ViewControllers/Login_SH_ViewController.swift"
-            timestampString = "545223107.9399641"
+            timestampString = "545245353.018056"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "166"
-            endingLineNumber = "166"
-            landmarkName = "Login_SH_ViewController"
-            landmarkType = "3">
+            startingLineNumber = "167"
+            endingLineNumber = "167"
+            landmarkName = "shouldAutorotate"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2711,11 +2711,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/ViewControllers/Login_SH_ViewController.swift"
-            timestampString = "545223107.940035"
+            timestampString = "545245353.018286"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "169"
-            endingLineNumber = "169">
+            startingLineNumber = "170"
+            endingLineNumber = "170"
+            landmarkName = "Login_SH_ViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -2741,11 +2743,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/ViewControllers/Login_SH_ViewController.swift"
-            timestampString = "545223107.940181"
+            timestampString = "545245353.018514"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "86"
-            endingLineNumber = "86"
+            startingLineNumber = "87"
+            endingLineNumber = "87"
             landmarkName = "login(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -2757,7 +2759,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/ViewControllers/ForgotPassword_SH_ViewController.swift"
-            timestampString = "545237177.090019"
+            timestampString = "545245353.018726"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "58"
@@ -2773,12 +2775,12 @@
                   moduleName = "DeepProProd"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mahmed/Documents/iOS_Codes/DeepProProd/DeepProProd/Shared/ViewControllers/ForgotPassword_SH_ViewController.swift"
-                  timestampString = "545237177.565824"
+                  timestampString = "545245353.519433"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "62"
                   endingLineNumber = "62"
-                  offsetFromSymbolStart = "484">
+                  offsetFromSymbolStart = "660">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -2788,7 +2790,7 @@
                   moduleName = "DeepProProd"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mahmed/Documents/iOS_Codes/DeepProProd/DeepProProd/Shared/ViewControllers/ForgotPassword_SH_ViewController.swift"
-                  timestampString = "545237177.567607"
+                  timestampString = "545245353.521216"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "68"
@@ -2833,11 +2835,11 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/ViewControllers/ForgotPassword_SH_ViewController.swift"
-            timestampString = "545237177.09008"
+            timestampString = "545245353.018796"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "90"
@@ -2853,7 +2855,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/ViewControllers/SignUp_SH_ViewController.swift"
-            timestampString = "545237177.090119"
+            timestampString = "545245353.018836"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "96"
@@ -2869,7 +2871,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/ViewControllers/SignUp_SH_ViewController.swift"
-            timestampString = "545237177.090343"
+            timestampString = "545245353.019053"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "99"
@@ -2885,7 +2887,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/ViewControllers/SignUp_SH_ViewController.swift"
-            timestampString = "545237177.090548"
+            timestampString = "545245353.019261"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "101"
@@ -2901,12 +2903,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/ViewControllers/Login_SH_ViewController.swift"
-            timestampString = "545223107.9404351"
+            timestampString = "545245353.019469"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "105"
-            endingLineNumber = "105"
-            landmarkName = "signUp(_:)"
+            startingLineNumber = "106"
+            endingLineNumber = "106"
+            landmarkName = "login(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2917,12 +2919,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/ViewControllers/Login_SH_ViewController.swift"
-            timestampString = "545223107.940501"
+            timestampString = "545245353.019677"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "108"
-            endingLineNumber = "108"
-            landmarkName = "signUp(_:)"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
+            landmarkName = "login(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -2933,12 +2935,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/ViewControllers/Login_SH_ViewController.swift"
-            timestampString = "545223107.940559"
+            timestampString = "545245353.019879"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
-            landmarkName = "signUp(_:)"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
+            landmarkName = "login(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -3541,7 +3543,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ServiceManager/TokenManager.swift"
-            timestampString = "545237177.091089"
+            timestampString = "545245353.020402"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "24"
@@ -3925,7 +3927,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Proto/pronunciation.grpc.swift"
-            timestampString = "545237177.0915329"
+            timestampString = "545245353.020843"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "46"
@@ -3941,7 +3943,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Proto/pronunciation.grpc.swift"
-            timestampString = "545237177.091769"
+            timestampString = "545245353.021116"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "48"
@@ -4140,38 +4142,6 @@
             endingLineNumber = "692"
             landmarkName = "callGRPCService()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "DeepProProd.TransDetailViewController.callGRPCService() -&gt; ()"
-                  moduleName = "DeepProProd"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mahmed/Documents/iOS_Codes/DeepProProd/DeepProProd/Shared/ViewControllers/TransDetailViewController.swift"
-                  timestampString = "545237177.63866"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "692"
-                  endingLineNumber = "692"
-                  offsetFromSymbolStart = "728">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (DeepProProd.Pronounce_PronounceResponse) -&gt; () in DeepProProd.TransDetailViewController.callGRPCService() -&gt; ()"
-                  moduleName = "DeepProProd"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/mahmed/Documents/iOS_Codes/DeepProProd/DeepProProd/Shared/ViewControllers/TransDetailViewController.swift"
-                  timestampString = "545237177.6403871"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "694"
-                  endingLineNumber = "694"
-                  offsetFromSymbolStart = "48">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4389,7 +4359,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ServiceManager/HTTPServiceManager.swift"
-            timestampString = "545237177.0922509"
+            timestampString = "545245353.0217071"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "249"
@@ -4405,7 +4375,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ServiceManager/HTTPServiceManager.swift"
-            timestampString = "545237177.092548"
+            timestampString = "545245353.0217969"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "256"
@@ -4421,7 +4391,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ServiceManager/HTTPServiceManager.swift"
-            timestampString = "545237177.092777"
+            timestampString = "545245353.0218461"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "178"
@@ -4437,7 +4407,7 @@
                   moduleName = "DeepProProd"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mahmed/Documents/iOS_Codes/DeepProProd/DeepProProd/ServiceManager/HTTPServiceManager.swift"
-                  timestampString = "545237177.648006"
+                  timestampString = "545245353.609586"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "178"
@@ -4452,7 +4422,7 @@
                   moduleName = "DeepProProd"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mahmed/Documents/iOS_Codes/DeepProProd/DeepProProd/ServiceManager/HTTPServiceManager.swift"
-                  timestampString = "545237177.649702"
+                  timestampString = "545245353.611927"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "179"
@@ -4785,7 +4755,7 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "Yes"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Shared/ViewModel/AssignmentsUnitsModel.swift"
@@ -4869,13 +4839,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ServiceManager/HTTPServiceManager.swift"
-            timestampString = "545237177.09332"
+            timestampString = "545245353.022143"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "291"
             endingLineNumber = "291"
-            landmarkName = "getProfile(for:onSuccess:onHTTPError:onError:)"
-            landmarkType = "7">
+            landmarkName = "ServiceManager"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -4917,7 +4887,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ServiceManager/HTTPServiceManager.swift"
-            timestampString = "545237177.093581"
+            timestampString = "545245353.022282"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "354"
@@ -4949,7 +4919,7 @@
                   moduleName = "DeepProProd"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mahmed/Documents/iOS_Codes/DeepProProd/DeepProProd/ServiceManager/GRPCServiceManager.swift"
-                  timestampString = "545237177.663003"
+                  timestampString = "545245353.6357599"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "33"
@@ -4964,7 +4934,7 @@
                   moduleName = "DeepProProd"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mahmed/Documents/iOS_Codes/DeepProProd/DeepProProd/ServiceManager/GRPCServiceManager.swift"
-                  timestampString = "545237177.6647"
+                  timestampString = "545245353.638433"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "36"
@@ -5029,7 +4999,7 @@
                   moduleName = "DeepProProd"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mahmed/Documents/iOS_Codes/DeepProProd/DeepProProd/ServiceManager/GRPCServiceManager.swift"
-                  timestampString = "545237177.674606"
+                  timestampString = "545245353.652917"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "72"
@@ -5044,7 +5014,7 @@
                   moduleName = "DeepProProd"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/mahmed/Documents/iOS_Codes/DeepProProd/DeepProProd/ServiceManager/GRPCServiceManager.swift"
-                  timestampString = "545237177.676504"
+                  timestampString = "545245353.654725"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "73"
@@ -5061,7 +5031,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ServiceManager/TokenManager.swift"
-            timestampString = "545237177.093871"
+            timestampString = "545245353.022442"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "82"
@@ -5077,7 +5047,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ServiceManager/TokenManager.swift"
-            timestampString = "545237177.094218"
+            timestampString = "545245353.023066"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "100"
@@ -5093,13 +5063,45 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ServiceManager/HTTPServiceManager.swift"
-            timestampString = "545237177.094442"
+            timestampString = "545245353.02353"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "372"
             endingLineNumber = "372"
             landmarkName = "verifyTokenAndProceed(of:onSuccess:onError:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "DeepProProd.ServiceManager.verifyTokenAndProceed(of: Swift.String, onSuccess: () -&gt; (), onError: (Any) -&gt; ()) -&gt; ()"
+                  moduleName = "DeepProProd"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mahmed/Documents/iOS_Codes/DeepProProd/DeepProProd/ServiceManager/HTTPServiceManager.swift"
+                  timestampString = "545245353.659323"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "372"
+                  endingLineNumber = "372"
+                  offsetFromSymbolStart = "272">
+               </Location>
+               <Location
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 () -&gt; () in DeepProProd.ServiceManager.verifyTokenAndProceed(of: Swift.String, onSuccess: () -&gt; (), onError: (Any) -&gt; ()) -&gt; ()"
+                  moduleName = "DeepProProd"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/mahmed/Documents/iOS_Codes/DeepProProd/DeepProProd/ServiceManager/HTTPServiceManager.swift"
+                  timestampString = "545245353.661303"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "373"
+                  endingLineNumber = "373"
+                  offsetFromSymbolStart = "24">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -5109,7 +5111,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ServiceManager/TokenManager.swift"
-            timestampString = "545237177.094963"
+            timestampString = "545245353.023677"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "65"
@@ -5125,7 +5127,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ServiceManager/TokenManager.swift"
-            timestampString = "545237177.095281"
+            timestampString = "545245353.024278"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "52"
@@ -5157,7 +5159,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ServiceManager/HTTPServiceManager.swift"
-            timestampString = "545237177.095596"
+            timestampString = "545245353.024893"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "198"
@@ -5173,7 +5175,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ServiceManager/HTTPServiceManager.swift"
-            timestampString = "545237177.0958149"
+            timestampString = "545245353.024981"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "183"
@@ -5189,7 +5191,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ServiceManager/HTTPServiceManager.swift"
-            timestampString = "545237177.096023"
+            timestampString = "545245353.025036"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "208"
@@ -5205,7 +5207,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ServiceManager/HTTPServiceManager.swift"
-            timestampString = "545237177.096221"
+            timestampString = "545245353.025082"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "221"
@@ -5221,12 +5223,60 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ServiceManager/HTTPServiceManager.swift"
-            timestampString = "545237177.096413"
+            timestampString = "545245353.025129"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "231"
             endingLineNumber = "231"
             landmarkName = "forgotPassword(for:onSuccess:onHTTPError:onError:onComplete:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ServiceManager/HTTPServiceManager.swift"
+            timestampString = "545245374.147583"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "264"
+            endingLineNumber = "264"
+            landmarkName = "doLogin(for:and:onSuccess:onHTTPError:onError:onComplete:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ServiceManager/HTTPServiceManager.swift"
+            timestampString = "545245478.827005"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "297"
+            endingLineNumber = "297"
+            landmarkName = "getProfile(for:onSuccess:onHTTPError:onError:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "ServiceManager/HTTPServiceManager.swift"
+            timestampString = "545245483.260998"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "305"
+            endingLineNumber = "305"
+            landmarkName = "getProfile(for:onSuccess:onHTTPError:onError:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

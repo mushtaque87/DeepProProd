@@ -23,42 +23,47 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SFb-RC-0CX">
-                    <rect key="frame" x="115" y="89" width="244" height="129"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="MAv-dR-BLb" userLabel="Whole Stack View">
+                    <rect key="frame" x="16" y="64" width="343" height="614"/>
+                    <subviews>
+                        <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Ll1-4O-8c9" userLabel="Header Stack View">
+                            <rect key="frame" x="0.0" y="0.0" width="343" height="95"/>
+                            <subviews>
+                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QX1-id-rMi">
+                                    <rect key="frame" x="0.0" y="0.0" width="91" height="95"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="95" id="MSy-ZE-7gk"/>
+                                        <constraint firstAttribute="width" constant="91" id="XQm-em-uln"/>
+                                    </constraints>
+                                </imageView>
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="SFb-RC-0CX">
+                                    <rect key="frame" x="101" y="0.0" width="242" height="95"/>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </tableView>
+                            </subviews>
+                        </stackView>
+                        <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="x0T-ON-rbP">
+                            <rect key="frame" x="0.0" y="115" width="343" height="499"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </tableView>
+                    </subviews>
                     <constraints>
-                        <constraint firstAttribute="height" constant="129" id="B2O-Wh-fp4"/>
+                        <constraint firstItem="x0T-ON-rbP" firstAttribute="top" secondItem="Ll1-4O-8c9" secondAttribute="bottom" constant="20" id="2P5-v2-M3W"/>
+                        <constraint firstItem="Ll1-4O-8c9" firstAttribute="leading" secondItem="MAv-dR-BLb" secondAttribute="leading" id="ALY-3K-jLW"/>
+                        <constraint firstItem="Ll1-4O-8c9" firstAttribute="top" secondItem="MAv-dR-BLb" secondAttribute="top" id="OkE-e4-FwW"/>
+                        <constraint firstAttribute="trailing" secondItem="Ll1-4O-8c9" secondAttribute="trailing" id="gyQ-hg-7m4"/>
                     </constraints>
-                </tableView>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="x0T-ON-rbP">
-                    <rect key="frame" x="16" y="255" width="343" height="269"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="269" id="381-0P-u35"/>
-                    </constraints>
-                </tableView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QX1-id-rMi">
-                    <rect key="frame" x="16" y="89" width="91" height="95"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="95" id="MSy-ZE-7gk"/>
-                        <constraint firstAttribute="width" constant="91" id="XQm-em-uln"/>
-                    </constraints>
-                </imageView>
+                </stackView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="SFb-RC-0CX" secondAttribute="trailing" constant="16" id="BJS-xw-Ohk"/>
-                <constraint firstItem="x0T-ON-rbP" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Qba-7D-Ndq"/>
-                <constraint firstItem="QX1-id-rMi" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="TTG-7L-gyi"/>
-                <constraint firstItem="x0T-ON-rbP" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="Wol-JV-Ti4"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="x0T-ON-rbP" secondAttribute="trailing" constant="16" id="eCv-da-OEU"/>
-                <constraint firstItem="x0T-ON-rbP" firstAttribute="top" secondItem="SFb-RC-0CX" secondAttribute="bottom" constant="37" id="mzY-sA-Zrj"/>
-                <constraint firstItem="QX1-id-rMi" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="45" id="rl5-5d-521"/>
-                <constraint firstItem="SFb-RC-0CX" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="45" id="vhd-t7-st3"/>
-                <constraint firstItem="SFb-RC-0CX" firstAttribute="leading" secondItem="QX1-id-rMi" secondAttribute="trailing" constant="8" id="x9j-09-JDN"/>
+                <constraint firstItem="MAv-dR-BLb" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" constant="-100" id="RhU-yW-ah9"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="MAv-dR-BLb" secondAttribute="trailing" constant="16" id="fZX-AN-gHZ"/>
+                <constraint firstItem="MAv-dR-BLb" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="16" id="gHW-R2-bGn"/>
+                <constraint firstItem="MAv-dR-BLb" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="lCx-fm-NpS"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
-            <point key="canvasLocation" x="33.5" y="127.5"/>
+            <point key="canvasLocation" x="33.5" y="127"/>
         </view>
     </objects>
 </document>

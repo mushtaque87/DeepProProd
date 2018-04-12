@@ -1,0 +1,54 @@
+[ {
+"assignment_id" : 123,
+"short_name" : "SWO 1",
+"description" : "This is a sample project",
+"creation_date" : 1522926168,
+"due_date" : 1522926168,
+"assignment_status" : "Assigned"
+},
+{
+"assignment_id" : 125,
+"short_name" : "SWO 2",
+"description" : "This is a sample project. This is a sample project . This is a sample project .  This is a sample project . This is a sample project .",
+"creation_date" : 1522580569,
+"due_date" : 1522580569,
+"assignment_status" : "Submitted"
+},
+
+{
+"assignment_id" : 125,
+"short_name" : "SWO 3",
+"description" : "This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project .",
+"creation_date" : 1522580568,
+"due_date" : 1522580568,
+"assignment_status" : "InProgress"
+},
+
+{
+"assignment_id" : 125,
+"short_name" : "SWO 4",
+"description" : "This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project .",
+"creation_date" : 1522580568,
+"due_date" : 1522667028,
+"assignment_status" : "InProgress"
+},
+
+{
+"assignment_id" : 125,
+"short_name" : "SWO 5",
+"description" : "This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project .",
+"creation_date" : 1522580568,
+"due_date" : 1522667028,
+"assignment_status" : "Assigned"
+},
+
+{
+"assignment_id" : 125,
+"short_name" : "SWO 6",
+"description" : "This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project . This is a sample project .",
+"creation_date" : 1522580568,
+"due_date" : 1522667028,
+"assignment_status" : "Submitted"
+}
+
+]

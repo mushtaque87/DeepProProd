@@ -18,7 +18,7 @@ class LevelViewModel: NSObject, UITableViewDelegate , UITableViewDataSource {
     
     override init() {
         do {
-             levelArray  = try Helper.parseJson()
+             levelArray  = try Helper.parseLevelJson()
             
         } catch  {
             print(error)

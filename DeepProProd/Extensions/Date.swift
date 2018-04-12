@@ -18,5 +18,11 @@ extension Date
         return dateFormatter.string(from: self)
     }
     
+    func dateFromEpoc(_ epoc:Double) -> Date
+    {
+        let date = Date(timeIntervalSince1970: epoc)
+       return date
+    }
    
 }
+

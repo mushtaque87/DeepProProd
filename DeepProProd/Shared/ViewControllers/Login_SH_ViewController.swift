@@ -77,29 +77,41 @@ class Login_SH_ViewController: UIViewController {
     @IBAction func login(_ sender: Any) {
       //  super.remove(viewController: self, from: s)
         Settings.sharedInstance.setValue(key: "FirstLogin", value: false as AnyObject)
-        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        hud.mode = MBProgressHUDMode.indeterminate
-        hud.label.text = "Logging in. Please wait"
+
+        /*
+        let rootVc: MainViewController = (UIApplication.rootViewController() as? MainViewController)!
+        rootVc.remove(viewController: self, from: rootVc)
+        rootVc.addTabBarControllers()
+        return
+        */
         
-        ServiceManager().doLogin(for: userNameTextField.text!, and: passwordTextField.text!,
-                                 onSuccess: { response in
-                                    Settings.sharedInstance.setValue(key: "isLoggedIn", value: true as AnyObject)
-                                    if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
-                                    {
-                                        rootVc.remove(viewController: self, from: rootVc)
-                                        rootVc.addTabBarControllers()
+        if(isDetailsFilled())
+        {
+            
+            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud.mode = MBProgressHUDMode.indeterminate
+            hud.label.text = "Logging in. Please wait"
+            
+            ServiceManager().doLogin(for: userNameTextField.text!, and: passwordTextField.text!,
+                                     onSuccess: { response in
+                                        Settings.sharedInstance.setValue(key: "isLoggedIn", value: true as AnyObject)
+                                        if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+                                        {
+                                            rootVc.remove(viewController: self, from: rootVc)
+                                            rootVc.addTabBarControllers()
+                                            
+                                        }
                                         
-                                    }
-                                    
-        }, onHTTPError: { httperror in
-            hud.mode = MBProgressHUDMode.text
-            hud.label.text = httperror.description
-        }, onError: { error in
-            hud.mode = MBProgressHUDMode.text
-            hud.label.text = error.localizedDescription
-        }, onComplete:  {
-            hud.hide(animated: true)
-        })
+            }, onHTTPError: { httperror in
+                hud.mode = MBProgressHUDMode.text
+                hud.label.text = httperror.description
+            }, onError: { error in
+                hud.mode = MBProgressHUDMode.text
+                hud.label.text = error.localizedDescription
+            }, onComplete:  {
+                hud.hide(animated: true)
+            })
+        }
     }
 
     @IBAction func signUp(_ sender: Any) {
@@ -160,6 +172,24 @@ class Login_SH_ViewController: UIViewController {
         return .portrait
     }
     
+    
+    func isDetailsFilled() -> Bool {
+        
+        guard userNameTextField.text?.count != 0 &&
+            passwordTextField.text?.count != 0
+            else {
+                if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+                {
+                    let alert = UIAlertController(title: "Warning", message:"Username and password is not filled." , preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
+                    rootVc.present(alert, animated: true, completion: nil)
+                    
+                }
+                return false
+        }
+
+        return true
+    }
     
    
     
