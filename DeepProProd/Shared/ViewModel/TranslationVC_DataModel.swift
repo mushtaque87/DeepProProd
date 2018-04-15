@@ -19,8 +19,8 @@ import AVFoundation
 
 struct Word {
     let word: String
-    let voice: String
-    let voiceTime : Array<VoiceTime>
+    let voice: String?
+    let voiceTime : Array<VoiceTime>?
 }
 
 struct VoiceTime {
@@ -227,10 +227,10 @@ class TranslationVC_DataModel: NSObject, UITableViewDataSource,UITableViewDelega
                         wordIndex += 1
                     }
                     
-                    player?.currentTime = word.voiceTime[wordIndex].startTime
+                    player?.currentTime = word.voiceTime![wordIndex].startTime
                     player!.prepareToPlay()
                     player!.play()
-                    playTimer = Timer.scheduledTimer(timeInterval:(word.voiceTime[wordIndex].endTime - word.voiceTime[wordIndex].startTime)
+                    playTimer = Timer.scheduledTimer(timeInterval:(word.voiceTime![wordIndex].endTime - word.voiceTime![wordIndex].startTime)
                         , target: self, selector: #selector(stopVoicePlayBack), userInfo: nil, repeats: false)
                     
                     // playTimer?.fire()

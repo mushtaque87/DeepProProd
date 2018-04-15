@@ -314,7 +314,8 @@ class ServiceManager: NSObject {
                                             }
                                         case .failure(let error):
                                             print("Request failed with error: \(error)")
-                                            self.showInfoAlertScreen(with: serverResponse.result.error!.localizedDescription, oftype: "INFO")
+                                            errorHandler(error)
+                                            
                                         }
                                         
                                 }
@@ -325,13 +326,87 @@ class ServiceManager: NSObject {
         
     }
     
+    func getassignments(for uid:String,
+                        onSuccess successCompletionHandler: @escaping ([FailableDecodable<Assignment>]) -> Void,
+                        onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
+                        onError errorHandler: @escaping (Error)-> Void  ,
+                        onComplete completeCompletionHandler: @escaping ()-> Void)
+    {
+        verifyTokenAndProceed(of: uid,
+                              onSuccess: {
+                                
+                                Alamofire.request("http://192.168.71.10:10002/v1/" + constant.student + uid + "/" + constant.assignments, method: .get, parameters: [:] , encoding: JSONEncoding.default, headers:self.generateAuthHeaders())
+                                    .responseData { serverResponse in
+                                        let decoder = JSONDecoder()
+                                        switch serverResponse.result {
+                                        case .success(let data):
+                                            if serverResponse.response!.statusCode == 200 {
+                                                let assignments = try! decoder.decode([FailableDecodable<Assignment>].self, from: data)
+                                                successCompletionHandler(assignments)
+                                            }
+                                            else
+                                            {
+                                                let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
+                                                httpErrorHandler(httpError)
+                                                print("HTTP error: \(httpError.description)")
+                                            }
+                                        case .failure(let error):
+                                            print("Request failed with error: \(error)")
+                                            //self.showInfoAlertScreen(with: serverResponse.result.error!.localizedDescription, oftype: "INFO")
+                                        }
+                                        
+                                }
+                                
+        },   onError: { error in
+            errorHandler(error)
+        })
+        
+    }
+    
+    func getUnits(for assignment:Int,
+                  of uid:String,
+                  onSuccess successCompletionHandler: @escaping ([FailableDecodable<Units>]) -> Void,
+                  onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
+                  onError errorHandler: @escaping (Error)-> Void  ,
+                  onComplete completeCompletionHandler: @escaping ()-> Void)
+    {
+        verifyTokenAndProceed(of: uid,
+                              onSuccess: {
+                                
+                                Alamofire.request("http://192.168.71.10:10002/v1/" + constant.assignments + "\(assignment)/" + constant.units , method: .get, parameters: [:] , encoding: JSONEncoding.default, headers:self.generateAuthHeaders())
+                                    .responseData { serverResponse in
+                                        let decoder = JSONDecoder()
+                                        switch serverResponse.result {
+                                        case .success(let data):
+                                            if serverResponse.response!.statusCode == 200 {
+                                                let units = try! decoder.decode([FailableDecodable<Units>].self, from: data)
+                                                successCompletionHandler(units)
+                                            }
+                                            else
+                                            {
+                                                let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
+                                                httpErrorHandler(httpError)
+                                                print("HTTP error: \(httpError.description)")
+                                            }
+                                        case .failure(let error):
+                                            print("Request failed with error: \(error)")
+                                            errorHandler(error)
+                                            
+                                        }
+                                        
+                                }
+                                
+        },   onError: { error in
+            errorHandler(error)
+        })
+    }
     
     func updateRefreshToken(of uid : String ,
                             onSuccess completionHandler: @escaping () -> Void ,
-                            onError errorHandler: @escaping (Any) -> Void)
+                            onError errorHandler: @escaping (Error) -> Void)
     {
         
-        Alamofire.request(constant.baseUrl + constant.useridentity + uid + constant.refreshtoken, method: .post, parameters: ["refresh-token":(UserDefaults.standard.string(forKey: "refresh_token"))!], encoding: JSONEncoding.default, headers: nil)
+        Alamofire.request(constant.baseUrl + constant.useridentity + uid+"/" + constant.refreshtoken, method: .post, parameters: ["refresh-token":(UserDefaults.standard.string(forKey: "refresh_token"))!], encoding: JSONEncoding.default, headers: nil)
             .responseData { serverResponse in
                 debugPrint(serverResponse)
                 switch serverResponse.result {
@@ -350,7 +425,7 @@ class ServiceManager: NSObject {
     
     func verifyTokenAndProceed(of uid : String,
                                onSuccess successCompletionHandler: @escaping () -> Void ,
-                               onError errorHandler: @escaping (Any) -> Void) 
+                               onError errorHandler: @escaping (Error) -> Void)
     {
         guard TokenManager.shared.isaccessTokenValid() else {
             guard TokenManager.shared.isRefreshTokenValid() else {
@@ -380,7 +455,7 @@ class ServiceManager: NSObject {
     }
     
    
-    
+  /*
 
     func showInfoAlertScreen(with alertDetails: Any , oftype alertType:String)
     {
@@ -393,7 +468,7 @@ class ServiceManager: NSObject {
                 case "HTTPERROR":
                     if let alert:HTTPError = alertDetails as? HTTPError
                    {
-                    let alert = UIAlertController(title: String(alert.error_code), message: alert.description, preferredStyle: UIAlertControllerStyle.alert)
+                    let alert = UIAlertController(title: String(alert.error_code!), message: alert.description, preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                     rootVc.present(alert, animated: true, completion: nil)
                    }
@@ -412,6 +487,8 @@ class ServiceManager: NSObject {
         }
         
 }
+ 
+ */
     
 func showLoginScreen(with message: String = "Please Login Again")
 {

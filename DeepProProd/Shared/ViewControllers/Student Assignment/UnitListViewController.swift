@@ -7,20 +7,70 @@
 //
 
 import UIKit
+import MBProgressHUD
 
-class UnitListViewController: UIViewController {
+protocol unitsProtocols: class {
+    func showPronunciationScreen(with unitsArray:[FailableDecodable<Units>] , and index:Int)
+}
+
+class UnitListViewController: UIViewController,unitsProtocols {
+ 
+    
 
     @IBOutlet weak var unitTableView: UITableView!
     @IBOutlet var viewModel: AssignmentsUnitsModel!
+    var assignmentId : Int?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
-          self.unitTableView.register(UINib(nibName: "UnitTableViewCell", bundle: nil), forCellReuseIdentifier: "unitCell")
+        viewModel.delegate = self
+        self.unitTableView.register(UINib(nibName: "UnitTableViewCell", bundle: nil), forCellReuseIdentifier: "unitCell")
         self.navigationItem.title = "unit List"
         unitTableView.backgroundColor = UIColor.clear
         self.view.backgroundColor = UIColor(red: 112/255, green: 127/255, blue: 134/255, alpha: 0.9)
+        
+        
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.mode = MBProgressHUDMode.indeterminate
+        hud.label.text = "Fetching Units. Please wait"
+        
+        ServiceManager().getUnits(for:assignmentId! , of: UserDefaults.standard.string(forKey: "uid")!, onSuccess: { unitlist in
+            hud.hide(animated: true)
+            self.viewModel.unitList = unitlist
+            self.unitTableView.reloadData()
+            
+        }, onHTTPError: { httperror in
+            hud.mode = MBProgressHUDMode.text
+            hud.label.text = httperror.description
+        }, onError: { error in
+            hud.mode = MBProgressHUDMode.text
+            hud.label.text = error.localizedDescription
+        }, onComplete: {
+            hud.hide(animated: true)
+        })
+        
+        
+    }
+    
+   func showPronunciationScreen(with unitsArray:[FailableDecodable<Units>] , and index:Int = 0)
+    {
+        
+        let transDetailViewController: TransDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
+        var wordArray = Array<Word>()
+        for text in unitsArray {
+            wordArray.append(Word(word: (text.base?.question_text)!, voice: "", voiceTime: nil))
+        }
+        //transDetailViewController.wordTextView.text = unitsArray[index].base?.question_text
+        self.navigationController?.pushViewController(transDetailViewController, animated: true)
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            transDetailViewController.vc_DataModel.wordArray = wordArray
+            transDetailViewController.wordTextView.text = wordArray[index].word
+
+        }
+
     }
 
     func DLog(message: String, function: String = #function) {

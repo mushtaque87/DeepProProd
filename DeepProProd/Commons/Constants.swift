@@ -19,20 +19,20 @@ struct Constants {
 
         //static let baseUrl = "http://192.168.32.24:8777/v1"
         
-        static let baseUrl = "http://192.168.71.10:10000/v1"
-        static let useridentity = "/uam/users/"
+        static let baseUrl = "http://192.168.71.10:10000/v1/"
+        static let useridentity = "uam/users/"
 
         static let login = "login"
         static let signUp = "signup"
         static let forgotpassword = "forget-password"
-        static let refreshtoken = "/token/refresh"
+        static let refreshtoken = "token/refresh"
 
         static let grpcBaseUrl = "192.168.71.10:10007"
 
         
-        static let student = "student/%@"
-        static let assignment = "/assignments"
-        
+        static let student = "students/"
+        static let assignments = "assignments/"
+        static let units = "units/"
         
         
         

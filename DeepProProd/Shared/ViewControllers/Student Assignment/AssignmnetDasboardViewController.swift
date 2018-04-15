@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import MBProgressHUD
+
 
 
 protocol assignmentsProtocols: class {
-    func showAssignmentDetailsScreen()
+    func showAssignmentDetailsScreen(for id:Int)
     func reloadtable()
 }
 
@@ -27,6 +29,31 @@ class AssignmnetDasboardViewController: UIViewController,assignmentsProtocols  {
         self.navigationItem.title = "Assignment Dashboard"
         assignmentListTableView.backgroundColor = UIColor.clear
         self.view.backgroundColor = UIColor(red: 112/255, green: 127/255, blue: 134/255, alpha: 0.9)
+        
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.mode = MBProgressHUDMode.indeterminate
+        hud.label.text = "Fetching assignments. Please wait"
+        
+        ServiceManager().getassignments(for: UserDefaults.standard.string(forKey: "uid")! , onSuccess: { assignmentlist in
+            self.viewModel.assignmnetList = assignmentlist
+            self.viewModel.sortAssignmentByDueDate()
+            self.viewModel.fetchUniqueDates()
+            for section in self.viewModel.sectionHeaders{
+                self.viewModel.assignmentsForSection.updateValue(self.viewModel.fetchListOfAssignmentsForDate(for: section), forKey: section)
+            }
+            self.assignmentListTableView.reloadData()
+            hud.hide(animated: true)
+        }, onHTTPError: { httperror in
+            hud.mode = MBProgressHUDMode.text
+            hud.label.text = httperror.description
+        }, onError: { error in
+            hud.mode = MBProgressHUDMode.text
+            hud.label.text = error.localizedDescription
+        }, onComplete: {
+            hud.hide(animated: true)
+        })
+       
+        
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -38,9 +65,16 @@ class AssignmnetDasboardViewController: UIViewController,assignmentsProtocols  {
         // Dispose of any resources that can be recreated.
     }
     
-    func showAssignmentDetailsScreen() {
+    func showAssignmentDetailsScreen(for id:Int) {
+        
         let unitListViewController =     UnitListViewController(nibName: "UnitListViewController", bundle: nil)
+        unitListViewController.assignmentId = id
         self.navigationController?.pushViewController(unitListViewController, animated: true)
+        
+        
+        
+        
+        
     }
     
    func reloadtable()

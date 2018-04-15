@@ -9,7 +9,7 @@
 import Foundation
 
 struct HTTPError: Codable {
-    let description : String
-    let error_code : String
+    let description : String?
+    let error_code : String?
     
 }

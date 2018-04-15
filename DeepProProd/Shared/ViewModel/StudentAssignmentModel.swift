@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+
 enum AssignmentType : String   {
     case inProgress = "InProgress"
     case assigned = "Assigned"
@@ -28,6 +29,8 @@ class StudentAssignmentModel: NSObject, UITableViewDataSource, UITableViewDelega
         do {
             super.init()
            // totalAssignmentList  = try Helper.getAssignmentList()
+            
+            /*
                 let filePath = Bundle.main.url(forResource: "getAssignments", withExtension: "txt")
                 let data: Data = try Data.init(contentsOf: filePath!)
                 
@@ -40,30 +43,29 @@ class StudentAssignmentModel: NSObject, UITableViewDataSource, UITableViewDelega
             for section in sectionHeaders{
                 assignmentsForSection.updateValue(fetchListOfAssignmentsForDate(for: section), forKey: section)
             }
+             */
+            
         } catch  {
             print(error)
         }
     }
     
-    /*
+   /*
     func getAssignmnets()
     {
         do {
-            // totalAssignmentList  = try Helper.getAssignmentList()
-            let filePath = Bundle.main.url(forResource: "getAssignments", withExtension: "txt")
-            let data: Data = try Data.init(contentsOf: filePath!)
+  
             
-            assignmnetList =  try JSONDecoder()
-                .decode([FailableDecodable<Assignment>].self, from: data)
-            
-            print(assignmnetList)
+       
             
             
         } catch  {
             print(error)
         }
     }
-    */
+ 
+ */
+   
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return sectionHeaders.count
@@ -125,7 +127,7 @@ class StudentAssignmentModel: NSObject, UITableViewDataSource, UITableViewDelega
         //let formatteddate  = date.dateFromEpoc(1522580569)
        // print(formatteddate.toString(dateFormat: "EEEE,d MMM,yyyy"))
         
-        
+        /*
         if let assignmentStatus =  AssignmentType(rawValue:(assignments[indexPath.row].base?.assignment_status)!) {
             cell.assignmentStatus.text = (assignments[indexPath.row].base?.assignment_status)!
             switch assignmentStatus {
@@ -138,12 +140,26 @@ class StudentAssignmentModel: NSObject, UITableViewDataSource, UITableViewDelega
           
          }
         }
-        
+        */
+        cell.detailsView.backgroundColor = UIColor(red: 159/255, green: 210/255, blue: 144/255, alpha: 0.9)
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.showAssignmentDetailsScreen()
+       
+        
+        
+        let assignments = assignmnetList.filter ({(assignment: FailableDecodable<Assignment>) -> Bool in
+            return Date().dateFromEpoc((assignment.base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy") == sectionHeaders[indexPath.section]
+        })
+        
+        guard  assignments[indexPath.row].base?.assignment_id != nil else {
+            return
+        }
+        delegate?.showAssignmentDetailsScreen(for: (assignments[indexPath.row].base?.assignment_id)!)
+        
+        
+        
     }
     
     

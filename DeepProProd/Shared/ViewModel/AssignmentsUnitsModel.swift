@@ -16,9 +16,7 @@ enum UnitStatus : String   {
 }
 
 class AssignmentsUnitsModel: NSObject, UITableViewDataSource, UITableViewDelegate {
-  
-    
-   
+    weak var delegate: unitsProtocols?
     var unitList =  Array<FailableDecodable<Units>>()
 
     override init() {
@@ -26,7 +24,7 @@ class AssignmentsUnitsModel: NSObject, UITableViewDataSource, UITableViewDelegat
         do {
              super.init()
         
-          
+          /*
                 let filePath = Bundle.main.url(forResource: "getUnits", withExtension: "txt")
                 let data: Data = try Data.init(contentsOf: filePath!)
                 
@@ -36,6 +34,7 @@ class AssignmentsUnitsModel: NSObject, UITableViewDataSource, UITableViewDelegat
                 
                 
                 print(unitList)
+ */
 
          } catch  {
     print(error)
@@ -64,6 +63,7 @@ class AssignmentsUnitsModel: NSObject, UITableViewDataSource, UITableViewDelegat
         cell.unitDescriptionLabel?.text = unit.base?.description
         //cell.detailView.backgroundColor = UIColor(red: 205/255, green: 129/255, blue: 129/255, alpha: 0.9)
         
+        /*
         if let unitStatus =  UnitStatus(rawValue:(unit.base?.unit_status)!) {
            // cell.assignmentStatus.text = (unit[indexPath.row].base?.unit_status)!
             switch unitStatus {
@@ -76,10 +76,16 @@ class AssignmentsUnitsModel: NSObject, UITableViewDataSource, UITableViewDelegat
                 
             }
         }
+         */
         
+        cell.detailView.backgroundColor = UIColor(red: 248/255, green: 182/255, blue: 130/255, alpha: 0.9)
         return cell
     }
-    
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        delegate?.showPronunciationScreen(with: unitList, and: indexPath.row)
+
+    }
     
         
 }
