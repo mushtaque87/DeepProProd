@@ -61,7 +61,7 @@
                             <rect key="frame" x="0.0" y="92.666666666666686" width="343" height="38.333333333333343"/>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             <connections>
                                 <outlet property="delegate" destination="R2e-WG-PQc" id="v7S-sa-sEj"/>
                             </connections>

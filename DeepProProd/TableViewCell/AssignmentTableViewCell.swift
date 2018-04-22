@@ -15,6 +15,7 @@ class AssignmentTableViewCell: UITableViewCell {
     @IBOutlet weak var creationDate: UILabel!
     @IBOutlet weak var submissionDate: UILabel!
     @IBOutlet weak var assignmentStatus: UILabel!
+    @IBOutlet weak var continueButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()

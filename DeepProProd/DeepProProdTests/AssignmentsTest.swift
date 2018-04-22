@@ -71,6 +71,31 @@ class AssignmentsTest: XCTestCase {
       
     }
     
+    func testgetUnitsAnswer_answersParsedSuccessfully()
+    {
+        var responseModel: [FailableDecodable<UnitAnswers>]!
+        do {
+            let filePath = Bundle.main.url(forResource: "getUnitAnswer", withExtension: "txt")
+            let data: Data = try Data.init(contentsOf: filePath!)
+            
+            
+            responseModel =  try JSONDecoder()
+                .decode([FailableDecodable<UnitAnswers>].self, from: data)
+            
+            
+            print(responseModel)
+        }
+        catch  {
+            print("decoding failed with error=\(error)")
+            
+        }
+        
+        // print(type(of: responseModel))
+        // XCTAssertEqual(responseModel[0].base?.unit_id , 1234)
+       // XCTAssertEqual(responseModel[0].base?.creation_date , 1234512345)
+        
+    }
+    
     func testEpoc_dateFormattedSuccessfully()
     {
         let date = Date()

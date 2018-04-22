@@ -32,6 +32,12 @@ struct Pronounce_PronounceRequest {
 
   var authToken: String = String()
 
+  var studentID: String = String()
+
+  var assignmentID: Int32 = 0
+
+  var unitID: Int32 = 0
+
   var unknownFields = SwiftProtobuf.UnknownStorage()
 
   init() {}
@@ -162,6 +168,9 @@ extension Pronounce_PronounceRequest: SwiftProtobuf.Message, SwiftProtobuf._Mess
     2: .same(proto: "text"),
     3: .same(proto: "userId"),
     4: .same(proto: "authToken"),
+    5: .same(proto: "studentId"),
+    6: .same(proto: "assignmentId"),
+    7: .same(proto: "unitId"),
   ]
 
   mutating func decodeMessage<D: SwiftProtobuf.Decoder>(decoder: inout D) throws {
@@ -171,6 +180,9 @@ extension Pronounce_PronounceRequest: SwiftProtobuf.Message, SwiftProtobuf._Mess
       case 2: try decoder.decodeSingularStringField(value: &self.text)
       case 3: try decoder.decodeSingularStringField(value: &self.userID)
       case 4: try decoder.decodeSingularStringField(value: &self.authToken)
+      case 5: try decoder.decodeSingularStringField(value: &self.studentID)
+      case 6: try decoder.decodeSingularInt32Field(value: &self.assignmentID)
+      case 7: try decoder.decodeSingularInt32Field(value: &self.unitID)
       default: break
       }
     }
@@ -189,6 +201,15 @@ extension Pronounce_PronounceRequest: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if !self.authToken.isEmpty {
       try visitor.visitSingularStringField(value: self.authToken, fieldNumber: 4)
     }
+    if !self.studentID.isEmpty {
+      try visitor.visitSingularStringField(value: self.studentID, fieldNumber: 5)
+    }
+    if self.assignmentID != 0 {
+      try visitor.visitSingularInt32Field(value: self.assignmentID, fieldNumber: 6)
+    }
+    if self.unitID != 0 {
+      try visitor.visitSingularInt32Field(value: self.unitID, fieldNumber: 7)
+    }
     try unknownFields.traverse(visitor: &visitor)
   }
 
@@ -197,6 +218,9 @@ extension Pronounce_PronounceRequest: SwiftProtobuf.Message, SwiftProtobuf._Mess
     if self.text != other.text {return false}
     if self.userID != other.userID {return false}
     if self.authToken != other.authToken {return false}
+    if self.studentID != other.studentID {return false}
+    if self.assignmentID != other.assignmentID {return false}
+    if self.unitID != other.unitID {return false}
     if unknownFields != other.unknownFields {return false}
     return true
   }

@@ -19,6 +19,8 @@ import AVFoundation
 
 struct Word {
     let word: String
+    let id: Int?
+    let parentId: Int?
     let voice: String?
     let voiceTime : Array<VoiceTime>?
 }
@@ -51,17 +53,17 @@ class TranslationVC_DataModel: NSObject, UITableViewDataSource,UITableViewDelega
     //var engWordArray: Array<String>? = ["Hello World", "Good Morning" , "Good Night" , "Happy Birthday" , "Peace be on you" ]
     //var arbicWordArray: Array<String>? = ["مرحبا بالعالم", "صباح الخير" , "تصبح على خير" , "عيد مولد سعيد" , "صلى عليك" ]
 
-    var engWordArray = [Word(word: "Hello World" , voice: "hello_world", voiceTime:[VoiceTime(startTime: 0.0, endTime: 1.0),VoiceTime(startTime: 1.0, endTime: 2.0)]) ,
-                        Word(word: "Good Morning" , voice: "good_morning" , voiceTime:[VoiceTime(startTime: 0.0, endTime: 0.8),VoiceTime(startTime: 0.8, endTime: 2.0)]) ,
-                        Word(word: "Good Night" , voice: "good_night" , voiceTime:[VoiceTime(startTime: 0.0, endTime: 0.5),VoiceTime(startTime: 0.5, endTime: 2.0)]) ,
-                        Word(word: "Happy Birthday" , voice: "happy_birthday" , voiceTime:[VoiceTime(startTime: 0.0, endTime: 1.7),VoiceTime(startTime: 1.7, endTime: 2.2)]) ,
-                        Word(word: "Happy Christmas and Happy New Year" , voice: "happy_christmas", voiceTime:[VoiceTime(startTime: 0.5, endTime: 1.0),VoiceTime(startTime: 1.0, endTime: 1.5),VoiceTime(startTime: 1.7, endTime: 1.8),VoiceTime(startTime: 1.8, endTime: 2.3),VoiceTime(startTime: 2.2, endTime: 2.4),VoiceTime(startTime: 2.4, endTime: 3.0)]) ]
+    var engWordArray = [Word(word: "Hello World", id: 0, parentId: 1 , voice: "hello_world", voiceTime:[VoiceTime(startTime: 0.0, endTime: 1.0),VoiceTime(startTime: 1.0, endTime: 2.0)]) ,
+                        Word(word: "Good Morning" ,id: 1, parentId: 1 , voice: "good_morning" , voiceTime:[VoiceTime(startTime: 0.0, endTime: 0.8),VoiceTime(startTime: 0.8, endTime: 2.0)]) ,
+                        Word(word: "Good Night" ,id: 2, parentId: 1 , voice: "good_night" , voiceTime:[VoiceTime(startTime: 0.0, endTime: 0.5),VoiceTime(startTime: 0.5, endTime: 2.0)]) ,
+                        Word(word: "Happy Birthday" ,id: 3, parentId: 1 , voice: "happy_birthday" , voiceTime:[VoiceTime(startTime: 0.0, endTime: 1.7),VoiceTime(startTime: 1.7, endTime: 2.2)]) ,
+                        Word(word: "Happy Christmas and Happy New Year" , id: 4 , parentId: 1 ,voice: "happy_christmas", voiceTime:[VoiceTime(startTime: 0.5, endTime: 1.0),VoiceTime(startTime: 1.0, endTime: 1.5),VoiceTime(startTime: 1.7, endTime: 1.8),VoiceTime(startTime: 1.8, endTime: 2.3),VoiceTime(startTime: 2.2, endTime: 2.4),VoiceTime(startTime: 2.4, endTime: 3.0)]) ]
     
-    var arbicWordArray = [Word(word: "مرحبا بالعالم" , voice: "hello_world", voiceTime:[VoiceTime(startTime: 0.0, endTime: 1.0),VoiceTime(startTime: 1.0, endTime: 2.0)]) ,
-                        Word(word: "عيد مولد سعيد" , voice: "good_morning",voiceTime:[VoiceTime(startTime: 0.0, endTime: 1.0),VoiceTime(startTime: 1.0, endTime: 2.0)]) ,
-                        Word(word: "تصبح على خير" , voice: "good_night",voiceTime:[VoiceTime(startTime: 0.0, endTime: 1.0),VoiceTime(startTime: 1.0, endTime: 2.0)]) ,
-                        Word(word: "صباح الخير" , voice: "happy_birthday",voiceTime:[VoiceTime(startTime: 0.0, endTime: 1.0),VoiceTime(startTime: 1.0, endTime: 2.0)]) ,
-                        Word(word: "عيد ميلاد سعيد وسنة جديدة سعيدة" , voice: "happy_christmas",voiceTime:[VoiceTime(startTime: 0.0, endTime: 1.0),VoiceTime(startTime: 1.0, endTime: 2.0)]) ]
+    var arbicWordArray = [Word(word: "مرحبا بالعالم" ,id: 0, parentId: 1 , voice: "hello_world", voiceTime:[VoiceTime(startTime: 0.0, endTime: 1.0),VoiceTime(startTime: 1.0, endTime: 2.0)]) ,
+                        Word(word: "عيد مولد سعيد" , id: 1, parentId: 1 ,voice: "good_morning",voiceTime:[VoiceTime(startTime: 0.0, endTime: 1.0),VoiceTime(startTime: 1.0, endTime: 2.0)]) ,
+                        Word(word: "تصبح على خير" , id: 2, parentId: 1 ,voice: "good_night",voiceTime:[VoiceTime(startTime: 0.0, endTime: 1.0),VoiceTime(startTime: 1.0, endTime: 2.0)]) ,
+                        Word(word: "صباح الخير" , id: 3, parentId: 1 , voice: "happy_birthday",voiceTime:[VoiceTime(startTime: 0.0, endTime: 1.0),VoiceTime(startTime: 1.0, endTime: 2.0)]) ,
+                        Word(word: "عيد ميلاد سعيد وسنة جديدة سعيدة" ,id: 4, parentId: 1 , voice: "happy_christmas",voiceTime:[VoiceTime(startTime: 0.0, endTime: 1.0),VoiceTime(startTime: 1.0, endTime: 2.0)]) ]
    
      var engcomments = [Comment(comment: "That was not even close!!! Please hear the actual voice and try again", color: UIColor(red: 243.0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0), range: 0...25),
                             Comment(comment: "You need to improve. Please click on the word and check the phenome list and see where you went wrong.", color: UIColor(red: 253.0/255.0, green: 108.0/255.0, blue: 7.0/255.0, alpha: 1.0) , range: 25...50),

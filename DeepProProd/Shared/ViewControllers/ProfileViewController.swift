@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MBProgressHUD
 
 enum ScreenType : Int  {
     case view
@@ -43,13 +44,21 @@ class ProfileViewController: UIViewController {
         //view.addSubview(tempProfileView)
         // Do any additional setup after loading the view.
         
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.mode = MBProgressHUDMode.indeterminate
+        hud.label.text = "Fetching Profile. Please wait."
+        
+        
         ServiceManager().getProfile(for: UserDefaults.standard.string(forKey: "uid")! , onSuccess: { response in
             self.nameField.text = response.first_name + " " + response.last_name
             self.emailField.text = response.email
+            hud.hide(animated: true)
         }, onHTTPError: { httperror in
-            
+            hud.hide(animated: true)
         }, onError: { Error in
-            
+            hud.hide(animated: true)
+        },onComplete: {
+            hud.hide(animated: true)
         })
         
     }

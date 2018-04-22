@@ -153,29 +153,9 @@ class ServiceManager: NSObject {
                   onError errorHandler: @escaping (Error)-> Void  ,
                   onComplete completeCompletionHandler: @escaping ()-> Void)
     {
-     
-        
-        /*
-        var jsonData:Data?
-        let jsonEncoder = JSONEncoder()
-        do {
-            jsonData = try jsonEncoder.encode(body)
-            print("body: " +  String(data: jsonData!, encoding: .utf8)!)
-        }
-        catch {
-        }
-        
-        var request = URLRequest(url:URL(string: constant.baseUrl+constant.signUp)! )
-        request.httpMethod = HTTPMethod.post.rawValue
-        request.setValue("application/json; charset=UTF-8", forHTTPHeaderField: "Content-Type")
-        request.httpBody = jsonData
-        */
-        //print("Body--> \(body.toJSON().description)")
-       // print("Dict--> \(JSONSerialization.jsonObject(with: jsonData!) as? [String:Any])")
-        //var newRequest = createCustomeRequest(for: constant.baseUrl+constant.signUp, withParameter: body, httpType: HTTPMethod.post, withAuth: false)
-        //Alamofire.request(constant.baseUrl+constant.forgotpassword, method: .post, parameters:  jsonData , encoding: JSONEncoding.default, headers: nil)
-       
-        Alamofire.request(createCustomeRequest(for: constant.baseUrl+constant.useridentity+constant.signUp, withParameter: body, httpType: HTTPMethod.post, withAuth: false)).responseData(completionHandler:  { serverResponse in
+
+        Alamofire.request(createCustomeRequest(for: constant.signUp, withParameter: body, httpType: HTTPMethod.post, withAuth: false)).responseData(completionHandler:  { serverResponse in
+             DispatchQueue.main.async {
                 debugPrint(serverResponse)
                 let decoder = JSONDecoder()
                 switch serverResponse.result {
@@ -185,7 +165,7 @@ class ServiceManager: NSObject {
                         let signupresponse = try! decoder.decode(SignUpResponse.self, from: data)
                         print("signupresponse \(signupresponse)")
                          successCompletionHandler(signupresponse)
-                         completeCompletionHandler()
+                         //completeCompletionHandler()
                     }
                     else
                     {
@@ -202,6 +182,7 @@ class ServiceManager: NSObject {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     completeCompletionHandler()
                 }
+            }
         })
 }
     
@@ -212,7 +193,7 @@ class ServiceManager: NSObject {
                         onComplete completeCompletionHandler: @escaping ()-> Void)
     {
 
-        Alamofire.request(constant.baseUrl+constant.useridentity+constant.forgotpassword, method: .post, parameters: ["email":emailId], encoding: JSONEncoding.default, headers: nil)
+        Alamofire.request(constant.forgotpassword , method: .post, parameters: ["email":emailId], encoding: JSONEncoding.default, headers: nil)
             .responseData { serverResponse in
                 DispatchQueue.main.async {
                 debugPrint(serverResponse)
@@ -254,7 +235,7 @@ class ServiceManager: NSObject {
                  onError errorHandler: @escaping (Error)-> Void  ,
                  onComplete completeCompletionHandler: @escaping ()-> Void ) {
         
-        Alamofire.request(constant.baseUrl + constant.useridentity+constant.login, method: .post, parameters: ["username":username ,"password":password] , encoding: JSONEncoding.default, headers: nil)
+        Alamofire.request(constant.login, method: .post, parameters: ["username":username ,"password":password] , encoding: JSONEncoding.default, headers: nil)
             .responseData { serverResponse in
                 DispatchQueue.main.async {
                 debugPrint(serverResponse)
@@ -292,16 +273,18 @@ class ServiceManager: NSObject {
     func getProfile(for uid : String ,
                     onSuccess completionHandler: @escaping (Profile) -> Void,
                     onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
-                    onError  errorHandler: @escaping (Any) -> Void)
+                    onError  errorHandler: @escaping (Any) -> Void,
+                    onComplete completeCompletionHandler: @escaping ()-> Void )
     {
         verifyTokenAndProceed(of: uid,
                               onSuccess: {
                                 
-                                Alamofire.request(constant.baseUrl + constant.useridentity + uid, method: .get, parameters: [:] , encoding: JSONEncoding.default, headers:self.generateAuthHeaders())
+                                Alamofire.request(String(format:constant.profile,uid), method: .get, parameters: [:] , encoding: JSONEncoding.default, headers:self.generateAuthHeaders())
                                     .responseData { serverResponse in
+                                        DispatchQueue.main.async {
                                         let decoder = JSONDecoder()
                                         switch serverResponse.result {
-                                        case .success(let data):
+                                            case .success(let data):
                                             if serverResponse.response!.statusCode == 200 {
                                                 let profiledetails = try! decoder.decode(Profile.self, from: data)
                                                 completionHandler(profiledetails)
@@ -310,11 +293,17 @@ class ServiceManager: NSObject {
                                             {
                                                 let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
                                                 httpErrorHandler(httpError)
-                                                print("HTTP error: \(httpError.description)")
+                                                print("HTTP error: \(httpError.description!)")
                                             }
                                         case .failure(let error):
                                             print("Request failed with error: \(error)")
                                             errorHandler(error)
+                                            
+                                        }
+                                            
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                                completeCompletionHandler()
+                                            }
                                             
                                         }
                                         
@@ -335,8 +324,9 @@ class ServiceManager: NSObject {
         verifyTokenAndProceed(of: uid,
                               onSuccess: {
                                 
-                                Alamofire.request("http://192.168.71.10:10002/v1/" + constant.student + uid + "/" + constant.assignments, method: .get, parameters: [:] , encoding: JSONEncoding.default, headers:self.generateAuthHeaders())
+                                Alamofire.request(String(format:"http://192.168.71.10:10002/v1/" + constant.assignments ,uid) , method: .get, parameters: [:] , encoding: JSONEncoding.default, headers:self.generateAuthHeaders())
                                     .responseData { serverResponse in
+                                        DispatchQueue.main.async {
                                         let decoder = JSONDecoder()
                                         switch serverResponse.result {
                                         case .success(let data):
@@ -353,6 +343,11 @@ class ServiceManager: NSObject {
                                         case .failure(let error):
                                             print("Request failed with error: \(error)")
                                             //self.showInfoAlertScreen(with: serverResponse.result.error!.localizedDescription, oftype: "INFO")
+                                            errorHandler(error)
+                                        }
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                                completeCompletionHandler()
+                                            }
                                         }
                                         
                                 }
@@ -373,8 +368,9 @@ class ServiceManager: NSObject {
         verifyTokenAndProceed(of: uid,
                               onSuccess: {
                                 
-                                Alamofire.request("http://192.168.71.10:10002/v1/" + constant.assignments + "\(assignment)/" + constant.units , method: .get, parameters: [:] , encoding: JSONEncoding.default, headers:self.generateAuthHeaders())
+                                Alamofire.request(String(format:"http://192.168.71.10:10002/v1/" + constant.units, assignment) , method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
                                     .responseData { serverResponse in
+                                         DispatchQueue.main.async {
                                         let decoder = JSONDecoder()
                                         switch serverResponse.result {
                                         case .success(let data):
@@ -393,7 +389,10 @@ class ServiceManager: NSObject {
                                             errorHandler(error)
                                             
                                         }
-                                        
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                                completeCompletionHandler()
+                                            }
+                                        }
                                 }
                                 
         },   onError: { error in
@@ -401,12 +400,56 @@ class ServiceManager: NSObject {
         })
     }
     
+    func getAnswers(for assignmentId:Int,
+                    for unitId: Int,
+                    of uid:String,
+                  onSuccess successCompletionHandler: @escaping ([FailableDecodable<UnitAnswers>]) -> Void,
+                  onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
+                  onError errorHandler: @escaping (Error)-> Void  ,
+                  onComplete completeCompletionHandler: @escaping ()-> Void)
+    {
+        verifyTokenAndProceed(of: uid,
+                              onSuccess: {
+                                
+                                Alamofire.request("http://192.168.71.10:10010/v1/" + String(format:constant.answer,uid,assignmentId,unitId), method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
+                                    .responseData { serverResponse in
+                                        DispatchQueue.main.async {
+                                            let decoder = JSONDecoder()
+                                            switch serverResponse.result {
+                                            case .success(let data):
+                                                if serverResponse.response!.statusCode == 200 {
+                                                    let unitsanswer = try! decoder.decode([FailableDecodable<UnitAnswers>].self, from: data)
+                                                    successCompletionHandler(unitsanswer)
+                                                }
+                                                else
+                                                {
+                                                    let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
+                                                    httpErrorHandler(httpError)
+                                                    print("HTTP error: \(httpError.description)")
+                                                }
+                                            case .failure(let error):
+                                                print("Request failed with error: \(error)")
+                                                errorHandler(error)
+                                                
+                                            }
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                                completeCompletionHandler()
+                                            }
+                                        }
+                                }
+                                
+        },   onError: { error in
+            errorHandler(error)
+        })
+    }
+    
+    
     func updateRefreshToken(of uid : String ,
                             onSuccess completionHandler: @escaping () -> Void ,
                             onError errorHandler: @escaping (Error) -> Void)
     {
         
-        Alamofire.request(constant.baseUrl + constant.useridentity + uid+"/" + constant.refreshtoken, method: .post, parameters: ["refresh-token":(UserDefaults.standard.string(forKey: "refresh_token"))!], encoding: JSONEncoding.default, headers: nil)
+        Alamofire.request(String(format:constant.refreshtoken,uid), method: .post, parameters: ["refresh-token":(UserDefaults.standard.string(forKey: "refresh_token"))!], encoding: JSONEncoding.default, headers: nil)
             .responseData { serverResponse in
                 debugPrint(serverResponse)
                 switch serverResponse.result {

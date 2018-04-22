@@ -79,7 +79,12 @@ class ForgotPassword_SH_ViewController: UIViewController , CAAnimationDelegate {
     }
     
     @IBAction func close(_ sender: Any) {
-    self.view.slideBackToLeft(duration:1.0 , completionDelegate: self)
+    
+        if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController {
+            rootVc.remove(viewController: self, from: rootVc)
+        }
+        
+        //self.view.slideBackToLeft(duration:1.0 , completionDelegate: self)
     }
     
     public func animationDidStop(_ anim: CAAnimation, finished flag: Bool){

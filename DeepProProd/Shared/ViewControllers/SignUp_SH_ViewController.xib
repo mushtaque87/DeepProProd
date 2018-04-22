@@ -75,7 +75,7 @@
                             <rect key="frame" x="0.0" y="178.5" width="343" height="30"/>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             <connections>
                                 <outlet property="delegate" destination="yPE-W0-6FD" id="Tlc-3w-RWf"/>
                             </connections>
@@ -84,7 +84,7 @@
                             <rect key="frame" x="0.0" y="223.5" width="343" height="29.5"/>
                             <nil key="textColor"/>
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
+                            <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             <connections>
                                 <outlet property="delegate" destination="yPE-W0-6FD" id="npf-d1-8f6"/>
                             </connections>

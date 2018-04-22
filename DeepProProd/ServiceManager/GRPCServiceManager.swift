@@ -25,7 +25,7 @@ typealias constant = Constants.ServerApi
         service = Pronounce_PronounceServiceClient(address: Constants.ServerApi.grpcBaseUrl, secure: false)
     }
 
-    func getWordPredictionFromGRPC(for uid:String , with audio: Data, and text: String ,
+    func getWordPredictionFromGRPC(for uid:String , assignment assignmnetId:Int = 0, unit unitId:Int = 0, with audio: Data, and text: String ,
                                    onSuccess successCompletionHandler: @escaping (Pronounce_PronounceResponse) -> Void ,
                                    onFailure  failureCompletionHandler: @escaping (Any) -> Void,
                                    onComplete completeCompletionHandler: @escaping ()-> Void )
@@ -37,6 +37,8 @@ typealias constant = Constants.ServerApi
                 requestMessage.text = text
                 requestMessage.speech = audio
                 requestMessage.userID = uid
+                requestMessage.assignmentID = Int32(assignmnetId)
+                requestMessage.unitID = Int32(unitId)
                 requestMessage.authToken =  UserDefaults.standard.string(forKey: "access_token")!
         
         do {

@@ -20,7 +20,7 @@ extension Date
     
     func dateFromEpoc(_ epoc:Double) -> Date
     {
-        let date = Date(timeIntervalSince1970: epoc)
+        let date = Date(timeIntervalSince1970: (epoc/1000))
        return date
     }
    

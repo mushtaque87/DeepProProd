@@ -141,7 +141,10 @@ class StudentAssignmentModel: NSObject, UITableViewDataSource, UITableViewDelega
          }
         }
         */
+        cell.continueButton.tag = (assignments[indexPath.row].base?.assignment_id)!
+        cell.continueButton.addTarget(self, action:#selector(showUnitsScreen(_:)) , for: .touchUpInside)
         cell.detailsView.backgroundColor = UIColor(red: 159/255, green: 210/255, blue: 144/255, alpha: 0.9)
+        cell.selectionStyle = UITableViewCellSelectionStyle.none
         return cell
     }
 
@@ -156,10 +159,16 @@ class StudentAssignmentModel: NSObject, UITableViewDataSource, UITableViewDelega
         guard  assignments[indexPath.row].base?.assignment_id != nil else {
             return
         }
-        delegate?.showAssignmentDetailsScreen(for: (assignments[indexPath.row].base?.assignment_id)!)
         
         
         
+    }
+    
+    @objc func showUnitsScreen(_ sender:UIButton)
+    {
+        print(sender.tag)
+        delegate?.showAssignmentDetailsScreen(for: sender.tag)
+
     }
     
     

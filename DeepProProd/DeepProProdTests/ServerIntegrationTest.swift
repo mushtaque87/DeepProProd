@@ -121,6 +121,8 @@ class ServerIntegrationTest: QuickSpec {
                         
                     }, onError: { error in
                         
+                    },onComplete: {
+                        
                     })
                     expect(serverResponse).toEventuallyNot(beNil(), timeout: 10)
                     expect(serverResponse?.email) == email

@@ -27,7 +27,7 @@ class UnitListViewController: UIViewController,unitsProtocols {
         // Do any additional setup after loading the view.
         viewModel.delegate = self
         self.unitTableView.register(UINib(nibName: "UnitTableViewCell", bundle: nil), forCellReuseIdentifier: "unitCell")
-        self.navigationItem.title = "unit List"
+        self.navigationItem.title = "Units"
         unitTableView.backgroundColor = UIColor.clear
         self.view.backgroundColor = UIColor(red: 112/255, green: 127/255, blue: 134/255, alpha: 0.9)
         
@@ -60,7 +60,7 @@ class UnitListViewController: UIViewController,unitsProtocols {
         let transDetailViewController: TransDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
         var wordArray = Array<Word>()
         for text in unitsArray {
-            wordArray.append(Word(word: (text.base?.question_text)!, voice: "", voiceTime: nil))
+            wordArray.append(Word(word: (text.base?.question_text)!, id:text.base?.unit_id ,parentId:assignmentId , voice: "", voiceTime: nil))
         }
         //transDetailViewController.wordTextView.text = unitsArray[index].base?.question_text
         self.navigationController?.pushViewController(transDetailViewController, animated: true)

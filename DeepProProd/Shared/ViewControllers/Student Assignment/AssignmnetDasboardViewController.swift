@@ -19,6 +19,15 @@ protocol assignmentsProtocols: class {
 class AssignmnetDasboardViewController: UIViewController,assignmentsProtocols  {
     @IBOutlet weak var assignmentListTableView: UITableView!
     @IBOutlet var viewModel: StudentAssignmentModel!
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action:
+            #selector(self.handleRefresh(_:)),
+                                 for: UIControlEvents.valueChanged)
+        refreshControl.tintColor = UIColor.red
+        
+        return refreshControl
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +38,24 @@ class AssignmnetDasboardViewController: UIViewController,assignmentsProtocols  {
         self.navigationItem.title = "Assignment Dashboard"
         assignmentListTableView.backgroundColor = UIColor.clear
         self.view.backgroundColor = UIColor(red: 112/255, green: 127/255, blue: 134/255, alpha: 0.9)
+        self.assignmentListTableView.addSubview(self.refreshControl)
+        
+        fetchAssignments()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        
+    }
+    override func viewDidAppear(_ animated: Bool) {
+       // assignmentListTableView.reloadData()
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    func fetchAssignments()
+    {
         
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud.mode = MBProgressHUDMode.indeterminate
@@ -52,29 +79,19 @@ class AssignmnetDasboardViewController: UIViewController,assignmentsProtocols  {
         }, onComplete: {
             hud.hide(animated: true)
         })
-       
+        
         
     }
-
-    override func viewDidAppear(_ animated: Bool) {
-       // assignmentListTableView.reloadData()
-    }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
+        fetchAssignments()
+        refreshControl.endRefreshing()
     }
-    
     func showAssignmentDetailsScreen(for id:Int) {
         
         let unitListViewController =     UnitListViewController(nibName: "UnitListViewController", bundle: nil)
         unitListViewController.assignmentId = id
         self.navigationController?.pushViewController(unitListViewController, animated: true)
-        
-        
-        
-        
-        
     }
     
    func reloadtable()

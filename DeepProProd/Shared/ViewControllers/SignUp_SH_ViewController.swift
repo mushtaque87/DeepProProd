@@ -85,12 +85,15 @@ class SignUp_SH_ViewController: UIViewController {
           let  requestBody = viewModel.createSignUpBody(firstname: firstNameTxtField.text!, lastname: lastNameTxtField.text!, email: emailTxtField.text!, password: passordTextField.text!, age: ageTxtField.text!, dob: ageTxtField.text!, gender: genderSwitch.selectedSegmentIndex)
             
             ServiceManager().doSignUp(withBody: requestBody, onSuccess: { result in
-                if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+               /* if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
                 {
                     //rootVc.remove(viewController: rootVc.login_ViewController, from: rootVc)
                     rootVc.remove(viewController: rootVc.signUp_ViewController, from: rootVc)
                     //rootVc.addTabBarControllers()
-                }
+                }*/
+                self.clearData()
+                hud.mode = MBProgressHUDMode.text
+                hud.label.text = "Account created ! Please Login now."
             } , onHTTPError: { httperror in
                 hud.mode = MBProgressHUDMode.text
                 hud.label.text = httperror.description
@@ -121,6 +124,17 @@ class SignUp_SH_ViewController: UIViewController {
         backgroundImage.setBackGroundimage()
         
         //loginTitleLbl.alignText()
+        
+    }
+    
+    func clearData()
+    {
+        self.firstNameTxtField.text = ""
+        self.lastNameTxtField.text = ""
+        self.emailTxtField.text = ""
+        self.passordTextField.text = ""
+        self.confirmPasswordTxtField.text = ""
+        self.ageTxtField.text = ""
         
     }
     

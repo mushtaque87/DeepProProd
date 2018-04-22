@@ -83,6 +83,17 @@ class AssignmentsUnitsModel: NSObject, UITableViewDataSource, UITableViewDelegat
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let unit = unitList[indexPath.row]
+        ServiceManager().getAnswers(for: 1, for:(unit.base?.unit_id)! , of: UserDefaults.standard.string(forKey: "uid")! , onSuccess: {response in
+            
+        }, onHTTPError: { httperror in
+            
+        }, onError: { error in
+            
+        }, onComplete: {
+            
+        })
+        
         delegate?.showPronunciationScreen(with: unitList, and: indexPath.row)
 
     }

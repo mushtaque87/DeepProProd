@@ -35,6 +35,10 @@
 		505B75C62020B2C700A5A0B2 /* json.txt in Resources */ = {isa = PBXBuildFile; fileRef = 505B75C42020B2C700A5A0B2 /* json.txt */; };
 		505B75CC202AEFC200A5A0B2 /* ServerIntegrationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B75CB202AEFC200A5A0B2 /* ServerIntegrationTest.swift */; };
 		505B75CE202AF3F400A5A0B2 /* LoginApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505B75CD202AF3F400A5A0B2 /* LoginApi.swift */; };
+		5075A9E7208885B0007CEFD0 /* UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5075A9E6208885B0007CEFD0 /* UIButton.swift */; };
+		5075A9FB2088C132007CEFD0 /* UnitAnswers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5075A9F92088C12F007CEFD0 /* UnitAnswers.swift */; };
+		5075A9FD2088C25F007CEFD0 /* getUnitAnswer.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5075A9FC2088C25F007CEFD0 /* getUnitAnswer.txt */; };
+		5075A9FE2088C25F007CEFD0 /* getUnitAnswer.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5075A9FC2088C25F007CEFD0 /* getUnitAnswer.txt */; };
 		508987BE206D13DD004566B4 /* Assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A325CF206D0BA50003FF5C /* Assignment.swift */; };
 		508987CF206D4C0F004566B4 /* Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508987CC206D3668004566B4 /* Units.swift */; };
 		508987D0206D4C3A004566B4 /* AssignmentsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A325C9206CD5660003FF5C /* AssignmentsTest.swift */; };
@@ -387,6 +391,9 @@
 		505B75C42020B2C700A5A0B2 /* json.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = json.txt; sourceTree = "<group>"; };
 		505B75CB202AEFC200A5A0B2 /* ServerIntegrationTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerIntegrationTest.swift; sourceTree = "<group>"; };
 		505B75CD202AF3F400A5A0B2 /* LoginApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginApi.swift; sourceTree = "<group>"; };
+		5075A9E6208885B0007CEFD0 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
+		5075A9F92088C12F007CEFD0 /* UnitAnswers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitAnswers.swift; sourceTree = "<group>"; };
+		5075A9FC2088C25F007CEFD0 /* getUnitAnswer.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = getUnitAnswer.txt; sourceTree = "<group>"; };
 		508987CA206D3601004566B4 /* getUnits.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = getUnits.txt; sourceTree = "<group>"; };
 		508987CC206D3668004566B4 /* Units.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Units.swift; sourceTree = "<group>"; };
 		508FE5A320566ACC0051941F /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
@@ -563,6 +570,7 @@
 		500327AB204D0ACA00D39194 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
+				5075A9FC2088C25F007CEFD0 /* getUnitAnswer.txt */,
 				508987CA206D3601004566B4 /* getUnits.txt */,
 				50A325CC206CFE780003FF5C /* getAssignments.txt */,
 				500327AE204D0B4300D39194 /* LoginErrorJson */,
@@ -895,6 +903,7 @@
 				504CCC63203C544300EE3CC2 /* Date.swift */,
 				504CCC66203C55C400EE3CC2 /* String.swift */,
 				508FE5A320566ACC0051941F /* Data.swift */,
+				5075A9E6208885B0007CEFD0 /* UIButton.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -999,6 +1008,7 @@
 				50A5EFBF205566B30083F28C /* Profile.swift */,
 				50A325CF206D0BA50003FF5C /* Assignment.swift */,
 				508987CC206D3668004566B4 /* Units.swift */,
+				5075A9F92088C12F007CEFD0 /* UnitAnswers.swift */,
 				500260072069706C00942A72 /* FailableDecodable.swift */,
 			);
 			path = JsonModels;
@@ -1276,6 +1286,7 @@
 				50E7B32820078A7000DB9DB0 /* happy_birthday.wav in Resources */,
 				50F83CEB2017696000690DCF /* Accounts_SH_ViewController.xib in Resources */,
 				50E76B202004AA53009420F9 /* Resources.rtf in Resources */,
+				5075A9FD2088C25F007CEFD0 /* getUnitAnswer.txt in Resources */,
 				50E7B32620078A7000DB9DB0 /* peace_be_on_you.wav in Resources */,
 				50E7B32520078A7000DB9DB0 /* good_morning.wav in Resources */,
 				50E7B32720078A7000DB9DB0 /* hello_world.wav in Resources */,
@@ -1323,6 +1334,7 @@
 			files = (
 				50A325CD206CFE790003FF5C /* getAssignments.txt in Resources */,
 				500327AF204D0B4300D39194 /* LoginErrorJson in Resources */,
+				5075A9FE2088C25F007CEFD0 /* getUnitAnswer.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1461,6 +1473,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5075A9E7208885B0007CEFD0 /* UIButton.swift in Sources */,
 				504CCC67203C55C400EE3CC2 /* String.swift in Sources */,
 				501B48C52057BE40005D6C63 /* Alignment.swift in Sources */,
 				50BEA27B201DE31B007F1899 /* ThemeCell.swift in Sources */,
@@ -1470,12 +1483,9 @@
 				5095C6D1200652C0003207AD /* Level_SHViewController.swift in Sources */,
 				50E7B31820075B4900DB9DB0 /* UIApplication.swift in Sources */,
 				50E76B1E2003A121009420F9 /* Settings.swift in Sources */,
-
 				50E793CF207DF470002854E5 /* pronunciation.pb.swift in Sources */,
-
 				50E4DA74206A388200C17A12 /* AssignmnetDasboardViewController.swift in Sources */,
 				50D8ABA0206A4E3600BA5F85 /* UnitListViewController.swift in Sources */,
-
 				5095C6D62006552C003207AD /* Menu_SH_ViewController.swift in Sources */,
 				508FE5A620568C710051941F /* GRPCServiceManager.swift in Sources */,
 				5095C6B0200643BF003207AD /* serviceProtocols.swift in Sources */,
@@ -1490,6 +1500,7 @@
 				5095C6B6200643E5003207AD /* Prediction_Model.swift in Sources */,
 				504CCC5D203AE10B00EE3CC2 /* SignUp.swift in Sources */,
 				50E76B2B2004D64E009420F9 /* Localizator.swift in Sources */,
+				5075A9FB2088C132007CEFD0 /* UnitAnswers.swift in Sources */,
 				50A5EFC0205566B30083F28C /* Profile.swift in Sources */,
 				504CCC64203C544300EE3CC2 /* Date.swift in Sources */,
 				5095C69920064314003207AD /* HTTPServiceManager.swift in Sources */,
