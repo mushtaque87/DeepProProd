@@ -45,6 +45,7 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
         
             let studentAssignmentNavigationController = UINavigationController()
             let studentDashboard = AssignmnetDasboardViewController(nibName:"AssignmnetDasboardViewController",bundle:nil)
+            studentDashboard.viewModel.tasktype = .assignment
             studentAssignmentNavigationController.viewControllers = [studentDashboard]
             studentAssignmentNavigationController.tabBarItem = UITabBarItem(title: "Assignment", image: UIImage(named: "assignmentTab.png"), tag: 1)
             

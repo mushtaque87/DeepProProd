@@ -1,0 +1,6 @@
+[{"id":1,
+"short_name":"French class practice",
+"description":"french class practice session",
+"creation_date":1523607721000,
+"category_id":1,
+"task_type":"PRACTICE"}]

@@ -9,23 +9,25 @@
 import UIKit
 
 class LevelViewModel: NSObject, UITableViewDelegate , UITableViewDataSource {
-
-    var parentController: Level_SHViewController?
-    var levelArray : LevelList? // = ["Level_Basic".localized,"Level_Intermediate".localized,"Level_Advance".localized]
     
+    var parentController: Level_SHViewController?
+    weak var delegate: CategoriesProtocol?
+    //  var levelArray : LevelList? // = ["Level_Basic".localized,"Level_Intermediate".localized,"Level_Advance".localized]
+    var categoriesList =  Array<FailableDecodable<Categories>>()
+
     // Mark: - UITable View Delegate and Data Source
     
     
-    override init() {
+    /*override init() {
         do {
-             levelArray  = try Helper.parseLevelJson()
+             //levelArray  = try Helper.parseLevelJson()
             
         } catch  {
             print(error)
         }
         
 
-    }
+    }*/
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -33,7 +35,7 @@ class LevelViewModel: NSObject, UITableViewDelegate , UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
      
-        return 3
+        return categoriesList.count
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -44,15 +46,15 @@ class LevelViewModel: NSObject, UITableViewDelegate , UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "content", for: indexPath) as! ChapterContentCell
        // cell.contentLabel.textColor = UIColor.white
-        let level = levelArray?.levels[indexPath.row]
         
-        cell.contentLabel.text  = level?.levelname.rawValue
+        
+        cell.contentLabel.text  = categoriesList[indexPath.row].base?.name
         cell.backgroundColor = UIColor.clear
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        delegate?.showPracticesScreen!(for: (categoriesList[indexPath.row].base?.id)!)
     }
     
 }

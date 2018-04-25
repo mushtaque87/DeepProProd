@@ -50,7 +50,7 @@ class ProfileViewController: UIViewController {
         
         
         ServiceManager().getProfile(for: UserDefaults.standard.string(forKey: "uid")! , onSuccess: { response in
-            self.nameField.text = response.first_name + " " + response.last_name
+            self.nameField.text = response.first_name! + " " + response.last_name!
             self.emailField.text = response.email
             hud.hide(animated: true)
         }, onHTTPError: { httperror in

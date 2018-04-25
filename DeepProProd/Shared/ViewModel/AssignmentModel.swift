@@ -16,12 +16,19 @@ enum AssignmentType : String   {
     case submitted = "Submitted"
 }
 
+enum TaskType : String   {
+    case practice
+    case assignment
+}
 
-class StudentAssignmentModel: NSObject, UITableViewDataSource, UITableViewDelegate {
-    weak var delegate: assignmentsProtocols?
+
+class AssignmentModel: NSObject, UITableViewDataSource, UITableViewDelegate {
+    weak var delegate: AssignmentsProtocols?
     var assignmnetList =  Array<FailableDecodable<Assignment>>()
+    var practiceList =  Array<FailableDecodable<Practice>>()
     var sectionHeaders = Array<String>()
     var assignmentsForSection = Dictionary<String, Array<FailableDecodable<Assignment>>>()
+    var tasktype : TaskType = .practice //default
    // var totalAssignmentList : Assignments?
     //var newAssignmentlist = Array<AssignmentsList.Assignments>()
     
@@ -68,7 +75,12 @@ class StudentAssignmentModel: NSObject, UITableViewDataSource, UITableViewDelega
    
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sectionHeaders.count
+        switch tasktype {
+        case .assignment:
+            return sectionHeaders.count
+        default:
+            return 1
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -91,22 +103,39 @@ class StudentAssignmentModel: NSObject, UITableViewDataSource, UITableViewDelega
             }
         }
         */
-        return fetchNumberOfRowsForSection(for: sectionHeaders[section])
+        switch tasktype {
+        case .assignment:
+            return fetchNumberOfRowsForSection(for: sectionHeaders[section])
+            
+        default:
+            return practiceList.count
+            
+        }
+        
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        
+       
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 40))
         headerView.backgroundColor = UIColor.clear
         let titleLbl : UILabel =  UILabel(frame: CGRect(x: 5, y: 0, width: headerView.frame.size.width, height: headerView.frame.size.height/2))
         titleLbl.font = UIFont.boldSystemFont(ofSize: 12)
         titleLbl.textColor = UIColor.white
+        switch tasktype {
+        case .assignment:
         titleLbl.text = sectionHeaders[section]
+            break
+        default:
+           titleLbl.text = ""
+        }
+            
         titleLbl.alignText()
         titleLbl.backgroundColor = UIColor.clear
         headerView.addSubview(titleLbl)
         //headerView.backgroundColor = UIColor(red: 180.0/255.0, green: 180.0/255.0, blue: 180.0/255.0, alpha: 1)
         return headerView
+       
+            
     }
     
     
@@ -115,6 +144,8 @@ class StudentAssignmentModel: NSObject, UITableViewDataSource, UITableViewDelega
        
         //let assignment =  fetchListOfAssignmentsForDate(for: sectionHeaders[indexPath.section])[indexPath.row]
         //let assignment = assignmentsForSection[sectionHeaders[indexPath.section]]![indexPath.row]
+        switch tasktype {
+        case .assignment:
         let assignments = assignmnetList.filter ({(assignment: FailableDecodable<Assignment>) -> Bool in
             return Date().dateFromEpoc((assignment.base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy") == sectionHeaders[indexPath.section]
         })
@@ -143,15 +174,56 @@ class StudentAssignmentModel: NSObject, UITableViewDataSource, UITableViewDelega
         */
         cell.continueButton.tag = (assignments[indexPath.row].base?.assignment_id)!
         cell.continueButton.addTarget(self, action:#selector(showUnitsScreen(_:)) , for: .touchUpInside)
+       
+        break
+            
+        default:
+            /*
+            let practices = practiceList.filter ({(practice: FailableDecodable<Practice>) -> Bool in
+                return Date().dateFromEpoc((practice.base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy") == sectionHeaders[indexPath.section]
+            })*/
+            
+            cell.assignmentName.text = practiceList[indexPath.row].base?.short_name
+            cell.descriptionView.text =  practiceList[indexPath.row].base?.description
+            //cell.submissionDate.text =  String(format:"Due Date: %@",(Date().dateFromEpoc((practices[indexPath.row].base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy")))
+            cell.creationDate.text = String(format:"Assigned on: %@",(Date().dateFromEpoc((practiceList[indexPath.row].base?.creation_date)!).toString(dateFormat: "EEEE, d MMM, yyyy")))
+            
+            //let formatteddate  = date.dateFromEpoc(1522580569)
+            // print(formatteddate.toString(dateFormat: "EEEE,d MMM,yyyy"))
+            
+            /*
+             if let assignmentStatus =  AssignmentType(rawValue:(assignments[indexPath.row].base?.assignment_status)!) {
+             cell.assignmentStatus.text = (assignments[indexPath.row].base?.assignment_status)!
+             switch assignmentStatus {
+             case .assigned :
+             cell.detailsView.backgroundColor = UIColor(red: 254/255, green: 143/255, blue: 136/255, alpha: 0.9)
+             case .inProgress:
+             cell.detailsView.backgroundColor = UIColor(red: 248/255, green: 182/255, blue: 130/255, alpha: 0.9)
+             case .submitted :
+             cell.detailsView.backgroundColor = UIColor(red: 159/255, green: 210/255, blue: 144/255, alpha: 0.9)
+             
+             }
+             }
+             */
+            cell.continueButton.tag = (practiceList[indexPath.row].base?.id)!
+            cell.continueButton.addTarget(self, action:#selector(showUnitsScreen(_:)) , for: .touchUpInside)
+            
+            
+            break
+        }
+        
+        // FIXME: - Remove the color
         cell.detailsView.backgroundColor = UIColor(red: 159/255, green: 210/255, blue: 144/255, alpha: 0.9)
         cell.selectionStyle = UITableViewCellSelectionStyle.none
         return cell
+        
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
        
         
-        
+        switch tasktype {
+        case .assignment:
         let assignments = assignmnetList.filter ({(assignment: FailableDecodable<Assignment>) -> Bool in
             return Date().dateFromEpoc((assignment.base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy") == sectionHeaders[indexPath.section]
         })
@@ -159,7 +231,10 @@ class StudentAssignmentModel: NSObject, UITableViewDataSource, UITableViewDelega
         guard  assignments[indexPath.row].base?.assignment_id != nil else {
             return
         }
-        
+        break
+        default:
+            break
+        }
         
         
     }
@@ -174,14 +249,26 @@ class StudentAssignmentModel: NSObject, UITableViewDataSource, UITableViewDelega
     
     func sortAssignmentByDueDate()
     {
-        assignmnetList.sort {
-            ($0.base?.due_date)!  < ($1.base?.due_date)!
+        switch tasktype {
+        case .assignment:
+            assignmnetList.sort {
+                ($0.base?.due_date)!  < ($1.base?.due_date)!
+            }
+            break
+        default:
+            practiceList.sort {
+                ($0.base?.due_date)!  < ($1.base?.due_date)!
+            }
+            break
         }
+       
     }
     
     func fetchUniqueDates()
     {
         sectionHeaders.removeAll()
+        switch tasktype {
+        case .assignment:
         for assignment in assignmnetList
         {
             if (!sectionHeaders.contains((Date().dateFromEpoc((assignment.base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy"))) )
@@ -189,11 +276,24 @@ class StudentAssignmentModel: NSObject, UITableViewDataSource, UITableViewDelega
                 sectionHeaders.append(Date().dateFromEpoc((assignment.base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy"))
             }
         }
+            break
+        default:
+            for practice in practiceList
+            {
+                if (!sectionHeaders.contains((Date().dateFromEpoc((practice.base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy"))) )
+                {
+                    sectionHeaders.append(Date().dateFromEpoc((practice.base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy"))
+                }
+            }
+            break
+        }
     }
    
     func fetchNumberOfRowsForSection(for date:String) -> Int
     {
         var rowCount = 0
+        switch tasktype {
+        case .assignment:
         for assignment in assignmnetList
         {
             if(Date().dateFromEpoc((assignment.base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy") == date)
@@ -202,10 +302,22 @@ class StudentAssignmentModel: NSObject, UITableViewDataSource, UITableViewDelega
             }
         }
         return rowCount
+         default:
+            for practice in assignmnetList
+            {
+                if(Date().dateFromEpoc((practice.base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy") == date)
+                {
+                    rowCount += 1
+                }
+            }
+            return rowCount
+        }
     }
 
     func fetchListOfAssignmentsForDate(for date:String) -> Array<FailableDecodable<Assignment>>
     {
+        switch tasktype {
+        case .assignment:
         var assignmentListForDate = Array<FailableDecodable<Assignment>>()
         for assignment in assignmnetList
         {
@@ -215,5 +327,16 @@ class StudentAssignmentModel: NSObject, UITableViewDataSource, UITableViewDelega
             }
         }
         return assignmentListForDate
+        default:
+            var practiceListForDate = Array<FailableDecodable<Assignment>>()
+            for practice in assignmnetList
+            {
+                if(Date().dateFromEpoc((practice.base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy") == date)
+                {
+                    practiceListForDate.append(practice)
+                }
+            }
+            return practiceListForDate
+        }
     }
 }

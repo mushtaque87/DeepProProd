@@ -14,10 +14,10 @@
             <connections>
                 <outlet property="unitTableView" destination="25c-Nb-aOO" id="7yp-ao-vAE"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
-                <outlet property="viewModel" destination="a48-Bz-VRX" id="Tjd-M3-Gk6"/>
+                <outlet property="viewModel" destination="a48-Bz-VRX" id="9xM-wL-uzT"/>
             </connections>
         </placeholder>
-        <customObject id="a48-Bz-VRX" customClass="AssignmentsUnitsModel" customModule="DeepProProd" customModuleProvider="target"/>
+        <customObject id="a48-Bz-VRX" customClass="Assignments_UnitsModel" customModule="DeepProProd" customModuleProvider="target"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>

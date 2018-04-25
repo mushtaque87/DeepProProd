@@ -1,0 +1,9 @@
+[{"id":1,
+"name":"EASY",
+"description":"level of the practice session"},
+{"id":2,
+"name":"MODERATE",
+"description":"level of the practice session"},
+{"id":3,
+"name":"DIFFICULT",
+"description":"level of the practice session"}]

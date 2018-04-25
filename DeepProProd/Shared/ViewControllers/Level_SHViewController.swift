@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MBProgressHUD
 
-class Level_SHViewController: UIViewController {
+class Level_SHViewController: UIViewController, CategoriesProtocol {
 
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet var viewModel: LevelViewModel!
@@ -18,15 +19,17 @@ class Level_SHViewController: UIViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        
+        fetchCategories()
         self.levelTableView.register(UINib(nibName: "ChapterContentCell", bundle: nil), forCellReuseIdentifier: "content")
         viewModel.parentController = self
+        viewModel.delegate = self
         levelTableView.backgroundColor = UIColor.clear
-        
         self.navigationItem.title = "Courses"
 
+        
     }
 
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -36,6 +39,37 @@ class Level_SHViewController: UIViewController {
         refreshUI()
     }
 
+    
+    func fetchCategories()
+    {
+        
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.mode = MBProgressHUDMode.indeterminate
+        hud.label.text = "Fetching assignments. Please wait"
+        
+        ServiceManager().getCategories(onSuccess: { assignmentlist in
+            self.viewModel.categoriesList = assignmentlist
+            self.levelTableView.reloadData()
+            hud.hide(animated: true)
+        }, onHTTPError: { httperror in
+            hud.mode = MBProgressHUDMode.text
+            hud.label.text = httperror.description
+        }, onError: { error in
+            hud.mode = MBProgressHUDMode.text
+            hud.label.text = error.localizedDescription
+        }, onComplete: {
+            hud.hide(animated: true)
+        })
+        
+        
+    }
+    
+    func showPracticesScreen(for categoryId:Int) {
+        let practiceScreen = AssignmnetDasboardViewController(nibName:"AssignmnetDasboardViewController",bundle:nil)
+        practiceScreen.viewModel.tasktype = .practice
+        self.navigationController?.pushViewController(practiceScreen, animated: true)
+    }
+    
     /*
     // MARK: - Navigation
 

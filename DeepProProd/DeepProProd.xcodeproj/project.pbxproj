@@ -8,6 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		4FB2D613F5231058FD5832BE /* Pods_DeepProProdTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 16658320066D22BF5A1B9D18 /* Pods_DeepProProdTests.framework */; };
+		5001F789208CAD0F00451031 /* PracticeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5001F788208CAD0F00451031 /* PracticeTest.swift */; };
+		5001F798208CB2F900451031 /* getPracticeUnits.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5001F795208CB2F800451031 /* getPracticeUnits.txt */; };
+		5001F799208CB2F900451031 /* getCategory.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5001F796208CB2F900451031 /* getCategory.txt */; };
+		5001F79A208CB2F900451031 /* getPractice.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5001F797208CB2F900451031 /* getPractice.txt */; };
+		5001F79B208CB30800451031 /* getCategory.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5001F796208CB2F900451031 /* getCategory.txt */; };
+		5001F79C208CB30B00451031 /* getPractice.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5001F797208CB2F900451031 /* getPractice.txt */; };
+		5001F79D208CB30E00451031 /* getPracticeUnits.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5001F795208CB2F800451031 /* getPracticeUnits.txt */; };
+		5001F79F208CB6BB00451031 /* Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5001F79E208CB6BB00451031 /* Categories.swift */; };
+		5001F7A2208CB70A00451031 /* Practice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5001F7A1208CB70A00451031 /* Practice.swift */; };
+		5001F7A3208CB70B00451031 /* Practice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5001F7A1208CB70A00451031 /* Practice.swift */; };
 		50025FFB20693AB200942A72 /* AssignmentList.txt in Resources */ = {isa = PBXBuildFile; fileRef = 50025FFA20693AB200942A72 /* AssignmentList.txt */; };
 		500260082069706C00942A72 /* FailableDecodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 500260072069706C00942A72 /* FailableDecodable.swift */; };
 		500327AF204D0B4300D39194 /* LoginErrorJson in Resources */ = {isa = PBXBuildFile; fileRef = 500327AE204D0B4300D39194 /* LoginErrorJson */; };
@@ -22,6 +32,7 @@
 		500648952072244E00B7C13D /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 500648902072244D00B7C13D /* Poppins-SemiBold.ttf */; };
 		500648962072244E00B7C13D /* Poppins-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 500648912072244D00B7C13D /* Poppins-Bold.ttf */; };
 		500648972072244E00B7C13D /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 500648922072244D00B7C13D /* Poppins-Medium.ttf */; };
+		5008A1B7208DC4D70075951F /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5008A1B6208DC4D70075951F /* Protocols.swift */; };
 		501B48C32057BE40005D6C63 /* PredictionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501B48BD2057BE35005D6C63 /* PredictionResponse.swift */; };
 		501B48C42057BE40005D6C63 /* TopPredictions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501B48BE2057BE36005D6C63 /* TopPredictions.swift */; };
 		501B48C52057BE40005D6C63 /* Alignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501B48BF2057BE37005D6C63 /* Alignment.swift */; };
@@ -43,6 +54,8 @@
 		508987CF206D4C0F004566B4 /* Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508987CC206D3668004566B4 /* Units.swift */; };
 		508987D0206D4C3A004566B4 /* AssignmentsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A325C9206CD5660003FF5C /* AssignmentsTest.swift */; };
 		508987D1206D4C7E004566B4 /* getUnits.txt in Resources */ = {isa = PBXBuildFile; fileRef = 508987CA206D3601004566B4 /* getUnits.txt */; };
+		508F741920909165001B9933 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508F741720909164001B9933 /* Profile.swift */; };
+		508F741A20909165001B9933 /* User_attribute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508F741820909164001B9933 /* User_attribute.swift */; };
 		508FE5A420566ACC0051941F /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508FE5A320566ACC0051941F /* Data.swift */; };
 		508FE5A620568C710051941F /* GRPCServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508FE5A520568C710051941F /* GRPCServiceManager.swift */; };
 		5095C68E20064108003207AD /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5099C221200640CC00898B0A /* Charts.framework */; };
@@ -84,12 +97,11 @@
 		5099C21620063EAB00898B0A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5099C20E20063EAB00898B0A /* SettingsViewController.swift */; };
 		50A325CD206CFE790003FF5C /* getAssignments.txt in Resources */ = {isa = PBXBuildFile; fileRef = 50A325CC206CFE780003FF5C /* getAssignments.txt */; };
 		50A325CE206D082B0003FF5C /* getAssignments.txt in Resources */ = {isa = PBXBuildFile; fileRef = 50A325CC206CFE780003FF5C /* getAssignments.txt */; };
-		50A5EFC0205566B30083F28C /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A5EFBF205566B30083F28C /* Profile.swift */; };
-		50B7D3BD207A0DFE0058662F /* AssignmentsUnitsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B7D3BC207A0DFE0058662F /* AssignmentsUnitsModel.swift */; };
+		50B7D3BD207A0DFE0058662F /* Assignments_UnitsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B7D3BC207A0DFE0058662F /* Assignments_UnitsModel.swift */; };
 		50BEA274201896D2007F1899 /* LoginViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BEA273201896D2007F1899 /* LoginViewModelTest.swift */; };
 		50BEA27B201DE31B007F1899 /* ThemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BEA279201DE31B007F1899 /* ThemeCell.swift */; };
 		50BEA27C201DE31B007F1899 /* ThemeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50BEA27A201DE31B007F1899 /* ThemeCell.xib */; };
-		50C36C0020691B7B001C604B /* StudentAssignmentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C36BFF20691B7B001C604B /* StudentAssignmentModel.swift */; };
+		50C36C0020691B7B001C604B /* AssignmentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C36BFF20691B7B001C604B /* AssignmentModel.swift */; };
 		50C36C03206922CA001C604B /* AssignmentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C36C01206922CA001C604B /* AssignmentTableViewCell.swift */; };
 		50C36C04206922CA001C604B /* AssignmentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50C36C02206922CA001C604B /* AssignmentTableViewCell.xib */; };
 		50C8D76A203DD1430028F05D /* DatePickerDialog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50C8D768203DD1430028F05D /* DatePickerDialog.swift */; };
@@ -363,6 +375,12 @@
 /* Begin PBXFileReference section */
 		16658320066D22BF5A1B9D18 /* Pods_DeepProProdTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DeepProProdTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29281F83558DA47BDE96940E /* Pods-DeepProProd.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeepProProd.release.xcconfig"; path = "Pods/Target Support Files/Pods-DeepProProd/Pods-DeepProProd.release.xcconfig"; sourceTree = "<group>"; };
+		5001F788208CAD0F00451031 /* PracticeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeTest.swift; sourceTree = "<group>"; };
+		5001F795208CB2F800451031 /* getPracticeUnits.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = getPracticeUnits.txt; sourceTree = "<group>"; };
+		5001F796208CB2F900451031 /* getCategory.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = getCategory.txt; sourceTree = "<group>"; };
+		5001F797208CB2F900451031 /* getPractice.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = getPractice.txt; sourceTree = "<group>"; };
+		5001F79E208CB6BB00451031 /* Categories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Categories.swift; sourceTree = "<group>"; };
+		5001F7A1208CB70A00451031 /* Practice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Practice.swift; sourceTree = "<group>"; };
 		50025FFA20693AB200942A72 /* AssignmentList.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = AssignmentList.txt; sourceTree = "<group>"; };
 		500260072069706C00942A72 /* FailableDecodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FailableDecodable.swift; sourceTree = "<group>"; };
 		500327AE204D0B4300D39194 /* LoginErrorJson */ = {isa = PBXFileReference; lastKnownFileType = text; path = LoginErrorJson; sourceTree = "<group>"; };
@@ -377,6 +395,7 @@
 		500648902072244D00B7C13D /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
 		500648912072244D00B7C13D /* Poppins-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Bold.ttf"; sourceTree = "<group>"; };
 		500648922072244D00B7C13D /* Poppins-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Poppins-Medium.ttf"; sourceTree = "<group>"; };
+		5008A1B6208DC4D70075951F /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		501B48BD2057BE35005D6C63 /* PredictionResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PredictionResponse.swift; sourceTree = "<group>"; };
 		501B48BE2057BE36005D6C63 /* TopPredictions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopPredictions.swift; sourceTree = "<group>"; };
 		501B48BF2057BE37005D6C63 /* Alignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alignment.swift; sourceTree = "<group>"; };
@@ -396,6 +415,8 @@
 		5075A9FC2088C25F007CEFD0 /* getUnitAnswer.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = getUnitAnswer.txt; sourceTree = "<group>"; };
 		508987CA206D3601004566B4 /* getUnits.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = getUnits.txt; sourceTree = "<group>"; };
 		508987CC206D3668004566B4 /* Units.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Units.swift; sourceTree = "<group>"; };
+		508F741720909164001B9933 /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		508F741820909164001B9933 /* User_attribute.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User_attribute.swift; sourceTree = "<group>"; };
 		508FE5A320566ACC0051941F /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		508FE5A520568C710051941F /* GRPCServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRPCServiceManager.swift; sourceTree = "<group>"; };
 		5095C69820064314003207AD /* HTTPServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPServiceManager.swift; sourceTree = "<group>"; };
@@ -437,13 +458,12 @@
 		50A325C9206CD5660003FF5C /* AssignmentsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentsTest.swift; sourceTree = "<group>"; };
 		50A325CC206CFE780003FF5C /* getAssignments.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = getAssignments.txt; sourceTree = "<group>"; };
 		50A325CF206D0BA50003FF5C /* Assignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
-		50A5EFBF205566B30083F28C /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
-		50B7D3BC207A0DFE0058662F /* AssignmentsUnitsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentsUnitsModel.swift; sourceTree = "<group>"; };
+		50B7D3BC207A0DFE0058662F /* Assignments_UnitsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assignments_UnitsModel.swift; sourceTree = "<group>"; };
 		50BEA273201896D2007F1899 /* LoginViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelTest.swift; sourceTree = "<group>"; };
 		50BEA275201C728B007F1899 /* DeepProProd-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DeepProProd-Bridging-Header.h"; sourceTree = "<group>"; };
 		50BEA279201DE31B007F1899 /* ThemeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeCell.swift; sourceTree = "<group>"; };
 		50BEA27A201DE31B007F1899 /* ThemeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThemeCell.xib; sourceTree = "<group>"; };
-		50C36BFF20691B7B001C604B /* StudentAssignmentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudentAssignmentModel.swift; sourceTree = "<group>"; };
+		50C36BFF20691B7B001C604B /* AssignmentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentModel.swift; sourceTree = "<group>"; };
 		50C36C01206922CA001C604B /* AssignmentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentTableViewCell.swift; sourceTree = "<group>"; };
 		50C36C02206922CA001C604B /* AssignmentTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AssignmentTableViewCell.xib; sourceTree = "<group>"; };
 		50C8D768203DD1430028F05D /* DatePickerDialog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DatePickerDialog.swift; sourceTree = "<group>"; };
@@ -570,6 +590,9 @@
 		500327AB204D0ACA00D39194 /* Fixtures */ = {
 			isa = PBXGroup;
 			children = (
+				5001F796208CB2F900451031 /* getCategory.txt */,
+				5001F797208CB2F900451031 /* getPractice.txt */,
+				5001F795208CB2F800451031 /* getPracticeUnits.txt */,
 				5075A9FC2088C25F007CEFD0 /* getUnitAnswer.txt */,
 				508987CA206D3601004566B4 /* getUnits.txt */,
 				50A325CC206CFE780003FF5C /* getAssignments.txt */,
@@ -630,6 +653,15 @@
 				50D8AB9F206A4E3600BA5F85 /* UnitListViewController.xib */,
 			);
 			path = "Student Assignment";
+			sourceTree = "<group>";
+		};
+		508F740B2090902B001B9933 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				508F741720909164001B9933 /* Profile.swift */,
+				508F741820909164001B9933 /* User_attribute.swift */,
+			);
+			path = Profile;
 			sourceTree = "<group>";
 		};
 		5095C69620064302003207AD /* ServiceManager */ = {
@@ -730,8 +762,8 @@
 				50E7B331200B769C00DB9DB0 /* SignupViewModel.swift */,
 				50E7B333200B76AF00DB9DB0 /* ForgetPasswordViewModel.swift */,
 				50E7B335200B866800DB9DB0 /* SettingsViewModel.swift */,
-				50C36BFF20691B7B001C604B /* StudentAssignmentModel.swift */,
-				50B7D3BC207A0DFE0058662F /* AssignmentsUnitsModel.swift */,
+				50C36BFF20691B7B001C604B /* AssignmentModel.swift */,
+				50B7D3BC207A0DFE0058662F /* Assignments_UnitsModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -839,6 +871,7 @@
 				505B75CB202AEFC200A5A0B2 /* ServerIntegrationTest.swift */,
 				50C8D7E520482E260028F05D /* SignUpViewModel.swift */,
 				50A325C9206CD5660003FF5C /* AssignmentsTest.swift */,
+				5001F788208CAD0F00451031 /* PracticeTest.swift */,
 			);
 			path = DeepProProdTests;
 			sourceTree = "<group>";
@@ -954,6 +987,7 @@
 				50E76B2A2004D64E009420F9 /* Localizator.swift */,
 				5099C1FF2005F13A00898B0A /* Helper.swift */,
 				50F83CDA2014D8F300690DCF /* Constants.swift */,
+				5008A1B6208DC4D70075951F /* Protocols.swift */,
 			);
 			path = Commons;
 			sourceTree = "<group>";
@@ -998,14 +1032,16 @@
 		50F83CE420170D7A00690DCF /* JsonModels */ = {
 			isa = PBXGroup;
 			children = (
+				508F740B2090902B001B9933 /* Profile */,
 				50AFDA892056A44A00AD8B94 /* Prediction */,
+				5001F79E208CB6BB00451031 /* Categories.swift */,
+				5001F7A1208CB70A00451031 /* Practice.swift */,
 				50F83CE520170DB600690DCF /* Course.swift */,
 				505B75CD202AF3F400A5A0B2 /* LoginApi.swift */,
 				50CBA0EB20331FB9001ABC95 /* ProfileApi.swift */,
 				50CBA0F520345A88001ABC95 /* HTTPError.swift */,
 				504CCC5C203AE10B00EE3CC2 /* SignUp.swift */,
 				50C8D76B20429B240028F05D /* ForgotPassword.swift */,
-				50A5EFBF205566B30083F28C /* Profile.swift */,
 				50A325CF206D0BA50003FF5C /* Assignment.swift */,
 				508987CC206D3668004566B4 /* Units.swift */,
 				5075A9F92088C12F007CEFD0 /* UnitAnswers.swift */,
@@ -1275,6 +1311,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5001F79C208CB30B00451031 /* getPractice.txt in Resources */,
 				5099C203200622C600898B0A /* Arabic.plist in Resources */,
 				5099C21520063EAB00898B0A /* TransDetailViewController.xib in Resources */,
 				5099C204200622C600898B0A /* English.plist in Resources */,
@@ -1287,6 +1324,7 @@
 				50F83CEB2017696000690DCF /* Accounts_SH_ViewController.xib in Resources */,
 				50E76B202004AA53009420F9 /* Resources.rtf in Resources */,
 				5075A9FD2088C25F007CEFD0 /* getUnitAnswer.txt in Resources */,
+				5001F79B208CB30800451031 /* getCategory.txt in Resources */,
 				50E7B32620078A7000DB9DB0 /* peace_be_on_you.wav in Resources */,
 				50E7B32520078A7000DB9DB0 /* good_morning.wav in Resources */,
 				50E7B32720078A7000DB9DB0 /* hello_world.wav in Resources */,
@@ -1301,6 +1339,7 @@
 				5095C6D3200652DC003207AD /* Level_SHViewController.xib in Resources */,
 				500648952072244E00B7C13D /* Poppins-SemiBold.ttf in Resources */,
 				50E7B33D200CE3DA00DB9DB0 /* LevelJson.txt in Resources */,
+				5001F79D208CB30E00451031 /* getPracticeUnits.txt in Resources */,
 				500327BB204D666F00D39194 /* ProfileViewController.xib in Resources */,
 				50A325CE206D082B0003FF5C /* getAssignments.txt in Resources */,
 				50E7B32C2008CDD200DB9DB0 /* SignUp_SH_ViewController.xib in Resources */,
@@ -1332,6 +1371,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5001F798208CB2F900451031 /* getPracticeUnits.txt in Resources */,
+				5001F799208CB2F900451031 /* getCategory.txt in Resources */,
+				5001F79A208CB2F900451031 /* getPractice.txt in Resources */,
 				50A325CD206CFE790003FF5C /* getAssignments.txt in Resources */,
 				500327AF204D0B4300D39194 /* LoginErrorJson in Resources */,
 				5075A9FE2088C25F007CEFD0 /* getUnitAnswer.txt in Resources */,
@@ -1475,6 +1517,7 @@
 			files = (
 				5075A9E7208885B0007CEFD0 /* UIButton.swift in Sources */,
 				504CCC67203C55C400EE3CC2 /* String.swift in Sources */,
+				5008A1B7208DC4D70075951F /* Protocols.swift in Sources */,
 				501B48C52057BE40005D6C63 /* Alignment.swift in Sources */,
 				50BEA27B201DE31B007F1899 /* ThemeCell.swift in Sources */,
 				5095C69D2006433A003207AD /* ChapterVC_DataModel.swift in Sources */,
@@ -1484,14 +1527,16 @@
 				50E7B31820075B4900DB9DB0 /* UIApplication.swift in Sources */,
 				50E76B1E2003A121009420F9 /* Settings.swift in Sources */,
 				50E793CF207DF470002854E5 /* pronunciation.pb.swift in Sources */,
+				5001F79F208CB6BB00451031 /* Categories.swift in Sources */,
 				50E4DA74206A388200C17A12 /* AssignmnetDasboardViewController.swift in Sources */,
 				50D8ABA0206A4E3600BA5F85 /* UnitListViewController.swift in Sources */,
 				5095C6D62006552C003207AD /* Menu_SH_ViewController.swift in Sources */,
 				508FE5A620568C710051941F /* GRPCServiceManager.swift in Sources */,
 				5095C6B0200643BF003207AD /* serviceProtocols.swift in Sources */,
 				5099C21320063EAB00898B0A /* WordsViewController.swift in Sources */,
+				508F741920909165001B9933 /* Profile.swift in Sources */,
 				50E7B336200B866800DB9DB0 /* SettingsViewModel.swift in Sources */,
-				50B7D3BD207A0DFE0058662F /* AssignmentsUnitsModel.swift in Sources */,
+				50B7D3BD207A0DFE0058662F /* Assignments_UnitsModel.swift in Sources */,
 				500327BD204D6BB100D39194 /* MyProfileEdit.swift in Sources */,
 				50CBA0EC20331FB9001ABC95 /* ProfileApi.swift in Sources */,
 				500327BA204D666F00D39194 /* ProfileViewController.swift in Sources */,
@@ -1501,13 +1546,13 @@
 				504CCC5D203AE10B00EE3CC2 /* SignUp.swift in Sources */,
 				50E76B2B2004D64E009420F9 /* Localizator.swift in Sources */,
 				5075A9FB2088C132007CEFD0 /* UnitAnswers.swift in Sources */,
-				50A5EFC0205566B30083F28C /* Profile.swift in Sources */,
 				504CCC64203C544300EE3CC2 /* Date.swift in Sources */,
 				5095C69920064314003207AD /* HTTPServiceManager.swift in Sources */,
 				5095C6C7200644C1003207AD /* UIView.swift in Sources */,
 				50EF61AB207B7D0D00166162 /* UnitTableViewCell.swift in Sources */,
 				50E76AD320037E2A009420F9 /* MainViewController.swift in Sources */,
 				5095C6B7200643E5003207AD /* Pronunciation_Prediction.swift in Sources */,
+				508F741A20909165001B9933 /* User_attribute.swift in Sources */,
 				500260082069706C00942A72 /* FailableDecodable.swift in Sources */,
 				50C36C03206922CA001C604B /* AssignmentTableViewCell.swift in Sources */,
 				505B75CE202AF3F400A5A0B2 /* LoginApi.swift in Sources */,
@@ -1540,6 +1585,7 @@
 				5095C6C520064470003207AD /* IntAxisValueFormatter.swift in Sources */,
 				504CCC60203C0A8D00EE3CC2 /* TokenManager.swift in Sources */,
 				500327BC204D6BAC00D39194 /* MyProfileView.swift in Sources */,
+				5001F7A2208CB70A00451031 /* Practice.swift in Sources */,
 				508987CF206D4C0F004566B4 /* Units.swift in Sources */,
 				50E7B344200DD23C00DB9DB0 /* LabelTableViewCell.swift in Sources */,
 				500327C1204D8AD600D39194 /* NibView.swift in Sources */,
@@ -1550,7 +1596,7 @@
 				50E7B32B2008CDD200DB9DB0 /* SignUp_SH_ViewController.swift in Sources */,
 				5095C6C320064470003207AD /* DateValueFormatter.swift in Sources */,
 				50E7B348200DD2A100DB9DB0 /* LanguageTableViewCell.swift in Sources */,
-				50C36C0020691B7B001C604B /* StudentAssignmentModel.swift in Sources */,
+				50C36C0020691B7B001C604B /* AssignmentModel.swift in Sources */,
 				50E76B392004F5B5009420F9 /* LoginViewModel.swift in Sources */,
 				5095C6C220064470003207AD /* DayAxisValueFormatter.swift in Sources */,
 				50E793CE207DF470002854E5 /* pronunciation.grpc.swift in Sources */,
@@ -1568,6 +1614,8 @@
 			files = (
 				50BEA274201896D2007F1899 /* LoginViewModelTest.swift in Sources */,
 				50E76AE620037E2A009420F9 /* DeepProProdTests.swift in Sources */,
+				5001F7A3208CB70B00451031 /* Practice.swift in Sources */,
+				5001F789208CAD0F00451031 /* PracticeTest.swift in Sources */,
 				50C8D7E620482E260028F05D /* SignUpViewModel.swift in Sources */,
 				508987D0206D4C3A004566B4 /* AssignmentsTest.swift in Sources */,
 				505B75CC202AEFC200A5A0B2 /* ServerIntegrationTest.swift in Sources */,

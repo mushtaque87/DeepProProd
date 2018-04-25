@@ -14,7 +14,6 @@
             <connections>
                 <outlet property="assignmentListTableView" destination="Ros-PQ-OCY" id="JKg-DS-dxk"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
-                <outlet property="viewModel" destination="jUQ-IB-iUT" id="QYY-zu-Kl1"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -26,8 +25,8 @@
                     <rect key="frame" x="0.0" y="33" width="375" height="614"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <connections>
-                        <outlet property="dataSource" destination="jUQ-IB-iUT" id="f5Z-jJ-luJ"/>
-                        <outlet property="delegate" destination="jUQ-IB-iUT" id="jUP-gl-pZe"/>
+                        <outlet property="dataSource" destination="jUQ-IB-iUT" id="mXH-un-ss1"/>
+                        <outlet property="delegate" destination="jUQ-IB-iUT" id="mpe-X4-S2G"/>
                     </connections>
                 </tableView>
             </subviews>
@@ -41,6 +40,6 @@
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="34.5" y="91.5"/>
         </view>
-        <customObject id="jUQ-IB-iUT" customClass="StudentAssignmentModel" customModule="DeepProProd" customModuleProvider="target"/>
+        <customObject id="jUQ-IB-iUT" customClass="AssignmentModel" customModule="DeepProProd" customModuleProvider="target"/>
     </objects>
 </document>

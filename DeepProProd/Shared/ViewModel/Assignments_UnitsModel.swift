@@ -15,7 +15,7 @@ enum UnitStatus : String   {
     case completed = "Complete"
 }
 
-class AssignmentsUnitsModel: NSObject, UITableViewDataSource, UITableViewDelegate {
+class Assignments_UnitsModel: NSObject, UITableViewDataSource, UITableViewDelegate {
     weak var delegate: unitsProtocols?
     var unitList =  Array<FailableDecodable<Units>>()
 

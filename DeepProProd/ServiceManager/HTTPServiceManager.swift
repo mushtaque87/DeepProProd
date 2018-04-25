@@ -111,6 +111,8 @@ class ServiceManager: NSObject {
 })
 
 }
+    
+     //MARK: - Others
   
     func generateAuthHeaders() -> [String:String]
     {
@@ -146,6 +148,61 @@ class ServiceManager: NSObject {
         return request
     }
  
+    
+    func updateRefreshToken(of uid : String ,
+                            onSuccess completionHandler: @escaping () -> Void ,
+                            onError errorHandler: @escaping (Error) -> Void)
+    {
+        
+        Alamofire.request(String(format:constant.refreshtoken), method: .post, parameters: ["refresh-token":(UserDefaults.standard.string(forKey: "refresh_token"))!], encoding: JSONEncoding.default, headers: nil)
+            .responseData { serverResponse in
+                debugPrint(serverResponse)
+                switch serverResponse.result {
+                case .success(let data):
+                    if serverResponse.response!.statusCode == 200 {
+                        let decoder = JSONDecoder()
+                        let userdetails = try! decoder.decode(LoginResponse.self, from: data)
+                        TokenManager.shared.storeNewToken(with: userdetails)
+                        completionHandler()
+                    }
+                case .failure(let error):
+                    errorHandler(error)
+                }
+        }
+    }
+    
+    func verifyTokenAndProceed(of uid : String,
+                               onSuccess successCompletionHandler: @escaping () -> Void ,
+                               onError errorHandler: @escaping (Error) -> Void)
+    {
+        guard TokenManager.shared.isaccessTokenValid() else {
+            guard TokenManager.shared.isRefreshTokenValid() else {
+                if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+                {
+                    rootVc.showLoginViewController()
+                }
+                return
+            }
+            
+            //FIXME: Change the condition from take(2) to actual condition on real time environment
+            /*  UserInfo.shared.accessTokenObserver.take(2).subscribe(onNext: { [weak self] details in
+             // print("AccessToken : \(details!)")
+             completionHandler()
+             
+             }).disposed(by: disposeBag)
+             */
+            
+            self.updateRefreshToken(of: uid , onSuccess: {
+                successCompletionHandler()
+            }, onError: { error in
+                errorHandler(error)
+            })
+            return
+        }
+        successCompletionHandler()
+    }
+   
+    //MARK: - User Identity
     
     func doSignUp(withBody body: SignUpRequest,
                   onSuccess successCompletionHandler: @escaping (SignUpResponse) -> Void,
@@ -269,7 +326,7 @@ class ServiceManager: NSObject {
         }
 }
     
-
+    //MARK: - Profile and Settings
     func getProfile(for uid : String ,
                     onSuccess completionHandler: @escaping (Profile) -> Void,
                     onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
@@ -279,7 +336,7 @@ class ServiceManager: NSObject {
         verifyTokenAndProceed(of: uid,
                               onSuccess: {
                                 
-                                Alamofire.request(String(format:constant.profile,uid), method: .get, parameters: [:] , encoding: JSONEncoding.default, headers:self.generateAuthHeaders())
+                                Alamofire.request(String(format:constant.profile,uid), method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
                                     .responseData { serverResponse in
                                         DispatchQueue.main.async {
                                         let decoder = JSONDecoder()
@@ -315,6 +372,8 @@ class ServiceManager: NSObject {
         
     }
     
+     //MARK: - Assignment
+    
     func getassignments(for uid:String,
                         onSuccess successCompletionHandler: @escaping ([FailableDecodable<Assignment>]) -> Void,
                         onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
@@ -324,7 +383,7 @@ class ServiceManager: NSObject {
         verifyTokenAndProceed(of: uid,
                               onSuccess: {
                                 
-                                Alamofire.request(String(format:"http://192.168.71.10:10002/v1/" + constant.assignments ,uid) , method: .get, parameters: [:] , encoding: JSONEncoding.default, headers:self.generateAuthHeaders())
+                                Alamofire.request(String(format: constant.assignments ,uid) , method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
                                     .responseData { serverResponse in
                                         DispatchQueue.main.async {
                                         let decoder = JSONDecoder()
@@ -368,7 +427,7 @@ class ServiceManager: NSObject {
         verifyTokenAndProceed(of: uid,
                               onSuccess: {
                                 
-                                Alamofire.request(String(format:"http://192.168.71.10:10002/v1/" + constant.units, assignment) , method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
+                                Alamofire.request(String(format:constant.units, uid, assignment) , method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
                                     .responseData { serverResponse in
                                          DispatchQueue.main.async {
                                         let decoder = JSONDecoder()
@@ -411,7 +470,7 @@ class ServiceManager: NSObject {
         verifyTokenAndProceed(of: uid,
                               onSuccess: {
                                 
-                                Alamofire.request("http://192.168.71.10:10010/v1/" + String(format:constant.answer,uid,assignmentId,unitId), method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
+                                Alamofire.request(String(format:constant.assignmentAnswer,uid,assignmentId,unitId), method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
                                     .responseData { serverResponse in
                                         DispatchQueue.main.async {
                                             let decoder = JSONDecoder()
@@ -443,59 +502,127 @@ class ServiceManager: NSObject {
         })
     }
     
+   
+     //MARK: - Category & Practice
     
-    func updateRefreshToken(of uid : String ,
-                            onSuccess completionHandler: @escaping () -> Void ,
-                            onError errorHandler: @escaping (Error) -> Void)
+    
+    func getCategories(onSuccess successCompletionHandler: @escaping ([FailableDecodable<Categories>]) -> Void,
+                  onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
+                  onError errorHandler: @escaping (Error)-> Void  ,
+                  onComplete completeCompletionHandler: @escaping ()-> Void)
     {
+                            //FIXME: Change URL
+                                Alamofire.request(constant.category , method: .get, parameters: [:] , encoding: URLEncoding.default, headers:nil)
+                                    .responseData { serverResponse in
+                                        DispatchQueue.main.async {
+                                            let decoder = JSONDecoder()
+                                            switch serverResponse.result {
+                                            case .success(let data):
+                                                if serverResponse.response!.statusCode == 200 {
+                                                    let categories = try! decoder.decode([FailableDecodable<Categories>].self, from: data)
+                                                    successCompletionHandler(categories)
+                                                }
+                                                else
+                                                {
+                                                    let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
+                                                    httpErrorHandler(httpError)
+                                                    print("HTTP error: \(httpError.description!)")
+                                                }
+                                            case .failure(let error):
+                                                print("Request failed with error: \(error)")
+                                                errorHandler(error)
+                                                
+                                            }
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                                completeCompletionHandler()
+                                            }
+                                        }
+                                }
+                                
+        }
+    
+    
+    func getPractices(for uid:String,
+                  onSuccess successCompletionHandler: @escaping ([FailableDecodable<Practice>]) -> Void,
+                  onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
+                  onError errorHandler: @escaping (Error)-> Void  ,
+                  onComplete completeCompletionHandler: @escaping ()-> Void)
+    {
+        verifyTokenAndProceed(of: uid,
+                              onSuccess: {
+                                
+                                Alamofire.request(String(format: constant.practice, uid) , method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
+                                    .responseData { serverResponse in
+                                        DispatchQueue.main.async {
+                                            let decoder = JSONDecoder()
+                                            switch serverResponse.result {
+                                            case .success(let data):
+                                                if serverResponse.response!.statusCode == 200 {
+                                                    let practices = try! decoder.decode([FailableDecodable<Practice>].self, from: data)
+                                                    successCompletionHandler(practices)
+                                                }
+                                                else
+                                                {
+                                                    let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
+                                                    httpErrorHandler(httpError)
+                                                    print("HTTP error: \(httpError.description)")
+                                                }
+                                            case .failure(let error):
+                                                print("Request failed with error: \(error)")
+                                                errorHandler(error)
+                                                
+                                            }
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                                completeCompletionHandler()
+                                            }
+                                        }
+                                }
+                                
+        },   onError: { error in
+            errorHandler(error)
+        })
+    }
+    
+    
+    func getUnitsForPractices(for practiceid:Int, of uid: String,
+                  onSuccess successCompletionHandler: @escaping ([FailableDecodable<Units>]) -> Void,
+                  onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
+                  onError errorHandler: @escaping (Error)-> Void  ,
+                  onComplete completeCompletionHandler: @escaping ()-> Void)
+    {
+                                
+                                Alamofire.request(String(format: constant.units, uid, practiceid) , method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
+                                    .responseData { serverResponse in
+                                        DispatchQueue.main.async {
+                                            let decoder = JSONDecoder()
+                                            switch serverResponse.result {
+                                            case .success(let data):
+                                                if serverResponse.response!.statusCode == 200 {
+                                                    let units = try! decoder.decode([FailableDecodable<Units>].self, from: data)
+                                                    successCompletionHandler(units)
+                                                }
+                                                else
+                                                {
+                                                    let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
+                                                    httpErrorHandler(httpError)
+                                                    print("HTTP error: \(httpError.description)")
+                                                }
+                                            case .failure(let error):
+                                                print("Request failed with error: \(error)")
+                                                errorHandler(error)
+                                                
+                                            }
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                                completeCompletionHandler()
+                                            }
+                                        }
+                                }
+                                
         
-        Alamofire.request(String(format:constant.refreshtoken,uid), method: .post, parameters: ["refresh-token":(UserDefaults.standard.string(forKey: "refresh_token"))!], encoding: JSONEncoding.default, headers: nil)
-            .responseData { serverResponse in
-                debugPrint(serverResponse)
-                switch serverResponse.result {
-                case .success(let data):
-                    if serverResponse.response!.statusCode == 200 {
-                        let decoder = JSONDecoder()
-                        let userdetails = try! decoder.decode(LoginResponse.self, from: data)
-                        TokenManager.shared.storeNewToken(with: userdetails)
-                        completionHandler()
-                    }
-                case .failure(let error):
-                    errorHandler(error)
-                }
-        }
     }
     
-    func verifyTokenAndProceed(of uid : String,
-                               onSuccess successCompletionHandler: @escaping () -> Void ,
-                               onError errorHandler: @escaping (Error) -> Void)
-    {
-        guard TokenManager.shared.isaccessTokenValid() else {
-            guard TokenManager.shared.isRefreshTokenValid() else {
-                if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
-                {
-                    rootVc.showLoginViewController()
-                }
-                return
-            }
-            
-            //FIXME: Change the condition from take(2) to actual condition on real time environment
-          /*  UserInfo.shared.accessTokenObserver.take(2).subscribe(onNext: { [weak self] details in
-               // print("AccessToken : \(details!)")
-                completionHandler()
-                
-            }).disposed(by: disposeBag)
-            */
-            
-            self.updateRefreshToken(of: uid , onSuccess: {
-                successCompletionHandler()
-            }, onError: { error in
-                errorHandler(error)
-            })
-            return
-        }
-        successCompletionHandler()
-    }
+    
+    
     
    
   /*

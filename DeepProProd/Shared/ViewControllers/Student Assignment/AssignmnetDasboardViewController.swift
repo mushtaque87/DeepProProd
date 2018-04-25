@@ -11,14 +11,15 @@ import MBProgressHUD
 
 
 
-protocol assignmentsProtocols: class {
+
+protocol AssignmentsProtocols: class {
     func showAssignmentDetailsScreen(for id:Int)
     func reloadtable()
 }
 
-class AssignmnetDasboardViewController: UIViewController,assignmentsProtocols  {
+class AssignmnetDasboardViewController: UIViewController,AssignmentsProtocols  {
     @IBOutlet weak var assignmentListTableView: UITableView!
-    @IBOutlet var viewModel: StudentAssignmentModel!
+    var viewModel = AssignmentModel()
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action:
@@ -29,6 +30,8 @@ class AssignmnetDasboardViewController: UIViewController,assignmentsProtocols  {
         return refreshControl
     }()
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.assignmentListTableView.register(UINib(nibName: "AssignmentTableViewCell", bundle: nil), forCellReuseIdentifier: "assignmentListCell")
@@ -36,11 +39,20 @@ class AssignmnetDasboardViewController: UIViewController,assignmentsProtocols  {
        // viewModel.getAssignmnets()
         // Do any additional setup after loading the view.
         self.navigationItem.title = "Assignment Dashboard"
+        assignmentListTableView.delegate = viewModel
+        assignmentListTableView.dataSource = viewModel
         assignmentListTableView.backgroundColor = UIColor.clear
         self.view.backgroundColor = UIColor(red: 112/255, green: 127/255, blue: 134/255, alpha: 0.9)
         self.assignmentListTableView.addSubview(self.refreshControl)
         
-        fetchAssignments()
+        
+        switch viewModel.tasktype {
+        case .assignment:
+            fetchAssignments()
+        default:
+            fetchPractices()
+        }
+        
     }
     override func viewWillAppear(_ animated: Bool) {
         
@@ -83,14 +95,54 @@ class AssignmnetDasboardViewController: UIViewController,assignmentsProtocols  {
         
     }
     
+    func fetchPractices()
+    {
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.mode = MBProgressHUDMode.indeterminate
+        hud.label.text = "Fetching assignments. Please wait"
+        
+        ServiceManager().getPractices(for: UserDefaults.standard.string(forKey: "uid")! , onSuccess: { practicelist in
+            self.viewModel.practiceList = practicelist
+            //self.viewModel.sortAssignmentByDueDate()
+            //self.viewModel.fetchUniqueDates()
+            for section in self.viewModel.sectionHeaders{
+                self.viewModel.assignmentsForSection.updateValue(self.viewModel.fetchListOfAssignmentsForDate(for: section), forKey: section)
+            }
+            self.assignmentListTableView.reloadData()
+            hud.hide(animated: true)
+        }, onHTTPError: { httperror in
+            hud.mode = MBProgressHUDMode.text
+            hud.label.text = httperror.description
+        }, onError: { error in
+            hud.mode = MBProgressHUDMode.text
+            hud.label.text = error.localizedDescription
+        }, onComplete: {
+            hud.hide(animated: true)
+        })
+    }
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
-        fetchAssignments()
+        switch viewModel.tasktype {
+        case .assignment:
+            fetchAssignments()
+        break
+        default:
+            fetchPractices()
+            break
+        }
         refreshControl.endRefreshing()
     }
     func showAssignmentDetailsScreen(for id:Int) {
         
         let unitListViewController =     UnitListViewController(nibName: "UnitListViewController", bundle: nil)
         unitListViewController.assignmentId = id
+        switch viewModel.tasktype {
+        case .assignment:
+        unitListViewController.tasktype = .assignment
+        break
+        default:
+          unitListViewController.tasktype = .practice
+        break
+        }
         self.navigationController?.pushViewController(unitListViewController, animated: true)
     }
     
