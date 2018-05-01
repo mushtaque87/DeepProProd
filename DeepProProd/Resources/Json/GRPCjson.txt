@@ -1,0 +1,91 @@
+score: 87.5
+actual: "HH AH L OW / W ER L D"
+predicted: "HH AH L OW / W ER D"
+alignment {
+actual: "HH AH L OW / W ER L D"
+predicted: "HH AH L OW / W ER _ D"
+}
+wordResults {
+score: 100
+word: "hello"
+matched {
+phoneme: "HH"
+comparedPhoneme: "HH"
+}
+matched {
+phoneme: "AH"
+comparedPhoneme: "AH"
+index: 1
+}
+matched {
+phoneme: "L"
+comparedPhoneme: "L"
+index: 2
+}
+matched {
+phoneme: "OW"
+comparedPhoneme: "OW"
+index: 3
+}
+wordPhonemes: "HH"
+wordPhonemes: "AH"
+wordPhonemes: "L"
+wordPhonemes: "OW"
+predictedPhonemes: "HH"
+predictedPhonemes: "AH"
+predictedPhonemes: "L"
+predictedPhonemes: "OW"
+}
+wordResults {
+score: 75
+word: "world"
+matched {
+phoneme: "W"
+comparedPhoneme: "W"
+}
+matched {
+phoneme: "ER"
+comparedPhoneme: "ER"
+index: 1
+}
+matched {
+phoneme: "D"
+comparedPhoneme: "D"
+index: 3
+}
+notMatched {
+phoneme: "L"
+comparedPhoneme: "_"
+distance: 41
+index: 2
+}
+wordPhonemes: "W"
+wordPhonemes: "ER"
+wordPhonemes: "L"
+wordPhonemes: "D"
+predictedPhonemes: "W"
+predictedPhonemes: "ER"
+predictedPhonemes: "_"
+predictedPhonemes: "D"
+}
+topPredictions {
+text: "HH AH L OW / W ER AH T"
+distance: 3
+}
+topPredictions {
+text: "HH AH L OW / W ER T"
+distance: 2
+}
+topPredictions {
+text: "HH AH L OW / W ER D"
+distance: 1
+}
+topPredictions {
+text: "HH AE L OW / W ER T"
+distance: 3
+}
+topPredictions {
+text: "HH AE L OW / W ER D"
+distance: 2
+}
+)

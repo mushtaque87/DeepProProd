@@ -1,14 +1,125 @@
-[{"id":6,
-"submission_date":1523873009000,
-"audio_url":"/tmp/1e5e63e1-43ab-4096-b136-91611496bf9c.wav",
-"prediction_result_json":"this is a result for assignment",
-"score":25.0,
-"unit_id":2,
-"student_id":"11111"},
-{"id":12,
-"submission_date":1524133103000,
-"audio_url":"/tmp/0e568462-1639-43f2-b259-42cc087d3feb.wav",
-"prediction_result_json":"result of assignment",
-"score":25.22,
-"unit_id":2,
-"student_id":"11111"}]
+[{
+"id": 5,
+"submission_date": 1525094033000,
+"audio_url": "/tmp/646939c4-abe7-4d65-9b7f-132af0bbb1cb.wav",
+"prediction_result_json": {
+"score": 100.0,
+"actual": "Y UW / HH AE V",
+"predicted": "Y UW / HH AE V",
+"alignment": {
+"actual": "Y UW / HH AE V",
+"predicted": "Y UW / HH AE V"
+},
+"wordResults": [{
+"score": 100.0,
+"word": "you",
+"matched": [{
+"phoneme": "Y",
+"comparedPhoneme": "Y"
+}, {
+"phoneme": "UW",
+"comparedPhoneme": "UW",
+"index": 1
+}],
+"wordPhonemes": ["Y", "UW"],
+"predictedPhonemes": ["Y", "UW"]
+}, {
+"score": 100.0,
+"word": "have",
+"matched": [{
+"phoneme": "HH",
+"comparedPhoneme": "HH"
+}, {
+"phoneme": "AE",
+"comparedPhoneme": "AE",
+"index": 1
+}, {
+"phoneme": "V",
+"comparedPhoneme": "V",
+"index": 2
+}],
+"wordPhonemes": ["HH", "AE", "V"],
+"predictedPhonemes": ["HH", "AE", "V"]
+}],
+"topPredictions": [{
+"text": "Y UW / HH AE L V",
+"distance": 1.0
+}, {
+"text": "Y UW / HH AE V"
+}, {
+"text": "Y UW / HH AW V",
+"distance": 1.0
+}, {
+"text": "Y UW / HH EH V",
+"distance": 2.0
+}, {
+"text": "Y UW / HH AE V D",
+"distance": 1.0
+}]
+},
+"score": 100.0,
+"unit_id": 34,
+"student_id": "6dcede32-693c-4340-809d-63a3ef9c33e2"
+}, {
+"id": 6,
+"submission_date": 1525094047000,
+"audio_url": "/tmp/fdb0e87a-e22a-4e3f-9bdf-70e40c42867d.wav",
+"prediction_result_json": {
+"score": 100.0,
+"actual": "Y UW / HH AE V",
+"predicted": "Y UW / HH AE V",
+"alignment": {
+"actual": "Y UW / HH AE V",
+"predicted": "Y UW / HH AE V"
+},
+"wordResults": [{
+"score": 100.0,
+"word": "you",
+"matched": [{
+"phoneme": "Y",
+"comparedPhoneme": "Y"
+}, {
+"phoneme": "UW",
+"comparedPhoneme": "UW",
+"index": 1
+}],
+"wordPhonemes": ["Y", "UW"],
+"predictedPhonemes": ["Y", "UW"]
+}, {
+"score": 100.0,
+"word": "have",
+"matched": [{
+"phoneme": "HH",
+"comparedPhoneme": "HH"
+}, {
+"phoneme": "AE",
+"comparedPhoneme": "AE",
+"index": 1
+}, {
+"phoneme": "V",
+"comparedPhoneme": "V",
+"index": 2
+}],
+"wordPhonemes": ["HH", "AE", "V"],
+"predictedPhonemes": ["HH", "AE", "V"]
+}],
+"topPredictions": [{
+"text": "Y UW / HH AE P",
+"distance": 1.0
+}, {
+"text": "Y UW / HH AE V"
+}, {
+"text": "Y UW / HH AE V S",
+"distance": 1.0
+}, {
+"text": "Y UW / HH AW V",
+"distance": 1.0
+}, {
+"text": "Y UW / HH AE S",
+"distance": 1.0
+}]
+},
+"score": 100.0,
+"unit_id": 34,
+"student_id": "6dcede32-693c-4340-809d-63a3ef9c33e2"
+}]

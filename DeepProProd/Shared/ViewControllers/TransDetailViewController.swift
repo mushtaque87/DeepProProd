@@ -19,7 +19,7 @@ enum BoardType  :  Int {
     // ...
 }
 
-class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerDelegate, CAAnimationDelegate, ServiceProtocols {
+class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVAudioPlayerDelegate, CAAnimationDelegate {
 
     @IBOutlet var vc_DataModel: TranslationVC_DataModel!
     @IBOutlet weak var recordPlayView: UIView!
@@ -158,7 +158,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        vc_DataModel.reloadScreen()
+        //vc_DataModel.reloadScreen()
         refreshUI()
         
     }
@@ -178,6 +178,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
     
     
     // MARK: - Initiate and Refresh Graphs
+    /*
     func setChart(dataPoints: [Int], values: [Double]) {
         graphProgressView.isHidden = false
         var dataEntries: [ChartDataEntry] = []
@@ -193,6 +194,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
         graphProgressView.data = lineChartData
         
     }
+    */
     
     func setBarChart(values: [Double])-> BarChartData {
         //barChartView.noDataText = "You need to provide data for the chart."
@@ -206,9 +208,14 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
         }
         
         let chartDataSet = BarChartDataSet(values: dataEntries, label: "Accuracy")
-        //chartDataSet.colors = ChartColorTemplates.colorful()
+        chartDataSet.colors = ChartColorTemplates.material()
         let chartData = BarChartData(dataSet: chartDataSet)
-        chartData.barWidth = 0.2
+        if(values.count < 2){
+             chartData.barWidth = 0.2
+        }else{
+            chartData.barWidth = 0.9
+        }
+       
         
         //barChartView.data = chartData
         return chartData
@@ -218,7 +225,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
     
     func setBarGraph() {
         barProgressView.drawValueAboveBarEnabled = true
-        barProgressView.maxVisibleCount = 100
+        barProgressView.maxVisibleCount = 10
         
         
         let xAxis = barProgressView.xAxis
@@ -226,6 +233,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
         xAxis.labelFont = .systemFont(ofSize: 10)
         xAxis.granularity = 1
         xAxis.labelCount = 7
+        xAxis.drawGridLinesEnabled = false
         xAxis.valueFormatter = IntAxisValueFormatter()
         
         let leftAxisFormatter = NumberFormatter()
@@ -242,14 +250,18 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
         leftAxis.spaceTop = 0.15
         leftAxis.axisMinimum = 0 // FIXME: HUH?? this replaces startAtZero = YES
         
+        
+        
         let rightAxis = barProgressView.rightAxis
-        rightAxis.enabled = true
+        rightAxis.enabled = false
         rightAxis.labelFont = .systemFont(ofSize: 10)
         rightAxis.labelCount = 8
         rightAxis.valueFormatter = leftAxis.valueFormatter
         rightAxis.spaceTop = 0.15
         rightAxis.axisMinimum = 0
+       
         
+        /*
         let l = barProgressView.legend
         l.horizontalAlignment = .left
         l.verticalAlignment = .bottom
@@ -259,13 +271,13 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
         l.formSize = 9
         l.font = UIFont(name: "HelveticaNeue-Light", size: 11)!
         l.xEntrySpace = 4
-        
+        */
         
         
         barProgressView.data = setBarChart(values: accuracy)
         barProgressView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
         let ll = ChartLimitLine(limit: 85.0, label: "Target")
-        barProgressView.rightAxis.addLimitLine(ll)
+        barProgressView.leftAxis.addLimitLine(ll)
         barProgressView.drawValueAboveBarEnabled = true
         
     }
@@ -671,7 +683,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
                 callGRPCService()
             }
             else{
-                callHTTPService()
+                //callHTTPService()
             }
         } else {
             recordButton.setImage(UIImage(named: "microphonedisabled.png")!, for: UIControlState.normal)
@@ -692,7 +704,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
             let audioData =  try? Data(contentsOf: vc_DataModel.getDocumentsDirectory().appendingPathComponent("recording.wav"))
             //let encodedString = audioData?.base64EncodedString()
             
-            try grpcService.getWordPredictionFromGRPC(for:UserDefaults.standard.string(forKey: "uid")! , with: audioData!, and: wordTextView.text!, onSuccess: {(response) in
+            try grpcService.getWordPredictionFromGRPC(for:UserDefaults.standard.string(forKey: "uid")! ,assignment:(vc_DataModel.wordArray?[vc_DataModel.wordIndex].parentId)!  , unit:(vc_DataModel.wordArray?[vc_DataModel.wordIndex].id)! , with: audioData!, and: wordTextView.text!, onSuccess: {(response) in
                 
                 self.activityIndicator.isHidden = true
                 self.activityIndicator.stopAnimating()
@@ -757,6 +769,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
         
     }
     
+    /*
     func callHTTPService()  {
         
         activityIndicator.isHidden = false
@@ -882,7 +895,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
             
         //}
     }
-    
+  */
     // MARK: - Memory Management
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

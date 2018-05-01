@@ -96,6 +96,31 @@ class AssignmentsTest: XCTestCase {
         
     }
     
+    
+    func testgetPredictResult_answersParsedSuccessfully()
+    {
+        var responseModel: Answers!
+        do {
+            let filePath = Bundle.main.url(forResource: "getUnitAnswer", withExtension: "txt")
+            let data: Data = try Data.init(contentsOf: filePath!)
+            
+            
+            responseModel =  try? JSONDecoder().decode(Answers.self, from: data)
+            
+            
+            print(responseModel)
+        }
+        catch  {
+            print("decoding failed with error=\(error)")
+            
+        }
+        
+        // print(type(of: responseModel))
+        // XCTAssertEqual(responseModel[0].base?.unit_id , 1234)
+        // XCTAssertEqual(responseModel[0].base?.creation_date , 1234512345)
+        
+    }
+    
     func testEpoc_dateFormattedSuccessfully()
     {
         let date = Date()
@@ -106,7 +131,7 @@ class AssignmentsTest: XCTestCase {
     func testSortDates_datesSortedInAscendingOrderByDueDates()
     {
         
-        let studentAssignmentModel = StudentAssignmentModel()
+        let studentAssignmentModel = AssignmentModel()
         studentAssignmentModel.sortAssignmentByDueDate()
         
         XCTAssertEqual(studentAssignmentModel.assignmnetList[0].base?.short_name , "SWO 2")
@@ -115,7 +140,7 @@ class AssignmentsTest: XCTestCase {
     
     func testUniqueDates_fetchSetOfDatesForSection()
     {
-        let studentAssignmentModel = StudentAssignmentModel()
+        let studentAssignmentModel = AssignmentModel()
         studentAssignmentModel.fetchUniqueDates()
         print(studentAssignmentModel.sectionHeaders)
         
@@ -123,7 +148,7 @@ class AssignmentsTest: XCTestCase {
     
     func testNoOfRowsInSection_fetchTheRowCount()
     {
-        let studentAssignmentModel = StudentAssignmentModel()
+        let studentAssignmentModel = AssignmentModel()
         studentAssignmentModel.fetchUniqueDates()
         for date in studentAssignmentModel.sectionHeaders{
             print("For Dates: \(date)")

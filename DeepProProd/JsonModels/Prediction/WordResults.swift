@@ -13,31 +13,37 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 
 import Foundation
 struct WordResults : Codable {
+	let score : Int?
 	let word : String?
-	let actual : String?
-	let notMatched : [NotMatched]?
-	let predicted : String?
-	let score : Float?
-	let matched : [Matched]?
+	var matched : [Matched]?
+	let wordPhonemes : [String]?
+	let predictedPhonemes : [String]?
 
 	enum CodingKeys: String, CodingKey {
 
-		case word = "word"
-		case actual = "actual"
-		case notMatched = "notMatched"
-		case predicted = "predicted"
 		case score = "score"
+		case word = "word"
 		case matched = "matched"
+		case wordPhonemes = "wordPhonemes"
+		case predictedPhonemes = "predictedPhonemes"
 	}
 
 	init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
+		score = try values.decodeIfPresent(Int.self, forKey: .score)
 		word = try values.decodeIfPresent(String.self, forKey: .word)
-		actual = try values.decodeIfPresent(String.self, forKey: .actual)
-		notMatched = try values.decodeIfPresent([NotMatched].self, forKey: .notMatched)
-		predicted = try values.decodeIfPresent(String.self, forKey: .predicted)
-		score = try values.decodeIfPresent(Float.self, forKey: .score)
 		matched = try values.decodeIfPresent([Matched].self, forKey: .matched)
+		wordPhonemes = try values.decodeIfPresent([String].self, forKey: .wordPhonemes)
+		predictedPhonemes = try values.decodeIfPresent([String].self, forKey: .predictedPhonemes)
 	}
+    
+    init(score:Int ,word:String , wordPhonemes:[String] , predictedPhonemes:[String])
+    {
+        self.score = score
+        self.word = word
+        self.wordPhonemes = wordPhonemes
+        self.predictedPhonemes = predictedPhonemes
+        
+    }
 
 }

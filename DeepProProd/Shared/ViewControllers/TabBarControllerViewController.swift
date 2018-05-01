@@ -51,8 +51,10 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
             
             
             let practiceBoardNavigationController = UINavigationController()
-            let transDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
-            transDetailViewController.boardType = BoardType.account
+            //let transDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
+            // transDetailViewController.boardType = .account
+            let transDetailViewController = PracticeBoardViewController(nibName:"PracticeBoardViewController",bundle:nil)
+            //transDetailViewController.boardType = BoardType.account
             practiceBoardNavigationController.viewControllers = [transDetailViewController]
             practiceBoardNavigationController.tabBarItem = UITabBarItem(title: "Speech", image: UIImage(named: "assignmentTab.png"), tag: 2)
         

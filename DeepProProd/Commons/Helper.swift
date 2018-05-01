@@ -120,6 +120,11 @@ class Helper: NSObject {
     return levels
     }
     
+    func scoreColor()
+    {
+    
+    }
+    
     /*
  static func getAssignmentList() throws -> Assignments  {
         let filePath = Bundle.main.url(forResource: "AssignmentList", withExtension: "txt")

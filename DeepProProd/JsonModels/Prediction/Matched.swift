@@ -13,25 +13,19 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 
 import Foundation
 struct Matched : Codable {
-	let distance : Int?
-	let comparedPhoneme : String?
-	let index : Int?
 	let phoneme : String?
+	let comparedPhoneme : String?
 
 	enum CodingKeys: String, CodingKey {
 
-		case distance = "distance"
-		case comparedPhoneme = "comparedPhoneme"
-		case index = "index"
 		case phoneme = "phoneme"
+		case comparedPhoneme = "comparedPhoneme"
 	}
 
 	init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
-		distance = try values.decodeIfPresent(Int.self, forKey: .distance)
-		comparedPhoneme = try values.decodeIfPresent(String.self, forKey: .comparedPhoneme)
-		index = try values.decodeIfPresent(Int.self, forKey: .index)
 		phoneme = try values.decodeIfPresent(String.self, forKey: .phoneme)
+		comparedPhoneme = try values.decodeIfPresent(String.self, forKey: .comparedPhoneme)
 	}
 
 }

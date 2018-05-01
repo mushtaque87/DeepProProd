@@ -13,22 +13,19 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 
 import Foundation
 struct TopPredictions : Codable {
-	let distance : Int?
-	let closeMatch : Bool?
 	let text : String?
+	let distance : Int?
 
 	enum CodingKeys: String, CodingKey {
 
-		case distance = "distance"
-		case closeMatch = "closeMatch"
 		case text = "text"
+		case distance = "distance"
 	}
 
 	init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
-		distance = try values.decodeIfPresent(Int.self, forKey: .distance)
-		closeMatch = try values.decodeIfPresent(Bool.self, forKey: .closeMatch)
 		text = try values.decodeIfPresent(String.self, forKey: .text)
+		distance = try values.decodeIfPresent(Int.self, forKey: .distance)
 	}
 
 }

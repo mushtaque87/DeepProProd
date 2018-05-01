@@ -37,6 +37,7 @@ typealias constant = Constants.ServerApi
                 requestMessage.text = text
                 requestMessage.speech = audio
                 requestMessage.userID = uid
+                requestMessage.studentID = uid
                 requestMessage.assignmentID = Int32(assignmnetId)
                 requestMessage.unitID = Int32(unitId)
                 requestMessage.authToken =  UserDefaults.standard.string(forKey: "access_token")!

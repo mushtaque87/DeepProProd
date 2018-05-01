@@ -59,6 +59,7 @@ class Assignments_UnitsModel: NSObject, UITableViewDataSource, UITableViewDelega
         cell.contentView.backgroundColor = UIColor.clear
         let unit = unitList[indexPath.row]
         cell.titleLabel.text = unit.base?.question_text
+        //cell.titleLabel.text = "unit.base?.question_text cell.titleLabel.text = unit.base?.question_text"
         cell.unitDetailLabel.text = "Status: | Attempts: | Highest Score:"
         cell.unitDescriptionLabel?.text = unit.base?.description
         //cell.detailView.backgroundColor = UIColor(red: 205/255, green: 129/255, blue: 129/255, alpha: 0.9)
@@ -77,14 +78,18 @@ class Assignments_UnitsModel: NSObject, UITableViewDataSource, UITableViewDelega
             }
         }
          */
-        
+        cell.continueButton.tag = (unitList[indexPath.row].base?.unit_id)!
+        cell.continueButton.indexPath = indexPath
+        cell.continueButton.addTarget(self, action:#selector(showUnitsScreen(_:)) , for: .touchUpInside)
+        cell.selectionStyle = UITableViewCellSelectionStyle.none
         cell.detailView.backgroundColor = UIColor(red: 248/255, green: 182/255, blue: 130/255, alpha: 0.9)
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let unit = unitList[indexPath.row]
-        ServiceManager().getAnswers(for: 1, for:(unit.base?.unit_id)! , of: UserDefaults.standard.string(forKey: "uid")! , onSuccess: {response in
+        //let unit = unitList[indexPath.row]
+       
+        /* ServiceManager().getAnswers(for: 1, for:(unit.base?.unit_id)! , of: UserDefaults.standard.string(forKey: "uid")! , onSuccess: {response in
             
         }, onHTTPError: { httperror in
             
@@ -92,11 +97,17 @@ class Assignments_UnitsModel: NSObject, UITableViewDataSource, UITableViewDelega
             
         }, onComplete: {
             
-        })
+        })*/
         
-        delegate?.showPronunciationScreen(with: unitList, and: indexPath.row)
+        //delegate?.showPronunciationScreen(with: unitList, and: indexPath.row)
 
     }
     
+    @objc func showUnitsScreen(_ sender:UIButton)
+    {
+        print(sender.tag)
+        delegate?.showPronunciationScreen(with: unitList, and: (sender as! ContinueButton).indexPath.row)
+
+    }
         
 }

@@ -13,13 +13,13 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 
 import Foundation
 struct UnitAnswers : Codable {
-	let id : Int?
-	let submission_date : Double?
-	let audio_url : String?
-	let prediction_result_json : String?
-	let score : Float?
-	let unit_id : Int?
-	let student_id : String?
+	var id : Int?
+	var submission_date : Int?
+	var audio_url : String?
+	let prediction_result_json : Prediction_result_json?
+	let score : Double?
+	var unit_id : Int?
+	var student_id : String?
 
 	enum CodingKeys: String, CodingKey {
 
@@ -35,12 +35,18 @@ struct UnitAnswers : Codable {
 	init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
 		id = try values.decodeIfPresent(Int.self, forKey: .id)
-		submission_date = try values.decodeIfPresent(Double.self, forKey: .submission_date)
+		submission_date = try values.decodeIfPresent(Int.self, forKey: .submission_date)
 		audio_url = try values.decodeIfPresent(String.self, forKey: .audio_url)
-		prediction_result_json = try values.decodeIfPresent(String.self, forKey: .prediction_result_json)
-		score = try values.decodeIfPresent(Float.self, forKey: .score)
+		prediction_result_json = try values.decodeIfPresent(Prediction_result_json.self, forKey: .prediction_result_json)
+        //try Prediction_result_json(from: decoder)
+		score = try values.decodeIfPresent(Double.self, forKey: .score)
 		unit_id = try values.decodeIfPresent(Int.self, forKey: .unit_id)
 		student_id = try values.decodeIfPresent(String.self, forKey: .student_id)
 	}
+    
+    init(score: Double, predictJson: Prediction_result_json) {
+        self.score = score
+        self.prediction_result_json = predictJson
+    }
 
 }

@@ -12,32 +12,36 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 */
 
 import Foundation
-struct PredictionResponse : Codable {
-	let alignment : Alignment?
+struct Prediction_result_json : Codable {
+	var score : Int?
+	var actual : String?
+	var predicted : String?
+	var alignment : Alignment?
 	let wordResults : [WordResults]?
-	let actual : String?
-	let predicted : String?
-	let score : Int?
-	let topPredictions : [TopPredictions]?
+	var topPredictions : [TopPredictions]?
 
 	enum CodingKeys: String, CodingKey {
 
-		case alignment
-		case wordResults = "wordResults"
+		case score = "score"
 		case actual = "actual"
 		case predicted = "predicted"
-		case score = "score"
+		case alignment = "alignment"
+		case wordResults = "wordResults"
 		case topPredictions = "topPredictions"
 	}
 
 	init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
-		alignment = try Alignment(from: decoder)
-		wordResults = try values.decodeIfPresent([WordResults].self, forKey: .wordResults)
+		score = try values.decodeIfPresent(Int.self, forKey: .score)
 		actual = try values.decodeIfPresent(String.self, forKey: .actual)
 		predicted = try values.decodeIfPresent(String.self, forKey: .predicted)
-		score = try values.decodeIfPresent(Int.self, forKey: .score)
+		alignment = try values.decodeIfPresent(Alignment.self, forKey: .alignment)
+		wordResults = try values.decodeIfPresent([WordResults].self, forKey: .wordResults)
 		topPredictions = try values.decodeIfPresent([TopPredictions].self, forKey: .topPredictions)
 	}
 
+    init(wordResults:[WordResults])
+    {
+        self.wordResults = wordResults
+    }
 }

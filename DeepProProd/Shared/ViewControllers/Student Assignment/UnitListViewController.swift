@@ -51,7 +51,7 @@ class UnitListViewController: UIViewController,unitsProtocols {
     hud.mode = MBProgressHUDMode.indeterminate
     hud.label.text = "Fetching Units. Please wait"
     
-    ServiceManager().getUnits(for:assignmentId! , of: UserDefaults.standard.string(forKey: "uid")!, onSuccess: { unitlist in
+    ServiceManager().getAssignmentsUnits(for:assignmentId! , of: UserDefaults.standard.string(forKey: "uid")!, onSuccess: { unitlist in
         hud.hide(animated: true)
         self.viewModel.unitList = unitlist
         self.unitTableView.reloadData()
@@ -75,7 +75,7 @@ class UnitListViewController: UIViewController,unitsProtocols {
             hud.mode = MBProgressHUDMode.indeterminate
             hud.label.text = "Fetching Units. Please wait"
             
-            ServiceManager().getUnitsForPractices(for:assignmentId!, of: UserDefaults.standard.string(forKey: "uid")!,
+            ServiceManager().getPracticesUnits(for:assignmentId!, of: UserDefaults.standard.string(forKey: "uid")!,
                 onSuccess: { unitlist in
                 hud.hide(animated: true)
                 self.viewModel.unitList = unitlist
@@ -96,20 +96,73 @@ class UnitListViewController: UIViewController,unitsProtocols {
         
    func showPronunciationScreen(with unitsArray:[FailableDecodable<Units>] , and index:Int = 0)
     {
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.mode = MBProgressHUDMode.indeterminate
+        hud.label.text = "Fetching Unit History. Please wait"
         
+        switch tasktype {
+        case .assignment:
+            ServiceManager().getAssignmentsUnitsAnswers(forUnit:(unitsArray[index].base?.unit_id)!  , ofAssignment:assignmentId!  , ofStudent: UserDefaults.standard.string(forKey: "uid")!, onSuccess: { response  in
+                
+                let practiceBoardVC = PracticeBoardViewController(nibName:"PracticeBoardViewController",bundle:nil)
+               // var unitAnswers = [UnitAnswers]()
+                for count in 0..<response.count{
+                    if let base =  response[count].base {
+                        practiceBoardVC.viewModel.answersList.append(base)
+                        practiceBoardVC.viewModel.scoreData.append(base.score!)
+                    }
+                }
+                practiceBoardVC.unitIndex = index
+                hud.hide(animated: true)
+                self.navigationController?.pushViewController(practiceBoardVC, animated: true)
+                
+                
+            }, onHTTPError: { (httperror) in
+                hud.mode = MBProgressHUDMode.text
+                hud.label.text = httperror.description
+            }, onError: { (error) in
+                hud.mode = MBProgressHUDMode.text
+                hud.label.text = error.localizedDescription
+            },onComplete: {
+                  hud.hide(animated: true)
+            })
+            
+        default:
+            ServiceManager().getPracticesUnitsAnswers(forUnit:(unitsArray[index].base?.unit_id)!  , ofAssignment:assignmentId!  , ofStudent: UserDefaults.standard.string(forKey: "uid")!, onSuccess: { response  in
+                hud.hide(animated: true)
+            }, onHTTPError: { (httperror) in
+                hud.mode = MBProgressHUDMode.text
+                hud.label.text = httperror.description
+            }, onError: { (error) in
+                hud.mode = MBProgressHUDMode.text
+                hud.label.text = error.localizedDescription
+            },onComplete: {
+                  hud.hide(animated: true)
+            })
+            
+            break
+        }
+ 
+        
+       /*
         let transDetailViewController: TransDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
         var wordArray = Array<Word>()
         for text in unitsArray {
             wordArray.append(Word(word: (text.base?.question_text)!, id:text.base?.unit_id ,parentId:assignmentId , voice: "", voiceTime: nil))
         }
+        transDetailViewController.boardType = .account
         //transDetailViewController.wordTextView.text = unitsArray[index].base?.question_text
         self.navigationController?.pushViewController(transDetailViewController, animated: true)
+ 
         
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
             transDetailViewController.vc_DataModel.wordArray = wordArray
+            transDetailViewController.vc_DataModel.wordIndex = index
             transDetailViewController.wordTextView.text = wordArray[index].word
-            
+            transDetailViewController.refreshUI()
         }
+       */
+        
 
     }
 

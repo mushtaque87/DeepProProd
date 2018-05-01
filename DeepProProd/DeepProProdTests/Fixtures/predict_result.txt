@@ -1,0 +1,57 @@
+{
+"prediction_result_json": {
+"score": 100.0,
+"actual": "Y UW / HH AE V",
+"predicted": "Y UW / HH AE V",
+"alignment": {
+"actual": "Y UW / HH AE V",
+"predicted": "Y UW / HH AE V"
+},
+"wordResults": [{
+"score": 100.0,
+"word": "you",
+"matched": [{
+"phoneme": "Y",
+"comparedPhoneme": "Y"
+}, {
+"phoneme": "UW",
+"comparedPhoneme": "UW",
+"index": 1
+}],
+"wordPhonemes": ["Y", "UW"],
+"predictedPhonemes": ["Y", "UW"]
+}, {
+"score": 100.0,
+"word": "have",
+"matched": [{
+"phoneme": "HH",
+"comparedPhoneme": "HH"
+}, {
+"phoneme": "AE",
+"comparedPhoneme": "AE",
+"index": 1
+}, {
+"phoneme": "V",
+"comparedPhoneme": "V",
+"index": 2
+}],
+"wordPhonemes": ["HH", "AE", "V"],
+"predictedPhonemes": ["HH", "AE", "V"]
+}],
+"topPredictions": [{
+"text": "Y UW / HH AE P",
+"distance": 1.0
+}, {
+"text": "Y UW / HH AE V"
+}, {
+"text": "Y UW / HH AE V S",
+"distance": 1.0
+}, {
+"text": "Y UW / HH AW V",
+"distance": 1.0
+}, {
+"text": "Y UW / HH AE S",
+"distance": 1.0
+}]
+}
+}

@@ -14,6 +14,7 @@ class UnitTableViewCell: UITableViewCell {
     @IBOutlet weak var unitDetailLabel: UILabel!
     @IBOutlet weak var unitDescriptionLabel: UILabel!
     @IBOutlet weak var detailView: UIView!
+    @IBOutlet weak var continueButton: ContinueButton!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

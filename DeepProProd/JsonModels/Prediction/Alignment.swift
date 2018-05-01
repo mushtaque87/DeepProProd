@@ -13,19 +13,19 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 
 import Foundation
 struct Alignment : Codable {
-	let predicted : String?
 	let actual : String?
+	let predicted : String?
 
 	enum CodingKeys: String, CodingKey {
 
-		case predicted = "predicted"
 		case actual = "actual"
+		case predicted = "predicted"
 	}
 
 	init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
-		predicted = try values.decodeIfPresent(String.self, forKey: .predicted)
 		actual = try values.decodeIfPresent(String.self, forKey: .actual)
+		predicted = try values.decodeIfPresent(String.self, forKey: .predicted)
 	}
 
 }
