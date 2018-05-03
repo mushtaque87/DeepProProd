@@ -29,6 +29,7 @@ class AssignmentModel: NSObject, UITableViewDataSource, UITableViewDelegate {
     var sectionHeaders = Array<String>()
     var assignmentsForSection = Dictionary<String, Array<FailableDecodable<Assignment>>>()
     var tasktype : TaskType = .practice //default
+    var categoryId:Int?
    // var totalAssignmentList : Assignments?
     //var newAssignmentlist = Array<AssignmentsList.Assignments>()
     

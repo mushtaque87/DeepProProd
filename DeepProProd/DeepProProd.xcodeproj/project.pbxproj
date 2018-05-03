@@ -60,6 +60,7 @@
 		5077BAEE20986AD30091CBCC /* RecordButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5077BAEC20986AD30091CBCC /* RecordButton.swift */; };
 		5077BAF120986E6D0091CBCC /* StartRecording.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5077BAEF20986E6C0091CBCC /* StartRecording.aiff */; };
 		5077BAF220986E6D0091CBCC /* StopRecording.aiff in Resources */ = {isa = PBXBuildFile; fileRef = 5077BAF020986E6D0091CBCC /* StopRecording.aiff */; };
+		5077BAF7209B2F990091CBCC /* HTTPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5077BAF6209B2F980091CBCC /* HTTPError.swift */; };
 		508987BE206D13DD004566B4 /* Assignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A325CF206D0BA50003FF5C /* Assignment.swift */; };
 		508987CF206D4C0F004566B4 /* Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = 508987CC206D3668004566B4 /* Units.swift */; };
 		508987D0206D4C3A004566B4 /* AssignmentsTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50A325C9206CD5660003FF5C /* AssignmentsTest.swift */; };
@@ -119,7 +120,6 @@
 		50CBA0EC20331FB9001ABC95 /* ProfileApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CBA0EB20331FB9001ABC95 /* ProfileApi.swift */; };
 		50CBA0F120342E58001ABC95 /* InfromationAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CBA0EF20342E58001ABC95 /* InfromationAlertViewController.swift */; };
 		50CBA0F220342E58001ABC95 /* InfromationAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50CBA0F020342E58001ABC95 /* InfromationAlertViewController.xib */; };
-		50CBA0F620345A88001ABC95 /* HTTPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50CBA0F520345A88001ABC95 /* HTTPError.swift */; };
 		50D8ABA0206A4E3600BA5F85 /* UnitListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50D8AB9E206A4E3600BA5F85 /* UnitListViewController.swift */; };
 		50D8ABA1206A4E3600BA5F85 /* UnitListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50D8AB9F206A4E3600BA5F85 /* UnitListViewController.xib */; };
 		50DC39FE2090BF3100CDA113 /* PracticeBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DC39FC2090BF3100CDA113 /* PracticeBoardViewController.swift */; };
@@ -429,6 +429,7 @@
 		5077BAEC20986AD30091CBCC /* RecordButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordButton.swift; sourceTree = "<group>"; };
 		5077BAEF20986E6C0091CBCC /* StartRecording.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = StartRecording.aiff; sourceTree = "<group>"; };
 		5077BAF020986E6D0091CBCC /* StopRecording.aiff */ = {isa = PBXFileReference; lastKnownFileType = audio.aiff; path = StopRecording.aiff; sourceTree = "<group>"; };
+		5077BAF6209B2F980091CBCC /* HTTPError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPError.swift; sourceTree = "<group>"; };
 		508987CA206D3601004566B4 /* getUnits.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = getUnits.txt; sourceTree = "<group>"; };
 		508987CC206D3668004566B4 /* Units.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Units.swift; sourceTree = "<group>"; };
 		508F741720909164001B9933 /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
@@ -487,7 +488,6 @@
 		50CBA0EB20331FB9001ABC95 /* ProfileApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileApi.swift; sourceTree = "<group>"; };
 		50CBA0EF20342E58001ABC95 /* InfromationAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfromationAlertViewController.swift; sourceTree = "<group>"; };
 		50CBA0F020342E58001ABC95 /* InfromationAlertViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfromationAlertViewController.xib; sourceTree = "<group>"; };
-		50CBA0F520345A88001ABC95 /* HTTPError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPError.swift; sourceTree = "<group>"; };
 		50D8AB9E206A4E3600BA5F85 /* UnitListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitListViewController.swift; sourceTree = "<group>"; };
 		50D8AB9F206A4E3600BA5F85 /* UnitListViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnitListViewController.xib; sourceTree = "<group>"; };
 		50DC39FC2090BF3100CDA113 /* PracticeBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeBoardViewController.swift; sourceTree = "<group>"; };
@@ -1081,12 +1081,12 @@
 				50902FEC209609EE008D37DB /* Answers */,
 				508F740B2090902B001B9933 /* Profile */,
 				50AFDA892056A44A00AD8B94 /* Prediction */,
+				5077BAF6209B2F980091CBCC /* HTTPError.swift */,
 				5001F79E208CB6BB00451031 /* Categories.swift */,
 				5001F7A1208CB70A00451031 /* Practice.swift */,
 				50F83CE520170DB600690DCF /* Course.swift */,
 				505B75CD202AF3F400A5A0B2 /* LoginApi.swift */,
 				50CBA0EB20331FB9001ABC95 /* ProfileApi.swift */,
-				50CBA0F520345A88001ABC95 /* HTTPError.swift */,
 				504CCC5C203AE10B00EE3CC2 /* SignUp.swift */,
 				50C8D76B20429B240028F05D /* ForgotPassword.swift */,
 				50A325CF206D0BA50003FF5C /* Assignment.swift */,
@@ -1604,6 +1604,7 @@
 				5095C6C7200644C1003207AD /* UIView.swift in Sources */,
 				50EF61AB207B7D0D00166162 /* UnitTableViewCell.swift in Sources */,
 				50E76AD320037E2A009420F9 /* MainViewController.swift in Sources */,
+				5077BAF7209B2F990091CBCC /* HTTPError.swift in Sources */,
 				50C9C9152095BAD000161635 /* ContinueButton.swift in Sources */,
 				50DC3A0120919DA000CDA113 /* PracticeViewModel.swift in Sources */,
 				5095C6B7200643E5003207AD /* Pronunciation_Prediction.swift in Sources */,
@@ -1611,7 +1612,6 @@
 				500260082069706C00942A72 /* FailableDecodable.swift in Sources */,
 				50C36C03206922CA001C604B /* AssignmentTableViewCell.swift in Sources */,
 				505B75CE202AF3F400A5A0B2 /* LoginApi.swift in Sources */,
-				50CBA0F620345A88001ABC95 /* HTTPError.swift in Sources */,
 				5077BAEE20986AD30091CBCC /* RecordButton.swift in Sources */,
 				508987BE206D13DD004566B4 /* Assignment.swift in Sources */,
 				50E76B292004BB2F009420F9 /* ViewControllerExtensions.swift in Sources */,

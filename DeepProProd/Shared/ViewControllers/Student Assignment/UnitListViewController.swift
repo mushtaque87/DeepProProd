@@ -97,7 +97,7 @@ class UnitListViewController: UIViewController,unitsProtocols {
    func showPronunciationScreen(with unitsArray:[FailableDecodable<Units>] , and index:Int = 0)
     {
         
-        
+        /*
         let practiceBoardVC = PracticeBoardViewController(nibName:"PracticeBoardViewController",bundle:nil)
         practiceBoardVC.unitIndex = index
         if let assignmentId = self.assignmentId {
@@ -109,13 +109,13 @@ class UnitListViewController: UIViewController,unitsProtocols {
             }
         }
         self.navigationController?.pushViewController(practiceBoardVC, animated: true)
-        
+        */
         
         
         
  
         
-   /*
+   
         let transDetailViewController: TransDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
         var wordArray = Array<Word>()
         for text in unitsArray {
@@ -133,7 +133,7 @@ class UnitListViewController: UIViewController,unitsProtocols {
             transDetailViewController.refreshUI()
         }
        
-        */
+        
 
     }
 

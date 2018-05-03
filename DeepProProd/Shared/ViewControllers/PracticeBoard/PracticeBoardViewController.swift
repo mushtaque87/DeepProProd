@@ -26,7 +26,6 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var resultView: UIView!
     @IBOutlet weak var expert_AudioButton: UIButton!
-  
     @IBOutlet weak var scoreCollectionView: UICollectionView!
     @IBOutlet weak var textView: UITextView!
     var tasktype : TaskType = .assignment
@@ -35,6 +34,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     
     
    //Record Button
+    let speechSynthesizer = AVSpeechSynthesizer()
     @IBOutlet weak var recordButton: RecordButton!
     var progressTimer : Timer!
     var progress : CGFloat! = 0
@@ -209,6 +209,24 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         textView.contentOffset = CGPoint.init(x: 0, y: -topCorrect)
     }
     
+    @IBAction func playExpertVoice(_ sender: Any) {
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+            //  try AVAudioSession.overrideOutputAudioPort(AVAudioSession.sharedInstance())
+            
+            let speechUtterance = AVSpeechUtterance(string: textView.text)
+            speechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+            speechUtterance.pitchMultiplier = 1.0
+            speechUtterance.volume = 1.0
+            speechSynthesizer.speak(speechUtterance)
+            
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        
+    }
     public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool)
     {
         if flag {

@@ -50,6 +50,8 @@ class LevelViewModel: NSObject, UITableViewDelegate , UITableViewDataSource {
         
         cell.contentLabel.text  = categoriesList[indexPath.row].base?.name
         cell.backgroundColor = UIColor.clear
+        cell.selectionStyle = UITableViewCellSelectionStyle.none
+
         return cell
     }
     

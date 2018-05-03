@@ -50,7 +50,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
     var boardType : BoardType?
     let grpcService = GRPCServiceManager()
     typealias BUILDSETTINGS = Constants.BUILDSETTINGS
-    
+    let speechSynthesizer = AVSpeechSynthesizer()
     
     
     
@@ -208,7 +208,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
         }
         
         let chartDataSet = BarChartDataSet(values: dataEntries, label: "Accuracy")
-        chartDataSet.colors = ChartColorTemplates.material()
+        chartDataSet.colors = [UIColor(red: 31.0/255.0, green: 72.0/255.0, blue: 142.0/255.0, alpha: 1)]
         let chartData = BarChartData(dataSet: chartDataSet)
         if(values.count < 2){
              chartData.barWidth = 0.2
@@ -382,6 +382,26 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
     
     @IBAction func playTheText()
     {
+        
+            do {
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+                try AVAudioSession.sharedInstance().setActive(true)
+                //  try AVAudioSession.overrideOutputAudioPort(AVAudioSession.sharedInstance())
+                
+                let speechUtterance = AVSpeechUtterance(string: wordTextView.text)
+                speechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+                speechUtterance.pitchMultiplier = 1.0
+                speechUtterance.volume = 1.0
+                speechSynthesizer.speak(speechUtterance)
+                
+            } catch let error {
+                print(error.localizedDescription)
+            }
+            
+        
+        
+        
+        /*
         let word: Word = vc_DataModel.wordArray![vc_DataModel.wordIndex]
         if(word.word.lowercased() == wordTextView.text.lowercased() )
         {
@@ -395,7 +415,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
             player!.prepareToPlay()
             player!.play()
         }
-        
+        */
     }
     
     
@@ -677,14 +697,14 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
         if success {
             //recordButton.setTitle("Tap to Re-record", for: .normal)
             recordButton.setImage(UIImage(named: "microphonedisabled.png")!, for: UIControlState.normal)
-            
-            if(BUILDSETTINGS.grpcTest != nil)
+            callGRPCService()
+            /*if(BUILDSETTINGS.grpcTest != nil)
             {
                 callGRPCService()
             }
             else{
                 //callHTTPService()
-            }
+            }*/
         } else {
             recordButton.setImage(UIImage(named: "microphonedisabled.png")!, for: UIControlState.normal)
             

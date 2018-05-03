@@ -70,6 +70,9 @@
                                         <constraint firstAttribute="width" constant="30" id="fJ2-nG-Maa"/>
                                     </constraints>
                                     <state key="normal" backgroundImage="speaker"/>
+                                    <connections>
+                                        <action selector="playExpertVoice:" destination="-1" eventType="touchUpInside" id="hUA-ry-b6G"/>
+                                    </connections>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

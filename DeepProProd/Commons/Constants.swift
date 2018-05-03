@@ -32,14 +32,14 @@ struct Constants {
         //Assignment
         static let student = "students/"
         static let assignmentService = "assignment-service/v1/"
-        static let assignments = baseUrl + assignmentService + "students/%@/assignments"
-        static let units = baseUrl + assignmentService + "students/%@/assignments/%d/units"
+        static let assignments = "http://192.168.71.10:10002/v1/" + "students/%@/assignments"
+        static let units = "http://192.168.71.10:10002/v1/" + "students/%@/assignments/%d/units"
         static let assignmentAnswer = baseUrl + assignmentService + "students/%@/assignments/%d/units/%d/answers"
         
         //Practice
-        static let category = baseUrl + assignmentService +  "categories"
-        static let practice = baseUrl + assignmentService + "students/%@/practices"
-        static let practiceunit = baseUrl + assignmentService + "students/%@/practices/%d/units"
+        static let category = "http://192.168.71.10:10002/v1/" +  "categories"
+        static let practice = "http://192.168.71.10:10002/v1/" + "students/%@/practices?categoryId=%d"
+        static let practiceunit = "http://192.168.71.10:10002/v1/" + "students/%@/practices/%d/units"
         static let practicesAnswer = baseUrl + assignmentService + "students/%@/practices/%d/units/%d/answers"
 
         // GRPC

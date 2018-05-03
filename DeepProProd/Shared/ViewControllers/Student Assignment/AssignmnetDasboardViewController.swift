@@ -38,7 +38,15 @@ class AssignmnetDasboardViewController: UIViewController,AssignmentsProtocols  {
         viewModel.delegate = self
        // viewModel.getAssignmnets()
         // Do any additional setup after loading the view.
-        self.navigationItem.title = "Assignment Dashboard"
+        
+        /*
+        if viewModel.tasktype = .assignment {
+        self.navigationItem.title = "Assignment List"
+        } else {
+            self.navigationItem.title = "Practices List"
+        }
+         */
+        
         assignmentListTableView.delegate = viewModel
         assignmentListTableView.dataSource = viewModel
         assignmentListTableView.backgroundColor = UIColor.clear
@@ -101,7 +109,7 @@ class AssignmnetDasboardViewController: UIViewController,AssignmentsProtocols  {
         hud.mode = MBProgressHUDMode.indeterminate
         hud.label.text = "Fetching assignments. Please wait"
         
-        ServiceManager().getPractices(for: UserDefaults.standard.string(forKey: "uid")! , onSuccess: { practicelist in
+        ServiceManager().getPractices(for:viewModel.categoryId!, of:UserDefaults.standard.string(forKey: "uid")! , onSuccess: { practicelist in
             self.viewModel.practiceList = practicelist
             //self.viewModel.sortAssignmentByDueDate()
             //self.viewModel.fetchUniqueDates()

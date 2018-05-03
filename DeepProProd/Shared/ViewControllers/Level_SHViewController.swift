@@ -67,6 +67,7 @@ class Level_SHViewController: UIViewController, CategoriesProtocol {
     func showPracticesScreen(for categoryId:Int) {
         let practiceScreen = AssignmnetDasboardViewController(nibName:"AssignmnetDasboardViewController",bundle:nil)
         practiceScreen.viewModel.tasktype = .practice
+        practiceScreen.viewModel.categoryId = categoryId
         self.navigationController?.pushViewController(practiceScreen, animated: true)
     }
     

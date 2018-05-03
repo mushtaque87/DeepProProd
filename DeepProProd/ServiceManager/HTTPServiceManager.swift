@@ -228,9 +228,10 @@ class ServiceManager: NSObject {
                     {
                         print(serverResponse.result.value!)
                         let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: data)
-                        print(httpError.description)
-                        httpErrorHandler(httpError)
-                        print("HTTP error: \(httpError.description)")
+                        if let description = httpError.description {
+                            httpErrorHandler(httpError)
+                            print("HTTP error: \(description)")
+                        }
                     }
                 case .failure(let error):
                     print("Request failed with error: \(error)")
@@ -268,8 +269,10 @@ class ServiceManager: NSObject {
                     {
                         //   self.handleHTTPError(from: serverResponse)
                         let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
-                        httpErrorHandler(httpError)
-                        print("HTTP error: \(httpError.description)")
+                        if let description = httpError.description {
+                            httpErrorHandler(httpError)
+                            print("HTTP error: \(description)")
+                        }
                     }
                 case .failure(let error):
                     print("Request failed with error: \(error)")
@@ -310,8 +313,10 @@ class ServiceManager: NSObject {
                     {
                         //self.handleHTTPError(from: serverResponse)
                         let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
-                        httpErrorHandler(httpError)
-                        print("HTTP error: \(httpError.description)")
+                        if let description = httpError.description {
+                            httpErrorHandler(httpError)
+                            print("HTTP error: \(description)")
+                        }
                     }
                 case .failure(let error):
                     print("Request failed with error: \(error)")
@@ -349,8 +354,10 @@ class ServiceManager: NSObject {
                                             else
                                             {
                                                 let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
-                                                httpErrorHandler(httpError)
-                                                print("HTTP error: \(httpError.description!)")
+                                                if let description = httpError.description {
+                                                    httpErrorHandler(httpError)
+                                                    print("HTTP error: \(description)")
+                                                }
                                             }
                                         case .failure(let error):
                                             print("Request failed with error: \(error)")
@@ -380,9 +387,11 @@ class ServiceManager: NSObject {
                         onError errorHandler: @escaping (Error)-> Void  ,
                         onComplete completeCompletionHandler: @escaping ()-> Void)
     {
+        let verifyTime = Date()
         verifyTokenAndProceed(of: uid,
                               onSuccess: {
-                                
+                                print("Verify Time  \(Date().timeIntervalSince(verifyTime))")
+                                let startTime = Date()
                                 Alamofire.request(String(format: constant.assignments ,uid) , method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
                                     .responseData { serverResponse in
                                         DispatchQueue.main.async {
@@ -390,14 +399,19 @@ class ServiceManager: NSObject {
                                         switch serverResponse.result {
                                         case .success(let data):
                                             if serverResponse.response!.statusCode == 200 {
+                                                 print("Response Time  \(Date().timeIntervalSince(startTime))")
+                                                let decodeTime = Date()
                                                 let assignments = try! decoder.decode([FailableDecodable<Assignment>].self, from: data)
+                                                print("Decode Time  \(Date().timeIntervalSince(decodeTime))")
                                                 successCompletionHandler(assignments)
                                             }
                                             else
                                             {
                                                 let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
-                                                httpErrorHandler(httpError)
-                                                print("HTTP error: \(httpError.description)")
+                                                if let description = httpError.description {
+                                                    httpErrorHandler(httpError)
+                                                    print("HTTP error: \(description)")
+                                                }
                                             }
                                         case .failure(let error):
                                             print("Request failed with error: \(error)")
@@ -440,8 +454,10 @@ class ServiceManager: NSObject {
                                             else
                                             {
                                                 let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
-                                                httpErrorHandler(httpError)
-                                                print("HTTP error: \(httpError.description)")
+                                                if let description = httpError.description {
+                                                    httpErrorHandler(httpError)
+                                                    print("HTTP error: \(description)")
+                                                }
                                             }
                                         case .failure(let error):
                                             print("Request failed with error: \(error)")
@@ -483,8 +499,10 @@ class ServiceManager: NSObject {
                                                 else
                                                 {
                                                     let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
-                                                    httpErrorHandler(httpError)
-                                                    print("HTTP error: \(httpError.description)")
+                                                    if let description = httpError.description {
+                                                        httpErrorHandler(httpError)
+                                                        print("HTTP error: \(description)")
+                                                    }
                                                 }
                                             case .failure(let error):
                                                 print("Request failed with error: \(error)")
@@ -525,8 +543,10 @@ class ServiceManager: NSObject {
                                                 else
                                                 {
                                                     let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
-                                                    httpErrorHandler(httpError)
-                                                    print("HTTP error: \(httpError.description)")
+                                                    if let description = httpError.description {
+                                                        httpErrorHandler(httpError)
+                                                        print("HTTP error: \(description)")
+                                                    }
                                                 }
                                             case .failure(let error):
                                                 print("Request failed with error: \(error)")
@@ -542,16 +562,17 @@ class ServiceManager: NSObject {
         }
     
     
-    func getPractices(for uid:String,
-                  onSuccess successCompletionHandler: @escaping ([FailableDecodable<Practice>]) -> Void,
-                  onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
-                  onError errorHandler: @escaping (Error)-> Void  ,
-                  onComplete completeCompletionHandler: @escaping ()-> Void)
+    func getPractices(for categoryid: Int,
+                      of uid:String,
+                      onSuccess successCompletionHandler: @escaping ([FailableDecodable<Practice>]) -> Void,
+                      onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
+                      onError errorHandler: @escaping (Error)-> Void  ,
+                      onComplete completeCompletionHandler: @escaping ()-> Void)
     {
         verifyTokenAndProceed(of: uid,
                               onSuccess: {
                                 
-                                Alamofire.request(String(format: constant.practice, uid) , method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
+                                Alamofire.request(String(format: constant.practice, uid , categoryid) , method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
                                     .responseData { serverResponse in
                                         DispatchQueue.main.async {
                                             let decoder = JSONDecoder()
@@ -564,8 +585,11 @@ class ServiceManager: NSObject {
                                                 else
                                                 {
                                                     let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
-                                                    httpErrorHandler(httpError)
-                                                    print("HTTP error: \(httpError.description)")
+                                                   
+                                                    if let description = httpError.description {
+                                                         httpErrorHandler(httpError)
+                                                        print("HTTP error: \(description)")
+                                                    }
                                                 }
                                             case .failure(let error):
                                                 print("Request failed with error: \(error)")
@@ -605,8 +629,10 @@ class ServiceManager: NSObject {
                                                 else
                                                 {
                                                     let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
-                                                    httpErrorHandler(httpError)
-                                                    print("HTTP error: \(httpError.description)")
+                                                    if let description = httpError.description {
+                                                        httpErrorHandler(httpError)
+                                                        print("HTTP error: \(description)")
+                                                    }
                                                 }
                                             case .failure(let error):
                                                 print("Request failed with error: \(error)")
@@ -651,8 +677,10 @@ class ServiceManager: NSObject {
                                                 else
                                                 {
                                                     let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
-                                                    httpErrorHandler(httpError)
-                                                    print("HTTP error: \(httpError.description)")
+                                                    if let description = httpError.description {
+                                                        httpErrorHandler(httpError)
+                                                        print("HTTP error: \(description)")
+                                                    }
                                                 }
                                             case .failure(let error):
                                                 print("Request failed with error: \(error)")
