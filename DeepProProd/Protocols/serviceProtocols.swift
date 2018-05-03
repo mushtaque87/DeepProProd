@@ -12,3 +12,7 @@ import Alamofire
 protocol ServiceProtocols: class {
     func returnPredictionValue(response : DataResponse<Any>)
 }
+
+protocol PracticeBoardProtocols: class {
+    func reloadtable()
+}

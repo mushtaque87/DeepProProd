@@ -74,6 +74,7 @@ typealias constant = Constants.ServerApi
  
             } , onError: { error in
             failureCompletionHandler("Unauthenticated. Please Log in Again.")
+                
         })
 }
 

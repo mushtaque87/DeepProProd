@@ -20,15 +20,19 @@ enum resultViewType  :  Int {
     case phenomeTable
 }
 
-class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , AVAudioPlayerDelegate {
+class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , AVAudioPlayerDelegate, PracticeBoardProtocols {
+   
 
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var resultView: UIView!
     @IBOutlet weak var expert_AudioButton: UIButton!
-   // @IBOutlet weak var phenomeTableView: UITableView!
+  
     @IBOutlet weak var scoreCollectionView: UICollectionView!
     @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var phenomeTableView: wordResult_View!
+    var tasktype : TaskType = .assignment
+    
+    @IBOutlet weak var phonemeTable: UITableView!
+    
     
    //Record Button
     @IBOutlet weak var recordButton: RecordButton!
@@ -43,7 +47,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     
     var viewModel = PracticeViewModel()
     var unitIndex = 0;
-    
+    var assignmentId = 0;
     var recordingSession: AVAudioSession!
     var audioRecorder: AVAudioRecorder!
     var player: AVAudioPlayer?
@@ -53,18 +57,21 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        phenomeTableView.isHidden = true
+        phonemeTable.isHidden = true
         // Do any additional setup after loading the view.
         self.view.backgroundColor = UIColor(red: 102/255, green: 204/255, blue: 204/255, alpha: 0.9)
-       
+        viewModel.delegate = self
         self.scoreCollectionView.register(UINib(nibName: "Scores_Cell", bundle: nil), forCellWithReuseIdentifier: "scoresCell")
         scoreCollectionView.delegate = viewModel
         scoreCollectionView.dataSource = viewModel
         
         barChartView.backgroundColor =  UIColor.white
         
-        //phenomeTableView?.wordPhenome_Table.delegate = viewModel
-        //phenomeTableView?.wordPhenome_Table.dataSource = viewModel
+        
+        fetchUnitAnswers(for: unitIndex)
+        self.phonemeTable.register(UINib(nibName: "ReportCell", bundle: nil), forCellReuseIdentifier: "report")
+        phonemeTable?.delegate = viewModel
+        phonemeTable?.dataSource = viewModel
         
         let rightswipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(changeResultType(sender:)))
         rightswipeGesture.direction = .right
@@ -94,6 +101,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         //textView.layer.cornerRadius = 15
         textView.layer.borderColor = UIColor.white.cgColor
         textView.layer.borderWidth = 1
+        resetTextViewContent(textView: textView)
         
         recordingSession = AVAudioSession.sharedInstance()
         do {
@@ -111,20 +119,80 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         } catch {
             // failed to record!
         }
-        
+        //scoreCollectionView.isHidden = true
         setBarGraph()
         
     }
 
     override func viewDidAppear(_ animated: Bool) {
+       // resetTextViewContent(textView: textView)
+        textView.text = viewModel.unitList[unitIndex].question_text
         resetTextViewContent(textView: textView)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+      
+
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    func fetchUnitAnswers(for index: Int){
+        //Validate if the answers is available then return back the
+        
+        
+        let hud = MBProgressHUD.showAdded(to: resultView , animated: true)
+        hud.mode = MBProgressHUDMode.indeterminate
+        hud.label.text = "Fetching Unit History. Please wait"
+        
+        switch tasktype {
+        case .assignment:
+            ServiceManager().getAssignmentsUnitsAnswers(forUnit:self.viewModel.unitList[index].unit_id!, ofAssignment:self.assignmentId  , ofStudent: UserDefaults.standard.string(forKey: "uid")!, onSuccess: { response  in
+                
+               // let practiceBoardVC = PracticeBoardViewController(nibName:"PracticeBoardViewController",bundle:nil)
+                // var unitAnswers = [UnitAnswers]()
+                for count in 0..<response.count{
+                    if let base =  response[count].base {
+                        self.viewModel.answersList.append(base)
+                        self.viewModel.scoreData.append(base.score!)
+                    }
+                }
+                
+                hud.hide(animated: true)
+                self.scoreCollectionView.reloadData()
+                self.updateGraph()
+               // self.navigationController?.pushViewController(practiceBoardVC, animated: true)
+                
+                
+            }, onHTTPError: { (httperror) in
+                hud.mode = MBProgressHUDMode.text
+                hud.label.text = httperror.description
+            }, onError: { (error) in
+                hud.mode = MBProgressHUDMode.text
+                hud.label.text = error.localizedDescription
+            },onComplete: {
+                hud.hide(animated: true)
+            })
+            
+        default:
+            ServiceManager().getAssignmentsUnitsAnswers(forUnit:viewModel.unitList[index].unit_id!, ofAssignment:self.assignmentId  , ofStudent: UserDefaults.standard.string(forKey: "uid")!, onSuccess: { response  in
+                hud.hide(animated: true)
+            }, onHTTPError: { (httperror) in
+                hud.mode = MBProgressHUDMode.text
+                hud.label.text = httperror.description
+            }, onError: { (error) in
+                hud.mode = MBProgressHUDMode.text
+                hud.label.text = error.localizedDescription
+            },onComplete: {
+                hud.hide(animated: true)
+            })
+            
+            break
+        }
+    }
+    
     /*
     // MARK: - Navigation
 
@@ -180,7 +248,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
             let audioData =  try? Data(contentsOf: viewModel.getDocumentsDirectory().appendingPathComponent("recording.wav"))
             //let encodedString = audioData?.base64EncodedString()
             
-            try grpcService.getWordPredictionFromGRPC(for:UserDefaults.standard.string(forKey: "uid")! ,assignment:5  , unit:33 , with: audioData!, and: textView.text!, onSuccess: {(response) in
+            try grpcService.getWordPredictionFromGRPC(for:UserDefaults.standard.string(forKey: "uid")! ,assignment:self.assignmentId  , unit:self.viewModel.unitList[unitIndex].unit_id! , with: audioData!, and: textView.text!, onSuccess: {(response) in
                 
                
                 //Fill the Data
@@ -346,9 +414,10 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         }
         
         let chartDataSet = BarChartDataSet(values: dataEntries, label: "Accuracy")
-        chartDataSet.colors = ChartColorTemplates.material()
+       // chartDataSet.colors = ChartColorTemplates.material()
+        chartDataSet.colors = [UIColor(red: 31.0/255.0, green: 72.0/255.0, blue: 142.0/255.0, alpha: 1)]
         let chartData = BarChartData(dataSet: chartDataSet)
-        if(values.count < 2){
+        if(values.count < 4){
             chartData.barWidth = 0.2
         }else{
             chartData.barWidth = 0.9
@@ -385,9 +454,9 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         leftAxis.labelCount = 8
         leftAxis.valueFormatter = DefaultAxisValueFormatter(formatter: leftAxisFormatter)
         leftAxis.labelPosition = .outsideChart
-        leftAxis.spaceTop = 0.15
+        leftAxis.spaceTop = 0.35
         leftAxis.axisMinimum = 0 // FIXME: HUH?? this replaces startAtZero = YES
-        
+        leftAxis.axisMaximum = 100
         
         
         let rightAxis = barChartView.rightAxis
@@ -423,8 +492,12 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     func updateGraph()  {
         barChartView.data = setBarChart(values: viewModel.scoreData)
         barChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
+        barChartView.fitBars = true
     }
     
+    func reloadtable() {
+        phonemeTable.reloadData()
+    }
     
     
     @objc func changeResultType(sender:UISwipeGestureRecognizer){
@@ -452,13 +525,13 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
           print("Swipe Right")
             scoreCollectionView.isHidden = false
             barChartView.isHidden = true
-            phenomeTableView.isHidden = true
+            phonemeTable.isHidden = true
         }
         else if (sender.direction == .left) {
             print("Swipe Left")
             scoreCollectionView.isHidden = true
-            barChartView.isHidden = false
-            phenomeTableView.isHidden = true
+            barChartView.isHidden = true
+            phonemeTable.isHidden = false
         }
     }
 }

@@ -51,7 +51,7 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
             
             
             let practiceBoardNavigationController = UINavigationController()
-            //let transDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
+           // let transDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
             // transDetailViewController.boardType = .account
             let transDetailViewController = PracticeBoardViewController(nibName:"PracticeBoardViewController",bundle:nil)
             //transDetailViewController.boardType = BoardType.account

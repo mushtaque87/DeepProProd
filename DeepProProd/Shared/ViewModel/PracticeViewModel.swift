@@ -28,30 +28,90 @@ class PracticeViewModel: NSObject,
                                 ColorVariance(color: UIColor(red: 22/255, green: 186/255, blue: 120/255, alpha: 0.9)  , range: 76...100)]
     
     
-    var wordResult : Word_Prediction?
+   // var wordResult : Word_Prediction?
     var predictionData : Pronunciation_Prediction = Pronunciation_Prediction.init()
     lazy var answersList = [UnitAnswers]()
-    
+    lazy var unitList = [Units]()
+    var selectedAnswer: Prediction_result_json?
+    weak var delegate: PracticeBoardProtocols?
+    //lazy var unitList =  Array<FailableDecodable<Units>>()
     
     
     //MARK: - Table View Delegate and Data source
-
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        //let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width/2, height: 28))
+        //headerView.backgroundColor = UIColor(red: 196.0/255.0, green: 194.0/255.0, blue: 255.0/255.0, alpha: 1)
+       
+        let cell = tableView.dequeueReusableCell(withIdentifier: "report", for: IndexPath(row: 0, section: section)) as! ReportCell
+        cell.contentView.backgroundColor  = UIColor(red: 196.0/255.0, green: 194.0/255.0, blue: 255.0/255.0, alpha: 1)
+        cell.actual.text = selectedAnswer?.wordResults![section].word
+        cell.actual.font = UIFont(name: "Poppins-Bold", size: 22.0)
+        cell.actual.textColor = UIColor.white
+        cell.actual.textAlignment = NSTextAlignment.center
+        cell.actual.backgroundColor = UIColor.clear
+        //headerView.addSubview(wordLabel)
+        
+        if let score = selectedAnswer?.wordResults![section].score {
+            cell.predicted.text = String(format:"%d",score)
+        } else{
+            cell.predicted.text = "--"
+        }
+        cell.predicted.font = UIFont(name: "Poppins-Bold", size: 22.0)
+        cell.predicted.textColor = UIColor.white
+        cell.predicted.textAlignment = NSTextAlignment.center
+        cell.predicted.backgroundColor = UIColor.clear
+        
+        /*
+        let wordLabel = UILabel(frame: CGRect(x: cell.actual.frame.origin.x, y: 0, width: cell.actual.frame.size.width, height: 28))
+        wordLabel.text = selectedAnswer?.wordResults![section].word
+        wordLabel.font = UIFont(name: "Poppins-Bold", size: 22.0)
+        wordLabel.textColor = UIColor.white
+        wordLabel.textAlignment = NSTextAlignment.center
+        wordLabel.backgroundColor = UIColor.clear
+        headerView.addSubview(wordLabel)
+ 
+        
+        let scoreLabel = UILabel(frame: CGRect(x: cell.predicted.frame.origin.x , y: 0, width: cell.predicted.frame.size.width , height: 28))
+        if let score = selectedAnswer?.wordResults![section].score {
+        scoreLabel.text = String(format:"%d",score)
+        } else{
+            scoreLabel.text = "--"
+        }
+        scoreLabel.font = UIFont(name: "Poppins-Bold", size: 22.0)
+        scoreLabel.textColor = UIColor.white
+        scoreLabel.textAlignment = NSTextAlignment.center
+        scoreLabel.backgroundColor = UIColor.clear
+        headerView.addSubview(scoreLabel)
+        */
+        
+        return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        if let wordResult = selectedAnswer?.wordResults {
+            return wordResult.count
+        }
+        return 0
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return scoreData.count
+        if let wordResult = selectedAnswer?.wordResults {
+            return max((wordResult[section].predictedPhonemes?.count)!, (wordResult[section].wordPhonemes?.count)!)
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "report", for: indexPath) as! ReportCell
        
-        if(wordResult?.predicted_phonemes?.indices.contains(indexPath.row))!{
-            cell.predicted.text = wordResult?.predicted_phonemes?[indexPath.row]
+        if(selectedAnswer?.wordResults![indexPath.section].predictedPhonemes?.indices.contains(indexPath.row))!{
+            cell.predicted.text = selectedAnswer?.wordResults![indexPath.section].predictedPhonemes?[indexPath.row]
         }
         else{
             cell.predicted.text = ""
         }
         
-        if(wordResult?.word_phonemes?.indices.contains(indexPath.row))!{
-            cell.actual.text =  wordResult?.word_phonemes?[indexPath.row]
+        if(selectedAnswer?.wordResults![indexPath.section].wordPhonemes?.indices.contains(indexPath.row))!{
+            cell.actual.text =  selectedAnswer?.wordResults![indexPath.section].wordPhonemes?[indexPath.row]
         }
         else{
             cell.predicted.text = ""
@@ -79,6 +139,13 @@ class PracticeViewModel: NSObject,
         cell.backgroundColor = colorTheCell(score: Int(answersList[indexPath.row].score!))
         return cell
 
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+        selectedAnswer =  answersList[indexPath.row].prediction_result_json
+        delegate?.reloadtable()
+        
     }
     
     // MARK: UICollectionViewDelegateFlowLayout

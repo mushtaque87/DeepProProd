@@ -96,55 +96,26 @@ class UnitListViewController: UIViewController,unitsProtocols {
         
    func showPronunciationScreen(with unitsArray:[FailableDecodable<Units>] , and index:Int = 0)
     {
-        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        hud.mode = MBProgressHUDMode.indeterminate
-        hud.label.text = "Fetching Unit History. Please wait"
         
-        switch tasktype {
-        case .assignment:
-            ServiceManager().getAssignmentsUnitsAnswers(forUnit:(unitsArray[index].base?.unit_id)!  , ofAssignment:assignmentId!  , ofStudent: UserDefaults.standard.string(forKey: "uid")!, onSuccess: { response  in
-                
-                let practiceBoardVC = PracticeBoardViewController(nibName:"PracticeBoardViewController",bundle:nil)
-               // var unitAnswers = [UnitAnswers]()
-                for count in 0..<response.count{
-                    if let base =  response[count].base {
-                        practiceBoardVC.viewModel.answersList.append(base)
-                        practiceBoardVC.viewModel.scoreData.append(base.score!)
-                    }
-                }
-                practiceBoardVC.unitIndex = index
-                hud.hide(animated: true)
-                self.navigationController?.pushViewController(practiceBoardVC, animated: true)
-                
-                
-            }, onHTTPError: { (httperror) in
-                hud.mode = MBProgressHUDMode.text
-                hud.label.text = httperror.description
-            }, onError: { (error) in
-                hud.mode = MBProgressHUDMode.text
-                hud.label.text = error.localizedDescription
-            },onComplete: {
-                  hud.hide(animated: true)
-            })
-            
-        default:
-            ServiceManager().getPracticesUnitsAnswers(forUnit:(unitsArray[index].base?.unit_id)!  , ofAssignment:assignmentId!  , ofStudent: UserDefaults.standard.string(forKey: "uid")!, onSuccess: { response  in
-                hud.hide(animated: true)
-            }, onHTTPError: { (httperror) in
-                hud.mode = MBProgressHUDMode.text
-                hud.label.text = httperror.description
-            }, onError: { (error) in
-                hud.mode = MBProgressHUDMode.text
-                hud.label.text = error.localizedDescription
-            },onComplete: {
-                  hud.hide(animated: true)
-            })
-            
-            break
+        
+        let practiceBoardVC = PracticeBoardViewController(nibName:"PracticeBoardViewController",bundle:nil)
+        practiceBoardVC.unitIndex = index
+        if let assignmentId = self.assignmentId {
+        practiceBoardVC.assignmentId = assignmentId
         }
+        for units in self.viewModel.unitList {
+            if let base = units.base{
+            practiceBoardVC.viewModel.unitList.append(base)
+            }
+        }
+        self.navigationController?.pushViewController(practiceBoardVC, animated: true)
+        
+        
+        
+        
  
         
-       /*
+   /*
         let transDetailViewController: TransDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
         var wordArray = Array<Word>()
         for text in unitsArray {
@@ -161,8 +132,8 @@ class UnitListViewController: UIViewController,unitsProtocols {
             transDetailViewController.wordTextView.text = wordArray[index].word
             transDetailViewController.refreshUI()
         }
-       */
-        
+       
+        */
 
     }
 
