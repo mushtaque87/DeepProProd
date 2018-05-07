@@ -24,8 +24,8 @@ class Level_SHViewController: UIViewController, CategoriesProtocol {
         viewModel.parentController = self
         viewModel.delegate = self
         levelTableView.backgroundColor = UIColor.clear
-        self.navigationItem.title = "Courses"
-
+        self.navigationItem.title = "Practices"
+        refreshUI()
         
     }
 

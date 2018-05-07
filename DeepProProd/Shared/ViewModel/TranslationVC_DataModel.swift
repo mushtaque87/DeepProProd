@@ -158,13 +158,13 @@ class TranslationVC_DataModel: NSObject, UITableViewDataSource,UITableViewDelega
         originalsound.setImage(UIImage.init(named: "sound.png"), for: UIControlState.normal)
         originalsound.tag = 1
         originalsound.addTarget(self, action: #selector(playVoice), for: UIControlEvents.touchUpInside)
-         headerView.addSubview(originalsound)
+         //headerView.addSubview(originalsound)
         
         let predictionsound = UIButton(frame: CGRect(x: predictionLabel.frame.origin.x + predictionLabel.frame.size.width , y: 0, width: 25, height: 25))
         predictionsound.setImage(UIImage.init(named: "sound.png"), for: UIControlState.normal)
         predictionsound.tag = 2
         predictionsound.addTarget(self, action: #selector(playVoice), for: UIControlEvents.touchUpInside)
-        headerView.addSubview(predictionsound)
+       // headerView.addSubview(predictionsound)
 
         
         return headerView

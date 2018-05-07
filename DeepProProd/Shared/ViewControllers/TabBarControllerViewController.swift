@@ -41,7 +41,7 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
             let courseNavigationController = UINavigationController()
             let levelViewController : Level_SHViewController =  Level_SHViewController(nibName: "Level_SHViewController", bundle: nil)
             courseNavigationController.viewControllers = [levelViewController]
-            courseNavigationController.tabBarItem = UITabBarItem(title: "Menu", image: UIImage(named: "homeTab.png"), tag: 0)
+            courseNavigationController.tabBarItem = UITabBarItem(title: "Practices", image: UIImage(named: "homeTab.png"), tag: 0)
         
             let studentAssignmentNavigationController = UINavigationController()
             let studentDashboard = AssignmnetDasboardViewController(nibName:"AssignmnetDasboardViewController",bundle:nil)
@@ -56,7 +56,7 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
             //let transDetailViewController = PracticeBoardViewController(nibName:"PracticeBoardViewController",bundle:nil)
             //transDetailViewController.boardType = BoardType.account
             practiceBoardNavigationController.viewControllers = [transDetailViewController]
-            practiceBoardNavigationController.tabBarItem = UITabBarItem(title: "Speech", image: UIImage(named: "assignmentTab.png"), tag: 2)
+            practiceBoardNavigationController.tabBarItem = UITabBarItem(title: "Board", image: UIImage(named: "assignmentTab.png"), tag: 2)
         
             let settingNavigationController = UINavigationController()
             let settingsViewController = SettingsViewController(nibName: "SettingsViewController", bundle: nil)

@@ -38,15 +38,7 @@ class AssignmnetDasboardViewController: UIViewController,AssignmentsProtocols  {
         viewModel.delegate = self
        // viewModel.getAssignmnets()
         // Do any additional setup after loading the view.
-        
-        /*
-        if viewModel.tasktype = .assignment {
-        self.navigationItem.title = "Assignment List"
-        } else {
-            self.navigationItem.title = "Practices List"
-        }
-         */
-        
+    
         assignmentListTableView.delegate = viewModel
         assignmentListTableView.dataSource = viewModel
         assignmentListTableView.backgroundColor = UIColor.clear
@@ -56,8 +48,10 @@ class AssignmnetDasboardViewController: UIViewController,AssignmentsProtocols  {
         
         switch viewModel.tasktype {
         case .assignment:
+            self.navigationItem.title = "Assignments List"
             fetchAssignments()
         default:
+            self.navigationItem.title = "Practices List"
             fetchPractices()
         }
         

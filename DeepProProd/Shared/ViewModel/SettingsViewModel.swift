@@ -79,12 +79,13 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 
                 cell.languageSwitch.addTarget(self, action: #selector(languageSelected), for: UIControlEvents.valueChanged)
                 cell.titlLbl.alignText()
-
+                cell.contentView.backgroundColor = UIColor.clear
                 return cell
             case .profile:
                  let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
                  cell.titleLbl.text = "My_Account".localized
                  cell.titleLbl.alignText()
+                 cell.contentView.backgroundColor = UIColor.clear
                  return cell
             case .mainPage:
                 
@@ -94,6 +95,7 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 cell.languageSwitch.setTitle("Practice Board", forSegmentAt: 1)
                 cell.languageSwitch.addTarget(self, action: #selector(selectMainPage(_:)), for: UIControlEvents.valueChanged)
                 cell.titlLbl.alignText()
+                cell.contentView.backgroundColor = UIColor.clear
                 return cell
             case .graphtype:
                 
@@ -103,6 +105,7 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 cell.languageSwitch.setTitle("Line", forSegmentAt: 1)
                 cell.languageSwitch.addTarget(self, action: #selector(selectGraphType(_:)), for: UIControlEvents.valueChanged)
                 cell.titlLbl.alignText()
+                cell.contentView.backgroundColor = UIColor.clear
                 return cell
             case .themetype:
                 
@@ -127,17 +130,19 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 
                 cell.titleLbl.text = "Theme".localized
                 cell.titleLbl.alignText()
-                
+                cell.contentView.backgroundColor = UIColor.clear
                 return cell
             case .announcements:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
                 cell.titleLbl.text = "Announcements".localized
                 cell.titleLbl.alignText()
+                cell.contentView.backgroundColor = UIColor.clear
                 return cell
             case .aboutus:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
                 cell.titleLbl.text = "Aboutus".localized
                 cell.titleLbl.alignText()
+                cell.contentView.backgroundColor = UIColor.clear
                 return cell
             case .logout:
 //                 let cell = tableView.dequeueReusableCell(withIdentifier: "logout", for: indexPath) as! LogOutCell
@@ -145,6 +150,7 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
                 cell.titleLbl.textAlignment = .center
                 cell.titleLbl.text = "Logout".localized
+                cell.contentView.backgroundColor = UIColor.clear
                 return cell
             }
         }

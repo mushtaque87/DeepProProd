@@ -19,7 +19,8 @@ class SettingsViewController: UIViewController,SettingProtocols {
 
     @IBOutlet var viewModel: SettingsViewModel!
     @IBOutlet weak var settingTableView: UITableView!
-   
+    @IBOutlet weak var backgroundImage: UIImageView!
+    
     @IBOutlet weak var logOutBtn: UIButton!
     @IBOutlet weak var languageControl: UISegmentedControl!
     override func viewDidLoad() {
@@ -31,12 +32,13 @@ class SettingsViewController: UIViewController,SettingProtocols {
         self.settingTableView.register(UINib(nibName: "LabelTableViewCell", bundle: nil), forCellReuseIdentifier: "labelCell")
         self.settingTableView.register(UINib(nibName: "LanguageTableViewCell", bundle: nil), forCellReuseIdentifier: "language")
         self.settingTableView.register(UINib(nibName: "ThemeCell", bundle: nil), forCellReuseIdentifier: "theme")
-        
+        self.settingTableView.backgroundColor = UIColor.clear
         viewModel.delegate = self 
     }
     
     override func viewDidAppear(_ animated: Bool) {
         refreshUI()
+         backgroundImage.setBackGroundimage()
     }
 
     override func didReceiveMemoryWarning() {
