@@ -33,5 +33,13 @@ struct HTTPError : Codable {
 		correlation_id = try values.decodeIfPresent(String.self, forKey: .correlation_id)
 		external_error_code = try values.decodeIfPresent(String.self, forKey: .external_error_code)
 	}
+    
+    init(with errorCode:String , and description:String)
+    {
+        self.error_code = errorCode
+        self.description = description
+        self.correlation_id = ""
+        self.external_error_code = ""
+    }
 
 }

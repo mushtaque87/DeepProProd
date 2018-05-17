@@ -13,7 +13,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 import Foundation
 struct WordResults : Codable {
-	let score : Int?
+	let score : Float?
 	let word : String?
 	var matched : [Matched]?
 	let wordPhonemes : [String]?
@@ -30,14 +30,14 @@ struct WordResults : Codable {
 
 	init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
-		score = try values.decodeIfPresent(Int.self, forKey: .score)
+		score = try values.decodeIfPresent(Float.self, forKey: .score)
 		word = try values.decodeIfPresent(String.self, forKey: .word)
 		matched = try values.decodeIfPresent([Matched].self, forKey: .matched)
 		wordPhonemes = try values.decodeIfPresent([String].self, forKey: .wordPhonemes)
 		predictedPhonemes = try values.decodeIfPresent([String].self, forKey: .predictedPhonemes)
 	}
     
-    init(score:Int ,word:String , wordPhonemes:[String] , predictedPhonemes:[String])
+    init(score:Float ,word:String , wordPhonemes:[String] , predictedPhonemes:[String])
     {
         self.score = score
         self.word = word

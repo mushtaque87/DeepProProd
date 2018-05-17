@@ -103,6 +103,8 @@
 		5099C21620063EAB00898B0A /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5099C20E20063EAB00898B0A /* SettingsViewController.swift */; };
 		50A325CD206CFE790003FF5C /* getAssignments.txt in Resources */ = {isa = PBXBuildFile; fileRef = 50A325CC206CFE780003FF5C /* getAssignments.txt */; };
 		50A325CE206D082B0003FF5C /* getAssignments.txt in Resources */ = {isa = PBXBuildFile; fileRef = 50A325CC206CFE780003FF5C /* getAssignments.txt */; };
+		50B6317B20A190C10022A1CE /* Response.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B6316F20A190C10022A1CE /* Response.swift */; };
+		50B6318120A9D1BF0022A1CE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50B6318020A9D1BF0022A1CE /* AudioToolbox.framework */; };
 		50B7D3BD207A0DFE0058662F /* Assignments_UnitsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50B7D3BC207A0DFE0058662F /* Assignments_UnitsModel.swift */; };
 		50BEA274201896D2007F1899 /* LoginViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BEA273201896D2007F1899 /* LoginViewModelTest.swift */; };
 		50BEA27B201DE31B007F1899 /* ThemeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50BEA279201DE31B007F1899 /* ThemeCell.swift */; };
@@ -470,6 +472,9 @@
 		50A325C9206CD5660003FF5C /* AssignmentsTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssignmentsTest.swift; sourceTree = "<group>"; };
 		50A325CC206CFE780003FF5C /* getAssignments.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = getAssignments.txt; sourceTree = "<group>"; };
 		50A325CF206D0BA50003FF5C /* Assignment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assignment.swift; sourceTree = "<group>"; };
+		50B6316F20A190C10022A1CE /* Response.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Response.swift; sourceTree = "<group>"; };
+		50B6318020A9D1BF0022A1CE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		50B6318220A9D1BF0022A1CE /* DeepProProd.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DeepProProd.entitlements; sourceTree = "<group>"; };
 		50B7D3BC207A0DFE0058662F /* Assignments_UnitsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assignments_UnitsModel.swift; sourceTree = "<group>"; };
 		50BEA273201896D2007F1899 /* LoginViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModelTest.swift; sourceTree = "<group>"; };
 		50BEA275201C728B007F1899 /* DeepProProd-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DeepProProd-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -570,6 +575,7 @@
 				50E7580720612D8400DA0473 /* gRPC.framework in Frameworks */,
 				50E7580F20612D8400DA0473 /* BoringSSL.framework in Frameworks */,
 				5095C68E20064108003207AD /* Charts.framework in Frameworks */,
+				50B6318120A9D1BF0022A1CE /* AudioToolbox.framework in Frameworks */,
 				50E7581B20612D8400DA0473 /* Czlib.framework in Frameworks */,
 				50E7581320612D8400DA0473 /* SwiftProtobufPluginLibrary.framework in Frameworks */,
 				8CB8E2BCD7C4ECFE327F5C43 /* Pods_DeepProProd.framework in Frameworks */,
@@ -897,6 +903,7 @@
 		50E76ACF20037E2A009420F9 /* DeepProProd */ = {
 			isa = PBXGroup;
 			children = (
+				50B6318220A9D1BF0022A1CE /* DeepProProd.entitlements */,
 				50E76AD020037E2A009420F9 /* AppDelegate.swift */,
 				50E76AD220037E2A009420F9 /* MainViewController.swift */,
 				50E76AD420037E2A009420F9 /* Main.storyboard */,
@@ -1090,6 +1097,7 @@
 				504CCC5C203AE10B00EE3CC2 /* SignUp.swift */,
 				50C8D76B20429B240028F05D /* ForgotPassword.swift */,
 				50A325CF206D0BA50003FF5C /* Assignment.swift */,
+				50B6316F20A190C10022A1CE /* Response.swift */,
 				508987CC206D3668004566B4 /* Units.swift */,
 				5077BA6020974EC50091CBCC /* UnitAnswers.swift */,
 				500260072069706C00942A72 /* FailableDecodable.swift */,
@@ -1107,6 +1115,7 @@
 		7BAF947CDBFAE2FA5A781EF4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				50B6318020A9D1BF0022A1CE /* AudioToolbox.framework */,
 				799A9D798938B6A0F2C2BB87 /* Pods_DeepProProd.framework */,
 				16658320066D22BF5A1B9D18 /* Pods_DeepProProdTests.framework */,
 			);
@@ -1197,6 +1206,14 @@
 						CreatedOnToolsVersion = 9.2;
 						LastSwiftMigration = 0920;
 						ProvisioningStyle = Automatic;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+							com.apple.InterAppAudio = {
+								enabled = 1;
+							};
+						};
 					};
 					50E76AE020037E2A009420F9 = {
 						CreatedOnToolsVersion = 9.2;
@@ -1650,6 +1667,7 @@
 				50E7B32B2008CDD200DB9DB0 /* SignUp_SH_ViewController.swift in Sources */,
 				5095C6C320064470003207AD /* DateValueFormatter.swift in Sources */,
 				50E7B348200DD2A100DB9DB0 /* LanguageTableViewCell.swift in Sources */,
+				50B6317B20A190C10022A1CE /* Response.swift in Sources */,
 				50C36C0020691B7B001C604B /* AssignmentModel.swift in Sources */,
 				50E76B392004F5B5009420F9 /* LoginViewModel.swift in Sources */,
 				5095C6C220064470003207AD /* DayAxisValueFormatter.swift in Sources */,
@@ -1874,6 +1892,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = DeepProProd/DeepProProd.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C6UNXYYV66;
 				INFOPLIST_FILE = DeepProProd/Info.plist;
@@ -1897,6 +1916,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = DeepProProd/DeepProProd.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C6UNXYYV66;
 				INFOPLIST_FILE = DeepProProd/Info.plist;

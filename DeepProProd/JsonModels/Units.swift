@@ -13,29 +13,40 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 import Foundation
 struct Units : Codable {
-	let unit_id : Int?
+	let id : Int?
 	let creation_date : Int?
 	let description : String?
 	let question_text : String?
-    let unit_status : String?
-    
+    let status : String?
+    let attempts : Int?
+    let highest_score : Double?
+    let assignment_id : Int?
+    let audio_url : String?
 
 	enum CodingKeys: String, CodingKey {
 
-		case unit_id = "unit_id"
+		case id = "id"
 		case creation_date = "creation_date"
 		case description = "description"
 		case question_text = "question_text"
-        case unit_status = "unit_status"
+        case status = "status"
+        case attempts = "attempts"
+        case highest_score = "highest_score"
+        case assignment_id = "assignment_id"
+        case audio_url = "audio_url"
 	}
 
 	init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
-		unit_id = try values.decodeIfPresent(Int.self, forKey: .unit_id)
+		id = try values.decodeIfPresent(Int.self, forKey: .id)
 		creation_date = try values.decodeIfPresent(Int.self, forKey: .creation_date)
 		description = try values.decodeIfPresent(String.self, forKey: .description)
 		question_text = try values.decodeIfPresent(String.self, forKey: .question_text)
-        unit_status = try values.decodeIfPresent(String.self, forKey: .unit_status)
+        status = try values.decodeIfPresent(String.self, forKey: .status)
+        attempts = try values.decodeIfPresent(Int.self, forKey: .attempts)
+        highest_score = try values.decodeIfPresent(Double.self, forKey: .highest_score)
+        assignment_id = try values.decodeIfPresent(Int.self, forKey: .assignment_id)
+        audio_url = try values.decodeIfPresent(String.self, forKey: .audio_url)
 	}
 
 }

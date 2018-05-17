@@ -19,6 +19,7 @@ struct Practice : Codable {
 	let category_id : Int?
 	let task_type : String?
     let due_date : Double?
+    let status : String?
     
 	enum CodingKeys: String, CodingKey {
 
@@ -29,6 +30,7 @@ struct Practice : Codable {
 		case category_id = "category_id"
 		case task_type = "task_type"
         case due_date = "due_date"
+        case status = "status"
 	}
 
 	init(from decoder: Decoder) throws {
@@ -40,6 +42,7 @@ struct Practice : Codable {
         due_date = try values.decodeIfPresent(Double.self, forKey: .due_date)
 		category_id = try values.decodeIfPresent(Int.self, forKey: .category_id)
 		task_type = try values.decodeIfPresent(String.self, forKey: .task_type)
+        status = try values.decodeIfPresent(String.self, forKey: .status)
 	}
 
 }

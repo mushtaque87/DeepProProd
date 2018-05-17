@@ -137,6 +137,7 @@ class AssignmnetDasboardViewController: UIViewController,AssignmentsProtocols  {
         
         let unitListViewController =     UnitListViewController(nibName: "UnitListViewController", bundle: nil)
         unitListViewController.assignmentId = id
+        
         switch viewModel.tasktype {
         case .assignment:
         unitListViewController.tasktype = .assignment

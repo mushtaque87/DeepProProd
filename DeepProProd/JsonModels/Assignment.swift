@@ -13,31 +13,31 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 import Foundation
 struct Assignment : Codable {
-	let assignment_id : Int?
+	let id : Int?
 	let short_name : String?
 	let description : String?
 	let creation_date : Double?
 	let due_date : Double?
-    let assignment_status : String?
+    let status : String?
 
 	enum CodingKeys: String, CodingKey {
 
-		case assignment_id = "assignment_id"
+		case id = "id"
 		case short_name = "short_name"
 		case description = "description"
 		case creation_date = "creation_date"
 		case due_date = "due_date"
-        case assignment_status = "assignment_status"
+        case status = "status"
 	}
 
 	init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
-		assignment_id = try values.decodeIfPresent(Int.self, forKey: .assignment_id)
+		id = try values.decodeIfPresent(Int.self, forKey: .id)
 		short_name = try values.decodeIfPresent(String.self, forKey: .short_name)
 		description = try values.decodeIfPresent(String.self, forKey: .description)
 		creation_date = try values.decodeIfPresent(Double.self, forKey: .creation_date)
 		due_date = try values.decodeIfPresent(Double.self, forKey: .due_date)
-        assignment_status = try values.decodeIfPresent(String.self, forKey: .assignment_status)
+        status = try values.decodeIfPresent(String.self, forKey: .status)
 	}
 
 }

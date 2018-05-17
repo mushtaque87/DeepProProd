@@ -16,7 +16,7 @@ class Scores_Cell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
+        print("awakeFromNib")
         
     }
 

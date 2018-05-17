@@ -11,6 +11,7 @@ import MBProgressHUD
 
 protocol unitsProtocols: class {
     func showPronunciationScreen(with unitsArray:[FailableDecodable<Units>] , and index:Int)
+    func submitAssignment()
 }
 
 class UnitListViewController: UIViewController,unitsProtocols {
@@ -28,6 +29,7 @@ class UnitListViewController: UIViewController,unitsProtocols {
         // Do any additional setup after loading the view.
         viewModel.delegate = self
         self.unitTableView.register(UINib(nibName: "UnitTableViewCell", bundle: nil), forCellReuseIdentifier: "unitCell")
+        self.unitTableView.register(UINib(nibName: "LogOutCell", bundle: nil), forCellReuseIdentifier: "logout")
         self.navigationItem.title = "Units"
         unitTableView.backgroundColor = UIColor.clear
         self.view.backgroundColor = UIColor(red: 112/255, green: 127/255, blue: 134/255, alpha: 0.9)
@@ -37,11 +39,15 @@ class UnitListViewController: UIViewController,unitsProtocols {
             fetchAssignmentUnits()
             break
         default:
-             fetchPracticeUnits()
+            fetchPracticeUnits()
             break
         }
             
         
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        print("viewDidAppear")
     }
     
    func fetchAssignmentUnits()
@@ -97,9 +103,10 @@ class UnitListViewController: UIViewController,unitsProtocols {
    func showPronunciationScreen(with unitsArray:[FailableDecodable<Units>] , and index:Int = 0)
     {
         
-        /*
+       
         let practiceBoardVC = PracticeBoardViewController(nibName:"PracticeBoardViewController",bundle:nil)
         practiceBoardVC.unitIndex = index
+        practiceBoardVC.tasktype = self.tasktype
         if let assignmentId = self.assignmentId {
         practiceBoardVC.assignmentId = assignmentId
         }
@@ -109,13 +116,13 @@ class UnitListViewController: UIViewController,unitsProtocols {
             }
         }
         self.navigationController?.pushViewController(practiceBoardVC, animated: true)
-        */
+ 
         
         
         
  
         
-   
+        /*
         let transDetailViewController: TransDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
         var wordArray = Array<Word>()
         for text in unitsArray {
@@ -132,11 +139,28 @@ class UnitListViewController: UIViewController,unitsProtocols {
             transDetailViewController.wordTextView.text = wordArray[index].word
             transDetailViewController.refreshUI()
         }
-       
+       */
         
 
     }
 
+   @objc func submitAssignment() {
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.mode = MBProgressHUDMode.indeterminate
+        hud.label.text = "Submitting Assignment. Please wait"
+        
+    ServiceManager().updateAssignmentStatus(for: assignmentId!, of: UserDefaults.standard.string(forKey: "uid")!, with: "SUBMITTED", onSuccess: { response in
+             hud.hide(animated: true)
+        }, onHTTPError: { httperror in
+            hud.mode = MBProgressHUDMode.text
+            hud.label.text = httperror.description
+        }, onError: { error in
+            hud.mode = MBProgressHUDMode.text
+            hud.label.text = error.localizedDescription
+        }, onComplete: {
+             hud.hide(animated: true)
+        })
+    }
     func DLog(message: String, function: String = #function) {
         #if DEBUG
             print("\(function): \(message)")

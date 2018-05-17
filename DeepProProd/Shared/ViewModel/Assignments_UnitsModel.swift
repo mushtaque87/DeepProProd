@@ -10,15 +10,13 @@ import Foundation
 import UIKit
 
 enum UnitStatus : String   {
-    case notStarted = "No Started"
-    case inComplete = "Incomplete"
-    case completed = "Complete"
+    case assigned = "ASSIGNED"
+    case submitted = "SUBMITTED"
 }
 
 class Assignments_UnitsModel: NSObject, UITableViewDataSource, UITableViewDelegate {
     weak var delegate: unitsProtocols?
     var unitList =  Array<FailableDecodable<Units>>()
-
     override init() {
         
         do {
@@ -50,43 +48,88 @@ class Assignments_UnitsModel: NSObject, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-        return unitList.count
+        guard unitList.count != 0 else {
+            return 0
+        }
+        return unitList.count + 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-         let cell = tableView.dequeueReusableCell(withIdentifier: "unitCell", for: indexPath) as! UnitTableViewCell
+        
+        
+        if(indexPath.row > unitList.count - 1)
+        {
+            let submitCell =  tableView.dequeueReusableCell(withIdentifier: "logout", for: indexPath) as! LogOutCell
+            submitCell.logOut.titleLabel?.textAlignment = .center
+            submitCell.logOut.setTitle("Submit", for: .normal)
+            submitCell.contentView.backgroundColor = UIColor.clear
+            submitCell.selectionStyle = UITableViewCellSelectionStyle.none
+            submitCell.logOut.addTarget(self, action: #selector(submitAssignment), for: .touchUpInside)
+
+            return submitCell
+            
+        }
+        
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "unitCell", for: indexPath) as! UnitTableViewCell
         cell.contentView.backgroundColor = UIColor.clear
         let unit = unitList[indexPath.row]
         cell.titleLabel.text = unit.base?.question_text
         //cell.titleLabel.text = "unit.base?.question_text cell.titleLabel.text = unit.base?.question_text"
-        cell.unitDetailLabel.text = "Status: | Attempts: | Highest Score:"
+       // cell.unitDetailLabel.text = String(format:"Status: %d| Attempts: %d| Highest Score:%d",(unitList[indexPath.row].base?.unit_status)!,(unitList[indexPath.row].base?.attempts)!,(unitList[indexPath.row].base?.highest_score)!);
+        cell.unitDetailLabel.isHidden = true
+        var metaDataText = "Status: "
+        if let status = unitList[indexPath.row].base?.status
+        {
+            cell.unitDetailLabel.isHidden = false
+            metaDataText = String(format:"%@%@",metaDataText,status)
+        }
+        metaDataText = metaDataText + " | Attempts: "
+        if let attempts = unitList[indexPath.row].base?.attempts
+        {
+            cell.unitDetailLabel.isHidden = false
+            metaDataText = String(format:"%@%d",metaDataText,attempts)
+        }
+        metaDataText = metaDataText + " | Highest Score: "
+        if let highestScore = unitList[indexPath.row].base?.highest_score
+        {
+            cell.unitDetailLabel.isHidden = false
+            metaDataText = String(format:"%@%.2f",metaDataText,highestScore)
+        }
+        
+        
+        cell.unitDetailLabel.text = metaDataText
+        
         cell.unitDescriptionLabel?.text = unit.base?.description
         //cell.detailView.backgroundColor = UIColor(red: 205/255, green: 129/255, blue: 129/255, alpha: 0.9)
         
-        /*
-        if let unitStatus =  UnitStatus(rawValue:(unit.base?.unit_status)!) {
+        
+        if let unitStatus =  UnitStatus(rawValue:(unit.base?.status)!) {
            // cell.assignmentStatus.text = (unit[indexPath.row].base?.unit_status)!
             switch unitStatus {
-            case .notStarted :
-                cell.detailView.backgroundColor = UIColor(red: 254/255, green: 143/255, blue: 136/255, alpha: 0.9)
-            case .inComplete:
+            case .assigned:
                 cell.detailView.backgroundColor = UIColor(red: 248/255, green: 182/255, blue: 130/255, alpha: 0.9)
-            case .completed :
+            case .submitted :
                 cell.detailView.backgroundColor = UIColor(red: 159/255, green: 210/255, blue: 144/255, alpha: 0.9)
                 
             }
         }
-         */
-        cell.continueButton.tag = (unitList[indexPath.row].base?.unit_id)!
+        
+        cell.continueButton.tag = (unitList[indexPath.row].base?.id)!
         cell.continueButton.indexPath = indexPath
         cell.continueButton.addTarget(self, action:#selector(showUnitsScreen(_:)) , for: .touchUpInside)
         cell.selectionStyle = UITableViewCellSelectionStyle.none
-        cell.detailView.backgroundColor = UIColor(red: 248/255, green: 182/255, blue: 130/255, alpha: 0.9)
+        //cell.detailView.backgroundColor = UIColor(red: 248/255, green: 182/255, blue: 130/255, alpha: 0.9)
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        guard indexPath.row < unitList.count - 1 else {
+            return
+        }
+        
+        
         //let unit = unitList[indexPath.row]
        
         /* ServiceManager().getAnswers(for: 1, for:(unit.base?.unit_id)! , of: UserDefaults.standard.string(forKey: "uid")! , onSuccess: {response in
@@ -108,6 +151,11 @@ class Assignments_UnitsModel: NSObject, UITableViewDataSource, UITableViewDelega
         print(sender.tag)
         delegate?.showPronunciationScreen(with: unitList, and: (sender as! ContinueButton).indexPath.row)
 
+    }
+    
+    @objc func submitAssignment()
+    {
+       delegate?.submitAssignment()
     }
         
 }

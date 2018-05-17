@@ -14,5 +14,7 @@ protocol ServiceProtocols: class {
 }
 
 protocol PracticeBoardProtocols: class {
+    func displayResultType(to resultType: ResultViewType  , from currentType:ResultViewType)
+    func resetTextViewContent(textView: UITextView)
     func reloadtable()
 }

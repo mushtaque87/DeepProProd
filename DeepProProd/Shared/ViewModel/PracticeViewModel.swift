@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Charts
+import AVFoundation
+
 private let reuseIdentifier = "scoresCell"
 
 
@@ -18,7 +21,9 @@ struct ColorVariance {
 
 class PracticeViewModel: NSObject,
                             UITableViewDelegate , UITableViewDataSource ,
-                            UICollectionViewDelegate , UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
+                        UICollectionViewDelegate ,UICollectionViewDataSource,
+                        UICollectionViewDelegateFlowLayout, ChartViewDelegate,
+                        UITextViewDelegate  {
     var scoreData = Array<Double>()
     var phenomeData = Array<Int>()
     let colors = [ColorVariance(color: UIColor(red: 254/255, green: 74/255, blue: 74/255, alpha: 0.9)  , range: 0...15),
@@ -34,6 +39,8 @@ class PracticeViewModel: NSObject,
     lazy var unitList = [Units]()
     var selectedAnswer: Prediction_result_json?
     weak var delegate: PracticeBoardProtocols?
+    var streamPlayer = AVPlayer()
+    
     //lazy var unitList =  Array<FailableDecodable<Units>>()
     
     
@@ -52,7 +59,7 @@ class PracticeViewModel: NSObject,
         //headerView.addSubview(wordLabel)
         
         if let score = selectedAnswer?.wordResults![section].score {
-            cell.predicted.text = String(format:"%d",score)
+            cell.predicted.text = String(format:"%.f",score)
         } else{
             cell.predicted.text = "--"
         }
@@ -136,6 +143,14 @@ class PracticeViewModel: NSObject,
         //let unit = answersList[indexPath.row].score
         
         cell.scoreLabel.text = String(format:"%.f",answersList[indexPath.row].score!)
+        if let submissionDate = answersList[indexPath.row].submission_date {
+             cell.submissionDateLabel.text =  String(format:"%@",(Date().dateFromEpoc(submissionDate).toString(dateFormat: "dd MMM, yyyy")))
+        } else {
+             cell.submissionDateLabel.text = ""
+        }
+
+        cell.audioPlayButton.tag = indexPath.row
+        cell.audioPlayButton.addTarget(self, action: #selector(playUserAudio(_:)), for: .touchUpInside)
         cell.backgroundColor = colorTheCell(score: Int(answersList[indexPath.row].score!))
         return cell
 
@@ -145,6 +160,7 @@ class PracticeViewModel: NSObject,
         
         selectedAnswer =  answersList[indexPath.row].prediction_result_json
         delegate?.reloadtable()
+        delegate?.displayResultType(to: .phenomeTable, from: .score)
         
     }
     
@@ -197,6 +213,81 @@ class PracticeViewModel: NSObject,
         let documentsDirectory = paths[0]
         return documentsDirectory
     }
+    
+    func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight){
+        selectedAnswer =  answersList[Int(entry.x)].prediction_result_json
+        delegate?.reloadtable()
+        delegate?.displayResultType(to: .phenomeTable, from: .graph)
+    }
+    
+    public func chartValueNothingSelected(_ chartView: ChartViewBase)
+    {
+        print("chartValueNothingSelected")
+    }
+    
+    @objc func playUserAudio(_ sender: UIButton)
+    {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+        if let url = answersList[sender.tag].audio_url{
+        let playerItem = AVPlayerItem(url: URL(string:url)!)
+        streamPlayer = AVPlayer(playerItem:playerItem)
+        streamPlayer.rate = 1.0;
+        streamPlayer.volume = 1.0
+        streamPlayer.play()
+        }
+            
+        } catch let error {
+            print(error.localizedDescription)
+            
+        }
+            
+        
+    }
+    
+  // MARK: - TextView Delegate
+    public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool
+    {
+       
+        delegate?.resetTextViewContent(textView:textView)
+        return true
+     
+    }
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+      
+            delegate?.resetTextViewContent(textView: textView)
+            
+      
+    }
+    func textViewDidChange(_ textView: UITextView) {
+        if(textView.text.count == 1)
+        {
+            delegate?.resetTextViewContent(textView: textView)
+            
+        }
+    }
+    
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+       
+            //parentObject.wordTextView.text = textView.text
+            //parentObject.showTextField()
+            delegate?.resetTextViewContent(textView: textView)
+        
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if(text == "\n")
+        {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+
   
     
 }

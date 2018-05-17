@@ -14,7 +14,7 @@ import  Alamofire
 import gRPC
 
 
-enum resultViewType  :  Int {
+enum ResultViewType  :  Int {
     case score
     case graph
     case phenomeTable
@@ -23,15 +23,18 @@ enum resultViewType  :  Int {
 class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , AVAudioPlayerDelegate, PracticeBoardProtocols {
    
 
-    @IBOutlet weak var contentView: UIView!
+    
     @IBOutlet weak var resultView: UIView!
     @IBOutlet weak var expert_AudioButton: UIButton!
     @IBOutlet weak var scoreCollectionView: UICollectionView!
     @IBOutlet weak var textView: UITextView!
-    var tasktype : TaskType = .assignment
-    
+    var tasktype : TaskType = .freeSpeech
+    var currentResultViewType:ResultViewType = .score
+    @IBOutlet weak var showResultTypeButton: UIButton!
     @IBOutlet weak var phonemeTable: UITableView!
-    
+    @IBOutlet weak var keyboard: UIButton!
+    @IBOutlet weak var textStackView: UIStackView!
+    @IBOutlet weak var contentView: UIView!
     
    //Record Button
     let speechSynthesizer = AVSpeechSynthesizer()
@@ -51,6 +54,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     var recordingSession: AVAudioSession!
     var audioRecorder: AVAudioRecorder!
     var player: AVAudioPlayer?
+    var streamPlayer = AVPlayer()
     var phenomeTableIsVisible: Bool = false
     
     let grpcService = GRPCServiceManager()
@@ -73,17 +77,18 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         phonemeTable?.delegate = viewModel
         phonemeTable?.dataSource = viewModel
         
-        let rightswipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(changeResultType(sender:)))
+        let rightswipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(changeWord(sender:)))
         rightswipeGesture.direction = .right
-        rightswipeGesture.cancelsTouchesInView = false
-        resultView.addGestureRecognizer(rightswipeGesture)
+        //rightswipeGesture.cancelsTouchesInView = false
+        textView.addGestureRecognizer(rightswipeGesture)
         
         
-        let leftswipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(changeResultType(sender:)))
+        let leftswipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(changeWord(sender:)))
         leftswipeGesture.direction = .left
-        leftswipeGesture.cancelsTouchesInView = false
-        resultView.addGestureRecognizer(leftswipeGesture)
+        //leftswipeGesture.cancelsTouchesInView = false
+        textView.addGestureRecognizer(leftswipeGesture)
         
+        textView.delegate = viewModel
         /*
         let rightswipeGestureForGraph = UISwipeGestureRecognizer(target: self, action: #selector(changeResultType(sender:)))
         rightswipeGestureForGraph.direction = .right
@@ -99,8 +104,9 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         //self.addSubview(wordPhenome_Table)
         
         //textView.layer.cornerRadius = 15
-        textView.layer.borderColor = UIColor.white.cgColor
-        textView.layer.borderWidth = 1
+        contentView.layer.borderColor = UIColor.white.cgColor
+        contentView.layer.borderWidth = 1
+        
         resetTextViewContent(textView: textView)
         
         recordingSession = AVAudioSession.sharedInstance()
@@ -121,12 +127,26 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         }
         //scoreCollectionView.isHidden = true
         setBarGraph()
-        
+        displayResultType(to: currentResultViewType, from: .graph)
+        guard tasktype != TaskType.freeSpeech else {
+            textView.text = "Type Here"
+            textView.isUserInteractionEnabled = true
+            return
+        }
+        //textView.isUserInteractionEnabled = false
+        textView.text = viewModel.unitList[unitIndex].question_text
+        resetTextViewContent(textView: textView)
+       
     }
 
     override func viewDidAppear(_ animated: Bool) {
        // resetTextViewContent(textView: textView)
+       /* guard tasktype != TaskType.freeSpeech else {
+            return
+        }
         textView.text = viewModel.unitList[unitIndex].question_text
+        
+         */
         resetTextViewContent(textView: textView)
     }
     
@@ -149,14 +169,14 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         
         switch tasktype {
         case .assignment:
-            ServiceManager().getAssignmentsUnitsAnswers(forUnit:self.viewModel.unitList[index].unit_id!, ofAssignment:self.assignmentId  , ofStudent: UserDefaults.standard.string(forKey: "uid")!, onSuccess: { response  in
+            ServiceManager().getAssignmentsUnitsAnswers(forUnit:self.viewModel.unitList[index].id!, ofAssignment:self.assignmentId  , ofStudent: UserDefaults.standard.string(forKey: "uid")!, onSuccess: { response  in
                 
                // let practiceBoardVC = PracticeBoardViewController(nibName:"PracticeBoardViewController",bundle:nil)
                 // var unitAnswers = [UnitAnswers]()
                 for count in 0..<response.count{
                     if let base =  response[count].base {
                         self.viewModel.answersList.append(base)
-                        self.viewModel.scoreData.append(base.score!)
+                        self.viewModel.scoreData.append(base.score!) // Used to store graph scores
                     }
                 }
                 
@@ -175,9 +195,9 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
             },onComplete: {
                 hud.hide(animated: true)
             })
-            
-        default:
-            ServiceManager().getAssignmentsUnitsAnswers(forUnit:viewModel.unitList[index].unit_id!, ofAssignment:self.assignmentId  , ofStudent: UserDefaults.standard.string(forKey: "uid")!, onSuccess: { response  in
+           break
+        case .practice:
+            ServiceManager().getAssignmentsUnitsAnswers(forUnit:viewModel.unitList[index].id!, ofAssignment:self.assignmentId  , ofStudent: UserDefaults.standard.string(forKey: "uid")!, onSuccess: { response  in
                 hud.hide(animated: true)
             }, onHTTPError: { (httperror) in
                 hud.mode = MBProgressHUDMode.text
@@ -189,6 +209,10 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
                 hud.hide(animated: true)
             })
             
+            break
+        default:
+            print("FreeSpeech")
+            hud.hide(animated: true)
             break
         }
     }
@@ -211,19 +235,53 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     
     @IBAction func playExpertVoice(_ sender: Any) {
         
-        do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-            try AVAudioSession.sharedInstance().setActive(true)
-            //  try AVAudioSession.overrideOutputAudioPort(AVAudioSession.sharedInstance())
+        switch tasktype {
+        case .assignment , .practice:
+        if let audioUrl = viewModel.unitList[unitIndex].audio_url
+        {
+            let url = audioUrl //"http://192.168.71.11:7891/rec.wav"
+            let playerItem = AVPlayerItem(url: URL(string:url)!)
+            streamPlayer = AVPlayer(playerItem:playerItem)
+            streamPlayer.rate = 1.0;
+            streamPlayer.volume = 1.0
+            streamPlayer.play()
+        }
+        else {
+            do {
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+                try AVAudioSession.sharedInstance().setActive(true)
+                //  try AVAudioSession.overrideOutputAudioPort(AVAudioSession.sharedInstance())
             
-            let speechUtterance = AVSpeechUtterance(string: textView.text)
-            speechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-            speechUtterance.pitchMultiplier = 1.0
-            speechUtterance.volume = 1.0
-            speechSynthesizer.speak(speechUtterance)
-            
-        } catch let error {
+                let speechUtterance = AVSpeechUtterance(string: textView.text)
+                speechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+                speechUtterance.pitchMultiplier = 1.0
+                speechUtterance.volume = 1.0
+                speechSynthesizer.speak(speechUtterance)
+                
+            } catch let error {
             print(error.localizedDescription)
+                
+            }
+            
+        }
+            break
+        case .freeSpeech:
+            do {
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+                try AVAudioSession.sharedInstance().setActive(true)
+                //  try AVAudioSession.overrideOutputAudioPort(AVAudioSession.sharedInstance())
+                
+                let speechUtterance = AVSpeechUtterance(string: textView.text)
+                speechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+                speechUtterance.pitchMultiplier = 1.0
+                speechUtterance.volume = 1.0
+                speechSynthesizer.speak(speechUtterance)
+                
+            } catch let error {
+                print(error.localizedDescription)
+                
+            }
+            break
         }
         
     }
@@ -266,7 +324,12 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
             let audioData =  try? Data(contentsOf: viewModel.getDocumentsDirectory().appendingPathComponent("recording.wav"))
             //let encodedString = audioData?.base64EncodedString()
             
-            try grpcService.getWordPredictionFromGRPC(for:UserDefaults.standard.string(forKey: "uid")! ,assignment:self.assignmentId  , unit:self.viewModel.unitList[unitIndex].unit_id! , with: audioData!, and: textView.text!, onSuccess: {(response) in
+            var unitId : Int = 0
+            if tasktype != .freeSpeech {
+                unitId =  self.viewModel.unitList[unitIndex].id!
+            }
+            
+            try grpcService.getWordPredictionFromGRPC(for:UserDefaults.standard.string(forKey: "uid")! ,assignment:self.assignmentId  , unit:unitId , with: audioData!, and: textView.text!, onSuccess: {(response) in
                 
                
                 //Fill the Data
@@ -274,27 +337,29 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
                 var unitAnswer : UnitAnswers?
                 var wordResult = [WordResults]()
                 for word in response.wordResults {
-                  
-                    /*let wordScore : Word_Prediction = Word_Prediction()
-                    wordScore.word  = word.word
-                    wordScore.word_score  = word.score
-                    wordScore.word_phonemes = word.wordPhonemes
-                    wordScore.predicted_phonemes = word.predictedPhonemes
-                    self.viewModel.predictionData.words_Result?.append(wordScore)
-                     */
-                    wordResult.append(WordResults.init(score: Int(word.score) , word: word.word, wordPhonemes: word.wordPhonemes, predictedPhonemes: word.predictedPhonemes))
+            
+                    wordResult.append(WordResults.init(score: word.score , word: word.word, wordPhonemes: word.wordPhonemes, predictedPhonemes: word.predictedPhonemes))
                 }
-                unitAnswer = UnitAnswers(score: Double(response.score) , predictJson: Prediction_result_json(wordResults: wordResult))
+                //unitAnswer = UnitAnswers(score: Double(response.score) , predictJson: Prediction_result_json(wordResults: wordResult) )
+                unitAnswer = UnitAnswers(score: Double(response.score), predictJson: Prediction_result_json(wordResults: wordResult) ,
+                                         audio_url: self.viewModel.getDocumentsDirectory().appendingPathComponent("recording.wav").absoluteString,
+                                         submission_date:Date().timeIntervalSince1970 * 1000)
                 if let unit = unitAnswer
                 {
-                self.viewModel.answersList.insert(unit, at: 0)
+               // self.viewModel.answersList.insert(unit, at: 0)
+                self.viewModel.answersList.append(unit)
                 self.viewModel.scoreData.append(unit.score!)
                 }
                 hud.hide(animated: true)
                 
                 self.scoreCollectionView.reloadData()
+                self.scoreCollectionView?.scrollToItem(at: IndexPath(row: self.viewModel.answersList.count/3, section: 0), at: UICollectionViewScrollPosition.bottom, animated: true)
+               /* self.scoreCollectionView?.setContentOffset(CGPoint(x:
+                0,  y: self.scoreCollectionView.contentSize.height - self.scoreCollectionView.bounds.size.height), animated: true)
+                 */
                 self.updateGraph()
-                
+                //self.clearData()
+               // self.fetchUnitAnswers(for: self.unitIndex)
                 
             }, onFailure: { error in
 
@@ -451,7 +516,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     func setBarGraph() {
         barChartView.drawValueAboveBarEnabled = true
         barChartView.maxVisibleCount = 20
-        
+        barChartView.delegate = viewModel
         
         let xAxis = barChartView.xAxis
         xAxis.labelPosition = .bottom
@@ -517,6 +582,88 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         phonemeTable.reloadData()
     }
     
+    @IBAction func showResultType(_ sender: Any) {
+     
+        //let title = showResultTypeButton.title(for: .normal)
+        switch currentResultViewType {
+        case .score:
+            displayResultType(to: .score, from: .graph)
+            break
+        case .phenomeTable:
+            displayResultType(to: .score, from: currentResultViewType)
+            break
+        default:
+            displayResultType(to: .graph, from: .score)
+            break
+        }
+        
+    }
+    
+    func displayResultType(to resultType: ResultViewType  , from currentType:ResultViewType)
+    {
+        currentResultViewType = currentType
+        switch currentType {
+        case .score:
+            //showResultTypeButton.setTitle("S", for: .normal)
+            showResultTypeButton.setImage(UIImage(named:"scoreTiles"), for: .normal)
+            break
+        case .phenomeTable:
+            showResultTypeButton.setTitle("P", for: .normal)
+            break
+        default:
+            //showResultTypeButton.setTitle("G", for: .normal)
+            showResultTypeButton.setImage(UIImage(named:"graphButton"), for: .normal)
+
+            break
+        }
+        
+        switch resultType {
+        case .score:
+            scoreCollectionView.isHidden = false
+            barChartView.isHidden = true
+            phonemeTable.isHidden = true
+            break
+        case .phenomeTable:
+            scoreCollectionView.isHidden = true
+            barChartView.isHidden = true
+            phonemeTable.isHidden = false
+            break
+        default:
+            scoreCollectionView.isHidden = true
+            barChartView.isHidden = false
+            phonemeTable.isHidden = true
+            break
+        }
+
+    }
+    
+    @objc func changeWord(sender:UISwipeGestureRecognizer){
+       
+        
+        if(sender.direction == .right &&  unitIndex > 0) {
+            unitIndex -= 1
+            // wordLabel.slideInFromLeft()
+            textView.slideInFromLeft()
+        }
+        else if (sender.direction == .left &&  unitIndex <= viewModel.unitList.count - 2) {
+            // wordLabel.slideInFromRight()
+            textView.slideInFromRight()
+            unitIndex += 1
+        }
+        
+        guard  unitIndex < viewModel.unitList.count else {
+            return
+        }
+        // wordLabel.text = vc_DataModel.wordArray![vc_DataModel.wordIndex]
+        
+        let word  = viewModel.unitList[unitIndex]
+        textView.text = word.question_text
+        resetTextViewContent(textView: textView)
+        clearData()
+        fetchUnitAnswers(for: unitIndex)
+        //
+ 
+    }
     
     @objc func changeResultType(sender:UISwipeGestureRecognizer){
 //        guard wordResultView?.isPhenomeTableVisible != true else {
@@ -551,5 +698,22 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
             barChartView.isHidden = true
             phonemeTable.isHidden = false
         }
+    }
+    
+    func clearData()
+    {
+        viewModel.scoreData.removeAll()
+        updateGraph()
+        viewModel.answersList.removeAll()
+        self.scoreCollectionView.reloadData()
+        viewModel.selectedAnswer = nil
+        reloadtable()
+    }
+   
+    @IBAction func showKeyboard(_ sender: Any) {
+        
+        textView.isUserInteractionEnabled = textView.isUserInteractionEnabled ? !textView.isUserInteractionEnabled : !textView.isUserInteractionEnabled
+        print(textView.isUserInteractionEnabled)
+        
     }
 }

@@ -35,6 +35,7 @@ struct Constants {
         static let assignments = "http://192.168.71.10:10002/v1/" + "students/%@/assignments"
         static let units = "http://192.168.71.10:10002/v1/" + "students/%@/assignments/%d/units"
         static let assignmentAnswer = baseUrl + assignmentService + "students/%@/assignments/%d/units/%d/answers"
+        static let updateAssignmentStatus = baseUrl + assignmentService + "students/%@/assignments/%d/status"
         
         //Practice
         static let category = "http://192.168.71.10:10002/v1/" +  "categories"

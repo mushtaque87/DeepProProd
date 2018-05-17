@@ -25,9 +25,9 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BJT-EC-egM">
-                        <rect key="frame" x="130" y="4" width="60" height="36"/>
+                        <rect key="frame" x="145" y="4" width="30" height="36"/>
                         <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="17"/>
-                        <state key="normal" title="Logout">
+                        <state key="normal">
                             <color key="titleColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </state>
                     </button>

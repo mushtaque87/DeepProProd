@@ -14,8 +14,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 import Foundation
 struct UnitAnswers : Codable {
 	var id : Int?
-	var submission_date : Int?
-	var audio_url : String?
+	var submission_date : Double?
+	var audio_url : String? 
 	let prediction_result_json : Prediction_result_json?
 	let score : Double?
 	var unit_id : Int?
@@ -35,7 +35,7 @@ struct UnitAnswers : Codable {
 	init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
 		id = try values.decodeIfPresent(Int.self, forKey: .id)
-		submission_date = try values.decodeIfPresent(Int.self, forKey: .submission_date)
+		submission_date = try values.decodeIfPresent(Double.self, forKey: .submission_date)
 		audio_url = try values.decodeIfPresent(String.self, forKey: .audio_url)
 		prediction_result_json = try values.decodeIfPresent(Prediction_result_json.self, forKey: .prediction_result_json)
         //try Prediction_result_json(from: decoder)
@@ -44,9 +44,11 @@ struct UnitAnswers : Codable {
 		student_id = try values.decodeIfPresent(String.self, forKey: .student_id)
 	}
     
-    init(score: Double, predictJson: Prediction_result_json) {
+    init(score: Double, predictJson: Prediction_result_json , audio_url: String, submission_date:Double) {
         self.score = score
         self.prediction_result_json = predictJson
+        self.audio_url = audio_url
+        self.submission_date = submission_date
     }
 
 }

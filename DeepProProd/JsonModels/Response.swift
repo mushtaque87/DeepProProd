@@ -12,36 +12,19 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 */
 
 import Foundation
-struct Prediction_result_json : Codable {
-	var score : Float?
-	var actual : String?
-	var predicted : String?
-	var alignment : Alignment?
-	let wordResults : [WordResults]?
-	var topPredictions : [TopPredictions]?
+struct Response : Codable {
+	let success : Bool?
+
 
 	enum CodingKeys: String, CodingKey {
 
-		case score = "score"
-		case actual = "actual"
-		case predicted = "predicted"
-		case alignment = "alignment"
-		case wordResults = "wordResults"
-		case topPredictions = "topPredictions"
+		case success = "success"
+	
 	}
 
 	init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
-		score = try values.decodeIfPresent(Float.self, forKey: .score)
-		actual = try values.decodeIfPresent(String.self, forKey: .actual)
-		predicted = try values.decodeIfPresent(String.self, forKey: .predicted)
-		alignment = try values.decodeIfPresent(Alignment.self, forKey: .alignment)
-		wordResults = try values.decodeIfPresent([WordResults].self, forKey: .wordResults)
-		topPredictions = try values.decodeIfPresent([TopPredictions].self, forKey: .topPredictions)
+		success = try values.decodeIfPresent(Bool.self, forKey: .success)
 	}
 
-    init(wordResults:[WordResults])
-    {
-        self.wordResults = wordResults
-    }
 }

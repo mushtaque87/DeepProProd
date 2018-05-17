@@ -140,7 +140,9 @@ class Login_SH_ViewController: UIViewController {
     
     @IBAction func showPracticeBoard(_ sender: Any) {
         
-        let transDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
+     //   let transDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
+        let transDetailViewController = PracticeBoardViewController(nibName:"PracticeBoardViewController",bundle:nil)
+
         self.present(transDetailViewController, animated: true) {
             print("Practice Board Displayed")
         }

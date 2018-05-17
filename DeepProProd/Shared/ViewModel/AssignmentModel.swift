@@ -11,14 +11,15 @@ import UIKit
 
 
 enum AssignmentType : String   {
-    case inProgress = "InProgress"
-    case assigned = "Assigned"
-    case submitted = "Submitted"
+    case inProgress = "IN_PROGRESS"
+    case assigned = "ASSIGNED"
+    case submitted = "SUBMITTED"
 }
 
 enum TaskType : String   {
     case practice
     case assignment
+    case freeSpeech
 }
 
 
@@ -85,7 +86,7 @@ class AssignmentModel: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 160.0
+        return 180.0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -153,15 +154,15 @@ class AssignmentModel: NSObject, UITableViewDataSource, UITableViewDelegate {
         
         cell.assignmentName.text = assignments[indexPath.row].base?.short_name
         cell.descriptionView.text =  assignments[indexPath.row].base?.description
-        cell.submissionDate.text =  String(format:"Due Date: %@",(Date().dateFromEpoc((assignments[indexPath.row].base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy")))
-        cell.creationDate.text = String(format:"Assigned on: %@",(Date().dateFromEpoc((assignments[indexPath.row].base?.creation_date)!).toString(dateFormat: "EEEE, d MMM, yyyy")))
+        cell.submissionDate.text =  String(format:"Due Date: %@",(Date().dateFromEpoc((assignments[indexPath.row].base?.due_date)!).toString(dateFormat: "EEE, d MMM, yyyy")))
+        cell.creationDate.text = String(format:"Assigned on: %@",(Date().dateFromEpoc((assignments[indexPath.row].base?.creation_date)!).toString(dateFormat: "EEE, d MMM, yyyy")))
         
         //let formatteddate  = date.dateFromEpoc(1522580569)
        // print(formatteddate.toString(dateFormat: "EEEE,d MMM,yyyy"))
         
-        /*
-        if let assignmentStatus =  AssignmentType(rawValue:(assignments[indexPath.row].base?.assignment_status)!) {
-            cell.assignmentStatus.text = (assignments[indexPath.row].base?.assignment_status)!
+        
+        if let assignmentStatus =  AssignmentType(rawValue:(assignments[indexPath.row].base?.status)!) {
+            cell.assignmentStatus.text = (assignments[indexPath.row].base?.status)!
             switch assignmentStatus {
             case .assigned :
                 cell.detailsView.backgroundColor = UIColor(red: 254/255, green: 143/255, blue: 136/255, alpha: 0.9)
@@ -172,8 +173,8 @@ class AssignmentModel: NSObject, UITableViewDataSource, UITableViewDelegate {
           
          }
         }
-        */
-        cell.continueButton.tag = (assignments[indexPath.row].base?.assignment_id)!
+        
+        cell.continueButton.tag = (assignments[indexPath.row].base?.id)!
         cell.continueButton.addTarget(self, action:#selector(showUnitsScreen(_:)) , for: .touchUpInside)
        
         break
@@ -183,18 +184,18 @@ class AssignmentModel: NSObject, UITableViewDataSource, UITableViewDelegate {
             let practices = practiceList.filter ({(practice: FailableDecodable<Practice>) -> Bool in
                 return Date().dateFromEpoc((practice.base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy") == sectionHeaders[indexPath.section]
             })*/
-            
+            cell.submissionDate.isHidden = true
             cell.assignmentName.text = practiceList[indexPath.row].base?.short_name
             cell.descriptionView.text =  practiceList[indexPath.row].base?.description
             //cell.submissionDate.text =  String(format:"Due Date: %@",(Date().dateFromEpoc((practices[indexPath.row].base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy")))
-            cell.creationDate.text = String(format:"Assigned on: %@",(Date().dateFromEpoc((practiceList[indexPath.row].base?.creation_date)!).toString(dateFormat: "EEEE, d MMM, yyyy")))
+            cell.creationDate.text = String(format:"Assigned on: %@",(Date().dateFromEpoc((practiceList[indexPath.row].base?.creation_date)!).toString(dateFormat: "EEE, d MMM, yyyy")))
             
             //let formatteddate  = date.dateFromEpoc(1522580569)
             // print(formatteddate.toString(dateFormat: "EEEE,d MMM,yyyy"))
             
-            /*
-             if let assignmentStatus =  AssignmentType(rawValue:(assignments[indexPath.row].base?.assignment_status)!) {
-             cell.assignmentStatus.text = (assignments[indexPath.row].base?.assignment_status)!
+            
+             if let assignmentStatus =  AssignmentType(rawValue:(practiceList[indexPath.row].base?.status)!) {
+             cell.assignmentStatus.text = (practiceList[indexPath.row].base?.status)!
              switch assignmentStatus {
              case .assigned :
              cell.detailsView.backgroundColor = UIColor(red: 254/255, green: 143/255, blue: 136/255, alpha: 0.9)
@@ -205,7 +206,7 @@ class AssignmentModel: NSObject, UITableViewDataSource, UITableViewDelegate {
              
              }
              }
-             */
+            
             cell.continueButton.tag = (practiceList[indexPath.row].base?.id)!
             cell.continueButton.addTarget(self, action:#selector(showUnitsScreen(_:)) , for: .touchUpInside)
             
@@ -214,7 +215,7 @@ class AssignmentModel: NSObject, UITableViewDataSource, UITableViewDelegate {
         }
         
         // FIXME: - Remove the color
-        cell.detailsView.backgroundColor = UIColor(red: 159/255, green: 210/255, blue: 144/255, alpha: 0.9)
+       // cell.detailsView.backgroundColor = UIColor(red: 159/255, green: 210/255, blue: 144/255, alpha: 0.9)
         cell.selectionStyle = UITableViewCellSelectionStyle.none
         return cell
         
@@ -229,7 +230,7 @@ class AssignmentModel: NSObject, UITableViewDataSource, UITableViewDelegate {
             return Date().dateFromEpoc((assignment.base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy") == sectionHeaders[indexPath.section]
         })
         
-        guard  assignments[indexPath.row].base?.assignment_id != nil else {
+        guard  assignments[indexPath.row].base?.id != nil else {
             return
         }
         break
