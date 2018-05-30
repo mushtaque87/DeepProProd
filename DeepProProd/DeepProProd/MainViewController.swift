@@ -107,7 +107,7 @@ class MainViewController: UIViewController, MainViewControllerProtocols {
             self.addSubView(addChildViewController: tabBar_ViewController!, on: self)
         }*/
         
-       // tabBar_ViewController = TabBarControllerViewController(nibName: "TabBarControllerViewController", bundle: nil)
+        //let tabBar_ViewController = TabBarControllerViewController(nibName: "TabBarControllerViewController", bundle: nil)
         self.addSubView(addChildViewController: tabBar_ViewController, on: self)
     }
     
@@ -141,8 +141,8 @@ class MainViewController: UIViewController, MainViewControllerProtocols {
     
     func showSignUpViewController() -> Void {
         //let signUp_ViewController: SignUp_SH_ViewController = SignUp_SH_ViewController(nibName: "SignUp_SH_ViewController", bundle: nil)
-       // self.present(signUp_ViewController, animated: true, completion: nil)
-        self.addSubView(addChildViewController: signUp_ViewController, on: self)
+        //     self.present(signUp_ViewController, animated: true, completion: nil)
+        //self.addSubView(addChildViewController: signUp_ViewController, on: self)
 
     }
     

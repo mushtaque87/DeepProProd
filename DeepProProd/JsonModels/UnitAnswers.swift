@@ -15,7 +15,7 @@ import Foundation
 struct UnitAnswers : Codable {
 	var id : Int?
 	var submission_date : Double?
-	var audio_url : String? 
+	var audio_url : String? = "http://192.168.71.11:7891/rec.wav"
 	let prediction_result_json : Prediction_result_json?
 	let score : Double?
 	var unit_id : Int?

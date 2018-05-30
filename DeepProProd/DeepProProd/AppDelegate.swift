@@ -24,6 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Helper.updateFileFromBundle(to: Helper.getDocumentDirectory, filename: "Settings", ofType: "plist")
         Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "Arabic", ofType: "plist")
         Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "English", ofType: "plist")
+        Helper.createDirectory(with: "PracticeBoard")
+        Helper.createDirectory(with: "Assignments")
       //  Helper.readJsonFile(at: "LevelJson", ofType: "txt")
         
         /*do {

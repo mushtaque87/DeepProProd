@@ -40,9 +40,9 @@ class PracticeTest: XCTestCase {
         }
         
         // print(type(of: responseModel))
-        XCTAssertEqual(responseModel[0].base?.assignment_id , 123)
+        XCTAssertEqual(responseModel[0].base?.id , 123)
         XCTAssertEqual(responseModel[0].base?.short_name , "AIN")
-        XCTAssertEqual(responseModel[1].base?.assignment_id , 125)
+        XCTAssertEqual(responseModel[1].base?.id , 125)
     }
 
     
@@ -52,5 +52,34 @@ class PracticeTest: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    
+    func testClean_AllAudiofileSucesffully() {
+        let practiceBoardVC = PracticeBoardViewController()
+        practiceBoardVC.audioFolderPath = Helper.getAudioDirectory(for: .freeSpeech)
+        practiceBoardVC.startRecording()
+        sleep(5)
+        practiceBoardVC.finishRecording(success: true)
+        practiceBoardVC.clearAllAudioFile()
+        
+        let enumerator = FileManager.default.enumerator(atPath: practiceBoardVC.audioFolderPath!)
+        while let element = enumerator?.nextObject() as? String {
+            if (element.hasSuffix(".wav")) {
+                XCTFail("All .wav Files not deleted")
+            }
+        }
+    }
+ 
+    /*
+    func testGRPCService_AudioReadSucessfully (){
+        let practiceBoardVC = PracticeBoardViewController(nibName:"PracticeBoardViewController",bundle:nil)
+       
+        practiceBoardVC.currentSessionRecordingCount =  1
+        practiceBoardVC.audioFolderPath = Helper.getAudioDirectory(for: .freeSpeech)
+        practiceBoardVC.startRecording()
+        sleep(5)
+        practiceBoardVC.finishRecording(success: true)
+        practiceBoardVC.callGRPCService()
+ 
+    } */
     
 }

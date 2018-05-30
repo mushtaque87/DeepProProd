@@ -41,9 +41,9 @@ class AssignmentsTest: XCTestCase {
         }
         
        // print(type(of: responseModel))
-        XCTAssertEqual(responseModel[0].base?.assignment_id , 123)
-        XCTAssertEqual(responseModel[0].base?.short_name , "AIN")
-        XCTAssertEqual(responseModel[1].base?.assignment_id , 125)
+        XCTAssertEqual(responseModel[0].base?.id , 123)
+        XCTAssertEqual(responseModel[0].base?.short_name , "SWO 1")
+        XCTAssertEqual(responseModel[1].base?.id , 125)
     }
    
     func testgetUnits_unitListParsedSuccessfully()
@@ -66,7 +66,7 @@ class AssignmentsTest: XCTestCase {
         }
         
         // print(type(of: responseModel))
-        XCTAssertEqual(responseModel[0].base?.unit_id , 1234)
+        XCTAssertEqual(responseModel[0].base?.id , 1234)
         XCTAssertEqual(responseModel[0].base?.creation_date , 1234512345)
       
     }
@@ -91,21 +91,21 @@ class AssignmentsTest: XCTestCase {
         }
         
         // print(type(of: responseModel))
-        // XCTAssertEqual(responseModel[0].base?.unit_id , 1234)
-       // XCTAssertEqual(responseModel[0].base?.creation_date , 1234512345)
+         XCTAssertEqual(responseModel[0].base?.unit_id , 34)
+        XCTAssertEqual(responseModel[0].base?.submission_date , 1234512345)
         
     }
     
     
     func testgetPredictResult_answersParsedSuccessfully()
     {
-        var responseModel: Answers!
+        var responseModel: [FailableDecodable<UnitAnswers>]!
         do {
             let filePath = Bundle.main.url(forResource: "getUnitAnswer", withExtension: "txt")
             let data: Data = try Data.init(contentsOf: filePath!)
             
             
-            responseModel =  try? JSONDecoder().decode(Answers.self, from: data)
+            responseModel =  try? JSONDecoder().decode([FailableDecodable<UnitAnswers>].self, from: data)
             
             
             print(responseModel)
@@ -116,8 +116,8 @@ class AssignmentsTest: XCTestCase {
         }
         
         // print(type(of: responseModel))
-        // XCTAssertEqual(responseModel[0].base?.unit_id , 1234)
-        // XCTAssertEqual(responseModel[0].base?.creation_date , 1234512345)
+         XCTAssertEqual(responseModel[0].base?.unit_id , 34)
+         XCTAssertEqual(responseModel[0].base?.submission_date , 1525094033000)
         
     }
     
@@ -126,12 +126,14 @@ class AssignmentsTest: XCTestCase {
         let date = Date()
         let formatteddate  = date.dateFromEpoc(1522580569)
         print(formatteddate.toString(dateFormat: "EEEE,d MMM,yyyy"))
+        XCTAssertEqual(formatteddate.toString(dateFormat: "EEEE,d MMM,yyyy"),"Sunday,1 April,2018")
     }
     
     func testSortDates_datesSortedInAscendingOrderByDueDates()
     {
         
         let studentAssignmentModel = AssignmentModel()
+        studentAssignmentModel.tasktype = .assignment
         studentAssignmentModel.sortAssignmentByDueDate()
         
         XCTAssertEqual(studentAssignmentModel.assignmnetList[0].base?.short_name , "SWO 2")

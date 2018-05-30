@@ -23,7 +23,7 @@ class PracticeViewModel: NSObject,
                             UITableViewDelegate , UITableViewDataSource ,
                         UICollectionViewDelegate ,UICollectionViewDataSource,
                         UICollectionViewDelegateFlowLayout, ChartViewDelegate,
-                        UITextViewDelegate  {
+                        UITextViewDelegate, AVAudioPlayerDelegate  {
     var scoreData = Array<Double>()
     var phenomeData = Array<Int>()
     let colors = [ColorVariance(color: UIColor(red: 254/255, green: 74/255, blue: 74/255, alpha: 0.9)  , range: 0...15),
@@ -160,7 +160,12 @@ class PracticeViewModel: NSObject,
         
         selectedAnswer =  answersList[indexPath.row].prediction_result_json
         delegate?.reloadtable()
+        if let wordResult = selectedAnswer?.wordResults {
+        delegate?.setAttributedText(with: createAttributedText(forText: wordResult))
         delegate?.displayResultType(to: .phenomeTable, from: .score)
+        } else{
+            print("ℹ️ No Phoneme data available")
+        }
         
     }
     
@@ -227,30 +232,139 @@ class PracticeViewModel: NSObject,
     
     @objc func playUserAudio(_ sender: UIButton)
     {
+        
+        
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
             try AVAudioSession.sharedInstance().setActive(true)
             
-        if let url = answersList[sender.tag].audio_url{
+        if let url = answersList[sender.tag].audio_url {
         let playerItem = AVPlayerItem(url: URL(string:url)!)
         streamPlayer = AVPlayer(playerItem:playerItem)
-        streamPlayer.rate = 1.0;
+        streamPlayer.rate = 1.0
         streamPlayer.volume = 1.0
         streamPlayer.play()
+         }
+        else {
+            let playerItem = AVPlayerItem(url: URL(string:"http://192.168.71.11:7891/rec.wav")!)
+            streamPlayer = AVPlayer(playerItem:playerItem)
+            streamPlayer.rate = 1.0
+            streamPlayer.volume = 1.0
+            streamPlayer.play()
         }
             
         } catch let error {
             print(error.localizedDescription)
             
         }
-            
-        
     }
     
+    
+    func createAttributedText(forText words_Result:[WordResults]) -> NSMutableAttributedString
+    {
+        
+        let attributedString = NSMutableAttributedString()
+        for word in words_Result {
+            var color: UIColor = UIColor.black
+            
+            if let score = word.score {
+            if (score > 70.0) {
+                color = UIColor(red: 0/255.0, green: 124/255.0, blue: 0/255.0, alpha: 1.0)
+            } else if (score < 30.0) {
+                color = UIColor(red: 180.0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0)
+            }
+            else{
+                color = UIColor.blue
+                
+                }
+                
+            }
+            let attributedSubString = NSAttributedString(string: word.word!, attributes: [NSAttributedStringKey.foregroundColor : color])
+            
+            attributedString.append(attributedSubString)
+            attributedString.append(NSAttributedString.init(string: " "))
+        }
+        
+        return attributedString
+        
+    }
+
+    func tapResponse(recognizer: UITapGestureRecognizer) -> (wordtoshow: TappedWord, details: (wordPhoneme:WordResults?, section:Int))
+    {
+        // var tappedWord = ""
+        let textView:UITextView =  recognizer.view as! UITextView
+        let location: CGPoint = recognizer.location(in: textView)
+        
+        let position:CGPoint = CGPoint(x: location.x, y: location.y)
+        
+        //get location in text from textposition at point
+        let tapPosition: UITextPosition = textView.closestPosition(to: position )!
+        
+        var tappedWord : TappedWord = TappedWord(word: "", apperenceCount: 0)
+        //fetch the word at this position (or nil, if not available)
+        if let textRange = textView.tokenizer.rangeEnclosingPosition(tapPosition, with: UITextGranularity.word, inDirection: UITextLayoutDirection.right.rawValue)
+        {
+     
+            print(textView.text(in: textRange)!)
+            tappedWord = TappedWord(word: textView.text(in: textRange)!, apperenceCount: getTheAppreanceCount(for: textView.text(in: textRange)!, in:textView, within: textRange))
+            return(tappedWord,getWordDataFromString(of: tappedWord))
+        }
+        return(tappedWord,getWordDataFromString(of: tappedWord))
+    }
+    
+    func getTheAppreanceCount(for text:String, in textView: UITextView, within range:UITextRange) -> Int
+    {
+        
+        // let start : UITextRange =
+        let end =  textView.offset(from: textView.beginningOfDocument, to: range.start)
+        let fullText = textView.text as NSString
+        let subString = fullText.substring(with:NSRange(location: 0, length: end))
+        print("Substring : \(subString)")
+        
+        let wordArray = subString.components(separatedBy: " ")
+        var appreanceCount = 0
+        for word in wordArray
+        {
+            if(word.count > 0 && word == text){
+                print(word)
+                appreanceCount += 1
+            }
+        }
+        print("AppereanceCount \(appreanceCount)")
+        return appreanceCount
+    }
+    
+    func getWordDataFromString(of tappedWord:TappedWord) -> (wordPhoneme:WordResults?, section:Int)
+    {
+        var count = 0
+        var section = 0
+        if let  wordResults = selectedAnswer?.wordResults {
+           
+        for wordData in wordResults {
+            if(wordData.word == tappedWord.word)
+            {
+                
+                if(tappedWord.apperenceCount == count){
+                    return (wordData,section)
+                }
+                count += 1
+            }
+            section += 1
+        }
+        }
+        else {
+             print("‼️ WordResult array is empty)")
+        }
+        return (nil,0)
+    }
+    
+    public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool){
+        
+    }
   // MARK: - TextView Delegate
     public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool
     {
-       
+      
         delegate?.resetTextViewContent(textView:textView)
         return true
      

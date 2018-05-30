@@ -106,6 +106,26 @@ class Helper: NSObject {
         }
     }
 
+static func createDirectory(with folderName:String)
+{
+    do{
+        try FileManager.default.createDirectory(atPath: getDocumentDirectory().appendingPathComponent(String(format: "%@",folderName)), withIntermediateDirectories: true, attributes: nil)
+    } catch {
+        print("Error: \(error.localizedDescription)")
+    }
+}
+
+    static func getAudioDirectory(for  type:TaskType) -> String
+    {
+        switch type {
+        case .assignment,.practice:
+            return getDocumentDirectory().appendingPathComponent("Assignments")
+     
+        default:
+            return getDocumentDirectory().appendingPathComponent("PracticeBoard")
+
+        }
+    }
     
  static func parseLevelJson() throws -> LevelList  {
     let filePath = Bundle.main.url(forResource: "LevelJson", withExtension: "txt")

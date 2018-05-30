@@ -7,6 +7,7 @@
 //
 
 import XCTest
+@testable import DeepProProd
 
 class DeepProProdUITests: XCTestCase {
         
@@ -28,6 +29,8 @@ class DeepProProdUITests: XCTestCase {
         super.tearDown()
     }
     
+    
+
     
     
 }

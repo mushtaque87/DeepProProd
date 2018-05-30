@@ -29,12 +29,14 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     @IBOutlet weak var scoreCollectionView: UICollectionView!
     @IBOutlet weak var textView: UITextView!
     var tasktype : TaskType = .freeSpeech
+    var audioFolderPath: String?
     var currentResultViewType:ResultViewType = .score
     @IBOutlet weak var showResultTypeButton: UIButton!
     @IBOutlet weak var phonemeTable: UITableView!
     @IBOutlet weak var keyboard: UIButton!
     @IBOutlet weak var textStackView: UIStackView!
     @IBOutlet weak var contentView: UIView!
+    @IBOutlet weak var clearButton: UIButton!
     
    //Record Button
     let speechSynthesizer = AVSpeechSynthesizer()
@@ -56,7 +58,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     var player: AVAudioPlayer?
     var streamPlayer = AVPlayer()
     var phenomeTableIsVisible: Bool = false
-    
+    var currentSessionRecordingCount: Int = 1
     let grpcService = GRPCServiceManager()
     
     override func viewDidLoad() {
@@ -89,24 +91,11 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         textView.addGestureRecognizer(leftswipeGesture)
         
         textView.delegate = viewModel
-        /*
-        let rightswipeGestureForGraph = UISwipeGestureRecognizer(target: self, action: #selector(changeResultType(sender:)))
-        rightswipeGestureForGraph.direction = .right
-        barChartView.addGestureRecognizer(rightswipeGestureForGraph)
-        
-        let leftswipeGestureForGraph = UISwipeGestureRecognizer(target: self, action: #selector(changeResultType(sender:)))
-        leftswipeGestureForGraph.direction = .left
-        barChartView.addGestureRecognizer(leftswipeGestureForGraph)
-        */
-        
-        
-        //self.wordPhenome_Table.register(UINib(nibName: "ReportCell", bundle: nil), forCellReuseIdentifier: "report")
-        //self.addSubview(wordPhenome_Table)
-        
+
+
         //textView.layer.cornerRadius = 15
         contentView.layer.borderColor = UIColor.white.cgColor
         contentView.layer.borderWidth = 1
-        
         resetTextViewContent(textView: textView)
         
         recordingSession = AVAudioSession.sharedInstance()
@@ -128,15 +117,32 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         //scoreCollectionView.isHidden = true
         setBarGraph()
         displayResultType(to: currentResultViewType, from: .graph)
+        keyboard.setImage(UIImage(named: "do-not-touch"), for: .normal)
+        audioFolderPath = Helper.getAudioDirectory(for: tasktype)
+        
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(displayWordPhonemeSection(sender:)))
+        textView.addGestureRecognizer(tapGesture)
+        
+        
         guard tasktype != TaskType.freeSpeech else {
-            textView.text = "Type Here"
-            textView.isUserInteractionEnabled = true
+            textView.text = "Type Here or there but type here only"
+            textView.isEditable = false
+            keyboard.isHidden = false
+            //textView.isUserInteractionEnabled = true
+            clearButton.isHidden = false
+           
             return
         }
+        
+        textView.isEditable = false
+        let newBackButton = UIBarButtonItem(title: "< Back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(backFromPracticeBoard))
+        self.navigationItem.leftBarButtonItem = newBackButton
+        
         //textView.isUserInteractionEnabled = false
         textView.text = viewModel.unitList[unitIndex].question_text
         resetTextViewContent(textView: textView)
-       
+        clearAllAudioFile()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -153,6 +159,14 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     override func viewWillAppear(_ animated: Bool) {
       
 
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        guard tasktype == TaskType.freeSpeech else {
+            //clearAllAudioFile()
+            return
+        }
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -320,30 +334,52 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         // hud.label.text = "Predicting Score"
         
         do {
+            let audioFilePath = URL(fileURLWithPath: audioFolderPath!).appendingPathComponent("recording\(currentSessionRecordingCount).wav")
+            print(audioFilePath)
             
-            let audioData =  try? Data(contentsOf: viewModel.getDocumentsDirectory().appendingPathComponent("recording.wav"))
+           // let audioData =  try? Data(contentsOf: viewModel.getDocumentsDirectory().appendingPathComponent(String(format:"recording\(currentSessionRecordingCount).wav")))
+            
+            let audioData =  try? Data(contentsOf: audioFilePath)
+            
             //let encodedString = audioData?.base64EncodedString()
-            
-            var unitId : Int = 0
-            if tasktype != .freeSpeech {
-                unitId =  self.viewModel.unitList[unitIndex].id!
-            }
-            
-            try grpcService.getWordPredictionFromGRPC(for:UserDefaults.standard.string(forKey: "uid")! ,assignment:self.assignmentId  , unit:unitId , with: audioData!, and: textView.text!, onSuccess: {(response) in
+            if let audiodata = audioData {
+                var unitId : Int = 0
+                if tasktype != .freeSpeech {
+                    unitId =  self.viewModel.unitList[unitIndex].id!
+                    
+                }
+                grpcService.getWordPredictionFromGRPC(for:UserDefaults.standard.string(forKey: "uid")! ,assignment:self.assignmentId  , unit:unitId , with: audiodata, and: textView.text!, onSuccess: {(response) in
                 
                
                 //Fill the Data
-                self.viewModel.predictionData.words_Result?.removeAll()
+                //self.viewModel.predictionData.words_Result?.removeAll()
                 var unitAnswer : UnitAnswers?
                 var wordResult = [WordResults]()
                 for word in response.wordResults {
             
                     wordResult.append(WordResults.init(score: word.score , word: word.word, wordPhonemes: word.wordPhonemes, predictedPhonemes: word.predictedPhonemes))
                 }
+                //self.textView.attributedText =
+                self.setAttributedText(with: self.viewModel.createAttributedText(forText: wordResult))
+                
                 //unitAnswer = UnitAnswers(score: Double(response.score) , predictJson: Prediction_result_json(wordResults: wordResult) )
-                unitAnswer = UnitAnswers(score: Double(response.score), predictJson: Prediction_result_json(wordResults: wordResult) ,
-                                         audio_url: self.viewModel.getDocumentsDirectory().appendingPathComponent("recording.wav").absoluteString,
+                
+                /*unitAnswer = UnitAnswers(score: Double(response.score), predictJson: Prediction_result_json(wordResults: wordResult) ,
+                                         audio_url: self.viewModel.getDocumentsDirectory().appendingPathComponent(String(format:"recording\(self.currentSessionRecordingCount).wav")).absoluteString,
                                          submission_date:Date().timeIntervalSince1970 * 1000)
+                */
+                    
+                
+                unitAnswer = UnitAnswers(score: Double(response.score), predictJson: Prediction_result_json(wordResults: wordResult) ,
+                                         audio_url: URL(fileURLWithPath:  self.audioFolderPath!).appendingPathComponent(String(format:"recording\(self.currentSessionRecordingCount).wav")).absoluteString,
+                                         submission_date:Date().timeIntervalSince1970 * 1000)
+                
+                
+                
+                
+                
+                
+                self.currentSessionRecordingCount += 1
                 if let unit = unitAnswer
                 {
                // self.viewModel.answersList.insert(unit, at: 0)
@@ -351,6 +387,9 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
                 self.viewModel.scoreData.append(unit.score!)
                 }
                 hud.hide(animated: true)
+                
+                self.viewModel.selectedAnswer = self.viewModel.answersList.last?.prediction_result_json
+                self.phonemeTable.reloadData()
                 
                 self.scoreCollectionView.reloadData()
                 self.scoreCollectionView?.scrollToItem(at: IndexPath(row: self.viewModel.answersList.count/3, section: 0), at: UICollectionViewScrollPosition.bottom, animated: true)
@@ -369,11 +408,19 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
             }, onComplete:  {
                 hud.hide(animated: true)
             })
-        } catch (let error) {
+            } else {
+                hud.mode = MBProgressHUDMode.text
+                hud.label.text = "File is corrupted or cant be read. Try again."
+                hud.hide(animated: true)
+            }
+            
+        }
+        catch (let error) {
             hud.mode = MBProgressHUDMode.text
             hud.label.text = error.localizedDescription
             print(error)
         }
+            
         
     }
     
@@ -436,17 +483,19 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
  
     
     func startRecording() {
-        print(viewModel.getDocumentsDirectory())
+        
         
         self.progressTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(PracticeBoardViewController.updateProgress), userInfo: nil, repeats: true)
         
-        let audioFilename = viewModel.getDocumentsDirectory().appendingPathComponent("recording.wav")
+            let audioFilename = URL(fileURLWithPath:audioFolderPath!).appendingPathComponent(String(format:"recording\(currentSessionRecordingCount).wav"))
+           // let audioFilename = viewModel.getDocumentsDirectory().appendingPathComponent(String(format:"recording\(currentSessionRecordingCount).wav"))
         print(audioFilename)
-        do {
-            try FileManager.default.removeItem(at: audioFilename)
-        } catch let error as NSError {
-            print("Error: \(error.domain)")
-        }
+            do {
+                try FileManager.default.removeItem(at: audioFilename)
+            } catch let error as NSError {
+                print("Error: \(error.domain)")
+            }
+       
     
         let settings = [
             AVFormatIDKey: Int(kAudioFormatLinearPCM),
@@ -467,6 +516,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         } catch {
             finishRecording(success: false)
         }
+      
     }
     
     @objc func updateProgress() {
@@ -474,7 +524,9 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         let maxDuration = CGFloat(5) // Max duration of the recordButton
         
         progress = progress + (CGFloat(0.05) / maxDuration)
+        if let recordButton = recordButton {
         recordButton.setProgress(progress)
+        }
         if progress >= 1 {
             progress = 0
             // progressTimer.invalidate()
@@ -580,6 +632,20 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     
     func reloadtable() {
         phonemeTable.reloadData()
+    }
+    
+     // MARK: - Practice Board Action
+    @objc func displayWordPhonemeSection (sender:UITapGestureRecognizer){
+        
+        guard viewModel.selectedAnswer != nil else {
+            print("‼️ No answer is selected. Please select an answer")
+            
+            return
+        }
+        let tappedWord =  viewModel.tapResponse(recognizer: sender)
+        displayResultType(to: .phenomeTable, from: currentResultViewType)
+        self.phonemeTable.scrollToRow(at: IndexPath(row: 0, section: tappedWord.details.section), at: UITableViewScrollPosition.top, animated: true)
+    
     }
     
     @IBAction func showResultType(_ sender: Any) {
@@ -700,6 +766,13 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         }
     }
     
+    func setAttributedText(with text:NSAttributedString) {
+        self.textView.attributedText = text
+        self.textView.textAlignment = NSTextAlignment.center
+        self.textView.font = UIFont.boldSystemFont(ofSize: 18.0)
+        self.resetTextViewContent(textView: self.textView)
+    }
+    
     func clearData()
     {
         viewModel.scoreData.removeAll()
@@ -712,8 +785,47 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
    
     @IBAction func showKeyboard(_ sender: Any) {
         
-        textView.isUserInteractionEnabled = textView.isUserInteractionEnabled ? !textView.isUserInteractionEnabled : !textView.isUserInteractionEnabled
+        textView.isEditable = textView.isEditable ? !textView.isEditable : !textView.isEditable
+        //textView.isUserInteractionEnabled = textView.isUserInteractionEnabled ? !textView.isUserInteractionEnabled : !textView.isUserInteractionEnabled
+        if (textView.isEditable) {
+            keyboard.setImage(UIImage(named: "do-not-touch.png"), for: .normal)
+        } else {
+            keyboard.setImage(UIImage(named: "keypad.png"), for: .normal)
+        }
         print(textView.isUserInteractionEnabled)
         
     }
+    
+    @objc func backFromPracticeBoard() {
+        clearAllAudioFile()
+        self.navigationController?.popViewController(animated: true)
+        
+    }
+    
+    @IBAction func clearTheScores(_ sender: Any) {
+        clearData()
+    }
+    
+    
+    @objc func clearAllAudioFile() {
+
+        let enumerator = FileManager.default.enumerator(atPath: URL(fileURLWithPath: audioFolderPath!).path)
+        while let element = enumerator?.nextObject() as? String {
+            // element is wav file
+            if (element.hasSuffix(".wav")) {
+                //print(element)
+                do {
+                    try FileManager.default.removeItem(at: URL(fileURLWithPath: audioFolderPath!).appendingPathComponent(element))
+                } catch let error as NSError {
+                    print("Error: \(error)")
+                }
+            }
+            
+        }
+        
+    }
+    
+    
+    
+    
 }

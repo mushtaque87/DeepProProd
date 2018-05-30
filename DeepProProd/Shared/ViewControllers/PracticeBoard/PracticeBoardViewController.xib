@@ -16,9 +16,10 @@
         </array>
     </customFonts>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PracticeBoard" customModule="DeepProProd" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="PracticeBoardViewController" customModule="DeepProProd" customModuleProvider="target">
             <connections>
                 <outlet property="barChartView" destination="uvW-S3-eiB" id="xms-jC-wK1"/>
+                <outlet property="clearButton" destination="0IN-LX-ML9" id="PlT-6n-WLA"/>
                 <outlet property="contentView" destination="iVY-Bf-Or5" id="lpJ-Qe-EPU"/>
                 <outlet property="expert_AudioButton" destination="zJK-5y-sUn" id="Jcg-Ac-TxP"/>
                 <outlet property="keyboard" destination="6mm-Df-Jgf" id="g8g-vM-B9k"/>
@@ -77,10 +78,9 @@
                                     </connections>
                                 </button>
                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6mm-Df-Jgf">
-                                    <rect key="frame" x="270" y="167.5" width="30" height="30"/>
-                                    <state key="normal" backgroundImage="keyboard"/>
+                                    <rect key="frame" x="270" y="5" width="30" height="30"/>
                                     <connections>
-                                        <action selector="showKeyboard:" destination="-1" eventType="touchUpInside" id="Uui-JA-KiX"/>
+                                        <action selector="showKeyboard:" destination="-1" eventType="touchUpInside" id="L3F-EK-CP3"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -94,8 +94,8 @@
                                 <constraint firstAttribute="bottom" secondItem="zJK-5y-sUn" secondAttribute="bottom" constant="10" id="Ouf-Ek-fRL"/>
                                 <constraint firstItem="oVD-Hc-cAQ" firstAttribute="leading" secondItem="iVY-Bf-Or5" secondAttribute="leading" id="d5N-YQ-Wqp"/>
                                 <constraint firstItem="6mm-Df-Jgf" firstAttribute="trailing" secondItem="iVY-Bf-Or5" secondAttribute="trailing" constant="-10" id="dX6-i7-DKp"/>
-                                <constraint firstItem="6mm-Df-Jgf" firstAttribute="bottom" secondItem="iVY-Bf-Or5" secondAttribute="bottom" constant="-10" id="dt5-zb-Sbq"/>
                                 <constraint firstAttribute="leading" secondItem="y2n-Dk-L7E" secondAttribute="leading" constant="-10" id="wkJ-tM-0Gv"/>
+                                <constraint firstItem="6mm-Df-Jgf" firstAttribute="top" secondItem="iVY-Bf-Or5" secondAttribute="top" constant="5" id="x5X-8i-X0b"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y60-wj-EAR" userLabel="ResultView">
@@ -125,6 +125,14 @@
                                         <action selector="showResultType:" destination="-1" eventType="touchUpInside" id="kqV-lh-bvP"/>
                                     </connections>
                                 </button>
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0IN-LX-ML9">
+                                    <rect key="frame" x="5" y="178.5" width="24" height="24"/>
+                                    <state key="normal" backgroundImage="trash"/>
+                                    <connections>
+                                        <action selector="clearTheScores:" destination="-1" eventType="touchUpInside" id="B5X-FJ-JRd"/>
+                                        <action selector="showResultType:" destination="-1" eventType="touchUpInside" id="NRk-Od-waB"/>
+                                    </connections>
+                                </button>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
@@ -138,8 +146,10 @@
                                 <constraint firstItem="uvW-S3-eiB" firstAttribute="top" secondItem="y60-wj-EAR" secondAttribute="top" constant="5" id="WFK-rz-cdT"/>
                                 <constraint firstAttribute="trailing" secondItem="sxC-qc-joA" secondAttribute="trailing" constant="5" id="YaE-Y0-wsT"/>
                                 <constraint firstItem="t3W-Gb-Bg2" firstAttribute="top" secondItem="y60-wj-EAR" secondAttribute="top" constant="5" id="cyr-Ok-dcB"/>
+                                <constraint firstItem="0IN-LX-ML9" firstAttribute="leading" secondItem="y60-wj-EAR" secondAttribute="leading" constant="5" id="grw-6a-RGD"/>
                                 <constraint firstItem="NfC-un-HUX" firstAttribute="width" secondItem="y60-wj-EAR" secondAttribute="width" id="kYo-pD-rfH"/>
                                 <constraint firstItem="NfC-un-HUX" firstAttribute="height" secondItem="y60-wj-EAR" secondAttribute="height" id="qav-fd-0eq"/>
+                                <constraint firstAttribute="bottom" secondItem="0IN-LX-ML9" secondAttribute="bottom" constant="5" id="qkX-ub-OPh"/>
                                 <constraint firstAttribute="bottom" secondItem="t3W-Gb-Bg2" secondAttribute="bottom" id="vYE-Tc-5aV"/>
                                 <constraint firstItem="uvW-S3-eiB" firstAttribute="height" secondItem="t3W-Gb-Bg2" secondAttribute="height" id="xR0-q3-GgN"/>
                             </constraints>
@@ -166,7 +176,7 @@
         </view>
     </objects>
     <resources>
-        <image name="keyboard" width="30" height="30"/>
         <image name="speaker" width="128" height="128"/>
+        <image name="trash" width="24" height="24"/>
     </resources>
 </document>

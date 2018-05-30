@@ -22,27 +22,21 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
 //        myFirstButton.frame = CGRect(x: 20, y: 80, width: 50, height: 40)
 //        myFirstButton.addTarget(self, action: #selector(progbutton), for: .touchUpInside)
 //        self.view.addSubview(myFirstButton)
+       configureTabBar()
+       
+        
+    }
+    
+    
+    func configureTabBar()
+    {
         var tabBarViewControllers = [UIViewController]()
-        if(Settings.sharedInstance.isDemo)!
-       {
-        
-        let transDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
-        transDetailViewController.boardType = BoardType.account
-        transDetailViewController.tabBarItem = UITabBarItem(title: "Practice Board", image:UIImage(named: "homeTab.png"), tag: 1)
 
-        let settingsViewController = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
-        settingsViewController.tabBarItem = UITabBarItem(title: "Settings", image:UIImage(named: "homeTab.png"), tag: 2)
-        
-        tabBarViewControllers  = [transDetailViewController,settingsViewController]
-
-        }
-        else{
-            
             let courseNavigationController = UINavigationController()
             let levelViewController : Level_SHViewController =  Level_SHViewController(nibName: "Level_SHViewController", bundle: nil)
             courseNavigationController.viewControllers = [levelViewController]
             courseNavigationController.tabBarItem = UITabBarItem(title: "Practices", image: UIImage(named: "homeTab.png"), tag: 0)
-        
+            
             let studentAssignmentNavigationController = UINavigationController()
             let studentDashboard = AssignmnetDasboardViewController(nibName:"AssignmnetDasboardViewController",bundle:nil)
             studentDashboard.viewModel.tasktype = .assignment
@@ -52,24 +46,22 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
             
             let practiceBoardNavigationController = UINavigationController()
             //let transDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
-          //  transDetailViewController.boardType = .account
+            //  transDetailViewController.boardType = .account
             let transDetailViewController = PracticeBoardViewController(nibName:"PracticeBoardViewController",bundle:nil)
             //transDetailViewController.boardType = BoardType.account
             transDetailViewController.tasktype = .freeSpeech
             practiceBoardNavigationController.viewControllers = [transDetailViewController]
             practiceBoardNavigationController.tabBarItem = UITabBarItem(title: "Board", image: UIImage(named: "assignmentTab.png"), tag: 2)
-        
+            
             let settingNavigationController = UINavigationController()
             let settingsViewController = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
             settingNavigationController.viewControllers = [settingsViewController]
             settingNavigationController.tabBarItem = UITabBarItem(title: "Settings", image:UIImage(named: "settingsTab.png"), tag: 3)
-   
+            
             tabBarViewControllers  = [courseNavigationController,studentAssignmentNavigationController,practiceBoardNavigationController,settingNavigationController]
+            
         
-        }
         viewControllers = tabBarViewControllers
-       
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
