@@ -13,6 +13,7 @@ class Scores_Cell: UICollectionViewCell {
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var audioPlayButton: UIButton!
     @IBOutlet weak var submissionDateLabel: UILabel!
+    var isPlaying : Bool = false
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

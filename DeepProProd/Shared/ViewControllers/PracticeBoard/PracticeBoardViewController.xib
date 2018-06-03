@@ -66,19 +66,24 @@
                                         <action selector="recordAndPredict:" destination="-1" eventType="touchUpInside" id="BOg-1Q-ugS"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zJK-5y-sUn">
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zJK-5y-sUn">
                                     <rect key="frame" x="270" y="167.5" width="30" height="30"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="30" id="Jme-sM-BUN"/>
                                         <constraint firstAttribute="width" constant="30" id="fJ2-nG-Maa"/>
                                     </constraints>
-                                    <state key="normal" backgroundImage="speaker"/>
+                                    <state key="normal" backgroundImage="speaker">
+                                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
                                     <connections>
                                         <action selector="playExpertVoice:" destination="-1" eventType="touchUpInside" id="hUA-ry-b6G"/>
                                     </connections>
                                 </button>
-                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6mm-Df-Jgf">
-                                    <rect key="frame" x="270" y="5" width="30" height="30"/>
+                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6mm-Df-Jgf">
+                                    <rect key="frame" x="270" y="5" width="30" height="34"/>
+                                    <state key="normal">
+                                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
                                     <connections>
                                         <action selector="showKeyboard:" destination="-1" eventType="touchUpInside" id="L3F-EK-CP3"/>
                                     </connections>

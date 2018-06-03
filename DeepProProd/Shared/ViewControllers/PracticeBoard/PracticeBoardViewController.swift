@@ -12,7 +12,8 @@ import MBProgressHUD
 import Charts
 import  Alamofire
 import gRPC
-
+import RxSwift
+import RxCocoa
 
 enum ResultViewType  :  Int {
     case score
@@ -124,9 +125,10 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(displayWordPhonemeSection(sender:)))
         textView.addGestureRecognizer(tapGesture)
         
-        
+       // _ = viewModel.isSpeaking.bind(to: expert_AudioButton.rx.image(for: .normal))
+        //expert_AudioButton.rx.image().
         guard tasktype != TaskType.freeSpeech else {
-            textView.text = "Type Here or there but type here only"
+            textView.text = "Type Here"
             textView.isEditable = false
             keyboard.isHidden = false
             //textView.isUserInteractionEnabled = true
@@ -195,7 +197,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
                 }
                 
                 hud.hide(animated: true)
-                self.scoreCollectionView.reloadData()
+                self.reloadCollectionView()
                 self.updateGraph()
                // self.navigationController?.pushViewController(practiceBoardVC, animated: true)
                 
@@ -251,54 +253,35 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         
         switch tasktype {
         case .assignment , .practice:
-        if let audioUrl = viewModel.unitList[unitIndex].audio_url
-        {
-            let url = audioUrl //"http://192.168.71.11:7891/rec.wav"
-            let playerItem = AVPlayerItem(url: URL(string:url)!)
-            streamPlayer = AVPlayer(playerItem:playerItem)
-            streamPlayer.rate = 1.0;
-            streamPlayer.volume = 1.0
-            streamPlayer.play()
-        }
-        else {
-            do {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-                try AVAudioSession.sharedInstance().setActive(true)
-                //  try AVAudioSession.overrideOutputAudioPort(AVAudioSession.sharedInstance())
-            
-                let speechUtterance = AVSpeechUtterance(string: textView.text)
-                speechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-                speechUtterance.pitchMultiplier = 1.0
-                speechUtterance.volume = 1.0
-                speechSynthesizer.speak(speechUtterance)
-                
-            } catch let error {
-            print(error.localizedDescription)
+//           viewModel.playStreamAudio(for: "")
+//           return
+           
+            if let audioUrl = viewModel.unitList[unitIndex].audio_url
+            {
+              viewModel.playStreamAudio(for: audioUrl, of: nil)
                 
             }
-            
-        }
+        else {
+            playTTS(for: textView.text)
+            }
             break
         case .freeSpeech:
-            do {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-                try AVAudioSession.sharedInstance().setActive(true)
-                //  try AVAudioSession.overrideOutputAudioPort(AVAudioSession.sharedInstance())
-                
-                let speechUtterance = AVSpeechUtterance(string: textView.text)
-                speechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-                speechUtterance.pitchMultiplier = 1.0
-                speechUtterance.volume = 1.0
-                speechSynthesizer.speak(speechUtterance)
-                
-            } catch let error {
-                print(error.localizedDescription)
-                
-            }
+            playTTS(for: textView.text)
             break
         }
         
     }
+    
+   
+    
+    func setExpertSpeechButtonImage() {
+        if (viewModel.isSpeaking){
+            expert_AudioButton.setImage(UIImage(named: "player_stop"), for: .normal)
+        } else {
+            expert_AudioButton.setImage(UIImage(named: "speaker"), for: .normal)
+        }
+    }
+    
     public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool)
     {
         if flag {
@@ -391,7 +374,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
                 self.viewModel.selectedAnswer = self.viewModel.answersList.last?.prediction_result_json
                 self.phonemeTable.reloadData()
                 
-                self.scoreCollectionView.reloadData()
+                self.reloadCollectionView()
                 self.scoreCollectionView?.scrollToItem(at: IndexPath(row: self.viewModel.answersList.count/3, section: 0), at: UICollectionViewScrollPosition.bottom, animated: true)
                /* self.scoreCollectionView?.setContentOffset(CGPoint(x:
                 0,  y: self.scoreCollectionView.contentSize.height - self.scoreCollectionView.bounds.size.height), animated: true)
@@ -634,20 +617,22 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         phonemeTable.reloadData()
     }
     
-     // MARK: - Practice Board Action
-    @objc func displayWordPhonemeSection (sender:UITapGestureRecognizer){
-        
-        guard viewModel.selectedAnswer != nil else {
-            print("‼️ No answer is selected. Please select an answer")
-            
-            return
-        }
-        let tappedWord =  viewModel.tapResponse(recognizer: sender)
-        displayResultType(to: .phenomeTable, from: currentResultViewType)
-        self.phonemeTable.scrollToRow(at: IndexPath(row: 0, section: tappedWord.details.section), at: UITableViewScrollPosition.top, animated: true)
-    
+    func reloadCollectionView() {
+        scoreCollectionView.reloadData()
     }
     
+    func reloadCellInCollectionView(at indexPath:[IndexPath] , isPlaying : Bool) {
+       
+        let cell = self.scoreCollectionView.cellForItem(at: indexPath[0]) as! Scores_Cell
+        if isPlaying == true {
+            cell.audioPlayButton.setImage(UIImage(named: "player_stop"), for: .normal)
+        } else {
+            cell.audioPlayButton.setImage(UIImage(named: "speaker"), for: .normal)
+        }
+    }
+    
+     // MARK: - Practice Board Action
+
     @IBAction func showResultType(_ sender: Any) {
      
         //let title = showResultTypeButton.title(for: .normal)
@@ -664,6 +649,40 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         }
         
     }
+    
+    @IBAction func showKeyboard(_ sender: Any) {
+        
+        textView.isEditable = textView.isEditable ? !textView.isEditable : !textView.isEditable
+        //textView.isUserInteractionEnabled = textView.isUserInteractionEnabled ? !textView.isUserInteractionEnabled : !textView.isUserInteractionEnabled
+        if (textView.isEditable) {
+            textView.inputView?.becomeFirstResponder()
+            keyboard.setImage(UIImage(named: "do-not-touch.png"), for: .normal)
+        } else {
+            textView.inputView?.resignFirstResponder()
+            keyboard.setImage(UIImage(named: "keypad.png"), for: .normal)
+        }
+        print(textView.isUserInteractionEnabled)
+        
+    }
+    
+    @IBAction func clearTheScores(_ sender: Any) {
+        clearData()
+    }
+    
+    @objc func displayWordPhonemeSection (sender:UITapGestureRecognizer){
+        
+        guard viewModel.selectedAnswer != nil else {
+            print("‼️ No answer is selected. Please select an answer")
+            
+            return
+        }
+        let tappedWord =  viewModel.tapResponse(recognizer: sender)
+        displayResultType(to: .phenomeTable, from: currentResultViewType)
+        self.phonemeTable.scrollToRow(at: IndexPath(row: 0, section: tappedWord.details.section), at: UITableViewScrollPosition.top, animated: true)
+        
+    }
+    
+    // MARK: - Operations
     
     func displayResultType(to resultType: ResultViewType  , from currentType:ResultViewType)
     {
@@ -703,6 +722,54 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
 
     }
     
+    /*
+    func playStreamAudio( for url:String)
+    {
+        guard streamPlayer.timeControlStatus != .playing else {
+            streamPlayer.pause()
+            return
+        }
+        // let url = audioUrl //"http://192.168.71.11:7891/rec.wav"
+        let url = "http://192.168.71.11:7891/rec.wav"
+        let playerItem = AVPlayerItem(url: URL(string:url)!)
+        streamPlayer = AVPlayer(playerItem:playerItem)
+        streamPlayer.rate = 1.0;
+        streamPlayer.volume = 1.0
+        streamPlayer.play()
+    }
+    */
+    
+    func playTTS(for text:String)
+    {
+        if (speechSynthesizer.isSpeaking) {
+            speechSynthesizer.stopSpeaking(at: .immediate)
+        } else
+        {
+            do {
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+                try AVAudioSession.sharedInstance().setActive(true)
+                //  try AVAudioSession.overrideOutputAudioPort(AVAudioSession.sharedInstance())
+                
+                let speechUtterance = AVSpeechUtterance(string: text)
+                speechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+                speechUtterance.pitchMultiplier = 1.0
+                speechUtterance.volume = 1.0
+                speechSynthesizer.delegate = viewModel
+                speechSynthesizer.speak(speechUtterance)
+                
+            } catch let error {
+                print(error.localizedDescription)
+                
+            }
+        }
+        
+    }
+    
+    @objc func audioDidFinishPlaying(for player:AVPlayer) {
+        
+        
+    }
+   
     @objc func changeWord(sender:UISwipeGestureRecognizer){
        
         
@@ -778,23 +845,11 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         viewModel.scoreData.removeAll()
         updateGraph()
         viewModel.answersList.removeAll()
-        self.scoreCollectionView.reloadData()
+        reloadCollectionView()
         viewModel.selectedAnswer = nil
         reloadtable()
     }
-   
-    @IBAction func showKeyboard(_ sender: Any) {
-        
-        textView.isEditable = textView.isEditable ? !textView.isEditable : !textView.isEditable
-        //textView.isUserInteractionEnabled = textView.isUserInteractionEnabled ? !textView.isUserInteractionEnabled : !textView.isUserInteractionEnabled
-        if (textView.isEditable) {
-            keyboard.setImage(UIImage(named: "do-not-touch.png"), for: .normal)
-        } else {
-            keyboard.setImage(UIImage(named: "keypad.png"), for: .normal)
-        }
-        print(textView.isUserInteractionEnabled)
-        
-    }
+
     
     @objc func backFromPracticeBoard() {
         clearAllAudioFile()
@@ -802,9 +857,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         
     }
     
-    @IBAction func clearTheScores(_ sender: Any) {
-        clearData()
-    }
+   
     
     
     @objc func clearAllAudioFile() {

@@ -9,6 +9,7 @@
 import UIKit
 import Charts
 import AVFoundation
+import RxSwift
 
 private let reuseIdentifier = "scoresCell"
 
@@ -23,7 +24,10 @@ class PracticeViewModel: NSObject,
                             UITableViewDelegate , UITableViewDataSource ,
                         UICollectionViewDelegate ,UICollectionViewDataSource,
                         UICollectionViewDelegateFlowLayout, ChartViewDelegate,
-                        UITextViewDelegate, AVAudioPlayerDelegate  {
+                        UITextViewDelegate, AVAudioPlayerDelegate,
+                        AVSpeechSynthesizerDelegate,
+                        AVAssetResourceLoaderDelegate{
+    
     var scoreData = Array<Double>()
     var phenomeData = Array<Int>()
     let colors = [ColorVariance(color: UIColor(red: 254/255, green: 74/255, blue: 74/255, alpha: 0.9)  , range: 0...15),
@@ -40,6 +44,20 @@ class PracticeViewModel: NSObject,
     var selectedAnswer: Prediction_result_json?
     weak var delegate: PracticeBoardProtocols?
     var streamPlayer = AVPlayer()
+    var isSpeaking : Bool = false
+    var playingIndexPath : IndexPath?
+    /*var isSpeaking : Observable<Bool> {
+        return Observable.
+    }*/
+    
+   /* var isValid : Observable<Bool> {
+        
+        return Observable.combineLatest(email.asObservable(),password.asObservable()) { email , password in
+            email.count > 0 && email.contains("@") && email.contains(".com")
+            
+        }
+    }
+    */
     
     //lazy var unitList =  Array<FailableDecodable<Units>>()
     
@@ -150,7 +168,14 @@ class PracticeViewModel: NSObject,
         }
 
         cell.audioPlayButton.tag = indexPath.row
+        cell.audioPlayButton.layer.setValue(indexPath.row, forKey: "row")
         cell.audioPlayButton.addTarget(self, action: #selector(playUserAudio(_:)), for: .touchUpInside)
+       /*
+        if cell.isPlaying == true {
+            cell.audioPlayButton.setImage(UIImage(named: "player_stop"), for: .normal)
+        } else {
+            cell.audioPlayButton.setImage(UIImage(named: "speaker"), for: .normal)
+        }*/
         cell.backgroundColor = colorTheCell(score: Int(answersList[indexPath.row].score!))
         return cell
 
@@ -199,6 +224,30 @@ class PracticeViewModel: NSObject,
         return sectionInsets.left
     }
 
+    //MARK: - Speech Synthesizer Delegate
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
+        print("😀 Expert didStart Speaking")
+        isSpeaking = true
+        delegate?.setExpertSpeechButtonImage()
+    }
+    
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
+         print("🤬 Expert didFinish Speaking")
+        isSpeaking = false
+        delegate?.setExpertSpeechButtonImage()
+    }
+    
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didPause utterance: AVSpeechUtterance) {
+        print("🤬 Expert didPause Speaking")
+        isSpeaking = false
+        delegate?.setExpertSpeechButtonImage()
+    }
+    func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
+        print("🤬 Expert didCancel Speaking")
+        isSpeaking = false
+        delegate?.setExpertSpeechButtonImage()
+    }
+    
     
     //MARK: - Others
     
@@ -232,26 +281,19 @@ class PracticeViewModel: NSObject,
     
     @objc func playUserAudio(_ sender: UIButton)
     {
-        
-        
+       
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
             try AVAudioSession.sharedInstance().setActive(true)
             
         if let url = answersList[sender.tag].audio_url {
-        let playerItem = AVPlayerItem(url: URL(string:url)!)
-        streamPlayer = AVPlayer(playerItem:playerItem)
-        streamPlayer.rate = 1.0
-        streamPlayer.volume = 1.0
-        streamPlayer.play()
+           
+            playStreamAudio(for: url, of: sender)
          }
         else {
-            let playerItem = AVPlayerItem(url: URL(string:"http://192.168.71.11:7891/rec.wav")!)
-            streamPlayer = AVPlayer(playerItem:playerItem)
-            streamPlayer.rate = 1.0
-            streamPlayer.volume = 1.0
-            streamPlayer.play()
-        }
+            
+            print("❌ Audio Url is not available")
+            }
             
         } catch let error {
             print(error.localizedDescription)
@@ -259,6 +301,65 @@ class PracticeViewModel: NSObject,
         }
     }
     
+    
+    func playStreamAudio( for url:String , of button:UIButton?)
+    {
+        guard streamPlayer.timeControlStatus != .playing else {
+            streamPlayer.pause()
+            if let playingIndexPath = playingIndexPath {
+                delegate?.reloadCellInCollectionView(at: [playingIndexPath], isPlaying: false)
+            }
+            return
+        }
+        // let url = audioUrl //"http://192.168.71.11:7891/rec.wav"
+        let url = "http://192.168.71.11:7891/rec.wav"
+       // let asset = AVURLAsset(url: URL(string: "http://192.168.71.11:7891/rec.wav")!)
+       // asset.resourceLoader.setDelegate(self, queue: DispatchQueue.main)
+        let playerItem = AVPlayerItem(url: URL(string:url)!)
+        // let playerItem = AVPlayerItem(asset: asset)
+        streamPlayer = AVPlayer(playerItem:playerItem)
+        streamPlayer.rate = 1.0;
+        streamPlayer.volume = 1.0
+        streamPlayer.play()
+        
+        
+        if let button = button {
+            let row : Int = (button.layer.value(forKey: "row")) as! Int
+            playingIndexPath  = IndexPath(row: row, section: 0)
+            delegate?.reloadCellInCollectionView(at: [playingIndexPath!], isPlaying: true)
+           // delegate?.reloadCollectionView()
+            
+            
+             NotificationCenter.default.addObserver(self, selector:#selector(playerDidFinishPlaying(_:)),name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: streamPlayer.currentItem )
+             //NotificationCenter.default.post(name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: streamPlayer.currentItem, userInfo: ["row" : row])
+           
+            //NotificationCenter.default.post(name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: streamPlayer.currentItem, userInfo: ["row":row])
+           
+            
+        
+        }
+
+    }
+    
+   @objc func playerDidFinishPlaying(_ notification: NSNotification) {
+        print("playerDidFinishPlaying")
+        delegate?.reloadCellInCollectionView(at: [playingIndexPath!], isPlaying: false)
+//    if let userInfo = notification.userInfo {
+//        if let row = userInfo["row"] {
+//
+//        }
+//   }
+
+    
+   // delegate?.reloadCellInCollectionView(at: [IndexPath(row: row, section: 0)], isPlaying: false)
+
+   
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+
     
     func createAttributedText(forText words_Result:[WordResults]) -> NSMutableAttributedString
     {

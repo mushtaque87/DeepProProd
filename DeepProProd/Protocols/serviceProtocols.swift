@@ -17,5 +17,8 @@ protocol PracticeBoardProtocols: class {
     func displayResultType(to resultType: ResultViewType  , from currentType:ResultViewType)
     func resetTextViewContent(textView: UITextView)
     func reloadtable()
+    func reloadCollectionView()
+    func reloadCellInCollectionView(at indexPath:[IndexPath], isPlaying: Bool) 
     func setAttributedText(with text:NSAttributedString)
+    func setExpertSpeechButtonImage()
 }

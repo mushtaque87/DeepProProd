@@ -231,19 +231,19 @@ class ServiceManager: NSObject {
         Alamofire.request(createCustomeRequest(for: constant.signUp, withParameter: body, httpType: HTTPMethod.post, withAuth: false)).responseData(completionHandler:  { serverResponse in
              DispatchQueue.main.async {
                 
-                if self.isValidJson(check: serverResponse.result.value!) == false{
-                    print("Invalid Json")
-                    httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        completeCompletionHandler()
-                    }
-                    return
-                }
-                
+         
                 debugPrint(serverResponse)
                 let decoder = JSONDecoder()
                 switch serverResponse.result {
                 case .success(let data):
+                    guard self.isValidJson(check: serverResponse.result.value!) == true else {
+                        print("❌ Invalid Json")
+                        httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                            completeCompletionHandler()
+                        }
+                        return
+                    }
                     if serverResponse.response!.statusCode == 200 {
                        // let decoder = JSONDecoder()
                         let signupresponse = try! decoder.decode(SignUpResponse.self, from: data)
@@ -281,18 +281,19 @@ class ServiceManager: NSObject {
         Alamofire.request(constant.forgotpassword , method: .post, parameters: ["email":emailId], encoding: JSONEncoding.default, headers: nil)
             .responseData { serverResponse in
                 DispatchQueue.main.async {
-                    if self.isValidJson(check: serverResponse.result.value!) == false{
-                        print("Invalid Json")
+                    
+                debugPrint(serverResponse)
+                let decoder = JSONDecoder()
+                switch serverResponse.result {
+                case .success(let data):
+                    guard self.isValidJson(check: serverResponse.result.value!) == true else {
+                        print("❌ Invalid Json")
                         httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                             completeCompletionHandler()
                         }
                         return
                     }
-                debugPrint(serverResponse)
-                let decoder = JSONDecoder()
-                switch serverResponse.result {
-                case .success(let data):
                     if serverResponse.response!.statusCode == 200 {
                         let decoder = JSONDecoder()
                         let response = try! decoder.decode(ForgotPasswordResponse.self, from: data)
@@ -333,18 +334,19 @@ class ServiceManager: NSObject {
         Alamofire.request(constant.login, method: .post, parameters: ["username":username ,"password":password] , encoding: JSONEncoding.default, headers: nil)
             .responseData { serverResponse in
                 DispatchQueue.main.async {
-                    if self.isValidJson(check: serverResponse.result.value!) == false{
-                        print("Invalid Json")
+               
+                debugPrint(serverResponse)
+                let decoder = JSONDecoder()
+                switch serverResponse.result {
+                case .success(let data):
+                    guard self.isValidJson(check: serverResponse.result.value!) == true else {
+                        print("❌ Invalid Json")
                         httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                             completeCompletionHandler()
                         }
                         return
                     }
-                debugPrint(serverResponse)
-                let decoder = JSONDecoder()
-                switch serverResponse.result {
-                case .success(let data):
                     if serverResponse.response!.statusCode == 200 {
                         let userdetails = try! decoder.decode(LoginResponse.self, from: data)
                         print("userdetails \(userdetails)")
@@ -387,17 +389,18 @@ class ServiceManager: NSObject {
                                 Alamofire.request(String(format:constant.profile,uid), method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
                                     .responseData { serverResponse in
                                         DispatchQueue.main.async {
-                                            if self.isValidJson(check: serverResponse.result.value!) == false{
-                                                print("Invalid Json")
-                                                httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
-                                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                                    completeCompletionHandler()
-                                                }
-                                                return
-                                            }
+                                     
                                         let decoder = JSONDecoder()
                                         switch serverResponse.result {
                                             case .success(let data):
+                                                guard self.isValidJson(check: serverResponse.result.value!) == true else {
+                                                    print("❌ Invalid Json")
+                                                    httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
+                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                                        completeCompletionHandler()
+                                                    }
+                                                    return
+                                                }
                                             if serverResponse.response!.statusCode == 200 {
                                                 let profiledetails = try! decoder.decode(Profile.self, from: data)
                                                 completionHandler(profiledetails)
@@ -447,18 +450,21 @@ class ServiceManager: NSObject {
                                     .responseData { serverResponse in
                                         DispatchQueue.main.async {
                                             
-                                            if self.isValidJson(check: serverResponse.result.value!) == false{
-                                                print("Invalid Json")
+                                           
+                                         
+                                        let decoder = JSONDecoder()
+                                        switch serverResponse.result {
+                                        case .success(let data):
+                                            
+                                            guard self.isValidJson(check: serverResponse.result.value!) == true else {
+                                                print("❌ Invalid Json")
                                                 httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
                                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                                     completeCompletionHandler()
                                                 }
                                                 return
                                             }
-                                         
-                                        let decoder = JSONDecoder()
-                                        switch serverResponse.result {
-                                        case .success(let data):
+                                            
                                             if serverResponse.response!.statusCode == 200 {
                                                  print("Response Time  \(Date().timeIntervalSince(startTime))")
                                                 let decodeTime = Date()
@@ -509,17 +515,21 @@ class ServiceManager: NSObject {
                                 Alamofire.request(String(format:constant.units, uid, assignment) , method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
                                     .responseData { serverResponse in
                                          DispatchQueue.main.async {
-                                            if self.isValidJson(check: serverResponse.result.value!) == false{
-                                                print("Invalid Json")
+                                        
+                                        let decoder = JSONDecoder()
+                                        switch serverResponse.result {
+                                        case .success(let data):
+                                            
+                                            guard self.isValidJson(check: serverResponse.result.value!) == true else {
+                                                print("❌ Invalid Json")
                                                 httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
                                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                                     completeCompletionHandler()
                                                 }
                                                 return
                                             }
-                                        let decoder = JSONDecoder()
-                                        switch serverResponse.result {
-                                        case .success(let data):
+                                            
+                                            
                                             if serverResponse.response!.statusCode == 200 {
                                                 let units = try! decoder.decode([FailableDecodable<Units>].self, from: data)
                                                 successCompletionHandler(units)
@@ -564,17 +574,21 @@ class ServiceManager: NSObject {
                                 Alamofire.request(String(format:constant.assignmentAnswer,uid,assignmentId,unitId), method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
                                     .responseData { serverResponse in
                                         DispatchQueue.main.async {
-                                            if self.isValidJson(check: serverResponse.result.value!) == false{
-                                                print("Invalid Json")
-                                                httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
-                                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                                    completeCompletionHandler()
-                                                }
-                                                return
-                                            }
+                                      
                                             let decoder = JSONDecoder()
                                             switch serverResponse.result {
+                                                
                                             case .success(let data):
+                                                
+                                                guard self.isValidJson(check: serverResponse.result.value!) == true else {
+                                                    print("❌ Invalid Json")
+                                                    httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
+                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                                        completeCompletionHandler()
+                                                    }
+                                                    return
+                                                }
+                                                
                                                 if serverResponse.response!.statusCode == 200 {
                                                     let unitsanswer = try! decoder.decode([FailableDecodable<UnitAnswers>].self, from: data)
                                                     successCompletionHandler(unitsanswer)
@@ -616,17 +630,20 @@ class ServiceManager: NSObject {
         Alamofire.request(String(format: constant.updateAssignmentStatus ,uid, assignment)  , method: .put, parameters: ["status":status] , encoding: JSONEncoding.default , headers:self.generateAuthHeaders())
             .responseData { serverResponse in
                 DispatchQueue.main.async {
-                    if self.isValidJson(check: serverResponse.result.value!) == false{
-                        print("Invalid Json")
-                        httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                            completeCompletionHandler()
-                        }
-                        return
-                    }
+         
                     let decoder = JSONDecoder()
                     switch serverResponse.result {
                     case .success(let data):
+                        
+                        guard self.isValidJson(check: serverResponse.result.value!) == true else {
+                            print("❌ Invalid Json")
+                            httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                completeCompletionHandler()
+                            }
+                            return
+                        }
+                        
                         if serverResponse.response!.statusCode == 200 {
                             let response = try! decoder.decode(Response.self, from: data)
                             successCompletionHandler(response)
@@ -664,18 +681,19 @@ class ServiceManager: NSObject {
                                 Alamofire.request(constant.category , method: .get, parameters: [:] , encoding: URLEncoding.default, headers:nil)
                                     .responseData { serverResponse in
                                         DispatchQueue.main.async {
-                                            if self.isValidJson(check: serverResponse.result.value!) == false{
-                                                print("Invalid Json")
-                                                httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
-                                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                                    completeCompletionHandler()
-                                                }
-                                                return
-                                            }
-                                            
                                             let decoder = JSONDecoder()
                                             switch serverResponse.result {
                                             case .success(let data):
+                                                
+                                                guard self.isValidJson(check: serverResponse.result.value!) == true else {
+                                                    print("❌ Invalid Json")
+                                                    httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
+                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                                        completeCompletionHandler()
+                                                    }
+                                                    return
+                                                }
+                                                
                                                 if serverResponse.response!.statusCode == 200 {
                                                     let categories = try! decoder.decode([FailableDecodable<Categories>].self, from: data)
                                                     successCompletionHandler(categories)
@@ -717,17 +735,19 @@ class ServiceManager: NSObject {
                                 Alamofire.request(String(format: constant.practice, uid , categoryid) , method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
                                     .responseData { serverResponse in
                                         DispatchQueue.main.async {
-                                            if self.isValidJson(check: serverResponse.result.value!) == false{
-                                                print("Invalid Json")
-                                                httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
-                                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                                    completeCompletionHandler()
-                                                }
-                                                return
-                                            }
+                                         
                                             let decoder = JSONDecoder()
                                             switch serverResponse.result {
                                             case .success(let data):
+                                                guard self.isValidJson(check: serverResponse.result.value!) == true else {
+                                                    print("❌ Invalid Json")
+                                                    httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
+                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                                        completeCompletionHandler()
+                                                    }
+                                                    return
+                                                }
+                                                
                                                 if serverResponse.response!.statusCode == 200 {
                                                     let practices = try! decoder.decode([FailableDecodable<Practice>].self, from: data)
                                                     successCompletionHandler(practices)
@@ -769,17 +789,20 @@ class ServiceManager: NSObject {
                                 Alamofire.request(String(format: constant.practiceunit, uid, practiceid) , method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
                                     .responseData { serverResponse in
                                         DispatchQueue.main.async {
-                                            if self.isValidJson(check: serverResponse.result.value!) == false{
-                                                print("Invalid Json")
-                                                httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
-                                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                                    completeCompletionHandler()
-                                                }
-                                                return
-                                            }
+                                      
                                             let decoder = JSONDecoder()
                                             switch serverResponse.result {
                                             case .success(let data):
+                                                
+                                                guard self.isValidJson(check: serverResponse.result.value!) == true else {
+                                                    print("❌ Invalid Json")
+                                                    httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
+                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                                        completeCompletionHandler()
+                                                    }
+                                                    return
+                                                }
+                                                
                                                 if serverResponse.response!.statusCode == 200 {
                                                     let units = try! decoder.decode([FailableDecodable<Units>].self, from: data)
                                                     successCompletionHandler(units)
@@ -825,17 +848,20 @@ class ServiceManager: NSObject {
                                 Alamofire.request(String(format:constant.practicesAnswer,uid,assignmentId,unitId), method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
                                     .responseData { serverResponse in
                                         DispatchQueue.main.async {
-                                            if self.isValidJson(check: serverResponse.result.value!) == false{
-                                                print("Invalid Json")
-                                                httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
-                                                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                                    completeCompletionHandler()
-                                                }
-                                                return
-                                            }
+                                           
                                             let decoder = JSONDecoder()
                                             switch serverResponse.result {
                                             case .success(let data):
+                                                
+                                                guard self.isValidJson(check: serverResponse.result.value!) == true else {
+                                                    print("❌ Invalid Json")
+                                                    httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
+                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                                        completeCompletionHandler()
+                                                    }
+                                                    return
+                                                }
+                                                
                                                 if serverResponse.response!.statusCode == 200 {
                                                     let unitsanswer = try! decoder.decode([FailableDecodable<UnitAnswers>].self, from: data)
                                                     successCompletionHandler(unitsanswer)
