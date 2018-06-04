@@ -271,7 +271,12 @@ class PracticeViewModel: NSObject,
     func chartValueSelected(_ chartView: ChartViewBase, entry: ChartDataEntry, highlight: Highlight){
         selectedAnswer =  answersList[Int(entry.x)].prediction_result_json
         delegate?.reloadtable()
-        delegate?.displayResultType(to: .phenomeTable, from: .graph)
+        if let wordResult = selectedAnswer?.wordResults {
+            delegate?.setAttributedText(with: createAttributedText(forText: wordResult))
+            delegate?.displayResultType(to: .phenomeTable, from: .graph)
+        } else{
+            print("ℹ️ No Phoneme data available")
+        }
     }
     
     public func chartValueNothingSelected(_ chartView: ChartViewBase)
@@ -312,7 +317,7 @@ class PracticeViewModel: NSObject,
             return
         }
         // let url = audioUrl //"http://192.168.71.11:7891/rec.wav"
-        let url = "http://192.168.71.11:7891/rec.wav"
+       // let url = "http://192.168.71.11:7891/rec.wav"
        // let asset = AVURLAsset(url: URL(string: "http://192.168.71.11:7891/rec.wav")!)
        // asset.resourceLoader.setDelegate(self, queue: DispatchQueue.main)
         let playerItem = AVPlayerItem(url: URL(string:url)!)
@@ -502,7 +507,21 @@ class PracticeViewModel: NSObject,
         }
         return true
     }
+   
+}
 
-  
+extension UITextView {
+
+    override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
+       
+        
+        UIMenuController.shared.isMenuVisible = false
+        
+        if action == #selector(UIResponderStandardEditActions.paste(_:)) {
+        print("paste")
+        return true
+        }
+        return false
+}
     
 }

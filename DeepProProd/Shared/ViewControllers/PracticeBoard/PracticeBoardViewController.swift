@@ -118,19 +118,27 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         //scoreCollectionView.isHidden = true
         setBarGraph()
         displayResultType(to: currentResultViewType, from: .graph)
-        keyboard.setImage(UIImage(named: "do-not-touch"), for: .normal)
+        keyboard.setImage(UIImage(named: "keypad.png"), for: .normal)
         audioFolderPath = Helper.getAudioDirectory(for: tasktype)
         
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(displayWordPhonemeSection(sender:)))
+        tapGesture.numberOfTapsRequired = 2
         textView.addGestureRecognizer(tapGesture)
+        
+        
+        //let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(displayWordPhonemeSection(sender:)))
+        //textView.addGestureRecognizer(longPressGesture)
         
        // _ = viewModel.isSpeaking.bind(to: expert_AudioButton.rx.image(for: .normal))
         //expert_AudioButton.rx.image().
         guard tasktype != TaskType.freeSpeech else {
             textView.text = "Type Here"
+            keyboard.setImage(UIImage(named: "keypad.png"), for: .normal)
             textView.isEditable = false
             keyboard.isHidden = false
+            textView.isSelectable = false
+            textView.inputView?.resignFirstResponder()
             //textView.isUserInteractionEnabled = true
             clearButton.isHidden = false
            
@@ -138,6 +146,8 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         }
         
         textView.isEditable = false
+        
+
         let newBackButton = UIBarButtonItem(title: "< Back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(backFromPracticeBoard))
         self.navigationItem.leftBarButtonItem = newBackButton
         
@@ -652,16 +662,19 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     
     @IBAction func showKeyboard(_ sender: Any) {
         
-        textView.isEditable = textView.isEditable ? !textView.isEditable : !textView.isEditable
+        //textView.isEditable = textView.isEditable ? !textView.isEditable : !textView.isEditable
         //textView.isUserInteractionEnabled = textView.isUserInteractionEnabled ? !textView.isUserInteractionEnabled : !textView.isUserInteractionEnabled
-        if (textView.isEditable) {
-            textView.inputView?.becomeFirstResponder()
+        if (!textView.isEditable) {
+            textView.isEditable = true
+            textView.isSelectable = true
+            //textView.inputView?.becomeFirstResponder()
             keyboard.setImage(UIImage(named: "do-not-touch.png"), for: .normal)
         } else {
-            textView.inputView?.resignFirstResponder()
+            textView.isEditable = false
+            textView.isSelectable = false
+           // textView.inputView?.resignFirstResponder()
             keyboard.setImage(UIImage(named: "keypad.png"), for: .normal)
         }
-        print(textView.isUserInteractionEnabled)
         
     }
     
