@@ -341,7 +341,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
                     unitId =  self.viewModel.unitList[unitIndex].id!
                     
                 }
-                grpcService.getWordPredictionFromGRPC(for:UserDefaults.standard.string(forKey: "uid")! ,assignment:self.assignmentId  , unit:unitId , with: audiodata, and: textView.text!, onSuccess: {(response) in
+                grpcService.getWordPredictionFromGRPC(for:UserDefaults.standard.string(forKey: "uid")!, unit:unitId , with: audiodata, and: textView.text!, onSuccess: {(response) in
                 
                
                 //Fill the Data
