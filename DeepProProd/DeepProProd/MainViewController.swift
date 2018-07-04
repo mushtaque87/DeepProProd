@@ -24,16 +24,18 @@ class MainViewController: UIViewController, MainViewControllerProtocols {
     open var previousViewController : UIViewController?
     let disposeBag = DisposeBag()
     
+    /*
     lazy var   tabBar_ViewController: TabBarControllerViewController = {
        var viewcontroller = TabBarControllerViewController(nibName: "TabBarControllerViewController", bundle: nil)
         return viewcontroller
     }()
-    
+    */
    lazy var     login_ViewController: Login_SH_ViewController  = {
      var viewcontroller   = Login_SH_ViewController(nibName: "Login_SH_ViewController", bundle: nil)
      return viewcontroller
     
     }()
+     
     
     lazy var     signUp_ViewController: SignUp_SH_ViewController  = {
         var viewcontroller   = SignUp_SH_ViewController(nibName: "SignUp_SH_ViewController", bundle: nil)
@@ -107,7 +109,7 @@ class MainViewController: UIViewController, MainViewControllerProtocols {
             self.addSubView(addChildViewController: tabBar_ViewController!, on: self)
         }*/
         
-        //let tabBar_ViewController = TabBarControllerViewController(nibName: "TabBarControllerViewController", bundle: nil)
+        let tabBar_ViewController = TabBarControllerViewController(nibName: "TabBarControllerViewController", bundle: nil)
         self.addSubView(addChildViewController: tabBar_ViewController, on: self)
     }
     
@@ -132,7 +134,7 @@ class MainViewController: UIViewController, MainViewControllerProtocols {
         }
         
         */
-       // login_ViewController  = Login_SH_ViewController(nibName: "Login_SH_ViewController", bundle: nil)
+        //let login_ViewController  = Login_SH_ViewController(nibName: "Login_SH_ViewController", bundle: nil)
         //login_ViewController?.view.frame = self.view.frame
         self.addSubView(addChildViewController: login_ViewController, on: self)
         
@@ -140,10 +142,17 @@ class MainViewController: UIViewController, MainViewControllerProtocols {
     }
     
     func showSignUpViewController() -> Void {
-        //let signUp_ViewController: SignUp_SH_ViewController = SignUp_SH_ViewController(nibName: "SignUp_SH_ViewController", bundle: nil)
-        //     self.present(signUp_ViewController, animated: true, completion: nil)
+        let signUp_ViewController: SignUp_SH_ViewController = SignUp_SH_ViewController(nibName: "SignUp_SH_ViewController", bundle: nil)
+        //self.navigationController?.pushViewController(signUp_ViewController, animated: true)
+        self.present(signUp_ViewController, animated: true, completion: nil)
         //self.addSubView(addChildViewController: signUp_ViewController, on: self)
 
+    }
+    
+    func showForgetPasswordViewController() -> Void {
+        let forgot_ViewController : ForgotPassword_SH_ViewController = ForgotPassword_SH_ViewController(nibName: "ForgotPassword_SH_ViewController", bundle: nil)
+        self.present(forgot_ViewController, animated: true, completion: nil)
+        
     }
     
     func showInfoAlertView(with message:String) -> Void {

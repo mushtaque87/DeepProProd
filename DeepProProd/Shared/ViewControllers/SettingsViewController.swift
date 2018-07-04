@@ -25,7 +25,8 @@ class SettingsViewController: UIViewController,SettingProtocols {
     @IBOutlet weak var languageControl: UISegmentedControl!
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        edgesForExtendedLayout = []
+        
         // Do any additional setup after loading the view.
         self.navigationItem.title = "Setting"
         self.settingTableView.register(UINib(nibName: "LogOutCell", bundle: nil), forCellReuseIdentifier: "logout")
@@ -33,7 +34,10 @@ class SettingsViewController: UIViewController,SettingProtocols {
         self.settingTableView.register(UINib(nibName: "LanguageTableViewCell", bundle: nil), forCellReuseIdentifier: "language")
         self.settingTableView.register(UINib(nibName: "ThemeCell", bundle: nil), forCellReuseIdentifier: "theme")
         self.settingTableView.backgroundColor = UIColor.clear
-        viewModel.delegate = self 
+        viewModel.delegate = self
+        self.view.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+        self.backgroundImage.isHidden = true
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -57,8 +61,8 @@ class SettingsViewController: UIViewController,SettingProtocols {
         Settings.sharedInstance.reloadSettingsDictionary()
         if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
         {
-            rootVc.remove(viewController: rootVc.tabBar_ViewController , from: rootVc)
-           // rootVc.removeAllVCFromParentViewController()
+           // rootVc.remove(viewController: rootVc.tabBar_ViewController , from: rootVc)
+            rootVc.removeAllVCFromParentViewController()
             rootVc.showLoginViewController()
         }
     }

@@ -32,6 +32,8 @@ class ForgotPassword_SH_ViewController: UIViewController , CAAnimationDelegate {
         _ = forgotViewModel.isValid.bind(to: resetBtn.rx.isEnabled)
         
         Helper.lockOrientation(.portrait)
+        self.backgroundImage.isHidden = true
+        self.view.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
     }
    
     
@@ -80,10 +82,14 @@ class ForgotPassword_SH_ViewController: UIViewController , CAAnimationDelegate {
     
     @IBAction func close(_ sender: Any) {
     
-        if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController {
-            rootVc.remove(viewController: self, from: rootVc)
+        self.dismiss(animated: true) {
+            print("Dismmised")
         }
         
+//        if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController {
+//            rootVc.remove(viewController: self, from: rootVc)
+//        }
+//
         //self.view.slideBackToLeft(duration:1.0 , completionDelegate: self)
     }
     

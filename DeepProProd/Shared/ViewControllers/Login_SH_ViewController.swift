@@ -45,8 +45,9 @@ class Login_SH_ViewController: UIViewController {
         
         self.navigationController?.navigationBar.backgroundColor =  UIColor.clear
          Helper.lockOrientation(.portrait)
-        
-       
+        backgroundImg.isHidden = true
+        self.view.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -130,12 +131,17 @@ class Login_SH_ViewController: UIViewController {
     @IBOutlet weak var forgotPassword: UIButton!
     @IBAction func forgotPassword(_ sender: Any) {
         
-        let forgot_ViewController : ForgotPassword_SH_ViewController = ForgotPassword_SH_ViewController(nibName: "ForgotPassword_SH_ViewController", bundle: nil)
+        if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+        {
+            rootVc.showForgetPasswordViewController()
+        }
+
+        /*
         if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
         {
             rootVc.addSubView(addChildViewController: forgot_ViewController, on: rootVc)
             //forgot_ViewController.view.slideInFromRight()
-        }
+        }*/
     }
     
     @IBAction func showPracticeBoard(_ sender: Any) {

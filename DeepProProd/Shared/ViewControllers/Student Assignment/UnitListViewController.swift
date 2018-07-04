@@ -10,7 +10,7 @@ import UIKit
 import MBProgressHUD
 
 protocol unitsProtocols: class {
-    func showPronunciationScreen(with unitsArray:[FailableDecodable<Units>] , and index:Int)
+    func showPronunciationScreen(with unitsArray:[FailableDecodable<ContentUnits>] , and index:Int)
     func submitAssignment()
 }
 
@@ -19,9 +19,9 @@ class UnitListViewController: UIViewController,unitsProtocols {
     
 
     @IBOutlet weak var unitTableView: UITableView!
-    @IBOutlet var viewModel: Assignments_UnitsModel!
-    var assignmentId : Int?
-    var tasktype : TaskType = .assignment
+    @IBOutlet var viewModel : Assignments_UnitsModel!
+    var id : Int?
+    var tasktype : TaskType = .content
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,8 +32,9 @@ class UnitListViewController: UIViewController,unitsProtocols {
         self.unitTableView.register(UINib(nibName: "LogOutCell", bundle: nil), forCellReuseIdentifier: "logout")
         self.navigationItem.title = "Units"
         unitTableView.backgroundColor = UIColor.clear
-        self.view.backgroundColor = UIColor(red: 112/255, green: 127/255, blue: 134/255, alpha: 0.9)
+        self.view.backgroundColor = UIColor.white //UIColor(red: 112/255, green: 127/255, blue: 134/255, alpha: 0.9)
         
+        /*
         switch tasktype {
         case .assignment:
             fetchAssignmentUnits()
@@ -42,14 +43,21 @@ class UnitListViewController: UIViewController,unitsProtocols {
             fetchPracticeUnits()
             break
         }
-            
+        */
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        print("viewDidAppear")
+       
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        fetchUnits(for: id!)
+    }
+    
+    
+    
+    /*
    func fetchAssignmentUnits()
    {
     
@@ -98,18 +106,50 @@ class UnitListViewController: UIViewController,unitsProtocols {
             })
             
         }
-    
+ 
+ */
+    func fetchUnits(for id:Int){
         
-   func showPronunciationScreen(with unitsArray:[FailableDecodable<Units>] , and index:Int = 0)
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.mode = MBProgressHUDMode.indeterminate
+        hud.label.text = "Fetching assignments. Please wait"
+        
+        ServiceManager().getContentUnit(for: id, ofStudent: UserDefaults.standard.string(forKey: "uid")! , onSuccess: { unitList in
+            //self.viewModel.categoriesList = assignmentlist
+            //Show Units Screen
+            self.viewModel.unitList = unitList
+            self.unitTableView.reloadData()
+            //self.showUnitScreen(with: unitList)
+            // self.levelTableView.reloadData()
+            hud.hide(animated: true)
+        }, onHTTPError: { httperror in
+            hud.mode = MBProgressHUDMode.text
+            hud.label.text = httperror.description
+        }, onError: { error in
+            hud.mode = MBProgressHUDMode.text
+            hud.label.text = error.localizedDescription
+        }, onComplete: {
+            hud.hide(animated: true)
+        })
+        
+    }
+    
+    
+   func showPronunciationScreen(with unitsArray:[FailableDecodable<ContentUnits>] , and index:Int = 0)
     {
         
        
         let practiceBoardVC = PracticeBoardViewController(nibName:"PracticeBoardViewController",bundle:nil)
         practiceBoardVC.unitIndex = index
         practiceBoardVC.tasktype = self.tasktype
+       
+        /*
         if let assignmentId = self.assignmentId {
         practiceBoardVC.assignmentId = assignmentId
         }
+         */
+        
+        
         for units in self.viewModel.unitList {
             if let base = units.base{
             practiceBoardVC.viewModel.unitList.append(base)
@@ -147,9 +187,9 @@ class UnitListViewController: UIViewController,unitsProtocols {
    @objc func submitAssignment() {
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud.mode = MBProgressHUDMode.indeterminate
-        hud.label.text = "Submitting Assignment. Please wait"
+        hud.label.text = "Submitting Content. Please wait"
         
-    ServiceManager().updateAssignmentStatus(for: assignmentId!, of: UserDefaults.standard.string(forKey: "uid")!, with: "SUBMITTED", onSuccess: { response in
+    ServiceManager().updateAssignmentStatus(for: self.id!, of: UserDefaults.standard.string(forKey: "uid")!, with: "SUBMITTED", onSuccess: { response in
              hud.hide(animated: true)
         }, onHTTPError: { httperror in
             hud.mode = MBProgressHUDMode.text

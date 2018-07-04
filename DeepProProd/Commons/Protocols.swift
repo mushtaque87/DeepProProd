@@ -9,7 +9,8 @@
 import Foundation
 
 
-@objc protocol CategoriesProtocol: class {
-  @objc optional func showPracticesScreen(for categoryId:Int)
-  @objc optional  func reloadtable()
+protocol CategoriesProtocol: class {
+   //func showPracticesScreen(for category:RootContent)
+    //func fetchContentGroup(for content:ContentGroup)
+     func fetchContentGroup(for content:ContentGroup , actionType:CrumActionType)
 }

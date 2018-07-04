@@ -16,12 +16,18 @@ class ServiceManager: NSObject {
     
     typealias constant = Constants.ServerApi
     let disposeBag = DisposeBag()
-    
-    
-    
     weak var delegate: ServiceProtocols?
     var manager : SessionManager? = Alamofire.SessionManager()
-
+    
+    
+    override init() {
+        let configuration = URLSessionConfiguration.default
+        configuration.timeoutIntervalForRequest = 30
+        configuration.timeoutIntervalForResource = 30
+        manager = Alamofire.SessionManager(configuration:configuration)
+        
+    }
+    
     func ignoreSSL() -> Void {
         manager = Alamofire.SessionManager()
         
@@ -196,6 +202,7 @@ class ServiceManager: NSObject {
             guard TokenManager.shared.isRefreshTokenValid() else {
                 if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
                 {
+                    rootVc.removeAllVCFromParentViewController()
                     rootVc.showLoginViewController()
                 }
                 return
@@ -331,7 +338,7 @@ class ServiceManager: NSObject {
                  onError errorHandler: @escaping (Error)-> Void  ,
                  onComplete completeCompletionHandler: @escaping ()-> Void ) {
         
-        Alamofire.request(constant.login, method: .post, parameters: ["username":username ,"password":password] , encoding: JSONEncoding.default, headers: nil)
+        manager?.request(constant.login, method: .post, parameters: ["username":username ,"password":password] , encoding: JSONEncoding.default, headers: nil)
             .responseData { serverResponse in
                 DispatchQueue.main.async {
                
@@ -433,6 +440,69 @@ class ServiceManager: NSObject {
         
     }
     
+    func updateProfile(for uid : String ,
+                       with details: Profile,
+                    onSuccess completionHandler: @escaping () -> Void,
+                    onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
+                    onError  errorHandler: @escaping (Any) -> Void,
+                    onComplete completeCompletionHandler: @escaping ()-> Void )
+    {
+        verifyTokenAndProceed(of: uid,
+                              onSuccess: {
+                                let parameters: [String: Any] = [
+                                    "first_name": details.first_name as Any,
+                                    "last_name": details.last_name as Any,
+                                    "user_attributes": ["dob" : details.user_attributes?.dob as Any]
+                                    
+                                ]
+                                
+                                Alamofire.request(String(format:constant.profile,uid), method: .put, parameters:parameters  , encoding: JSONEncoding.default, headers:self.generateAuthHeaders())
+                                    .responseData { serverResponse in
+                                        DispatchQueue.main.async {
+                                            
+                                            let decoder = JSONDecoder()
+                                            switch serverResponse.result {
+                                            case .success(let data):
+                                                guard self.isValidJson(check: serverResponse.result.value!) == true else {
+                                                    print("❌ Invalid Json")
+                                                    httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
+                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                                        completeCompletionHandler()
+                                                    }
+                                                    return
+                                                }
+                                                if serverResponse.response!.statusCode == 200 {
+                                                   // let profiledetails = try! decoder.decode(Profile.self, from: data)
+                                                    completionHandler()
+                                                }
+                                                else
+                                                {
+                                                    let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
+                                                    if let description = httpError.description {
+                                                        httpErrorHandler(httpError)
+                                                        print("HTTP error: \(description)")
+                                                    }
+                                                }
+                                            case .failure(let error):
+                                                print("Request failed with error: \(error)")
+                                                errorHandler(error)
+                                                
+                                            }
+                                            
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                                completeCompletionHandler()
+                                            }
+                                            
+                                        }
+                                        
+                                }
+                                
+        },   onError: { error in
+            errorHandler(error)
+        })
+        
+    }
+    
      //MARK: - Assignment
     
     func getassignments(for uid:String,
@@ -504,7 +574,7 @@ class ServiceManager: NSObject {
     
     func getAssignmentsUnits(for assignment:Int,
                   of uid:String,
-                  onSuccess successCompletionHandler: @escaping ([FailableDecodable<Units>]) -> Void,
+                  onSuccess successCompletionHandler: @escaping ([FailableDecodable<ContentUnits>]) -> Void,
                   onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
                   onError errorHandler: @escaping (Error)-> Void  ,
                   onComplete completeCompletionHandler: @escaping ()-> Void)
@@ -531,7 +601,7 @@ class ServiceManager: NSObject {
                                             
                                             
                                             if serverResponse.response!.statusCode == 200 {
-                                                let units = try! decoder.decode([FailableDecodable<Units>].self, from: data)
+                                                let units = try! decoder.decode([FailableDecodable<ContentUnits>].self, from: data)
                                                 successCompletionHandler(units)
                                             }
                                             else
@@ -779,7 +849,7 @@ class ServiceManager: NSObject {
     
     
     func getPracticesUnits(for practiceid:Int, of uid: String,
-                  onSuccess successCompletionHandler: @escaping ([FailableDecodable<Units>]) -> Void,
+                  onSuccess successCompletionHandler: @escaping ([FailableDecodable<ContentUnits>]) -> Void,
                   onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
                   onError errorHandler: @escaping (Error)-> Void  ,
                   onComplete completeCompletionHandler: @escaping ()-> Void)
@@ -804,7 +874,7 @@ class ServiceManager: NSObject {
                                                 }
                                                 
                                                 if serverResponse.response!.statusCode == 200 {
-                                                    let units = try! decoder.decode([FailableDecodable<Units>].self, from: data)
+                                                    let units = try! decoder.decode([FailableDecodable<ContentUnits>].self, from: data)
                                                     successCompletionHandler(units)
                                                 }
                                                 else
@@ -976,5 +1046,229 @@ func createBody(parameters: [String: String],
         return body as Data
     }
  */
+
+     //MARK: - Content Apis
+    
+    func getRootContent(ofStudent uid:String,
+                       onSuccess successCompletionHandler: @escaping ([FailableDecodable<ContentGroup>]) -> Void,
+                       onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
+                       onError errorHandler: @escaping (Error)-> Void  ,
+                       onComplete completeCompletionHandler: @escaping ()-> Void)
+    {
+    verifyTokenAndProceed(of: uid,
+                              onSuccess: {
+                                self.manager?.request(String(format:constant.content,uid) , method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
+            .responseData { serverResponse in
+                DispatchQueue.main.async {
+                    let decoder = JSONDecoder()
+                    switch serverResponse.result {
+                    case .success(let data):
+                        
+                        guard self.isValidJson(check: serverResponse.result.value!) == true else {
+                            print("❌ Invalid Json")
+                            httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                completeCompletionHandler()
+                            }
+                            return
+                        }
+                        
+                        if serverResponse.response!.statusCode == 200 {
+                            let rootContent = try! decoder.decode([FailableDecodable<ContentGroup>].self, from: data)
+                            successCompletionHandler(rootContent)
+                        }
+                        else
+                        {
+                            let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
+                            if let description = httpError.description {
+                                httpErrorHandler(httpError)
+                                print("HTTP error: \(description)")
+                            }
+                        }
+                    case .failure(let error):
+                        print("Request failed with error: \(error)")
+                        errorHandler(error)
+                        
+                    }
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        completeCompletionHandler()
+                    }
+                }
+        }
+        } , onError: { error in
+    errorHandler(error)
+    })
+        
+    }
+    
+    func getContentGroup(for id: Int ,
+                         ofStudent uid:String,
+                         onSuccess successCompletionHandler: @escaping ([FailableDecodable<ContentGroup>]) -> Void,
+                         onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
+                         onError errorHandler: @escaping (Error)-> Void  ,
+                         onComplete completeCompletionHandler: @escaping ()-> Void)
+    {
+        verifyTokenAndProceed(of: uid,
+                              onSuccess: {
+                                
+                                var url: String?
+                                if id == 0 {
+                                    url = String(format:constant.rootContent,uid)
+                                } else {
+                                    url = String(format:constant.contentGroup,uid,id)
+                                }
+                                
+                                self.manager?.request(url! , method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
+            .responseData { serverResponse in
+                DispatchQueue.main.async {
+                    let decoder = JSONDecoder()
+                    switch serverResponse.result {
+                    case .success(let data):
+                        
+                        guard self.isValidJson(check: serverResponse.result.value!) == true else {
+                            print("❌ Invalid Json")
+                            httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                completeCompletionHandler()
+                            }
+                            return
+                        }
+                        
+                        if serverResponse.response!.statusCode == 200 {
+                            let rootContent = try! decoder.decode([FailableDecodable<ContentGroup>].self, from: data)
+                            successCompletionHandler(rootContent)
+                        }
+                        else
+                        {
+                            let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
+                            if let description = httpError.description {
+                                httpErrorHandler(httpError)
+                                print("HTTP error: \(description)")
+                            }
+                        }
+                    case .failure(let error):
+                        print("Request failed with error: \(error)")
+                        errorHandler(error)
+                        
+                    }
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        completeCompletionHandler()
+                    }
+                }
+        }
+        } , onError: { error in
+            errorHandler(error)
+        })
+    }
+    
+    func getContentUnit(for id: Int ,
+                         ofStudent uid:String,
+                         onSuccess successCompletionHandler: @escaping ([FailableDecodable<ContentUnits>]) -> Void,
+                         onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
+                         onError errorHandler: @escaping (Error)-> Void  ,
+                         onComplete completeCompletionHandler: @escaping ()-> Void)
+    {
+        verifyTokenAndProceed(of: uid,
+                              onSuccess: {
+                                self.manager?.request(String(format:constant.contentUnit,uid,id) , method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
+            .responseData { serverResponse in
+                DispatchQueue.main.async {
+                    let decoder = JSONDecoder()
+                    switch serverResponse.result {
+                    case .success(let data):
+                        
+                        guard self.isValidJson(check: serverResponse.result.value!) == true else {
+                            print("❌ Invalid Json")
+                            httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                completeCompletionHandler()
+                            }
+                            return
+                        }
+                        
+                        if serverResponse.response!.statusCode == 200 {
+                            let rootContent = try! decoder.decode([FailableDecodable<ContentUnits>].self, from: data)
+                            successCompletionHandler(rootContent)
+                        }
+                        else
+                        {
+                            let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
+                            if let description = httpError.description {
+                                httpErrorHandler(httpError)
+                                print("HTTP error: \(description)")
+                            }
+                        }
+                    case .failure(let error):
+                        print("Request failed with error: \(error)")
+                        errorHandler(error)
+                        
+                    }
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        completeCompletionHandler()
+                    }
+                }
+        }
+        } , onError: { error in
+            errorHandler(error)
+        })
+    }
+    
+    func getUnitsAnswer(for unitId: Int ,
+                        ofStudent uid:String,
+                        onSuccess successCompletionHandler: @escaping ([FailableDecodable<UnitAnswers>]) -> Void,
+                        onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
+                        onError errorHandler: @escaping (Error)-> Void  ,
+                        onComplete completeCompletionHandler: @escaping ()-> Void)
+    {
+        verifyTokenAndProceed(of: uid,
+                              onSuccess: {
+                                self.manager?.request(String(format:constant.unitAnswers,uid,unitId) , method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
+            .responseData { serverResponse in
+                DispatchQueue.main.async {
+                    let decoder = JSONDecoder()
+                    switch serverResponse.result {
+                    case .success(let data):
+                        
+                        guard self.isValidJson(check: serverResponse.result.value!) == true else {
+                            print("❌ Invalid Json")
+                            httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                completeCompletionHandler()
+                            }
+                            return
+                        }
+                        
+                        if serverResponse.response!.statusCode == 200 {
+                            let rootContent = try! decoder.decode([FailableDecodable<UnitAnswers>].self, from: data)
+                            successCompletionHandler(rootContent)
+                        }
+                        else
+                        {
+                            let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
+                            if let description = httpError.description {
+                                httpErrorHandler(httpError)
+                                print("HTTP error: \(description)")
+                            }
+                        }
+                    case .failure(let error):
+                        print("Request failed with error: \(error)")
+                        errorHandler(error)
+                        
+                    }
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        completeCompletionHandler()
+                    }
+                }
+        }
+        } , onError: { error in
+            errorHandler(error)
+        })
+    }
+    
+    
     
 }

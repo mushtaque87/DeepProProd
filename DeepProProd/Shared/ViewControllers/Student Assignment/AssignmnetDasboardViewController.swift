@@ -47,7 +47,7 @@ class AssignmnetDasboardViewController: UIViewController,AssignmentsProtocols  {
         
         
         switch viewModel.tasktype {
-        case .assignment:
+        case .content:
             self.navigationItem.title = "Assignments List"
             fetchAssignments()
         default:
@@ -124,7 +124,7 @@ class AssignmnetDasboardViewController: UIViewController,AssignmentsProtocols  {
     }
     @objc func handleRefresh(_ refreshControl: UIRefreshControl) {
         switch viewModel.tasktype {
-        case .assignment:
+        case .content:
             fetchAssignments()
         break
         default:
@@ -133,17 +133,18 @@ class AssignmnetDasboardViewController: UIViewController,AssignmentsProtocols  {
         }
         refreshControl.endRefreshing()
     }
+    
     func showAssignmentDetailsScreen(for id:Int) {
         
         let unitListViewController =     UnitListViewController(nibName: "UnitListViewController", bundle: nil)
-        unitListViewController.assignmentId = id
+        unitListViewController.id = id
         
         switch viewModel.tasktype {
-        case .assignment:
-        unitListViewController.tasktype = .assignment
+        case .content:
+        unitListViewController.tasktype = .content
         break
         default:
-          unitListViewController.tasktype = .practice
+          unitListViewController.tasktype = .content
         break
         }
         self.navigationController?.pushViewController(unitListViewController, animated: true)

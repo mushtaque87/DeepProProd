@@ -118,7 +118,7 @@ static func createDirectory(with folderName:String)
     static func getAudioDirectory(for  type:TaskType) -> String
     {
         switch type {
-        case .assignment,.practice:
+        case .content:
             return getDocumentDirectory().appendingPathComponent("Assignments")
      
         default:

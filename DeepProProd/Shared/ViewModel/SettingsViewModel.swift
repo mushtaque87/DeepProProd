@@ -14,9 +14,6 @@ enum SettingType : Int  {
     case profile
     case mainPage
     case graphtype
-    case themetype
-    case announcements
-    case aboutus
     case logout
 }
 
@@ -51,9 +48,9 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if let settingtype = SettingType(rawValue: indexPath.row) {
             switch settingtype {
-            case  .profile , .announcements , .aboutus :
+            case  .profile :
                  return 80.0
-            case .language, .mainPage , .graphtype , .themetype:
+            case .language, .mainPage , .graphtype :
                 return 100.0
             case .logout:
                  return 80.0
@@ -65,7 +62,7 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 8
+        return 5
     }
 
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -107,6 +104,7 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 cell.titlLbl.alignText()
                 cell.contentView.backgroundColor = UIColor.clear
                 return cell
+                /*
             case .themetype:
                 
                 /*let cell  = tableView.dequeueReusableCell(withIdentifier: "language", for: indexPath) as! LanguageTableViewCell
@@ -144,6 +142,7 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 cell.titleLbl.alignText()
                 cell.contentView.backgroundColor = UIColor.clear
                 return cell
+ */
             case .logout:
 //                 let cell = tableView.dequeueReusableCell(withIdentifier: "logout", for: indexPath) as! LogOutCell
 //                 return cell
@@ -185,11 +184,12 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                     break
                 case .mainPage: break
                 case .graphtype: break
+                    /*
                 case .themetype: break
                 case .announcements: break
                     
                 case .aboutus: break
-                    
+                    */
                 case .logout:
                     let cell = tableView.dequeueReusableCell(withIdentifier: "logout", for: indexPath) as! LogOutCell
                     delegate?.logOut(cell.logOut)

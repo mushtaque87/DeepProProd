@@ -18,7 +18,10 @@ protocol PracticeBoardProtocols: class {
     func resetTextViewContent(textView: UITextView)
     func reloadtable()
     func reloadCollectionView()
-    func reloadCellInCollectionView(at indexPath:[IndexPath], isPlaying: Bool) 
+    func reloadCellInCollectionView(at indexPath:[IndexPath], isPlaying: Bool)
+    func updateExpertAudioButton(isPlaying: Bool)
+    func resetAudioButtonInCollectionView(at count:Int)
     func setAttributedText(with text:NSAttributedString)
-    func setExpertSpeechButtonImage()
+    //func setExpertSpeechButtonImage()
+    func setExpertSpeechButtonImage(set isTTSSpeaking:Bool)
 }

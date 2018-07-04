@@ -146,6 +146,7 @@
                 <outlet property="descriptionView" destination="x3B-0q-5Mg" id="4xO-rD-lAN"/>
                 <outlet property="detailsView" destination="ywR-Ba-HYA" id="0Jd-oE-MD4"/>
                 <outlet property="submissionDate" destination="hSg-T5-ebz" id="j8E-Ec-XdE"/>
+                <outlet property="unitCount" destination="pvp-S1-2jk" id="FMi-CC-sa4"/>
             </connections>
             <point key="canvasLocation" x="106.5" y="200.5"/>
         </tableViewCell>

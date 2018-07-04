@@ -43,12 +43,22 @@ struct Constants {
         static let practiceunit = baseUrl + assignmentService + "students/%@/practices/%d/units"
         static let practicesAnswer = baseUrl + assignmentService + "students/%@/practices/%d/units/%d/answers"
 
+        //Content
+        static let contentService = "content-service/v1/"
+        static let content  = baseUrl + contentService + "students/%@/contents"
+        static let rootContent  = baseUrl + contentService + "students/%@/contents/"
+        static let contentGroup  = baseUrl + contentService + "students/%@/contents/%d"
+        static let contentUnit  = baseUrl  + contentService + "students/%@/contents/%d/units"
+        static let unitAnswers  = baseUrl  + contentService + "students/%@/units/%d/answers"
+
+        //http://192.168.71.11:8091/contents/4/units
         // GRPC
 
     }
     
     struct BUILDSETTINGS {
         static let tokenTest = ProcessInfo.processInfo.environment["TOKENEXPIRYTEST"]
+        static let refreshTokenTest = ProcessInfo.processInfo.environment["REFRESHTOKENEXPIRYTEST"]
         static let grpcTest = ProcessInfo.processInfo.environment["GRPCON"]
         
     }

@@ -35,21 +35,21 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
             let courseNavigationController = UINavigationController()
             let levelViewController : Level_SHViewController =  Level_SHViewController(nibName: "Level_SHViewController", bundle: nil)
             courseNavigationController.viewControllers = [levelViewController]
-            courseNavigationController.tabBarItem = UITabBarItem(title: "Practices", image: UIImage(named: "homeTab.png"), tag: 0)
-            
+            courseNavigationController.tabBarItem = UITabBarItem(title: "Contents", image: UIImage(named: "homeTab.png"), tag: 0)
+            /*
             let studentAssignmentNavigationController = UINavigationController()
             let studentDashboard = AssignmnetDasboardViewController(nibName:"AssignmnetDasboardViewController",bundle:nil)
             studentDashboard.viewModel.tasktype = .assignment
             studentAssignmentNavigationController.viewControllers = [studentDashboard]
             studentAssignmentNavigationController.tabBarItem = UITabBarItem(title: "Assignment", image: UIImage(named: "assignmentTab.png"), tag: 1)
-            
+            */
             
             let practiceBoardNavigationController = UINavigationController()
             //let transDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
             //  transDetailViewController.boardType = .account
             let transDetailViewController = PracticeBoardViewController(nibName:"PracticeBoardViewController",bundle:nil)
             //transDetailViewController.boardType = BoardType.account
-            transDetailViewController.tasktype = .freeSpeech
+            transDetailViewController.tasktype = .freeText
             practiceBoardNavigationController.viewControllers = [transDetailViewController]
             practiceBoardNavigationController.tabBarItem = UITabBarItem(title: "Board", image: UIImage(named: "assignmentTab.png"), tag: 2)
             
@@ -58,7 +58,7 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
             settingNavigationController.viewControllers = [settingsViewController]
             settingNavigationController.tabBarItem = UITabBarItem(title: "Settings", image:UIImage(named: "settingsTab.png"), tag: 3)
             
-            tabBarViewControllers  = [courseNavigationController,studentAssignmentNavigationController,practiceBoardNavigationController,settingNavigationController]
+            tabBarViewControllers  = [courseNavigationController,practiceBoardNavigationController,settingNavigationController]
             
         
         viewControllers = tabBarViewControllers

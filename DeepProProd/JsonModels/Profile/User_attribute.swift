@@ -22,5 +22,10 @@ struct User_attribute : Codable {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
 		dob = try values.decodeIfPresent(String.self, forKey: .dob)
 	}
+    
+    
+    init(dob: String) {
+        self.dob = dob
+    }
 
 }

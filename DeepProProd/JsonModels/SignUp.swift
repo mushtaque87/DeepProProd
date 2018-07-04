@@ -21,7 +21,7 @@ struct SignUpRequest: Codable {
 }
 
 struct User_attributes : Codable{
-    let dob: String
+    var dob: String
    // let gender : Gender?
 }
 

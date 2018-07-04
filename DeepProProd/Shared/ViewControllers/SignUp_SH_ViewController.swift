@@ -44,6 +44,9 @@ class SignUp_SH_ViewController: UIViewController {
             }).disposed(by: disposeBag)
         
          Helper.lockOrientation(.portrait)
+        self.backgroundImage.isHidden = true
+        self.view.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+
     }
     
         // Do any additional setup after loading the view.
@@ -57,14 +60,16 @@ class SignUp_SH_ViewController: UIViewController {
     // MARK: - UI Event and Action
   
     @IBAction func close(_ sender: Any) {
-      /*  self.dismiss(animated: true) {
+       self.dismiss(animated: true) {
             print("Dismmised")
-        } */
+        }
         
+        /*
         if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
         {
             rootVc.remove(viewController: rootVc.signUp_ViewController, from: rootVc)
         }
+ */
     }
     
     
@@ -159,9 +164,20 @@ class SignUp_SH_ViewController: UIViewController {
             else {
                 if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
                 {
+                    /*
                     let alert = UIAlertController(title: "Warning", message:"All the Details are not filled properly" , preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                     rootVc.present(alert, animated: true, completion: nil)
+                     */
+                    
+                    let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+                    hud.mode = .text
+                    hud.label.text = "Please insert correct details."
+                    hud.hide(animated: true, afterDelay: 1.5)
+//                    let infoView = InfoView.init(frame: self.view.bounds);
+//                    hud.customView = infoView
+//                    hud.customView?.bringSubview(toFront: infoView)
+//                    hud.show(animated: true)
                     
                 }
             return false
@@ -169,13 +185,19 @@ class SignUp_SH_ViewController: UIViewController {
         
         guard passordTextField.text == confirmPasswordTxtField.text else {
             
+            /*
             if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
             {
                 let alert = UIAlertController(title: "Warning", message:"password and confirm password field are not same" , preferredStyle: UIAlertControllerStyle.alert)
                 alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.default, handler: nil))
                 rootVc.present(alert, animated: true, completion: nil)
                 
-            }
+            }*/
+            
+            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+            hud.mode = MBProgressHUDMode.text
+            hud.label.text = "Password and Confirm password field are not same"
+            
             return false
         }
         

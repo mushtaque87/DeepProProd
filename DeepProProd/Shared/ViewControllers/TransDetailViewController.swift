@@ -724,7 +724,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
             let audioData =  try? Data(contentsOf: vc_DataModel.getDocumentsDirectory().appendingPathComponent("recording.wav"))
             //let encodedString = audioData?.base64EncodedString()
             
-            try grpcService.getWordPredictionFromGRPC(for:UserDefaults.standard.string(forKey: "uid")! ,assignment:(vc_DataModel.wordArray?[vc_DataModel.wordIndex].parentId)!  , unit:(vc_DataModel.wordArray?[vc_DataModel.wordIndex].id)! , with: audioData!, and: wordTextView.text!, onSuccess: {(response) in
+            try grpcService.getWordPredictionFromGRPC(for:UserDefaults.standard.string(forKey: "uid")! , unit:(vc_DataModel.wordArray?[vc_DataModel.wordIndex].id)! , with: audioData!, and: wordTextView.text!, onSuccess: {(response) in
                 
                 self.activityIndicator.isHidden = true
                 self.activityIndicator.stopAnimating()

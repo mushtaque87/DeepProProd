@@ -40,12 +40,15 @@ class PracticeViewModel: NSObject,
    // var wordResult : Word_Prediction?
     var predictionData : Pronunciation_Prediction = Pronunciation_Prediction.init()
     lazy var answersList = [UnitAnswers]()
-    lazy var unitList = [Units]()
+    lazy var unitList = [ContentUnits]()
     var selectedAnswer: Prediction_result_json?
     weak var delegate: PracticeBoardProtocols?
     var streamPlayer = AVPlayer()
-    var isSpeaking : Bool = false
+    var isTTSSpeaking : Bool = false
+    var isStreamPlaying : Bool = false
+    var isRecordingOn : Bool = false
     var playingIndexPath : IndexPath?
+    let speechSynthesizer = AVSpeechSynthesizer()
     /*var isSpeaking : Observable<Bool> {
         return Observable.
     }*/
@@ -227,25 +230,25 @@ class PracticeViewModel: NSObject,
     //MARK: - Speech Synthesizer Delegate
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didStart utterance: AVSpeechUtterance) {
         print("😀 Expert didStart Speaking")
-        isSpeaking = true
-        delegate?.setExpertSpeechButtonImage()
+        isTTSSpeaking = true
+        delegate?.setExpertSpeechButtonImage(set: true)
     }
     
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
          print("🤬 Expert didFinish Speaking")
-        isSpeaking = false
-        delegate?.setExpertSpeechButtonImage()
+        isTTSSpeaking = false
+        delegate?.setExpertSpeechButtonImage(set: false)
     }
     
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didPause utterance: AVSpeechUtterance) {
         print("🤬 Expert didPause Speaking")
-        isSpeaking = false
-        delegate?.setExpertSpeechButtonImage()
+        isTTSSpeaking = false
+        delegate?.setExpertSpeechButtonImage(set: false)
     }
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
         print("🤬 Expert didCancel Speaking")
-        isSpeaking = false
-        delegate?.setExpertSpeechButtonImage()
+        isTTSSpeaking = false
+        delegate?.setExpertSpeechButtonImage(set: false)
     }
     
     
@@ -273,7 +276,7 @@ class PracticeViewModel: NSObject,
         delegate?.reloadtable()
         if let wordResult = selectedAnswer?.wordResults {
             delegate?.setAttributedText(with: createAttributedText(forText: wordResult))
-            delegate?.displayResultType(to: .phenomeTable, from: .graph)
+            delegate?.displayResultType(to: .phenomeTable, from: .score)
         } else{
             print("ℹ️ No Phoneme data available")
         }
@@ -284,19 +287,61 @@ class PracticeViewModel: NSObject,
         print("chartValueNothingSelected")
     }
     
+    //MARK: - Audio Play Operations
+    func playTTS(for text:String)
+    {
+        guard !isRecordingOn else {
+            return
+        }
+        
+        if (speechSynthesizer.isSpeaking) {
+            stopPlayingTTS()
+        } else
+        {
+            do {
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+                try AVAudioSession.sharedInstance().setActive(true)
+                //  try AVAudioSession.overrideOutputAudioPort(AVAudioSession.sharedInstance())
+                
+                let speechUtterance = AVSpeechUtterance(string: text)
+                speechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
+                speechUtterance.pitchMultiplier = 1.0
+                speechUtterance.volume = 1.0
+                speechSynthesizer.delegate = self
+                speechSynthesizer.speak(speechUtterance)
+                
+            } catch let error {
+                print(error.localizedDescription)
+                
+            }
+        }
+        
+    }
+    
+    func stopPlayingTTS() {
+        if (isTTSSpeaking) {
+        speechSynthesizer.stopSpeaking(at: .immediate)
+        }
+    }
+    
     @objc func playUserAudio(_ sender: UIButton)
     {
-       
+        //Dont Play if Recording is on.
+        guard !isRecordingOn else {
+            return
+        }
+        //Reset Expert Audio before playing user audio
+        stopPlayingTTS()
+        delegate?.setExpertSpeechButtonImage(set: false)
+        delegate?.resetAudioButtonInCollectionView(at: answersList.count - 1)
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
             try AVAudioSession.sharedInstance().setActive(true)
             
         if let url = answersList[sender.tag].audio_url {
-           
             playStreamAudio(for: url, of: sender)
          }
         else {
-            
             print("❌ Audio Url is not available")
             }
             
@@ -309,11 +354,16 @@ class PracticeViewModel: NSObject,
     
     func playStreamAudio( for url:String , of button:UIButton?)
     {
+        //Dont Play if Recording is on.
+        guard !isRecordingOn else {
+            return
+        }
+        
         guard streamPlayer.timeControlStatus != .playing else {
-            streamPlayer.pause()
-            if let playingIndexPath = playingIndexPath {
-                delegate?.reloadCellInCollectionView(at: [playingIndexPath], isPlaying: false)
-            }
+            stopStreamPlaying()
+//            if let playingIndexPath = playingIndexPath {
+//                delegate?.reloadCellInCollectionView(at: [playingIndexPath], isPlaying: false)
+//            }
             return
         }
         // let url = audioUrl //"http://192.168.71.11:7891/rec.wav"
@@ -326,14 +376,17 @@ class PracticeViewModel: NSObject,
         streamPlayer.rate = 1.0;
         streamPlayer.volume = 1.0
         streamPlayer.play()
-        
+        isStreamPlaying = true
         
         if let button = button {
             let row : Int = (button.layer.value(forKey: "row")) as! Int
             playingIndexPath  = IndexPath(row: row, section: 0)
-            delegate?.reloadCellInCollectionView(at: [playingIndexPath!], isPlaying: true)
-           // delegate?.reloadCollectionView()
             
+            if playingIndexPath?.row == 1001 {
+                delegate?.updateExpertAudioButton(isPlaying: true)
+            } else {
+            delegate?.reloadCellInCollectionView(at: [playingIndexPath!], isPlaying: true)
+            }
             
              NotificationCenter.default.addObserver(self, selector:#selector(playerDidFinishPlaying(_:)),name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: streamPlayer.currentItem )
              //NotificationCenter.default.post(name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: streamPlayer.currentItem, userInfo: ["row" : row])
@@ -346,9 +399,29 @@ class PracticeViewModel: NSObject,
 
     }
     
+    func stopStreamPlaying() {
+        if(isStreamPlaying) {
+            isStreamPlaying = false
+            streamPlayer.pause()
+            if let playingIndexPath = playingIndexPath {
+                if playingIndexPath.row == 1001 {
+                    delegate?.updateExpertAudioButton(isPlaying: false)
+                } else {
+                    delegate?.reloadCellInCollectionView(at: [playingIndexPath], isPlaying: false)
+                }
+            }
+
+        }
+    }
+    
    @objc func playerDidFinishPlaying(_ notification: NSNotification) {
         print("playerDidFinishPlaying")
+        isStreamPlaying = false
+    if playingIndexPath?.row == 1001 {
+        delegate?.updateExpertAudioButton(isPlaying: false)
+    } else {
         delegate?.reloadCellInCollectionView(at: [playingIndexPath!], isPlaying: false)
+    }
 //    if let userInfo = notification.userInfo {
 //        if let row = userInfo["row"] {
 //
@@ -375,12 +448,12 @@ class PracticeViewModel: NSObject,
             
             if let score = word.score {
             if (score > 70.0) {
-                color = UIColor(red: 0/255.0, green: 124/255.0, blue: 0/255.0, alpha: 1.0)
+                color = UIColor(red: 8.0/255.0, green: 206.0/255.0, blue: 2.0/255.0, alpha: 1.0)
             } else if (score < 30.0) {
-                color = UIColor(red: 180.0/255.0, green: 0/255.0, blue: 0/255.0, alpha: 1.0)
+                color = UIColor(red: 255.0/255.0, green: 69.0/255.0, blue: 40.0/255.0, alpha: 1.0)
             }
             else{
-                color = UIColor.blue
+                color = UIColor(red: 232.0/255.0, green: 224.0/255.0, blue: 0/255.0, alpha: 1.0)
                 
                 }
                 
@@ -464,13 +537,22 @@ class PracticeViewModel: NSObject,
         return (nil,0)
     }
     
-    public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool){
+    func clearData()
+    {
+        scoreData.removeAll()
+        answersList.removeAll()
+        selectedAnswer = nil
         
     }
+    
+   
   // MARK: - TextView Delegate
     public func textViewShouldBeginEditing(_ textView: UITextView) -> Bool
     {
-      
+        if(textView.text == "Type Here"){
+            textView.text = ""
+            textView.textColor = UIColor.white
+        }
         delegate?.resetTextViewContent(textView:textView)
         return true
      
@@ -495,6 +577,10 @@ class PracticeViewModel: NSObject,
        
             //parentObject.wordTextView.text = textView.text
             //parentObject.showTextField()
+            if(textView.text == ""){
+                textView.text = "Type Here"
+                textView.textColor = UIColor.lightGray
+            }
             delegate?.resetTextViewContent(textView: textView)
         
     }
@@ -513,14 +599,15 @@ class PracticeViewModel: NSObject,
 extension UITextView {
 
     override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
-       
-        
+
         UIMenuController.shared.isMenuVisible = false
         
+        /*
         if action == #selector(UIResponderStandardEditActions.paste(_:)) {
         print("paste")
         return true
         }
+        */
         return false
 }
     

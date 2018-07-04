@@ -29,7 +29,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     @IBOutlet weak var expert_AudioButton: UIButton!
     @IBOutlet weak var scoreCollectionView: UICollectionView!
     @IBOutlet weak var textView: UITextView!
-    var tasktype : TaskType = .freeSpeech
+    var tasktype : TaskType = .freeText
     var audioFolderPath: String?
     var currentResultViewType:ResultViewType = .score
     @IBOutlet weak var showResultTypeButton: UIButton!
@@ -40,7 +40,6 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     @IBOutlet weak var clearButton: UIButton!
     
    //Record Button
-    let speechSynthesizer = AVSpeechSynthesizer()
     @IBOutlet weak var recordButton: RecordButton!
     var progressTimer : Timer!
     var progress : CGFloat! = 0
@@ -64,9 +63,11 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        edgesForExtendedLayout = []
+        self.navigationItem.title = "Board"
         phonemeTable.isHidden = true
         // Do any additional setup after loading the view.
-        self.view.backgroundColor = UIColor(red: 102/255, green: 204/255, blue: 204/255, alpha: 0.9)
+        self.view.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
         viewModel.delegate = self
         self.scoreCollectionView.register(UINib(nibName: "Scores_Cell", bundle: nil), forCellWithReuseIdentifier: "scoresCell")
         scoreCollectionView.delegate = viewModel
@@ -99,6 +100,9 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         contentView.layer.borderWidth = 1
         resetTextViewContent(textView: textView)
         
+        scoreCollectionView.layer.borderColor = UIColor.white.cgColor
+        scoreCollectionView.layer.borderWidth = 1
+        
         recordingSession = AVAudioSession.sharedInstance()
         do {
             try recordingSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
@@ -118,13 +122,20 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         //scoreCollectionView.isHidden = true
         setBarGraph()
         displayResultType(to: currentResultViewType, from: .graph)
-        keyboard.setImage(UIImage(named: "keypad.png"), for: .normal)
+        keyboard.setImage(UIImage(named: "pencil-edit.png"), for: .normal)
         audioFolderPath = Helper.getAudioDirectory(for: tasktype)
         
+        let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(controlKeyboard(sender:)))
+        singleTapGesture.numberOfTapsRequired = 1
+       // textView.addGestureRecognizer(singleTapGesture)
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(displayWordPhonemeSection(sender:)))
-        tapGesture.numberOfTapsRequired = 2
-        textView.addGestureRecognizer(tapGesture)
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(displayWordPhonemeSection(sender:)))
+        doubleTapGesture.numberOfTapsRequired = 1
+        textView.addGestureRecognizer(doubleTapGesture)
+        
+        //singleTapGesture.require(toFail: doubleTapGesture)
+        
+        // doubleTapGesture.require(toFail: singleTapGesture)
         
         
         //let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(displayWordPhonemeSection(sender:)))
@@ -132,19 +143,20 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         
        // _ = viewModel.isSpeaking.bind(to: expert_AudioButton.rx.image(for: .normal))
         //expert_AudioButton.rx.image().
-        guard tasktype != TaskType.freeSpeech else {
+       
+        guard tasktype != TaskType.freeText else {
             textView.text = "Type Here"
-            keyboard.setImage(UIImage(named: "keypad.png"), for: .normal)
-            textView.isEditable = false
+            keyboard.setImage(UIImage(named: "pencil-edit.png"), for: .normal)
+            textView.isEditable = true
             keyboard.isHidden = false
-            textView.isSelectable = false
+            textView.isSelectable = true
             textView.inputView?.resignFirstResponder()
             //textView.isUserInteractionEnabled = true
             clearButton.isHidden = false
            
             return
         }
-        
+         keyboard.isHidden = true
         textView.isEditable = false
         
 
@@ -155,6 +167,8 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         textView.text = viewModel.unitList[unitIndex].question_text
         resetTextViewContent(textView: textView)
         clearAllAudioFile()
+        
+        expert_AudioButton.layer.setValue(1001, forKey: "row")
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -174,7 +188,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        guard tasktype == TaskType.freeSpeech else {
+        guard tasktype == TaskType.freeText else {
             //clearAllAudioFile()
             return
         }
@@ -187,12 +201,46 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     
     func fetchUnitAnswers(for index: Int){
         //Validate if the answers is available then return back the
-        
-        
         let hud = MBProgressHUD.showAdded(to: resultView , animated: true)
         hud.mode = MBProgressHUDMode.indeterminate
         hud.label.text = "Fetching Unit History. Please wait"
         
+        switch tasktype {
+        case .content:
+        ServiceManager().getUnitsAnswer(for:self.viewModel.unitList[index].id!, ofStudent: UserDefaults.standard.string(forKey: "uid")!, onSuccess: { response  in
+            
+            // let practiceBoardVC = PracticeBoardViewController(nibName:"PracticeBoardViewController",bundle:nil)
+            // var unitAnswers = [UnitAnswers]()
+            for count in 0..<response.count{
+                if let base =  response[count].base {
+                    self.viewModel.answersList.append(base)
+                    self.viewModel.scoreData.append(base.score!) // Used to store graph scores
+                }
+            }
+            
+            hud.hide(animated: true)
+            self.reloadCollectionView()
+            self.updateGraph()
+            // self.navigationController?.pushViewController(practiceBoardVC, animated: true)
+            
+            
+        }, onHTTPError: { (httperror) in
+            hud.mode = MBProgressHUDMode.text
+            hud.label.text = httperror.description
+        }, onError: { (error) in
+            hud.mode = MBProgressHUDMode.text
+            hud.label.text = error.localizedDescription
+        },onComplete: {
+            hud.hide(animated: true)
+        })
+        break
+        default:
+            print("FreeSpeech")
+            hud.hide(animated: true)
+            break
+        }
+        
+        /*
         switch tasktype {
         case .assignment:
             ServiceManager().getAssignmentsUnitsAnswers(forUnit:self.viewModel.unitList[index].id!, ofAssignment:self.assignmentId  , ofStudent: UserDefaults.standard.string(forKey: "uid")!, onSuccess: { response  in
@@ -241,6 +289,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
             hud.hide(animated: true)
             break
         }
+ */
     }
     
     /*
@@ -260,37 +309,30 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     }
     
     @IBAction func playExpertVoice(_ sender: Any) {
+        //viewModel.stopStreamPlaying()
         
         switch tasktype {
-        case .assignment , .practice:
+        case .content:
 //           viewModel.playStreamAudio(for: "")
 //           return
            
             if let audioUrl = viewModel.unitList[unitIndex].audio_url
             {
-              viewModel.playStreamAudio(for: audioUrl, of: nil)
+                viewModel.playStreamAudio(for: audioUrl, of: sender as? UIButton)
                 
             }
         else {
-            playTTS(for: textView.text)
+            viewModel.playTTS(for: textView.text)
             }
             break
-        case .freeSpeech:
-            playTTS(for: textView.text)
+        case .freeText:
+            viewModel.playTTS(for: textView.text)
             break
         }
         
     }
     
-   
-    
-    func setExpertSpeechButtonImage() {
-        if (viewModel.isSpeaking){
-            expert_AudioButton.setImage(UIImage(named: "player_stop"), for: .normal)
-        } else {
-            expert_AudioButton.setImage(UIImage(named: "speaker"), for: .normal)
-        }
-    }
+ 
     
     public func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool)
     {
@@ -309,6 +351,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     func finishRecording(success: Bool) {
         audioRecorder.stop()
         audioRecorder = nil
+        viewModel.isRecordingOn = false
          self.progressTimer.invalidate()
         if success {
                 callGRPCService()
@@ -337,7 +380,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
             //let encodedString = audioData?.base64EncodedString()
             if let audiodata = audioData {
                 var unitId : Int = 0
-                if tasktype != .freeSpeech {
+                if tasktype != .freeText {
                     unitId =  self.viewModel.unitList[unitIndex].id!
                     
                 }
@@ -423,6 +466,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         //scoreCollectionView.reloadData()
         //updateGraph()
         // return
+        textView.resignFirstResponder()
         print("Recording: ", (sender as! RecordButton).buttonState == .recording)
         switch (sender as! RecordButton).buttonState {
         case .recording:
@@ -477,6 +521,8 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     
     func startRecording() {
         
+        viewModel.stopPlayingTTS()
+        viewModel.stopStreamPlaying()
         
         self.progressTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(PracticeBoardViewController.updateProgress), userInfo: nil, repeats: true)
         
@@ -504,6 +550,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
             audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
             audioRecorder.delegate = self
             audioRecorder.record()
+            viewModel.isRecordingOn = true
             //recordButton.setImage(UIImage(named: "player_stop.png")!, for: UIControlState.normal)
             //recordButton.setTitle("Tap to Stop", for: .normal)
         } catch {
@@ -623,6 +670,15 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         barChartView.fitBars = true
     }
     
+    //MARK: - Protocols
+    func updateExpertAudioButton(isPlaying: Bool) {
+        if isPlaying == true {
+            expert_AudioButton.setImage(UIImage(named: "speakerstop"), for: .normal)
+        } else {
+            expert_AudioButton.setImage(UIImage(named: "speakerup"), for: .normal)
+        }
+    }
+    
     func reloadtable() {
         phonemeTable.reloadData()
     }
@@ -633,11 +689,31 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     
     func reloadCellInCollectionView(at indexPath:[IndexPath] , isPlaying : Bool) {
        
-        let cell = self.scoreCollectionView.cellForItem(at: indexPath[0]) as! Scores_Cell
+        if let cell = self.scoreCollectionView.cellForItem(at: indexPath[0]) {
+            let cell = cell as! Scores_Cell
         if isPlaying == true {
-            cell.audioPlayButton.setImage(UIImage(named: "player_stop"), for: .normal)
+            cell.audioPlayButton.setImage(UIImage(named: "speakerstop"), for: .normal)
         } else {
-            cell.audioPlayButton.setImage(UIImage(named: "speaker"), for: .normal)
+            cell.audioPlayButton.setImage(UIImage(named: "speakerup"), for: .normal)
+        }
+        }
+    }
+    
+    func resetAudioButtonInCollectionView(at count:Int) {
+        for row in 0...count {
+            if let cell = self.scoreCollectionView.cellForItem(at: IndexPath(row: row , section: 0)) {
+                let cell = cell as! Scores_Cell
+                cell.audioPlayButton.setImage(UIImage(named: "speakerup"), for: .normal)
+            }
+       
+        }
+    }
+
+    func setExpertSpeechButtonImage(set isTTSSpeaking:Bool) {
+        if (isTTSSpeaking){
+            expert_AudioButton.setImage(UIImage(named: "speakerstop"), for: .normal)
+        } else {
+            expert_AudioButton.setImage(UIImage(named: "speakerup"), for: .normal)
         }
     }
     
@@ -668,29 +744,41 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
             textView.isEditable = true
             textView.isSelectable = true
             //textView.inputView?.becomeFirstResponder()
-            keyboard.setImage(UIImage(named: "do-not-touch.png"), for: .normal)
+            keyboard.setImage(UIImage(named: "pencil-unedit.png"), for: .normal)
         } else {
             textView.isEditable = false
             textView.isSelectable = false
            // textView.inputView?.resignFirstResponder()
-            keyboard.setImage(UIImage(named: "keypad.png"), for: .normal)
+            keyboard.setImage(UIImage(named: "pencil-edit.png"), for: .normal)
         }
         
     }
     
     @IBAction func clearTheScores(_ sender: Any) {
-        clearData()
+        viewModel.clearData()
+        refreshUI()
+    }
+    
+    @objc func controlKeyboard (sender:UITapGestureRecognizer){
+        guard sender.numberOfTapsRequired == 1 else {
+            return
+        }
+        if(textView.isFirstResponder) {
+            textView.resignFirstResponder()
+        } else {
+            textView.becomeFirstResponder()
+        }
     }
     
     @objc func displayWordPhonemeSection (sender:UITapGestureRecognizer){
-        
+        textView.resignFirstResponder()
         guard viewModel.selectedAnswer != nil else {
             print("‼️ No answer is selected. Please select an answer")
             
             return
         }
         let tappedWord =  viewModel.tapResponse(recognizer: sender)
-        displayResultType(to: .phenomeTable, from: currentResultViewType)
+        displayResultType(to: .phenomeTable, from: .score)
         self.phonemeTable.scrollToRow(at: IndexPath(row: 0, section: tappedWord.details.section), at: UITableViewScrollPosition.top, animated: true)
         
     }
@@ -703,14 +791,19 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         switch currentType {
         case .score:
             //showResultTypeButton.setTitle("S", for: .normal)
-            showResultTypeButton.setImage(UIImage(named:"scoreTiles"), for: .normal)
+            clearButton.setImage(UIImage(named:"trash_black.png"), for: .normal)
+            showResultTypeButton.setImage(UIImage(named:"tiles-view"), for: .normal)
+            
             break
         case .phenomeTable:
-            showResultTypeButton.setTitle("P", for: .normal)
+            clearButton.setImage(UIImage(named:"trash_black.png"), for: .normal)
+            showResultTypeButton.setImage(UIImage(named:"tiles-view"), for: .normal)
+            //showResultTypeButton.setTitle("P", for: .normal)
             break
         default:
             //showResultTypeButton.setTitle("G", for: .normal)
-            showResultTypeButton.setImage(UIImage(named:"graphButton"), for: .normal)
+            clearButton.setImage(UIImage(named:"trash_1"), for: .normal)
+            showResultTypeButton.setImage(UIImage(named:"bar-chart"), for: .normal)
 
             break
         }
@@ -752,36 +845,8 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     }
     */
     
-    func playTTS(for text:String)
-    {
-        if (speechSynthesizer.isSpeaking) {
-            speechSynthesizer.stopSpeaking(at: .immediate)
-        } else
-        {
-            do {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-                try AVAudioSession.sharedInstance().setActive(true)
-                //  try AVAudioSession.overrideOutputAudioPort(AVAudioSession.sharedInstance())
-                
-                let speechUtterance = AVSpeechUtterance(string: text)
-                speechUtterance.rate = AVSpeechUtteranceDefaultSpeechRate
-                speechUtterance.pitchMultiplier = 1.0
-                speechUtterance.volume = 1.0
-                speechSynthesizer.delegate = viewModel
-                speechSynthesizer.speak(speechUtterance)
-                
-            } catch let error {
-                print(error.localizedDescription)
-                
-            }
-        }
-        
-    }
     
-    @objc func audioDidFinishPlaying(for player:AVPlayer) {
-        
-        
-    }
+  
    
     @objc func changeWord(sender:UISwipeGestureRecognizer){
        
@@ -801,11 +866,13 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
             return
         }
         // wordLabel.text = vc_DataModel.wordArray![vc_DataModel.wordIndex]
-        
+        displayResultType(to: .score, from: .graph)
         let word  = viewModel.unitList[unitIndex]
         textView.text = word.question_text
+        textView.textColor = UIColor.white
         resetTextViewContent(textView: textView)
-        clearData()
+        viewModel.clearData()
+        refreshUI()
         fetchUnitAnswers(for: unitIndex)
         //
  
@@ -853,16 +920,13 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         self.resetTextViewContent(textView: self.textView)
     }
     
-    func clearData()
-    {
-        viewModel.scoreData.removeAll()
-        updateGraph()
-        viewModel.answersList.removeAll()
-        reloadCollectionView()
-        viewModel.selectedAnswer = nil
-        reloadtable()
-    }
+    
 
+    func refreshUI(){
+         updateGraph()
+         reloadCollectionView()
+         reloadtable()
+    }
     
     @objc func backFromPracticeBoard() {
         clearAllAudioFile()

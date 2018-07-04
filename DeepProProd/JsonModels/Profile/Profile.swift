@@ -7,22 +7,23 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+For support, please feel free to contact me at https://www.linkedin.com/in/syedabsar
 
 */
 
 import Foundation
 struct Profile : Codable {
-	let email : String?
-	let first_name : String?
-	let last_name : String?
-	let user_attributes : User_attribute?
+	var email : String?
+	var first_name : String?
+	var last_name : String?
+	var user_attributes : User_attributes?
 
 	enum CodingKeys: String, CodingKey {
 
 		case email = "email"
 		case first_name = "first_name"
 		case last_name = "last_name"
-		case user_attributes
+		case user_attributes = "user_attributes"
 	}
 
 	init(from decoder: Decoder) throws {
@@ -30,7 +31,13 @@ struct Profile : Codable {
 		email = try values.decodeIfPresent(String.self, forKey: .email)
 		first_name = try values.decodeIfPresent(String.self, forKey: .first_name)
 		last_name = try values.decodeIfPresent(String.self, forKey: .last_name)
-		user_attributes = try User_attribute(from: decoder)
+		user_attributes = try values.decodeIfPresent(User_attributes.self, forKey: .user_attributes)
 	}
+
+    init(first_name: String, last_name: String , user_attributes: User_attributes) {
+        self.first_name = first_name
+        self.last_name = last_name
+        self.user_attributes = user_attributes
+    }
 
 }

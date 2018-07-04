@@ -16,7 +16,7 @@ enum UnitStatus : String   {
 
 class Assignments_UnitsModel: NSObject, UITableViewDataSource, UITableViewDelegate {
     weak var delegate: unitsProtocols?
-    var unitList =  Array<FailableDecodable<Units>>()
+    var unitList =  Array<FailableDecodable<ContentUnits>>()
     override init() {
         
         do {
@@ -51,17 +51,19 @@ class Assignments_UnitsModel: NSObject, UITableViewDataSource, UITableViewDelega
         guard unitList.count != 0 else {
             return 0
         }
-        return unitList.count + 1
+        return unitList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        
+        /*
         if(indexPath.row > unitList.count - 1)
         {
             let submitCell =  tableView.dequeueReusableCell(withIdentifier: "logout", for: indexPath) as! LogOutCell
             submitCell.logOut.titleLabel?.textAlignment = .center
             submitCell.logOut.setTitle("Submit", for: .normal)
+            submitCell.logOut.setBackgroundImage(UIImage(named: "white button"), for: .normal)
+            submitCell.logOut.setTitleColor(UIColor(red: 88/255, green: 153/255, blue: 95/255, alpha: 0.9), for: .normal)
             submitCell.contentView.backgroundColor = UIColor.clear
             submitCell.selectionStyle = UITableViewCellSelectionStyle.none
             submitCell.logOut.addTarget(self, action: #selector(submitAssignment), for: .touchUpInside)
@@ -69,7 +71,7 @@ class Assignments_UnitsModel: NSObject, UITableViewDataSource, UITableViewDelega
             return submitCell
             
         }
-        
+        */
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "unitCell", for: indexPath) as! UnitTableViewCell
         cell.contentView.backgroundColor = UIColor.clear
@@ -108,9 +110,9 @@ class Assignments_UnitsModel: NSObject, UITableViewDataSource, UITableViewDelega
            // cell.assignmentStatus.text = (unit[indexPath.row].base?.unit_status)!
             switch unitStatus {
             case .assigned:
-                cell.detailView.backgroundColor = UIColor(red: 248/255, green: 182/255, blue: 130/255, alpha: 0.9)
+                cell.detailView.backgroundColor = UIColor(red: 201/255, green: 74/255, blue: 74/255, alpha: 0.9)
             case .submitted :
-                cell.detailView.backgroundColor = UIColor(red: 159/255, green: 210/255, blue: 144/255, alpha: 0.9)
+                cell.detailView.backgroundColor = UIColor(red: 88/255, green: 153/255, blue: 95/255, alpha: 0.9)
                 
             }
         }

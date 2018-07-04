@@ -51,11 +51,11 @@
                                     <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="17"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 </textView>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y2n-Dk-L7E" customClass="RecordButton" customModule="DeepProProd" customModuleProvider="target">
-                                    <rect key="frame" x="10" y="167.5" width="30" height="30"/>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y2n-Dk-L7E" customClass="RecordButton" customModule="DeepProProd" customModuleProvider="target">
+                                    <rect key="frame" x="10" y="167.5" width="35" height="35"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="y2n-Dk-L7E" secondAttribute="height" multiplier="1:1" id="Q5L-kO-Zv5"/>
-                                        <constraint firstAttribute="height" constant="30" id="hvy-4p-KY7"/>
+                                        <constraint firstAttribute="height" constant="35" id="hvy-4p-KY7"/>
                                     </constraints>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
@@ -66,21 +66,24 @@
                                         <action selector="recordAndPredict:" destination="-1" eventType="touchUpInside" id="BOg-1Q-ugS"/>
                                     </connections>
                                 </button>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zJK-5y-sUn">
-                                    <rect key="frame" x="270" y="167.5" width="30" height="30"/>
+                                <button opaque="NO" tag="1001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zJK-5y-sUn">
+                                    <rect key="frame" x="135" y="167.5" width="40" height="40"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="30" id="Jme-sM-BUN"/>
-                                        <constraint firstAttribute="width" constant="30" id="fJ2-nG-Maa"/>
+                                        <constraint firstAttribute="height" constant="40" id="Jme-sM-BUN"/>
+                                        <constraint firstAttribute="width" constant="40" id="fJ2-nG-Maa"/>
                                     </constraints>
-                                    <state key="normal" backgroundImage="speaker">
+                                    <state key="normal" image="speakerup">
                                         <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
                                     <connections>
                                         <action selector="playExpertVoice:" destination="-1" eventType="touchUpInside" id="hUA-ry-b6G"/>
                                     </connections>
                                 </button>
-                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6mm-Df-Jgf">
-                                    <rect key="frame" x="270" y="5" width="30" height="34"/>
+                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6mm-Df-Jgf">
+                                    <rect key="frame" x="271" y="168" width="34" height="34"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="6mm-Df-Jgf" secondAttribute="height" multiplier="1:1" id="Bzx-oE-9kB"/>
+                                    </constraints>
                                     <state key="normal">
                                         <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </state>
@@ -91,16 +94,16 @@
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstItem="y2n-Dk-L7E" firstAttribute="bottom" secondItem="iVY-Bf-Or5" secondAttribute="bottom" constant="-10" id="8Gy-iU-ikl"/>
+                                <constraint firstItem="y2n-Dk-L7E" firstAttribute="bottom" secondItem="iVY-Bf-Or5" secondAttribute="bottom" constant="-5" id="8Gy-iU-ikl"/>
                                 <constraint firstItem="oVD-Hc-cAQ" firstAttribute="top" secondItem="iVY-Bf-Or5" secondAttribute="top" constant="5" id="9s4-KQ-mHJ"/>
-                                <constraint firstItem="zJK-5y-sUn" firstAttribute="trailing" secondItem="iVY-Bf-Or5" secondAttribute="trailing" constant="-10" id="A5h-iZ-IPO"/>
                                 <constraint firstItem="oVD-Hc-cAQ" firstAttribute="width" secondItem="iVY-Bf-Or5" secondAttribute="width" id="As3-9q-Ssk"/>
+                                <constraint firstItem="zJK-5y-sUn" firstAttribute="centerX" secondItem="iVY-Bf-Or5" secondAttribute="centerX" id="Hyw-FC-m5x"/>
                                 <constraint firstItem="oVD-Hc-cAQ" firstAttribute="bottom" secondItem="iVY-Bf-Or5" secondAttribute="bottom" constant="-5" id="OBK-ni-vZT"/>
-                                <constraint firstAttribute="bottom" secondItem="zJK-5y-sUn" secondAttribute="bottom" constant="10" id="Ouf-Ek-fRL"/>
+                                <constraint firstAttribute="bottom" secondItem="zJK-5y-sUn" secondAttribute="bottom" id="Ouf-Ek-fRL"/>
+                                <constraint firstAttribute="bottom" secondItem="6mm-Df-Jgf" secondAttribute="bottom" constant="5.5" id="YzH-9Z-77A"/>
                                 <constraint firstItem="oVD-Hc-cAQ" firstAttribute="leading" secondItem="iVY-Bf-Or5" secondAttribute="leading" id="d5N-YQ-Wqp"/>
-                                <constraint firstItem="6mm-Df-Jgf" firstAttribute="trailing" secondItem="iVY-Bf-Or5" secondAttribute="trailing" constant="-10" id="dX6-i7-DKp"/>
+                                <constraint firstItem="6mm-Df-Jgf" firstAttribute="trailing" secondItem="iVY-Bf-Or5" secondAttribute="trailing" constant="-5" id="dX6-i7-DKp"/>
                                 <constraint firstAttribute="leading" secondItem="y2n-Dk-L7E" secondAttribute="leading" constant="-10" id="wkJ-tM-0Gv"/>
-                                <constraint firstItem="6mm-Df-Jgf" firstAttribute="top" secondItem="iVY-Bf-Or5" secondAttribute="top" constant="5" id="x5X-8i-X0b"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="y60-wj-EAR" userLabel="ResultView">
@@ -116,7 +119,7 @@
                                 </view>
                                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="t3W-Gb-Bg2">
                                     <rect key="frame" x="0.0" y="5" width="310" height="202.5"/>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="6Fg-GL-Yhy">
                                         <size key="itemSize" width="50" height="50"/>
                                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -131,11 +134,10 @@
                                     </connections>
                                 </button>
                                 <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0IN-LX-ML9">
-                                    <rect key="frame" x="5" y="178.5" width="24" height="24"/>
-                                    <state key="normal" backgroundImage="trash"/>
+                                    <rect key="frame" x="5" y="170.5" width="32" height="32"/>
+                                    <state key="normal" backgroundImage="trash_1"/>
                                     <connections>
                                         <action selector="clearTheScores:" destination="-1" eventType="touchUpInside" id="B5X-FJ-JRd"/>
-                                        <action selector="showResultType:" destination="-1" eventType="touchUpInside" id="NRk-Od-waB"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -181,7 +183,7 @@
         </view>
     </objects>
     <resources>
-        <image name="speaker" width="128" height="128"/>
-        <image name="trash" width="24" height="24"/>
+        <image name="speakerup" width="32" height="32"/>
+        <image name="trash_1" width="32" height="32"/>
     </resources>
 </document>

@@ -17,9 +17,8 @@ enum AssignmentType : String   {
 }
 
 enum TaskType : String   {
-    case practice
-    case assignment
-    case freeSpeech
+    case content
+    case freeText
 }
 
 
@@ -29,7 +28,7 @@ class AssignmentModel: NSObject, UITableViewDataSource, UITableViewDelegate {
     var practiceList =  Array<FailableDecodable<Practice>>()
     var sectionHeaders = Array<String>()
     var assignmentsForSection = Dictionary<String, Array<FailableDecodable<Assignment>>>()
-    var tasktype : TaskType = .practice //default
+    var tasktype : TaskType = .content //default
     var categoryId:Int?
    // var totalAssignmentList : Assignments?
     //var newAssignmentlist = Array<AssignmentsList.Assignments>()
@@ -78,7 +77,7 @@ class AssignmentModel: NSObject, UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         switch tasktype {
-        case .assignment:
+        case .content:
             return sectionHeaders.count
         default:
             return 1
@@ -106,7 +105,7 @@ class AssignmentModel: NSObject, UITableViewDataSource, UITableViewDelegate {
         }
         */
         switch tasktype {
-        case .assignment:
+        case .content:
             return fetchNumberOfRowsForSection(for: sectionHeaders[section])
             
         default:
@@ -124,7 +123,7 @@ class AssignmentModel: NSObject, UITableViewDataSource, UITableViewDelegate {
         titleLbl.font = UIFont.boldSystemFont(ofSize: 12)
         titleLbl.textColor = UIColor.white
         switch tasktype {
-        case .assignment:
+        case .content:
         titleLbl.text = sectionHeaders[section]
             break
         default:
@@ -147,7 +146,7 @@ class AssignmentModel: NSObject, UITableViewDataSource, UITableViewDelegate {
         //let assignment =  fetchListOfAssignmentsForDate(for: sectionHeaders[indexPath.section])[indexPath.row]
         //let assignment = assignmentsForSection[sectionHeaders[indexPath.section]]![indexPath.row]
         switch tasktype {
-        case .assignment:
+        case .content:
         let assignments = assignmnetList.filter ({(assignment: FailableDecodable<Assignment>) -> Bool in
             return Date().dateFromEpoc((assignment.base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy") == sectionHeaders[indexPath.section]
         })
@@ -225,7 +224,7 @@ class AssignmentModel: NSObject, UITableViewDataSource, UITableViewDelegate {
        
         
         switch tasktype {
-        case .assignment:
+        case .content:
         let assignments = assignmnetList.filter ({(assignment: FailableDecodable<Assignment>) -> Bool in
             return Date().dateFromEpoc((assignment.base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy") == sectionHeaders[indexPath.section]
         })
@@ -252,7 +251,7 @@ class AssignmentModel: NSObject, UITableViewDataSource, UITableViewDelegate {
     func sortAssignmentByDueDate()
     {
         switch tasktype {
-        case .assignment:
+        case .content:
             assignmnetList.sort {
                 ($0.base?.due_date)!  < ($1.base?.due_date)!
             }
@@ -270,7 +269,7 @@ class AssignmentModel: NSObject, UITableViewDataSource, UITableViewDelegate {
     {
         sectionHeaders.removeAll()
         switch tasktype {
-        case .assignment:
+        case .content:
         for assignment in assignmnetList
         {
             if (!sectionHeaders.contains((Date().dateFromEpoc((assignment.base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy"))) )
@@ -295,7 +294,7 @@ class AssignmentModel: NSObject, UITableViewDataSource, UITableViewDelegate {
     {
         var rowCount = 0
         switch tasktype {
-        case .assignment:
+        case .content:
         for assignment in assignmnetList
         {
             if(Date().dateFromEpoc((assignment.base?.due_date)!).toString(dateFormat: "EEEE, d MMM, yyyy") == date)
@@ -319,7 +318,7 @@ class AssignmentModel: NSObject, UITableViewDataSource, UITableViewDelegate {
     func fetchListOfAssignmentsForDate(for date:String) -> Array<FailableDecodable<Assignment>>
     {
         switch tasktype {
-        case .assignment:
+        case .content:
         var assignmentListForDate = Array<FailableDecodable<Assignment>>()
         for assignment in assignmnetList
         {

@@ -33,9 +33,13 @@
                         <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zOw-TD-wVk">
-                        <rect key="frame" x="76" y="4" width="40" height="40"/>
-                        <state key="normal" backgroundImage="speaker"/>
+                    <button opaque="NO" contentMode="scaleAspectFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zOw-TD-wVk">
+                        <rect key="frame" x="90" y="4" width="25" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="25" id="gs6-TY-s5N"/>
+                            <constraint firstAttribute="height" constant="25" id="xiQ-IP-Nls"/>
+                        </constraints>
+                        <state key="normal" image="speakerup"/>
                     </button>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="21-60-2018" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uag-QT-Jlu">
                         <rect key="frame" x="71" y="99" width="43" height="21"/>
@@ -49,15 +53,13 @@
                 </subviews>
             </view>
             <constraints>
-                <constraint firstItem="uag-QT-Jlu" firstAttribute="top" secondItem="zOw-TD-wVk" secondAttribute="bottom" constant="55" id="5aS-29-MHQ"/>
+                <constraint firstItem="ZTg-uK-7eu" firstAttribute="trailing" secondItem="zOw-TD-wVk" secondAttribute="trailing" constant="5" id="3k0-5m-Syq"/>
                 <constraint firstItem="zOw-TD-wVk" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="4" id="Iuo-Qu-tXn"/>
                 <constraint firstItem="ZTg-uK-7eu" firstAttribute="trailing" secondItem="uag-QT-Jlu" secondAttribute="trailing" constant="6" id="JIT-lA-rM4"/>
                 <constraint firstItem="ZTg-uK-7eu" firstAttribute="bottom" secondItem="cJs-dx-20V" secondAttribute="bottom" constant="5" id="N54-xS-GKb"/>
                 <constraint firstItem="cJs-dx-20V" firstAttribute="top" secondItem="ZTg-uK-7eu" secondAttribute="top" constant="15" id="O4L-db-8d4"/>
-                <constraint firstAttribute="trailing" secondItem="zOw-TD-wVk" secondAttribute="trailing" constant="4" id="VWV-n1-iK5"/>
                 <constraint firstItem="ZTg-uK-7eu" firstAttribute="bottom" secondItem="uag-QT-Jlu" secondAttribute="bottom" id="Xqf-j9-btL"/>
                 <constraint firstItem="ZTg-uK-7eu" firstAttribute="trailing" secondItem="cJs-dx-20V" secondAttribute="trailing" constant="20" id="czv-5N-4Pm"/>
-                <constraint firstItem="zOw-TD-wVk" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="76" id="heK-Ev-2mm"/>
                 <constraint firstItem="cJs-dx-20V" firstAttribute="leading" secondItem="ZTg-uK-7eu" secondAttribute="leading" id="wBh-EW-0Vu"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
@@ -69,6 +71,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="speaker" width="128" height="128"/>
+        <image name="speakerup" width="32" height="32"/>
     </resources>
 </document>

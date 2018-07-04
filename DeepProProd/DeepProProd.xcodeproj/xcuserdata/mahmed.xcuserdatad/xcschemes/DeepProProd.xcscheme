@@ -89,6 +89,11 @@
             isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
+            key = "REFRESHTOKENEXPIRYTEST"
+            value = "0"
+            isEnabled = "NO">
+         </EnvironmentVariable>
+         <EnvironmentVariable
             key = "GRPCON"
             value = "1"
             isEnabled = "YES">

@@ -97,6 +97,10 @@ class TokenManager: NSObject {
     }
     
     func isRefreshTokenValid() -> Bool {
+        if (BUILDSETTINGS.refreshTokenTest != nil) {
+            return false
+        }
+        
         let refreshTokenExpiryDate = UserDefaults.standard.string(forKey: "refreshtoken_expire_date")
         let currentDate = currentDateTime()
         if(currentDate.compare((refreshTokenExpiryDate?.toDate())!) == ComparisonResult.orderedAscending)
