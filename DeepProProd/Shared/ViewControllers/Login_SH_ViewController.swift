@@ -44,7 +44,10 @@ class Login_SH_ViewController: UIViewController {
         languageSwitch.addTarget(self, action: #selector(changeLanguage(_:)), for: .valueChanged)
         
         self.navigationController?.navigationBar.backgroundColor =  UIColor.clear
-         Helper.lockOrientation(.portrait)
+        
+        if(Helper.getCurrentDevice() == .phone) {
+            Helper.lockOrientation(.portrait)
+        } 
         backgroundImg.isHidden = true
         self.view.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
 

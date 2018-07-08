@@ -176,6 +176,39 @@ static func createDirectory(with folderName:String)
         UIDevice.current.setValue(rotateOrientation.rawValue, forKey: "orientation")
     }
     
+    
+    //MARK: - Device Idioms
+    enum UIUserInterfaceIdiom : Int {
+        case unspecified
+        case phone // iPhone and iPod touch style UI
+        case pad // iPad style UI
+    }
+    
+    static func getCurrentDevice() -> UIUserInterfaceIdiom {
+        var currentDevice : UIUserInterfaceIdiom?
+        switch UIDevice.current.userInterfaceIdiom {
+        case .phone:
+        // It's an iPhone
+            currentDevice = UIUserInterfaceIdiom.phone
+            break
+        case .pad:
+        // It's an iPad
+            currentDevice = UIUserInterfaceIdiom.pad
+            break
+        case .unspecified:
+            // Uh, oh! What could it be?
+            currentDevice = UIUserInterfaceIdiom.unspecified
+            break
+        case .tv:
+            currentDevice = UIUserInterfaceIdiom.unspecified
+            break
+        case .carPlay:
+            currentDevice = UIUserInterfaceIdiom.unspecified
+            break
+        }
+        return currentDevice!
+    }
+    
     //MARK: - HTTPError
     func handleHTTPError(from serverResponse: DataResponse<Data>)
     {

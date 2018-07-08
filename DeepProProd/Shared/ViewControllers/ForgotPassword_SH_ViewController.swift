@@ -25,7 +25,9 @@ class ForgotPassword_SH_ViewController: UIViewController , CAAnimationDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        if(Helper.getCurrentDevice() == .phone) {
+            Helper.lockOrientation(.portrait)
+        } 
         // Do any additional setup after loading the view.
         refreshUI()
         _ =  emailTextField.rx.text.map {$0 ?? ""}.bind(to:forgotViewModel.email)

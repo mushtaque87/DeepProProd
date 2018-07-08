@@ -33,6 +33,9 @@ class SignUp_SH_ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if(Helper.getCurrentDevice() == .phone) {
+            Helper.lockOrientation(.portrait)
+        } 
         refreshUI()
 
         //_ =  ageTxtField.rx.text.map {$0 ?? ""}.bind(to:viewModel.dob)

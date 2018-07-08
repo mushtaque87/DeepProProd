@@ -199,7 +199,7 @@ class PracticeViewModel: NSObject,
     
     // MARK: UICollectionViewDelegateFlowLayout
     fileprivate let sectionInsets = UIEdgeInsets(top: 5.0, left: 10.0, bottom: 0.0, right: 10.0)
-    fileprivate let itemsPerRow: CGFloat = 3
+    fileprivate var itemsPerRow: CGFloat = 3
     
     
     
@@ -207,6 +207,11 @@ class PracticeViewModel: NSObject,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         //2
+        if(Helper.getCurrentDevice() == .phone) {
+           itemsPerRow = 3
+        } else {
+            itemsPerRow = 6
+        }
         let paddingSpace = sectionInsets.left * (itemsPerRow + 1)
         let availableWidth = collectionView.frame.width - paddingSpace
         let widthPerItem = availableWidth / itemsPerRow
@@ -444,7 +449,7 @@ class PracticeViewModel: NSObject,
         
         let attributedString = NSMutableAttributedString()
         for word in words_Result {
-            var color: UIColor = UIColor.black
+            var color: UIColor = UIColor.white
             
             if let score = word.score {
             if (score > 70.0) {

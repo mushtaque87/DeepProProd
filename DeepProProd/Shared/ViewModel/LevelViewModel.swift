@@ -148,7 +148,7 @@ class LevelViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,    
         let crumTitle = crumList[indexPath.row]
         let crumWidth = CGFloat(7 * crumTitle.title.count)
         //return CGSize(width: crumWidth , height: 60.0)
-        return CGSize(width: 100.0, height: 70.0)
+        return CGSize(width: 110.0, height: 70.0)
     }
     
     func collectionView(_ collectionView: UICollectionView,

@@ -28,7 +28,7 @@ class SettingsViewController: UIViewController,SettingProtocols {
         edgesForExtendedLayout = []
         
         // Do any additional setup after loading the view.
-        self.navigationItem.title = "Setting"
+        self.navigationItem.title = "Settings"
         self.settingTableView.register(UINib(nibName: "LogOutCell", bundle: nil), forCellReuseIdentifier: "logout")
         self.settingTableView.register(UINib(nibName: "LabelTableViewCell", bundle: nil), forCellReuseIdentifier: "labelCell")
         self.settingTableView.register(UINib(nibName: "LanguageTableViewCell", bundle: nil), forCellReuseIdentifier: "language")

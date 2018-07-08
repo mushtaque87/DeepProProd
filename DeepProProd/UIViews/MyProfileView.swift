@@ -26,6 +26,7 @@ class MyProfileView: NibView {
         profileImageView.clipsToBounds = true
         profileImageView.layer.borderWidth = 2.0
         profileImageView.layer.borderColor = #colorLiteral(red: 0, green: 0.407166779, blue: 0.2167538702, alpha: 1).cgColor
+        //profileImageView.layer.borderColor = #colorLiteral(red: 0, green: 0.407166779, blue: 0.2167538702, alpha: 1).cgColor
     }
  
 

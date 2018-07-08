@@ -16,7 +16,9 @@ enum ScreenType : Int  {
 }
 
 
-class ProfileViewController: UIViewController {
+class ProfileViewController: UIViewController, ProfileViewDelegate {
+  
+    
 
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var myProfileView: MyProfileView!
@@ -37,8 +39,17 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         edgesForExtendedLayout = []
-       
+        
+       Helper.lockOrientation(.portrait)
+        let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(controlKeyboard(sender:)))
+        singleTapGesture.numberOfTapsRequired = 1
+        self.view.addGestureRecognizer(singleTapGesture)
+        
         configureEditOptions(with: viewModel.isEditEnabled)
+        viewModel.delegate = self
+        
+        firstNameField.delegate = viewModel
+        lastNameField.delegate = viewModel
         
        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editProfile(_:)))
       
@@ -84,6 +95,11 @@ class ProfileViewController: UIViewController {
         },onComplete: {
             hud.hide(animated: true)
         })
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardShown), name:NSNotification.Name.UIKeyboardDidShow, object: nil);
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHidden), name:NSNotification.Name.UIKeyboardDidHide, object: nil);
+
         
     }
 
@@ -149,9 +165,79 @@ class ProfileViewController: UIViewController {
       //  dobField.isEnabled = editStatus
        // contactField.isEnabled = editStatus
     }
-    /*
-    // MARK: - Navigation
+    
+    @objc func controlKeyboard (sender:UITapGestureRecognizer){
+        guard sender.numberOfTapsRequired == 1   else {
+            return
+        }
+        if let currentTextfield = viewModel.currentTextField {
+        if(currentTextfield.isFirstResponder) {
+            currentTextfield.resignFirstResponder()
+        } else {
+            currentTextfield.becomeFirstResponder()
+        }
+        }
+    }
+    
+     //MARK: - Protocol
+     //#define kOFFSET_FOR_KEYBOARD 80.0
 
+    @objc func keyboardShown(notification: NSNotification) {
+        let info = notification.userInfo!
+        let keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        print("keyboardFrame: \(keyboardFrame)")
+        moveTextField(up: true, by: keyboardFrame.height)
+    }
+    
+    @objc func keyboardHidden(notification: NSNotification) {
+        let info = notification.userInfo!
+        let keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        print("keyboardFrame: \(keyboardFrame)")
+        moveTextField(up: false, by: keyboardFrame.height)
+        
+    }
+    
+    func moveTextField(up movedUp: Bool ,by height:CGFloat) {
+        //detailsTable.setContentOffset(CGPoint(x: 0, y: textField.center.y - 160), animated: true)
+        //[UIView beginAnimations:nil context:NULL];
+        //[UIView setAnimationDuration:0.3]; // if you want to slide up the view
+        guard ((viewModel.currentTextField?.tag)! < 99) else {
+            return
+        }
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(0.3)
+        
+        var rect = self.view.frame;
+        if (movedUp)
+        {
+            // 1. move the view's origin up so that the text field that will be hidden come above the keyboard
+            // 2. increase the size of the view so that the area behind the keyboard is covered up.
+            if  (self.view.frame.origin.y >= 0)
+            {
+            viewModel.isKeyboardOnScreen = true
+                if(Helper.getCurrentDevice() == .phone) {
+                    rect.origin.y -= height;
+                    rect.size.height += height;
+                }
+            
+            }
+        }
+        else
+        {
+            // revert back to the normal state.
+            viewModel.isKeyboardOnScreen = false
+            if(Helper.getCurrentDevice() == .phone) {
+            rect.origin.y += height;
+            rect.size.height -= height;
+            }
+        }
+        self.view.frame = rect;
+        
+        //[UIView commitAnimations];
+        UIView.commitAnimations()
+    }
+    /*
+     MARK: - Navigation
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.

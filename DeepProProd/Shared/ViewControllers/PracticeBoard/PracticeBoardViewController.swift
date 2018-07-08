@@ -91,9 +91,8 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         leftswipeGesture.direction = .left
         //leftswipeGesture.cancelsTouchesInView = false
         textView.addGestureRecognizer(leftswipeGesture)
-        
         textView.delegate = viewModel
-
+        textView.tintColor = UIColor.white
 
         //textView.layer.cornerRadius = 15
         contentView.layer.borderColor = UIColor.white.cgColor
@@ -771,12 +770,14 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     }
     
     @objc func displayWordPhonemeSection (sender:UITapGestureRecognizer){
-        textView.resignFirstResponder()
+       
         guard viewModel.selectedAnswer != nil else {
             print("‼️ No answer is selected. Please select an answer")
             
             return
         }
+        
+       
         let tappedWord =  viewModel.tapResponse(recognizer: sender)
         displayResultType(to: .phenomeTable, from: .score)
         self.phonemeTable.scrollToRow(at: IndexPath(row: 0, section: tappedWord.details.section), at: UITableViewScrollPosition.top, animated: true)
@@ -791,20 +792,21 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         switch currentType {
         case .score:
             //showResultTypeButton.setTitle("S", for: .normal)
+             textView.resignFirstResponder()
             clearButton.setImage(UIImage(named:"trash_black.png"), for: .normal)
             showResultTypeButton.setImage(UIImage(named:"tiles-view"), for: .normal)
-            
             break
         case .phenomeTable:
+             textView.resignFirstResponder()
             clearButton.setImage(UIImage(named:"trash_black.png"), for: .normal)
             showResultTypeButton.setImage(UIImage(named:"tiles-view"), for: .normal)
             //showResultTypeButton.setTitle("P", for: .normal)
             break
         default:
             //showResultTypeButton.setTitle("G", for: .normal)
+             textView.resignFirstResponder()
             clearButton.setImage(UIImage(named:"trash_1"), for: .normal)
             showResultTypeButton.setImage(UIImage(named:"bar-chart"), for: .normal)
-
             break
         }
         

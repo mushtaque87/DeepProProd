@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -107,25 +108,29 @@
                         </button>
                     </subviews>
                 </stackView>
-                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="70" translatesAutoresizingMaskIntoConstraints="NO" id="BCN-8k-FNu" userLabel="Body Stack View">
+                <stackView opaque="NO" contentMode="scaleToFill" spacing="70" translatesAutoresizingMaskIntoConstraints="NO" id="BCN-8k-FNu" userLabel="Body Stack View">
                     <rect key="frame" x="16" y="390.66666666666669" width="343" height="31"/>
                     <subviews>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="English" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fsV-IZ-XUj">
-                            <rect key="frame" x="0.0" y="0.0" width="67.666666666666671" height="31"/>
+                            <rect key="frame" x="0.0" y="0.0" width="77" height="31"/>
                             <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                             <color key="textColor" red="0.98573304623620395" green="1" blue="0.98535126724598388" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <nil key="highlightedColor"/>
                         </label>
                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oUe-2K-gWU">
-                            <rect key="frame" x="137.66666666666666" y="0.0" width="69.666666666666657" height="31"/>
+                            <rect key="frame" x="147" y="0.0" width="51" height="31"/>
                         </switch>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="عربى" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kv9-w9-8Ne">
-                            <rect key="frame" x="275.33333333333331" y="0.0" width="67.666666666666686" height="31"/>
+                            <rect key="frame" x="266" y="0.0" width="77" height="31"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                             <color key="textColor" red="0.98551608801244373" green="1" blue="0.97467700510614053" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="kv9-w9-8Ne" secondAttribute="trailing" id="AGP-Q4-FWu"/>
+                        <constraint firstItem="fsV-IZ-XUj" firstAttribute="leading" secondItem="BCN-8k-FNu" secondAttribute="leading" id="fLA-2M-fAk"/>
+                    </constraints>
                 </stackView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -138,6 +143,7 @@
                 <constraint firstItem="xkT-Tm-R3a" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leadingMargin" id="Cfo-BN-Noq"/>
                 <constraint firstItem="BCN-8k-FNu" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="HyD-wD-01G"/>
                 <constraint firstItem="zDX-q1-Prt" firstAttribute="top" secondItem="BCN-8k-FNu" secondAttribute="bottom" constant="100" id="KWx-jV-hm7"/>
+                <constraint firstItem="oUe-2K-gWU" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="RUU-XD-WAf"/>
                 <constraint firstItem="FSW-Sy-olm" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="Yqf-UJ-If6"/>
                 <constraint firstItem="FSW-Sy-olm" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="fhd-44-VAu"/>
                 <constraint firstAttribute="trailingMargin" secondItem="zDX-q1-Prt" secondAttribute="trailing" id="iwG-NF-hZw"/>

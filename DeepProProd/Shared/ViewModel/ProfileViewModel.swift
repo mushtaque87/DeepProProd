@@ -23,6 +23,9 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
    
     var details : Profile?
     var isEditEnabled : Bool = false
+    weak var delegate: ProfileViewDelegate? 
+    var isKeyboardOnScreen : Bool = false
+    var currentTextField : UITextField?
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let detailtype = DetailType(rawValue: indexPath.row) {
@@ -32,6 +35,7 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         cell.valueTextField.isEnabled = isEditEnabled
                         cell.titleLabel.text = "Date of Birth"
                         cell.valueTextField.delegate = self
+                        cell.valueTextField.autocorrectionType = .no
                         cell.valueTextField.tag = indexPath.row
                         if let dob = details?.user_attributes?.dob {
                             cell.valueTextField.text = dob
@@ -46,6 +50,7 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
                         cell.valueTextField.isEnabled = isEditEnabled
                         cell.valueTextField.delegate = self
+                        cell.valueTextField.autocorrectionType = .no
                          cell.valueTextField.tag = indexPath.row
                         cell.valueTextField.text = "Male"
                         cell.titleLabel.text = "Gender"
@@ -59,6 +64,7 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
                         cell.valueTextField.isEnabled = isEditEnabled
                         cell.valueTextField.delegate = self
+                        cell.valueTextField.autocorrectionType = .no
                          cell.valueTextField.tag = indexPath.row
                         cell.valueTextField.text = "3"
                         cell.titleLabel.text = "Class"
@@ -72,6 +78,7 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
                         cell.valueTextField.isEnabled = isEditEnabled
                         cell.valueTextField.delegate = self
+                        cell.valueTextField.autocorrectionType = .no
                          cell.valueTextField.tag = indexPath.row
                         cell.valueTextField.text = "A"
                         cell.titleLabel.text = "Section"
@@ -85,6 +92,7 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
                         cell.valueTextField.isEnabled = isEditEnabled
                         cell.valueTextField.delegate = self
+                        cell.valueTextField.autocorrectionType = .no
                          cell.valueTextField.tag = indexPath.row
                         cell.valueTextField.text = "9886820824"
                         cell.titleLabel.text = "Contact"
@@ -112,12 +120,26 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
         return 1
     }
     
+    @objc func controlKeyboard (sender:UITapGestureRecognizer){
+        guard sender.numberOfTapsRequired == 1 else {
+            return
+        }
+        if((currentTextField != nil) && (currentTextField?.isFirstResponder)!) {
+            currentTextField?.resignFirstResponder()
+        } else {
+            currentTextField?.becomeFirstResponder()
+        }
+    }
+    
+    
     // MARK: - TextField Delegate
     func textFieldDidBeginEditing(_ textField: UITextField) {    //delegate method
        
     }
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+        currentTextField = textField
+        
         if textField.tag == 0 {
             let currentDate = Date()
             var dateComponents = DateComponents()
@@ -142,14 +164,28 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                                 }
             }
             return false
+        } else if (textField.tag == 100) || (textField.tag == 101){
+            return true
+        }
+        else {
+            if (isKeyboardOnScreen == false) {
+            //delegate?.moveTextField(up: true)
+            }
         }
         return true
     }
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {  //delegate method
+        if (isKeyboardOnScreen == true) {
+            //delegate?.moveTextField(up: false)
+        }
         return true
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {   //delegate method
+        if (isKeyboardOnScreen == true) {
+           // delegate?.moveTextField(up: false)
+        }
+       
         textField.resignFirstResponder()
         return true
     }

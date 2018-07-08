@@ -23,6 +23,9 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
 //        myFirstButton.addTarget(self, action: #selector(progbutton), for: .touchUpInside)
 //        self.view.addSubview(myFirstButton)
        configureTabBar()
+        if(Helper.getCurrentDevice() == .phone) {
+            Helper.lockOrientation(.portrait)
+        } 
        
         
     }
