@@ -35,6 +35,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     @IBOutlet weak var showResultTypeButton: UIButton!
     @IBOutlet weak var phonemeTable: UITableView!
     @IBOutlet weak var keyboard: UIButton!
+    @IBOutlet weak var feedbackButton: UIButton!
     @IBOutlet weak var textStackView: UIStackView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var clearButton: UIButton!
@@ -146,15 +147,17 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         guard tasktype != TaskType.freeText else {
             textView.text = "Type Here"
             keyboard.setImage(UIImage(named: "pencil-edit.png"), for: .normal)
-            textView.isEditable = true
+            textView.isEditable = false
             keyboard.isHidden = false
-            textView.isSelectable = true
+            feedbackButton.isHidden = true
+            textView.isSelectable = false
             textView.inputView?.resignFirstResponder()
             //textView.isUserInteractionEnabled = true
             clearButton.isHidden = false
            
             return
         }
+        feedbackButton.isHidden = false
          keyboard.isHidden = true
         textView.isEditable = false
         
@@ -315,14 +318,24 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
 //           viewModel.playStreamAudio(for: "")
 //           return
            
-            if let audioUrl = viewModel.unitList[unitIndex].audio_url
+            guard case let audioUrl: String = viewModel.unitList[unitIndex].audio_url! , audioUrl.count > 0 else {
+                print("Play TTS")
+                viewModel.playTTS(for: textView.text)
+                return
+            }
+            
+            viewModel.playStreamAudio(for: audioUrl, of: sender as? UIButton)
+            /*
+            if case let audioUrl = viewModel.unitList[unitIndex].audio_url, audioUrl!.count > 0
             {
-                viewModel.playStreamAudio(for: audioUrl, of: sender as? UIButton)
+                
+                viewModel.playStreamAudio(for: audioUrl!, of: sender as? UIButton)
                 
             }
         else {
             viewModel.playTTS(for: textView.text)
             }
+             */
             break
         case .freeText:
             viewModel.playTTS(for: textView.text)
@@ -848,7 +861,14 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     */
     
     
-  
+
+    @IBAction func showFeedback(_ sender: Any) {
+        let feedbackViewController =     FeedbackViewController(nibName: "FeedbackViewController", bundle: nil)
+        self.navigationController?.pushViewController(feedbackViewController, animated: true)
+        
+    }
+    
+    
    
     @objc func changeWord(sender:UISwipeGestureRecognizer){
        

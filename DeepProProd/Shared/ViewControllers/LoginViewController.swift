@@ -12,7 +12,7 @@ import RxSwift
 import MBProgressHUD
 
 
-class Login_SH_ViewController: UIViewController {
+class LoginViewController: UIViewController {
 
 
     @IBOutlet weak var backgroundImg: UIImageView!

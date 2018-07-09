@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 import MBProgressHUD
-class SignUp_SH_ViewController: UIViewController {
+class SignUpViewController: UIViewController {
 
     @IBOutlet weak var closeBtn: UIButton!
     @IBOutlet weak var backgroundImage: UIImageView!

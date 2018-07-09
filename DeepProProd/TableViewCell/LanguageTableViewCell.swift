@@ -17,6 +17,8 @@ class LanguageTableViewCell: UITableViewCell {
         // Initialization code
         self.backgroundColor = UIColor.clear
         self.contentView.backgroundColor = UIColor.clear
+        (languageSwitch.subviews[0] as UIView).tintColor = UIColor.white
+        (languageSwitch.subviews[1] as UIView).tintColor = UIColor.white
         titlLbl.alignText()
     }
 

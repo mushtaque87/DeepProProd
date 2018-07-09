@@ -9,7 +9,7 @@
 import UIKit
 import MBProgressHUD
 
-class Level_SHViewController: UIViewController, CategoriesProtocol {
+class LevelViewController: UIViewController, CategoriesProtocol {
 
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet var viewModel: LevelViewModel!

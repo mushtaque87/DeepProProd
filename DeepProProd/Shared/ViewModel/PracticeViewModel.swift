@@ -343,12 +343,21 @@ class PracticeViewModel: NSObject,
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
             try AVAudioSession.sharedInstance().setActive(true)
             
+            guard case let audioUrl: String = answersList[sender.tag].audio_url! , audioUrl.count > 0 else {
+               print("❌ Audio Url is not available")
+                return
+            }
+            playStreamAudio(for: audioUrl, of: sender)
+            
+            /*
         if let url = answersList[sender.tag].audio_url {
             playStreamAudio(for: url, of: sender)
          }
         else {
             print("❌ Audio Url is not available")
             }
+          */
+            
             
         } catch let error {
             print(error.localizedDescription)

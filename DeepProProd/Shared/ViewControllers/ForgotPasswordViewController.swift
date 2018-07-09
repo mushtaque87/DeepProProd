@@ -11,7 +11,7 @@ import RxSwift
 import RxCocoa
 import MBProgressHUD
 
-class ForgotPassword_SH_ViewController: UIViewController , CAAnimationDelegate {
+class ForgotPasswordViewController: UIViewController , CAAnimationDelegate {
 
     @IBOutlet weak var backgroundImage: UIImageView!
     @IBOutlet weak var                                                                                                                                        titleLbl: UILabel!

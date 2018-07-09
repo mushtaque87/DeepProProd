@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Accounts_SH_ViewController: UIViewController {
+class AccountsViewController: UIViewController {
 
     @IBOutlet weak var profilePhoto: UIImageView!
     @IBOutlet weak var profileInfoTable: UITableView!

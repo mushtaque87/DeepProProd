@@ -36,7 +36,7 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
         var tabBarViewControllers = [UIViewController]()
 
             let courseNavigationController = UINavigationController()
-            let levelViewController : Level_SHViewController =  Level_SHViewController(nibName: "Level_SHViewController", bundle: nil)
+            let levelViewController : LevelViewController =  LevelViewController(nibName: "LevelViewController", bundle: nil)
             courseNavigationController.viewControllers = [levelViewController]
             courseNavigationController.tabBarItem = UITabBarItem(title: "Contents", image: UIImage(named: "homeTab.png"), tag: 0)
             /*

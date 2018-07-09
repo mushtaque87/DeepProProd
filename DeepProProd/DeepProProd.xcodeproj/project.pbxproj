@@ -109,8 +109,8 @@
 		5095C6C520064470003207AD /* IntAxisValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5095C6C120064470003207AD /* IntAxisValueFormatter.swift */; };
 		5095C6C7200644C1003207AD /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5095C6C6200644C1003207AD /* UIView.swift */; };
 		5095C6CE20065282003207AD /* LevelViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5095C6CD20065282003207AD /* LevelViewModel.swift */; };
-		5095C6D1200652C0003207AD /* Level_SHViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5095C6D0200652C0003207AD /* Level_SHViewController.swift */; };
-		5095C6D3200652DC003207AD /* Level_SHViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5095C6D2200652DC003207AD /* Level_SHViewController.xib */; };
+		5095C6D1200652C0003207AD /* LevelViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5095C6D0200652C0003207AD /* LevelViewController.swift */; };
+		5095C6D3200652DC003207AD /* LevelViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5095C6D2200652DC003207AD /* LevelViewController.xib */; };
 		5099C2002005F13A00898B0A /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5099C1FF2005F13A00898B0A /* Helper.swift */; };
 		5099C203200622C600898B0A /* Arabic.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5099C201200622C600898B0A /* Arabic.plist */; };
 		5099C204200622C600898B0A /* English.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5099C202200622C600898B0A /* English.plist */; };
@@ -170,8 +170,8 @@
 		50E76B0220037EC7009420F9 /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 50E76B0120037EC7009420F9 /* Settings.plist */; };
 		50E76B1E2003A121009420F9 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E76B1D2003A121009420F9 /* Settings.swift */; };
 		50E76B202004AA53009420F9 /* Resources.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 50E76B1F2004AA53009420F9 /* Resources.rtf */; };
-		50E76B232004B28A009420F9 /* Login_SH_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E76B212004B28A009420F9 /* Login_SH_ViewController.swift */; };
-		50E76B242004B28A009420F9 /* Login_SH_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50E76B222004B28A009420F9 /* Login_SH_ViewController.xib */; };
+		50E76B232004B28A009420F9 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E76B212004B28A009420F9 /* LoginViewController.swift */; };
+		50E76B242004B28A009420F9 /* LoginViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50E76B222004B28A009420F9 /* LoginViewController.xib */; };
 		50E76B292004BB2F009420F9 /* ViewControllerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E76B282004BB2F009420F9 /* ViewControllerExtensions.swift */; };
 		50E76B2B2004D64E009420F9 /* Localizator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E76B2A2004D64E009420F9 /* Localizator.swift */; };
 		50E76B392004F5B5009420F9 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E76B382004F5B5009420F9 /* LoginViewModel.swift */; };
@@ -187,10 +187,10 @@
 		50E7B32620078A7000DB9DB0 /* peace_be_on_you.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50E7B32020078A6F00DB9DB0 /* peace_be_on_you.wav */; };
 		50E7B32720078A7000DB9DB0 /* hello_world.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50E7B32120078A7000DB9DB0 /* hello_world.wav */; };
 		50E7B32820078A7000DB9DB0 /* happy_birthday.wav in Resources */ = {isa = PBXBuildFile; fileRef = 50E7B32220078A7000DB9DB0 /* happy_birthday.wav */; };
-		50E7B32B2008CDD200DB9DB0 /* SignUp_SH_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E7B3292008CDD200DB9DB0 /* SignUp_SH_ViewController.swift */; };
-		50E7B32C2008CDD200DB9DB0 /* SignUp_SH_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50E7B32A2008CDD200DB9DB0 /* SignUp_SH_ViewController.xib */; };
-		50E7B32F2008CDEC00DB9DB0 /* ForgotPassword_SH_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E7B32D2008CDEC00DB9DB0 /* ForgotPassword_SH_ViewController.swift */; };
-		50E7B3302008CDEC00DB9DB0 /* ForgotPassword_SH_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50E7B32E2008CDEC00DB9DB0 /* ForgotPassword_SH_ViewController.xib */; };
+		50E7B32B2008CDD200DB9DB0 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E7B3292008CDD200DB9DB0 /* SignUpViewController.swift */; };
+		50E7B32C2008CDD200DB9DB0 /* SignUpViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50E7B32A2008CDD200DB9DB0 /* SignUpViewController.xib */; };
+		50E7B32F2008CDEC00DB9DB0 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E7B32D2008CDEC00DB9DB0 /* ForgotPasswordViewController.swift */; };
+		50E7B3302008CDEC00DB9DB0 /* ForgotPasswordViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50E7B32E2008CDEC00DB9DB0 /* ForgotPasswordViewController.xib */; };
 		50E7B332200B769C00DB9DB0 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E7B331200B769C00DB9DB0 /* SignupViewModel.swift */; };
 		50E7B334200B76AF00DB9DB0 /* ForgetPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E7B333200B76AF00DB9DB0 /* ForgetPasswordViewModel.swift */; };
 		50E7B336200B866800DB9DB0 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50E7B335200B866800DB9DB0 /* SettingsViewModel.swift */; };
@@ -207,8 +207,13 @@
 		50F83CDB2014D8F300690DCF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F83CDA2014D8F300690DCF /* Constants.swift */; };
 		50F83CE320161BAC00690DCF /* level.txt in Resources */ = {isa = PBXBuildFile; fileRef = 50F83CE220161BAC00690DCF /* level.txt */; };
 		50F83CE620170DB600690DCF /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F83CE520170DB600690DCF /* Course.swift */; };
-		50F83CEA2017696000690DCF /* Accounts_SH_ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F83CE82017696000690DCF /* Accounts_SH_ViewController.swift */; };
-		50F83CEB2017696000690DCF /* Accounts_SH_ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F83CE92017696000690DCF /* Accounts_SH_ViewController.xib */; };
+		50F83CEA2017696000690DCF /* AccountsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F83CE82017696000690DCF /* AccountsViewController.swift */; };
+		50F83CEB2017696000690DCF /* AccountsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50F83CE92017696000690DCF /* AccountsViewController.xib */; };
+		50FCAEF720F35FB400DC7D12 /* FeedbackViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FCAEF520F35FB400DC7D12 /* FeedbackViewController.swift */; };
+		50FCAEF820F35FB400DC7D12 /* FeedbackViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50FCAEF620F35FB400DC7D12 /* FeedbackViewController.xib */; };
+		50FCAF0520F3642100DC7D12 /* FeedbackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FCAF0420F3642100DC7D12 /* FeedbackModel.swift */; };
+		50FCAF0820F364E100DC7D12 /* FeedbackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FCAF0620F364E100DC7D12 /* FeedbackTableViewCell.swift */; };
+		50FCAF0920F364E100DC7D12 /* FeedbackTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50FCAF0720F364E100DC7D12 /* FeedbackTableViewCell.xib */; };
 		50FF20392091B09A0026199F /* Scores_Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FF20372091B09A0026199F /* Scores_Cell.swift */; };
 		50FF203A2091B09A0026199F /* Scores_Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50FF20382091B09A0026199F /* Scores_Cell.xib */; };
 		8CB8E2BCD7C4ECFE327F5C43 /* Pods_DeepProProd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 799A9D798938B6A0F2C2BB87 /* Pods_DeepProProd.framework */; };
@@ -489,8 +494,8 @@
 		5095C6C120064470003207AD /* IntAxisValueFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntAxisValueFormatter.swift; sourceTree = "<group>"; };
 		5095C6C6200644C1003207AD /* UIView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		5095C6CD20065282003207AD /* LevelViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelViewModel.swift; sourceTree = "<group>"; };
-		5095C6D0200652C0003207AD /* Level_SHViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Level_SHViewController.swift; sourceTree = "<group>"; };
-		5095C6D2200652DC003207AD /* Level_SHViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Level_SHViewController.xib; sourceTree = "<group>"; };
+		5095C6D0200652C0003207AD /* LevelViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelViewController.swift; sourceTree = "<group>"; };
+		5095C6D2200652DC003207AD /* LevelViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LevelViewController.xib; sourceTree = "<group>"; };
 		5099C1FF2005F13A00898B0A /* Helper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		5099C201200622C600898B0A /* Arabic.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Arabic.plist; sourceTree = "<group>"; };
 		5099C202200622C600898B0A /* English.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = English.plist; sourceTree = "<group>"; };
@@ -550,8 +555,8 @@
 		50E76B082003986A009420F9 /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		50E76B1D2003A121009420F9 /* Settings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		50E76B1F2004AA53009420F9 /* Resources.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Resources.rtf; sourceTree = "<group>"; };
-		50E76B212004B28A009420F9 /* Login_SH_ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Login_SH_ViewController.swift; sourceTree = "<group>"; };
-		50E76B222004B28A009420F9 /* Login_SH_ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Login_SH_ViewController.xib; sourceTree = "<group>"; };
+		50E76B212004B28A009420F9 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		50E76B222004B28A009420F9 /* LoginViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginViewController.xib; sourceTree = "<group>"; };
 		50E76B282004BB2F009420F9 /* ViewControllerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerExtensions.swift; sourceTree = "<group>"; };
 		50E76B2A2004D64E009420F9 /* Localizator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Localizator.swift; sourceTree = "<group>"; };
 		50E76B382004F5B5009420F9 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -567,10 +572,10 @@
 		50E7B32020078A6F00DB9DB0 /* peace_be_on_you.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = peace_be_on_you.wav; sourceTree = "<group>"; };
 		50E7B32120078A7000DB9DB0 /* hello_world.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = hello_world.wav; sourceTree = "<group>"; };
 		50E7B32220078A7000DB9DB0 /* happy_birthday.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = happy_birthday.wav; sourceTree = "<group>"; };
-		50E7B3292008CDD200DB9DB0 /* SignUp_SH_ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp_SH_ViewController.swift; sourceTree = "<group>"; };
-		50E7B32A2008CDD200DB9DB0 /* SignUp_SH_ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignUp_SH_ViewController.xib; sourceTree = "<group>"; };
-		50E7B32D2008CDEC00DB9DB0 /* ForgotPassword_SH_ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPassword_SH_ViewController.swift; sourceTree = "<group>"; };
-		50E7B32E2008CDEC00DB9DB0 /* ForgotPassword_SH_ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ForgotPassword_SH_ViewController.xib; sourceTree = "<group>"; };
+		50E7B3292008CDD200DB9DB0 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		50E7B32A2008CDD200DB9DB0 /* SignUpViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SignUpViewController.xib; sourceTree = "<group>"; };
+		50E7B32D2008CDEC00DB9DB0 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
+		50E7B32E2008CDEC00DB9DB0 /* ForgotPasswordViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ForgotPasswordViewController.xib; sourceTree = "<group>"; };
 		50E7B331200B769C00DB9DB0 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		50E7B333200B76AF00DB9DB0 /* ForgetPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordViewModel.swift; sourceTree = "<group>"; };
 		50E7B335200B866800DB9DB0 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -587,8 +592,13 @@
 		50F83CDA2014D8F300690DCF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		50F83CE220161BAC00690DCF /* level.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = level.txt; sourceTree = "<group>"; };
 		50F83CE520170DB600690DCF /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
-		50F83CE82017696000690DCF /* Accounts_SH_ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Accounts_SH_ViewController.swift; sourceTree = "<group>"; };
-		50F83CE92017696000690DCF /* Accounts_SH_ViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Accounts_SH_ViewController.xib; sourceTree = "<group>"; };
+		50F83CE82017696000690DCF /* AccountsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountsViewController.swift; sourceTree = "<group>"; };
+		50F83CE92017696000690DCF /* AccountsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AccountsViewController.xib; sourceTree = "<group>"; };
+		50FCAEF520F35FB400DC7D12 /* FeedbackViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewController.swift; sourceTree = "<group>"; };
+		50FCAEF620F35FB400DC7D12 /* FeedbackViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedbackViewController.xib; sourceTree = "<group>"; };
+		50FCAF0420F3642100DC7D12 /* FeedbackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackModel.swift; sourceTree = "<group>"; };
+		50FCAF0620F364E100DC7D12 /* FeedbackTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackTableViewCell.swift; sourceTree = "<group>"; };
+		50FCAF0720F364E100DC7D12 /* FeedbackTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedbackTableViewCell.xib; sourceTree = "<group>"; };
 		50FF20372091B09A0026199F /* Scores_Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scores_Cell.swift; sourceTree = "<group>"; };
 		50FF20382091B09A0026199F /* Scores_Cell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Scores_Cell.xib; sourceTree = "<group>"; };
 		799A9D798938B6A0F2C2BB87 /* Pods_DeepProProd.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DeepProProd.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -773,6 +783,8 @@
 				50EF61AA207B7D0D00166162 /* UnitTableViewCell.xib */,
 				5077869420EB92A800182708 /* DetailCell.swift */,
 				5077869520EB92A800182708 /* DetailCell.xib */,
+				50FCAF0620F364E100DC7D12 /* FeedbackTableViewCell.swift */,
+				50FCAF0720F364E100DC7D12 /* FeedbackTableViewCell.xib */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -850,6 +862,7 @@
 				50B7D3BC207A0DFE0058662F /* Assignments_UnitsModel.swift */,
 				50DC3A0020919DA000CDA113 /* PracticeViewModel.swift */,
 				5077868720EB7DDA00182708 /* ProfileViewModel.swift */,
+				50FCAF0420F3642100DC7D12 /* FeedbackModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -1062,26 +1075,28 @@
 			children = (
 				50DC39EC2090BC8900CDA113 /* PracticeBoard */,
 				5083E2322068F6EE001015A0 /* Student Assignment */,
-				50E76B212004B28A009420F9 /* Login_SH_ViewController.swift */,
-				50E76B222004B28A009420F9 /* Login_SH_ViewController.xib */,
+				50E76B212004B28A009420F9 /* LoginViewController.swift */,
+				50E76B222004B28A009420F9 /* LoginViewController.xib */,
 				50E79DD320050CF200327016 /* TabBarControllerViewController.swift */,
 				50E79DD420050CF200327016 /* TabBarControllerViewController.xib */,
-				5095C6D0200652C0003207AD /* Level_SHViewController.swift */,
-				5095C6D2200652DC003207AD /* Level_SHViewController.xib */,
-				50E7B3292008CDD200DB9DB0 /* SignUp_SH_ViewController.swift */,
-				50E7B32A2008CDD200DB9DB0 /* SignUp_SH_ViewController.xib */,
-				50E7B32D2008CDEC00DB9DB0 /* ForgotPassword_SH_ViewController.swift */,
-				50E7B32E2008CDEC00DB9DB0 /* ForgotPassword_SH_ViewController.xib */,
+				5095C6D0200652C0003207AD /* LevelViewController.swift */,
+				5095C6D2200652DC003207AD /* LevelViewController.xib */,
+				50E7B3292008CDD200DB9DB0 /* SignUpViewController.swift */,
+				50E7B32A2008CDD200DB9DB0 /* SignUpViewController.xib */,
+				50E7B32D2008CDEC00DB9DB0 /* ForgotPasswordViewController.swift */,
+				50E7B32E2008CDEC00DB9DB0 /* ForgotPasswordViewController.xib */,
 				5099C20E20063EAB00898B0A /* SettingsViewController.swift */,
 				5099C20920063EAA00898B0A /* SettingsViewController.xib */,
-				50F83CE82017696000690DCF /* Accounts_SH_ViewController.swift */,
-				50F83CE92017696000690DCF /* Accounts_SH_ViewController.xib */,
+				50F83CE82017696000690DCF /* AccountsViewController.swift */,
+				50F83CE92017696000690DCF /* AccountsViewController.xib */,
 				5099C20C20063EAB00898B0A /* TransDetailViewController.swift */,
 				5099C20D20063EAB00898B0A /* TransDetailViewController.xib */,
 				50CBA0EF20342E58001ABC95 /* InfromationAlertViewController.swift */,
 				50CBA0F020342E58001ABC95 /* InfromationAlertViewController.xib */,
 				500327B8204D666F00D39194 /* ProfileViewController.swift */,
 				500327B9204D666F00D39194 /* ProfileViewController.xib */,
+				50FCAEF520F35FB400DC7D12 /* FeedbackViewController.swift */,
+				50FCAEF620F35FB400DC7D12 /* FeedbackViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1431,6 +1446,7 @@
 				50FF203A2091B09A0026199F /* Scores_Cell.xib in Resources */,
 				5001F79C208CB30B00451031 /* getPractice.txt in Resources */,
 				5099C203200622C600898B0A /* Arabic.plist in Resources */,
+				50FCAF0920F364E100DC7D12 /* FeedbackTableViewCell.xib in Resources */,
 				5099C21520063EAB00898B0A /* TransDetailViewController.xib in Resources */,
 				5099C204200622C600898B0A /* English.plist in Resources */,
 				5099C21120063EAB00898B0A /* SettingsViewController.xib in Resources */,
@@ -1439,7 +1455,7 @@
 				50025FFB20693AB200942A72 /* AssignmentList.txt in Resources */,
 				50E7B32320078A7000DB9DB0 /* happy_christmas.wav in Resources */,
 				50E7B32820078A7000DB9DB0 /* happy_birthday.wav in Resources */,
-				50F83CEB2017696000690DCF /* Accounts_SH_ViewController.xib in Resources */,
+				50F83CEB2017696000690DCF /* AccountsViewController.xib in Resources */,
 				501F105520E8CC9200B2894E /* InfoView.xib in Resources */,
 				50E76B202004AA53009420F9 /* Resources.rtf in Resources */,
 				5075A9FD2088C25F007CEFD0 /* getUnitAnswer.txt in Resources */,
@@ -1452,25 +1468,26 @@
 				50E76ADB20037E2A009420F9 /* LaunchScreen.storyboard in Resources */,
 				50E76B0220037EC7009420F9 /* Settings.plist in Resources */,
 				5077869720EB92A800182708 /* DetailCell.xib in Resources */,
-				50E7B3302008CDEC00DB9DB0 /* ForgotPassword_SH_ViewController.xib in Resources */,
+				50E7B3302008CDEC00DB9DB0 /* ForgotPasswordViewController.xib in Resources */,
 				5077BA7020975BE00091CBCC /* predict_result.txt in Resources */,
-				50E76B242004B28A009420F9 /* Login_SH_ViewController.xib in Resources */,
+				50E76B242004B28A009420F9 /* LoginViewController.xib in Resources */,
 				500648932072244E00B7C13D /* Poppins-Italic.ttf in Resources */,
 				5080145120C6B3E7005A3100 /* CrumTitle_Cell.xib in Resources */,
 				50C36C04206922CA001C604B /* AssignmentTableViewCell.xib in Resources */,
 				500648962072244E00B7C13D /* Poppins-Bold.ttf in Resources */,
 				500648972072244E00B7C13D /* Poppins-Medium.ttf in Resources */,
-				5095C6D3200652DC003207AD /* Level_SHViewController.xib in Resources */,
+				5095C6D3200652DC003207AD /* LevelViewController.xib in Resources */,
 				500648952072244E00B7C13D /* Poppins-SemiBold.ttf in Resources */,
 				50E7B33D200CE3DA00DB9DB0 /* LevelJson.txt in Resources */,
 				5001F79D208CB30E00451031 /* getPracticeUnits.txt in Resources */,
 				500327BB204D666F00D39194 /* ProfileViewController.xib in Resources */,
 				50A325CE206D082B0003FF5C /* getAssignments.txt in Resources */,
-				50E7B32C2008CDD200DB9DB0 /* SignUp_SH_ViewController.xib in Resources */,
+				50E7B32C2008CDD200DB9DB0 /* SignUpViewController.xib in Resources */,
 				50E76AD820037E2A009420F9 /* Assets.xcassets in Resources */,
 				50D8ABA1206A4E3600BA5F85 /* UnitListViewController.xib in Resources */,
 				50E7B345200DD23C00DB9DB0 /* LabelTableViewCell.xib in Resources */,
 				50DC39FF2090BF3100CDA113 /* PracticeBoardViewController.xib in Resources */,
+				50FCAEF820F35FB400DC7D12 /* FeedbackViewController.xib in Resources */,
 				5095C6AD20064396003207AD /* ChapterContentCell.xib in Resources */,
 				50BEA27C201DE31B007F1899 /* ThemeCell.xib in Resources */,
 				50E79DD620050CF200327016 /* TabBarControllerViewController.xib in Resources */,
@@ -1655,9 +1672,10 @@
 				5095C69D2006433A003207AD /* ChapterVC_DataModel.swift in Sources */,
 				501F104820E8CC7E00B2894E /* InfoView.swift in Sources */,
 				5095C6BC2006444D003207AD /* wordResult_View.swift in Sources */,
-				5095C6D1200652C0003207AD /* Level_SHViewController.swift in Sources */,
+				5095C6D1200652C0003207AD /* LevelViewController.swift in Sources */,
 				50E7B31820075B4900DB9DB0 /* UIApplication.swift in Sources */,
 				50E76B1E2003A121009420F9 /* Settings.swift in Sources */,
+				50FCAF0520F3642100DC7D12 /* FeedbackModel.swift in Sources */,
 				50E793CF207DF470002854E5 /* pronunciation.pb.swift in Sources */,
 				5001F79F208CB6BB00451031 /* Categories.swift in Sources */,
 				50E4DA74206A388200C17A12 /* AssignmnetDasboardViewController.swift in Sources */,
@@ -1674,7 +1692,7 @@
 				500327BA204D666F00D39194 /* ProfileViewController.swift in Sources */,
 				50DC39FE2090BF3100CDA113 /* PracticeBoardViewController.swift in Sources */,
 				50CBA0F120342E58001ABC95 /* InfromationAlertViewController.swift in Sources */,
-				50E76B232004B28A009420F9 /* Login_SH_ViewController.swift in Sources */,
+				50E76B232004B28A009420F9 /* LoginViewController.swift in Sources */,
 				5095C6B6200643E5003207AD /* Prediction_Model.swift in Sources */,
 				504CCC5D203AE10B00EE3CC2 /* SignUp.swift in Sources */,
 				50E76B2B2004D64E009420F9 /* Localizator.swift in Sources */,
@@ -1684,6 +1702,7 @@
 				50EF61AB207B7D0D00166162 /* UnitTableViewCell.swift in Sources */,
 				50E76AD320037E2A009420F9 /* MainViewController.swift in Sources */,
 				5077BAF7209B2F990091CBCC /* HTTPError.swift in Sources */,
+				50FCAEF720F35FB400DC7D12 /* FeedbackViewController.swift in Sources */,
 				50C9C9152095BAD000161635 /* ContinueButton.swift in Sources */,
 				50DC3A0120919DA000CDA113 /* PracticeViewModel.swift in Sources */,
 				5080144F20C6B3E7005A3100 /* CrumTitle_Cell.swift in Sources */,
@@ -1728,10 +1747,11 @@
 				500327C1204D8AD600D39194 /* NibView.swift in Sources */,
 				50E7B33B200CDD3E00DB9DB0 /* LocalJsonService.swift in Sources */,
 				50E7B332200B769C00DB9DB0 /* SignupViewModel.swift in Sources */,
-				50E7B32F2008CDEC00DB9DB0 /* ForgotPassword_SH_ViewController.swift in Sources */,
-				50F83CEA2017696000690DCF /* Accounts_SH_ViewController.swift in Sources */,
-				50E7B32B2008CDD200DB9DB0 /* SignUp_SH_ViewController.swift in Sources */,
+				50E7B32F2008CDEC00DB9DB0 /* ForgotPasswordViewController.swift in Sources */,
+				50F83CEA2017696000690DCF /* AccountsViewController.swift in Sources */,
+				50E7B32B2008CDD200DB9DB0 /* SignUpViewController.swift in Sources */,
 				5077868820EB7DDA00182708 /* ProfileViewModel.swift in Sources */,
+				50FCAF0820F364E100DC7D12 /* FeedbackTableViewCell.swift in Sources */,
 				5095C6C320064470003207AD /* DateValueFormatter.swift in Sources */,
 				5080140D20C555D3005A3100 /* ContentUnits.swift in Sources */,
 				50E7B348200DD2A100DB9DB0 /* LanguageTableViewCell.swift in Sources */,

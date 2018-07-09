@@ -30,15 +30,15 @@ class MainViewController: UIViewController, MainViewControllerProtocols {
         return viewcontroller
     }()
     */
-   lazy var     login_ViewController: Login_SH_ViewController  = {
-     var viewcontroller   = Login_SH_ViewController(nibName: "Login_SH_ViewController", bundle: nil)
+   lazy var     login_ViewController: LoginViewController  = {
+     var viewcontroller   = LoginViewController(nibName: "LoginViewController", bundle: nil)
      return viewcontroller
     
     }()
      
     
-    lazy var     signUp_ViewController: SignUp_SH_ViewController  = {
-        var viewcontroller   = SignUp_SH_ViewController(nibName: "SignUp_SH_ViewController", bundle: nil)
+    lazy var     signUp_ViewController: SignUpViewController  = {
+        var viewcontroller   = SignUpViewController(nibName: "SignUpViewController", bundle: nil)
         return viewcontroller
         
     }()
@@ -142,7 +142,7 @@ class MainViewController: UIViewController, MainViewControllerProtocols {
     }
     
     func showSignUpViewController() -> Void {
-        let signUp_ViewController: SignUp_SH_ViewController = SignUp_SH_ViewController(nibName: "SignUp_SH_ViewController", bundle: nil)
+        let signUp_ViewController: SignUpViewController = SignUpViewController(nibName: "SignUpzViewController", bundle: nil)
         //self.navigationController?.pushViewController(signUp_ViewController, animated: true)
         self.present(signUp_ViewController, animated: true, completion: nil)
         //self.addSubView(addChildViewController: signUp_ViewController, on: self)
@@ -150,7 +150,7 @@ class MainViewController: UIViewController, MainViewControllerProtocols {
     }
     
     func showForgetPasswordViewController() -> Void {
-        let forgot_ViewController : ForgotPassword_SH_ViewController = ForgotPassword_SH_ViewController(nibName: "ForgotPassword_SH_ViewController", bundle: nil)
+        let forgot_ViewController : ForgotPasswordViewController = ForgotPasswordViewController(nibName: "ForgotPasswordViewController", bundle: nil)
         self.present(forgot_ViewController, animated: true, completion: nil)
         
     }

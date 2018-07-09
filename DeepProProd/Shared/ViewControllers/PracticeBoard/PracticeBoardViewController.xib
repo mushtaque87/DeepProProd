@@ -22,6 +22,7 @@
                 <outlet property="clearButton" destination="0IN-LX-ML9" id="PlT-6n-WLA"/>
                 <outlet property="contentView" destination="iVY-Bf-Or5" id="lpJ-Qe-EPU"/>
                 <outlet property="expert_AudioButton" destination="zJK-5y-sUn" id="Jcg-Ac-TxP"/>
+                <outlet property="feedbackButton" destination="FVi-sM-SPy" id="9MQ-mp-GUU"/>
                 <outlet property="keyboard" destination="6mm-Df-Jgf" id="g8g-vM-B9k"/>
                 <outlet property="phonemeTable" destination="NfC-un-HUX" id="Fbx-Dd-T2f"/>
                 <outlet property="recordButton" destination="y2n-Dk-L7E" id="yfZ-Rg-fer"/>
@@ -44,11 +45,11 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iVY-Bf-Or5" userLabel="ContentView">
                             <rect key="frame" x="0.0" y="0.0" width="310" height="207.5"/>
                             <subviews>
-                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="oVD-Hc-cAQ">
+                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oVD-Hc-cAQ">
                                     <rect key="frame" x="0.0" y="5" width="310" height="197.5"/>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="17"/>
+                                    <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="19"/>
                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 </textView>
                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y2n-Dk-L7E" customClass="RecordButton" customModule="DeepProProd" customModuleProvider="target">
@@ -80,7 +81,7 @@
                                     </connections>
                                 </button>
                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6mm-Df-Jgf">
-                                    <rect key="frame" x="271" y="168" width="34" height="34"/>
+                                    <rect key="frame" x="266" y="167.5" width="34" height="34"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="6mm-Df-Jgf" secondAttribute="height" multiplier="1:1" id="Bzx-oE-9kB"/>
                                     </constraints>
@@ -89,6 +90,18 @@
                                     </state>
                                     <connections>
                                         <action selector="showKeyboard:" destination="-1" eventType="touchUpInside" id="L3F-EK-CP3"/>
+                                    </connections>
+                                </button>
+                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FVi-sM-SPy">
+                                    <rect key="frame" x="271" y="172.5" width="32" height="32"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" secondItem="FVi-sM-SPy" secondAttribute="height" multiplier="1:1" id="rdl-Qp-udn"/>
+                                    </constraints>
+                                    <state key="normal" image="feedback">
+                                        <color key="titleColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="showFeedback:" destination="-1" eventType="touchUpInside" id="E11-tt-7xa"/>
                                     </connections>
                                 </button>
                             </subviews>
@@ -100,9 +113,12 @@
                                 <constraint firstItem="zJK-5y-sUn" firstAttribute="centerX" secondItem="iVY-Bf-Or5" secondAttribute="centerX" id="Hyw-FC-m5x"/>
                                 <constraint firstItem="oVD-Hc-cAQ" firstAttribute="bottom" secondItem="iVY-Bf-Or5" secondAttribute="bottom" constant="-5" id="OBK-ni-vZT"/>
                                 <constraint firstAttribute="bottom" secondItem="zJK-5y-sUn" secondAttribute="bottom" id="Ouf-Ek-fRL"/>
+                                <constraint firstItem="FVi-sM-SPy" firstAttribute="bottom" secondItem="y2n-Dk-L7E" secondAttribute="bottom" constant="2" id="RBx-nb-Bdr"/>
+                                <constraint firstAttribute="trailing" secondItem="FVi-sM-SPy" secondAttribute="trailing" constant="7" id="RZU-SA-TJz"/>
+                                <constraint firstItem="FVi-sM-SPy" firstAttribute="width" secondItem="FVi-sM-SPy" secondAttribute="height" multiplier="1:1" id="UBy-qj-P69"/>
                                 <constraint firstAttribute="bottom" secondItem="6mm-Df-Jgf" secondAttribute="bottom" constant="5.5" id="YzH-9Z-77A"/>
                                 <constraint firstItem="oVD-Hc-cAQ" firstAttribute="leading" secondItem="iVY-Bf-Or5" secondAttribute="leading" id="d5N-YQ-Wqp"/>
-                                <constraint firstItem="6mm-Df-Jgf" firstAttribute="trailing" secondItem="iVY-Bf-Or5" secondAttribute="trailing" constant="-5" id="dX6-i7-DKp"/>
+                                <constraint firstItem="6mm-Df-Jgf" firstAttribute="trailing" secondItem="iVY-Bf-Or5" secondAttribute="trailing" constant="-10" id="dX6-i7-DKp"/>
                                 <constraint firstAttribute="leading" secondItem="y2n-Dk-L7E" secondAttribute="leading" constant="-10" id="wkJ-tM-0Gv"/>
                             </constraints>
                         </view>
@@ -183,6 +199,7 @@
         </view>
     </objects>
     <resources>
+        <image name="feedback" width="32" height="32"/>
         <image name="speakerup" width="32" height="32"/>
         <image name="trash_1" width="32" height="32"/>
     </resources>
