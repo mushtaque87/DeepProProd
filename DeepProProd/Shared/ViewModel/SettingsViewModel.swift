@@ -11,8 +11,7 @@ import MBProgressHUD
 
 enum SettingType : Int  {
     case language
-    case profile
-    case mainPage
+    case themetype
     case graphtype
     case logout
 }
@@ -48,10 +47,8 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if let settingtype = SettingType(rawValue: indexPath.row) {
             switch settingtype {
-            case  .profile :
-                 return 80.0
-            case .language, .mainPage , .graphtype :
-                return 100.0
+            case .language, .graphtype , .themetype:
+                return 80.0
             case .logout:
                  return 80.0
             }
@@ -62,31 +59,51 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        guard section == 0 else {
+            return 4
+        }
+        
+        return 1
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
     }
 
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
+    guard indexPath.section > 0  else {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
+        cell.titleLbl.text = "My_Account".localized
+        cell.titleLbl.alignText()
+        cell.contentView.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+        return cell
+    }
     
     if let settingtype = SettingType(rawValue: indexPath.row) {
             switch settingtype {
             case .language:
-                let cell  = tableView.dequeueReusableCell(withIdentifier: "language", for: indexPath) as! LanguageTableViewCell
-                cell.titlLbl.text = "Language".localized
-                
-                cell.languageSwitch.addTarget(self, action: #selector(languageSelected), for: UIControlEvents.valueChanged)
-                cell.titlLbl.alignText()
-                cell.contentView.backgroundColor = UIColor.clear
+                //let cell  = tableView.dequeueReusableCell(withIdentifier: "language", for: indexPath) as! LanguageTableViewCell
+                 let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
+                 cell.titleLbl.text = "Language".localized
+
+                //cell.languageSwitch.addTarget(self, action: #selector(languageSelected), for: UIControlEvents.valueChanged)
+                cell.titleLbl.alignText()
+                cell.contentView.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                 return cell
+             /*
             case .profile:
                  let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
                  cell.titleLbl.text = "My_Account".localized
                  cell.titleLbl.alignText()
                  cell.contentView.backgroundColor = UIColor.clear
                  return cell
+              */
+                /*
             case .mainPage:
                 
                 let cell  = tableView.dequeueReusableCell(withIdentifier: "language", for: indexPath) as! LanguageTableViewCell
+                
                 cell.titlLbl.text = "MainPage".localized
                 cell.languageSwitch.setTitle("Main", forSegmentAt: 0)
                 cell.languageSwitch.setTitle("Practice Board", forSegmentAt: 1)
@@ -94,8 +111,13 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 cell.titlLbl.alignText()
                 cell.contentView.backgroundColor = UIColor.clear
                 return cell
+                 */
             case .graphtype:
-                
+                let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
+                cell.titleLbl.text = "GraphType".localized
+                cell.titleLbl.alignText()
+                cell.contentView.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                /*
                 let cell  = tableView.dequeueReusableCell(withIdentifier: "language", for: indexPath) as! LanguageTableViewCell
                 cell.titlLbl.text = "GraphType".localized
                 cell.languageSwitch.setTitle("Bar", forSegmentAt: 0)
@@ -103,9 +125,15 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 cell.languageSwitch.addTarget(self, action: #selector(selectGraphType(_:)), for: UIControlEvents.valueChanged)
                 cell.titlLbl.alignText()
                 cell.contentView.backgroundColor = UIColor.clear
+                 */
                 return cell
-                /*
+                
             case .themetype:
+                
+                let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
+                cell.titleLbl.text = "Theme".localized
+                cell.titleLbl.alignText()
+                cell.contentView.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                 
                 /*let cell  = tableView.dequeueReusableCell(withIdentifier: "language", for: indexPath) as! LanguageTableViewCell
                 cell.titlLbl.text = "GraphType".localized
@@ -116,6 +144,8 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                
                 cell.languageSwitch.addTarget(self, action: #selector(themeType), for: UIControlEvents.valueChanged)
                 cell.titlLbl.alignText()*/
+                
+                /*
                 let cell  = tableView.dequeueReusableCell(withIdentifier: "theme", for: indexPath) as! ThemeCell
                 cell.setImage(forButtonWithTag: 1, withImage: "Carbon")
                 cell.setImage(forButtonWithTag: 2, withImage: "Abstract")
@@ -129,7 +159,9 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 cell.titleLbl.text = "Theme".localized
                 cell.titleLbl.alignText()
                 cell.contentView.backgroundColor = UIColor.clear
+                */
                 return cell
+                /*
             case .announcements:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
                 cell.titleLbl.text = "Announcements".localized
@@ -149,41 +181,34 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
                 cell.titleLbl.textAlignment = .center
                 cell.titleLbl.text = "Logout".localized
-                cell.contentView.backgroundColor = UIColor.clear
+                cell.contentView.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                 return cell
             }
         }
     return UITableViewCell()
     }
 
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-       
-    }
    
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
         {
+            guard indexPath.section > 0 else {
+                delegate?.showProfileScreen()
+                return
+            }
+            
             if let settingtype = SettingType(rawValue: indexPath.row) {
                 switch settingtype {
-                    
-                case .language: break
-                    
+                case .language:
+                    delegate?.showSettingSelectionScreen(for: .language)
+                  /*
                 case .profile:
-                   // let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-                   // hud.mode = MBProgressHUDMode.indeterminate
-                   // hud.label.text = "Fetching Profile. Please wait"
-                   
-                    /*ServiceManager().getProfile(for: (UserInfo.shared.userDetails?.uid)!, onSuccess: {response in
-                        
-                    }, onHTTPError: { httperror in
-                        
-                    }, onError: {error in
-                        
-                    })*/
                     delegate?.showProfileScreen()
                     break
-                case .mainPage: break
-                case .graphtype: break
+ */
+                case .themetype:
+                    delegate?.showSettingSelectionScreen(for: .themetype)
+                case .graphtype:
+                    delegate?.showSettingSelectionScreen(for: .graphtype)
                     /*
                 case .themetype: break
                 case .announcements: break

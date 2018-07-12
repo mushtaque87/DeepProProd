@@ -10,18 +10,17 @@ import UIKit
 import MBProgressHUD
 import RxSwift
 
-enum ScreenType : Int  {
-    case view
-    case edit
-}
 
 
-class ProfileViewController: UIViewController, ProfileViewDelegate {
+
+class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationControllerDelegate, UIImagePickerControllerDelegate {
   
     
 
     @IBOutlet weak var editButton: UIButton!
     @IBOutlet weak var myProfileView: MyProfileView!
+    
+    @IBOutlet weak var profileButton: UIButton!
     @IBOutlet weak var profileImage: UIImageView!
     @IBOutlet weak var firstNameField: UITextField!
     @IBOutlet weak var lastNameField: UITextField!
@@ -39,7 +38,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         edgesForExtendedLayout = []
-        
+       
        Helper.lockOrientation(.portrait)
         let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(controlKeyboard(sender:)))
         singleTapGesture.numberOfTapsRequired = 1
@@ -48,8 +47,8 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         configureEditOptions(with: viewModel.isEditEnabled)
         viewModel.delegate = self
         
-        firstNameField.delegate = viewModel
-        lastNameField.delegate = viewModel
+       // firstNameField.delegate = viewModel
+       // lastNameField.delegate = viewModel
         
        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editProfile(_:)))
       
@@ -62,29 +61,44 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         //view.addSubview(tempProfileView)
         // Do any additional setup after loading the view.
         
-        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
-        hud.mode = MBProgressHUDMode.indeterminate
-        hud.label.text = "Fetching Profile. Please wait."
+        self.navigationItem.title = "My Account"
         
-        profileImage.layer.borderColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9).cgColor
-        profileImage.layer.borderWidth = 6
-        profileImage.layer.cornerRadius = 55
+//        profileButton.layer.borderColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9).cgColor
+//        profileButton.layer.borderWidth = 2
+//        profileButton.layer.cornerRadius = profileButton.frame.size.width/2
+//        profileButton.clipsToBounds = true
         
         
 //        self.view.layer.borderColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9).cgColor
 //        self.view.layer.borderWidth = 4
         //self.view.layer.cornerRadius = 55
-        
+        self.detailsTable.register(UINib(nibName: "InfoTableViewCell", bundle: nil), forCellReuseIdentifier: "profileCell")
         self.detailsTable.register(UINib(nibName: "DetailCell", bundle: nil), forCellReuseIdentifier: "details")
         self.detailsTable.delegate = viewModel
         self.detailsTable.dataSource = viewModel
         self.detailsTable.backgroundColor = UIColor.white
         
+
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardShown), name:NSNotification.Name.UIKeyboardDidShow, object: nil);
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHidden), name:NSNotification.Name.UIKeyboardDidHide, object: nil);
+
+        
+        guard viewModel.screenType == .edit else {
+            return
+            
+        }
+        
+        let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        hud.mode = MBProgressHUDMode.indeterminate
+        hud.label.text = "Fetching Profile. Please wait."
+        
         ServiceManager().getProfile(for: UserDefaults.standard.string(forKey: "uid")! , onSuccess: { response in
-            self.firstNameField.text = response.first_name
-            self.lastNameField.text = response.last_name
-            self.emailField.text = response.email
-            self.viewModel.details = Profile(first_name: response.first_name!, last_name: response.last_name!, user_attributes: User_attributes(dob: (response.user_attributes?.dob)!))
+           // self.firstNameField.text = response.first_name
+           // self.lastNameField.text = response.last_name
+           // self.emailField.text = response.email
+            self.viewModel.details = Profile(first_name: response.first_name!, last_name: response.last_name!,email: response.email!, user_attributes: User_attributes(dob: (response.user_attributes?.dob)!))
             self.detailsTable.reloadData()
             //self.dobField.text = response.user_attributes?.dob
             hud.hide(animated: true)
@@ -95,12 +109,6 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         },onComplete: {
             hud.hide(animated: true)
         })
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardShown), name:NSNotification.Name.UIKeyboardDidShow, object: nil);
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHidden), name:NSNotification.Name.UIKeyboardDidHide, object: nil);
-
-        
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -137,8 +145,10 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
            //     dob =  cell.valueTextField.text
            // }
             
-            let profile = Profile(first_name: firstNameField.text! , last_name: lastNameField.text! , user_attributes: User_attributes(dob:(viewModel.details?.user_attributes?.dob)!))
-            ServiceManager().updateProfile(for: UserDefaults.standard.string(forKey: "uid")! , with:profile,  onSuccess: { 
+            let profile = Profile(first_name: viewModel.details!.first_name!, last_name: viewModel.details!.last_name!, email: viewModel.details!.email!, user_attributes: User_attributes(dob:(viewModel.details?.user_attributes?.dob)!))
+         
+            
+            ServiceManager().updateProfile(for: UserDefaults.standard.string(forKey: "uid")! , with:profile,  onSuccess: {
                 hud.hide(animated: true)
             }, onHTTPError: { httperror in
                 hud.hide(animated: true)
@@ -152,8 +162,8 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
     }
     
     func configureEditOptions(with editStatus: Bool) {
-        firstNameField.isEnabled = editStatus
-        lastNameField.isEnabled = editStatus
+        //firstNameField.isEnabled = editStatus
+        //lastNameField.isEnabled = editStatus
         
 //        for rowCount in 0...detailsTable.numberOfRows(inSection: 0) {
 //            if let cell : DetailCell = self.detailsTable.cellForRow(at: IndexPath(row: rowCount, section: 0)) as? DetailCell {
@@ -179,9 +189,8 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         }
     }
     
-     //MARK: - Protocol
-     //#define kOFFSET_FOR_KEYBOARD 80.0
-
+     //MARK: - Keyboard Notification
+    
     @objc func keyboardShown(notification: NSNotification) {
         let info = notification.userInfo!
         let keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
@@ -197,6 +206,9 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         
     }
     
+     //MARK: - Protocol
+     //#define kOFFSET_FOR_KEYBOARD 80.0
+
     func moveTextField(up movedUp: Bool ,by height:CGFloat) {
         //detailsTable.setContentOffset(CGPoint(x: 0, y: textField.center.y - 160), animated: true)
         //[UIView beginAnimations:nil context:NULL];
@@ -236,6 +248,118 @@ class ProfileViewController: UIViewController, ProfileViewDelegate {
         //[UIView commitAnimations];
         UIView.commitAnimations()
     }
+     @objc func editProfilePic() {
+        
+        guard viewModel.isEditEnabled == true else {
+            return
+        }
+        
+        let actionsheet = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+        
+        actionsheet.addAction(UIAlertAction(title: "Take a Photo", style: UIAlertActionStyle.default, handler: { (action) -> Void in
+            self.pickImage(from: true)
+        }))
+        
+        actionsheet.addAction(UIAlertAction(title: "Choose Exisiting Photo", style: UIAlertActionStyle.default, handler: { (action) -> Void in
+            self.pickImage(from: false)
+        }))
+        actionsheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { (action) -> Void in
+            
+        }))
+        if(Helper.getCurrentDevice() == .pad) {
+            if let popoverController = actionsheet.popoverPresentationController {
+                popoverController.sourceView = self.view
+                popoverController.permittedArrowDirections = []
+                popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            }
+        }
+        self.present(actionsheet, animated: true, completion: nil)
+    }
+    
+    
+    func showEditNameScreen() {
+        
+        let profileSelectionTableViewController =     ProfileSelectionTableViewController(nibName: "ProfileSelectionTableViewController", bundle: nil)
+        profileSelectionTableViewController.editProfileType = .name
+        self.navigationController?.pushViewController(profileSelectionTableViewController, animated: true)
+        
+    }
+    
+    func showEditGenderScreen() {
+        
+        
+    }
+    
+    
+    
+    func pickImage(from camera:Bool){
+        
+        if(camera) {
+            if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)){
+                let picker = UIImagePickerController()
+                picker.delegate = self
+                picker.sourceType = UIImagePickerControllerSourceType.camera
+                picker.mediaTypes = UIImagePickerController.availableMediaTypes(for: picker.sourceType)!
+                //var mediaTypes: Array<AnyObject> = [kUTTypeImage]
+                // picker.mediaTypes = mediaTypes
+                picker.modalPresentationStyle = .custom;
+                // picker.showsCameraControls = true
+                // picker.isNavigationBarHidden = false
+                // picker.isToolbarHidden = false
+                picker.allowsEditing = true
+                self.present(picker, animated: true, completion: nil)
+                
+            }
+            else{
+                NSLog("No Camera.")
+            }
+        } else {
+            if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)){
+            let picker = UIImagePickerController()
+            picker.delegate = self
+            picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+            picker.mediaTypes = UIImagePickerController.availableMediaTypes(for: picker.sourceType)!
+            //var mediaTypes: Array<AnyObject> = [kUTTypeImage]
+            // picker.mediaTypes = mediaTypes
+            picker.modalPresentationStyle = .custom;
+            // picker.showsCameraControls = true
+            // picker.isNavigationBarHidden = false
+            // picker.isToolbarHidden = false
+            picker.allowsEditing = true
+            self.present(picker, animated: true, completion: nil)
+            } else {
+                NSLog("No Gallery.")
+            }
+        }
+        
+    }
+    
+    
+    
+    func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!){
+//        self.dismiss(animated: true, completion: { () -> Void in
+//            
+//        })
+        
+        //profileButton.setImage(image, for: .normal)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        self.dismiss(animated: true, completion: { () -> Void in
+            self.viewModel.details?.profile_image = info["UIImagePickerControllerOriginalImage"] as? UIImage
+            self.detailsTable.reloadData()
+//            self.profileButton.setImage((info["UIImagePickerControllerOriginalImage"] as! UIImage), for: .normal)
+//
+       })
+    }
+    
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true, completion: {() -> Void in
+            
+                })
+    }
+    
     /*
      MARK: - Navigation
     // In a storyboard-based application, you will often want to do a little preparation before navigation

@@ -65,7 +65,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     override func viewDidLoad() {
         super.viewDidLoad()
         edgesForExtendedLayout = []
-        self.navigationItem.title = "Board"
+        self.navigationItem.title = "Practice"
         phonemeTable.isHidden = true
         // Do any additional setup after loading the view.
         self.view.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
@@ -318,6 +318,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
 //           viewModel.playStreamAudio(for: "")
 //           return
            
+            /*
             guard case let audioUrl: String = viewModel.unitList[unitIndex].audio_url! , audioUrl.count > 0 else {
                 print("Play TTS")
                 viewModel.playTTS(for: textView.text)
@@ -325,17 +326,19 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
             }
             
             viewModel.playStreamAudio(for: audioUrl, of: sender as? UIButton)
-            /*
-            if case let audioUrl = viewModel.unitList[unitIndex].audio_url, audioUrl!.count > 0
+           */
+            if let audioUrl = viewModel.unitList[unitIndex].audio_url
             {
+                guard !audioUrl.isEmpty else {
+                    viewModel.playTTS(for: textView.text)
+                    return
+                }
+                viewModel.playStreamAudio(for: audioUrl, of: sender as? UIButton)
                 
-                viewModel.playStreamAudio(for: audioUrl!, of: sender as? UIButton)
-                
-            }
-        else {
+            }  else {
             viewModel.playTTS(for: textView.text)
             }
-             */
+            
             break
         case .freeText:
             viewModel.playTTS(for: textView.text)
@@ -755,12 +758,12 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         if (!textView.isEditable) {
             textView.isEditable = true
             textView.isSelectable = true
-            //textView.inputView?.becomeFirstResponder()
+            textView.becomeFirstResponder()
             keyboard.setImage(UIImage(named: "pencil-unedit.png"), for: .normal)
         } else {
             textView.isEditable = false
             textView.isSelectable = false
-           // textView.inputView?.resignFirstResponder()
+           textView.resignFirstResponder()
             keyboard.setImage(UIImage(named: "pencil-edit.png"), for: .normal)
         }
         

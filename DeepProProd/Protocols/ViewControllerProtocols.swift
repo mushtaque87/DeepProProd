@@ -26,7 +26,23 @@ protocol PracticeBoardProtocols: class {
     func setExpertSpeechButtonImage(set isTTSSpeaking:Bool)
 }
 
+protocol SettingProtocols: class {
+    func showProfileScreen()
+    func logOut(_ sender: Any)
+    func reloadTable()
+    func showSettingSelectionScreen(for settingType : SettingType) 
+}
+
 protocol ProfileViewDelegate: class {
  //func moveTextField(up movedUp: Bool)
- func moveTextField(up movedUp: Bool ,by height:CGFloat)
+    func moveTextField(up movedUp: Bool ,by height:CGFloat)
+    func editProfilePic()
+    func showEditNameScreen()
+    func showEditGenderScreen()
+    
+}
+
+protocol SignUpViewDelegate: class {
+    //func moveTextField(up movedUp: Bool)
+    func signUp()
 }

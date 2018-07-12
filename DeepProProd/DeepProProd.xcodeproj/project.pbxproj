@@ -36,6 +36,10 @@
 		501F104820E8CC7E00B2894E /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501F104720E8CC7E00B2894E /* InfoView.swift */; };
 		501F105520E8CC9200B2894E /* InfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 501F105420E8CC9200B2894E /* InfoView.xib */; };
 		501F105720E8DFC300B2894E /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 501F105620E8DFC300B2894E /* Profile.swift */; };
+		5037B94920F776BE00ECC5E7 /* NameTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5037B94720F776BE00ECC5E7 /* NameTableViewCell.swift */; };
+		5037B94A20F776BE00ECC5E7 /* NameTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5037B94820F776BE00ECC5E7 /* NameTableViewCell.xib */; };
+		5037B95920F78C7C00ECC5E7 /* ProfileSelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5037B95720F78C7C00ECC5E7 /* ProfileSelectionTableViewController.swift */; };
+		5037B95A20F78C7C00ECC5E7 /* ProfileSelectionTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5037B95820F78C7C00ECC5E7 /* ProfileSelectionTableViewController.xib */; };
 		504CCC5D203AE10B00EE3CC2 /* SignUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504CCC5C203AE10B00EE3CC2 /* SignUp.swift */; };
 		504CCC60203C0A8D00EE3CC2 /* TokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504CCC5F203C0A8D00EE3CC2 /* TokenManager.swift */; };
 		504CCC64203C544300EE3CC2 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 504CCC63203C544300EE3CC2 /* Date.swift */; };
@@ -214,6 +218,11 @@
 		50FCAF0520F3642100DC7D12 /* FeedbackModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FCAF0420F3642100DC7D12 /* FeedbackModel.swift */; };
 		50FCAF0820F364E100DC7D12 /* FeedbackTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FCAF0620F364E100DC7D12 /* FeedbackTableViewCell.swift */; };
 		50FCAF0920F364E100DC7D12 /* FeedbackTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50FCAF0720F364E100DC7D12 /* FeedbackTableViewCell.xib */; };
+		50FCAF0C20F5F75200DC7D12 /* SignUpDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FCAF0B20F5F75200DC7D12 /* SignUpDetails.swift */; };
+		50FCAF0F20F731F500DC7D12 /* SettingSelectionTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FCAF0D20F731F500DC7D12 /* SettingSelectionTableViewController.swift */; };
+		50FCAF1020F731F500DC7D12 /* SettingSelectionTableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50FCAF0E20F731F500DC7D12 /* SettingSelectionTableViewController.xib */; };
+		50FCAF1320F7644800DC7D12 /* InfoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FCAF1120F7644800DC7D12 /* InfoTableViewCell.swift */; };
+		50FCAF1420F7644800DC7D12 /* InfoTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50FCAF1220F7644800DC7D12 /* InfoTableViewCell.xib */; };
 		50FF20392091B09A0026199F /* Scores_Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50FF20372091B09A0026199F /* Scores_Cell.swift */; };
 		50FF203A2091B09A0026199F /* Scores_Cell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50FF20382091B09A0026199F /* Scores_Cell.xib */; };
 		8CB8E2BCD7C4ECFE327F5C43 /* Pods_DeepProProd.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 799A9D798938B6A0F2C2BB87 /* Pods_DeepProProd.framework */; };
@@ -437,6 +446,10 @@
 		501F104720E8CC7E00B2894E /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		501F105420E8CC9200B2894E /* InfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoView.xib; sourceTree = "<group>"; };
 		501F105620E8DFC300B2894E /* Profile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
+		5037B94720F776BE00ECC5E7 /* NameTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameTableViewCell.swift; sourceTree = "<group>"; };
+		5037B94820F776BE00ECC5E7 /* NameTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NameTableViewCell.xib; sourceTree = "<group>"; };
+		5037B95720F78C7C00ECC5E7 /* ProfileSelectionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSelectionTableViewController.swift; sourceTree = "<group>"; };
+		5037B95820F78C7C00ECC5E7 /* ProfileSelectionTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProfileSelectionTableViewController.xib; sourceTree = "<group>"; };
 		5041993D2060EA8B009C5432 /* SwiftProtobuf.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SwiftProtobuf.xcodeproj; path = "../../../../Downloads/swift-protobuf-master/SwiftProtobuf.xcodeproj"; sourceTree = "<group>"; };
 		504CCC5C203AE10B00EE3CC2 /* SignUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUp.swift; sourceTree = "<group>"; };
 		504CCC5F203C0A8D00EE3CC2 /* TokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenManager.swift; sourceTree = "<group>"; };
@@ -599,6 +612,11 @@
 		50FCAF0420F3642100DC7D12 /* FeedbackModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackModel.swift; sourceTree = "<group>"; };
 		50FCAF0620F364E100DC7D12 /* FeedbackTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackTableViewCell.swift; sourceTree = "<group>"; };
 		50FCAF0720F364E100DC7D12 /* FeedbackTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeedbackTableViewCell.xib; sourceTree = "<group>"; };
+		50FCAF0B20F5F75200DC7D12 /* SignUpDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpDetails.swift; sourceTree = "<group>"; };
+		50FCAF0D20F731F500DC7D12 /* SettingSelectionTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingSelectionTableViewController.swift; sourceTree = "<group>"; };
+		50FCAF0E20F731F500DC7D12 /* SettingSelectionTableViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SettingSelectionTableViewController.xib; sourceTree = "<group>"; };
+		50FCAF1120F7644800DC7D12 /* InfoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoTableViewCell.swift; sourceTree = "<group>"; };
+		50FCAF1220F7644800DC7D12 /* InfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoTableViewCell.xib; sourceTree = "<group>"; };
 		50FF20372091B09A0026199F /* Scores_Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scores_Cell.swift; sourceTree = "<group>"; };
 		50FF20382091B09A0026199F /* Scores_Cell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Scores_Cell.xib; sourceTree = "<group>"; };
 		799A9D798938B6A0F2C2BB87 /* Pods_DeepProProd.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DeepProProd.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -785,6 +803,10 @@
 				5077869520EB92A800182708 /* DetailCell.xib */,
 				50FCAF0620F364E100DC7D12 /* FeedbackTableViewCell.swift */,
 				50FCAF0720F364E100DC7D12 /* FeedbackTableViewCell.xib */,
+				50FCAF1120F7644800DC7D12 /* InfoTableViewCell.swift */,
+				50FCAF1220F7644800DC7D12 /* InfoTableViewCell.xib */,
+				5037B94720F776BE00ECC5E7 /* NameTableViewCell.swift */,
+				5037B94820F776BE00ECC5E7 /* NameTableViewCell.xib */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -816,6 +838,7 @@
 				5095C6B4200643E5003207AD /* Pronunciation_Prediction.swift */,
 				5095C6B2200643E5003207AD /* Word_Prediction.swift */,
 				50CBA0E92032FEE1001ABC95 /* UserInfo.swift */,
+				50FCAF0B20F5F75200DC7D12 /* SignUpDetails.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -1097,6 +1120,10 @@
 				500327B9204D666F00D39194 /* ProfileViewController.xib */,
 				50FCAEF520F35FB400DC7D12 /* FeedbackViewController.swift */,
 				50FCAEF620F35FB400DC7D12 /* FeedbackViewController.xib */,
+				50FCAF0D20F731F500DC7D12 /* SettingSelectionTableViewController.swift */,
+				50FCAF0E20F731F500DC7D12 /* SettingSelectionTableViewController.xib */,
+				5037B95720F78C7C00ECC5E7 /* ProfileSelectionTableViewController.swift */,
+				5037B95820F78C7C00ECC5E7 /* ProfileSelectionTableViewController.xib */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1444,10 +1471,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				50FF203A2091B09A0026199F /* Scores_Cell.xib in Resources */,
+				50FCAF1020F731F500DC7D12 /* SettingSelectionTableViewController.xib in Resources */,
 				5001F79C208CB30B00451031 /* getPractice.txt in Resources */,
 				5099C203200622C600898B0A /* Arabic.plist in Resources */,
 				50FCAF0920F364E100DC7D12 /* FeedbackTableViewCell.xib in Resources */,
 				5099C21520063EAB00898B0A /* TransDetailViewController.xib in Resources */,
+				5037B95A20F78C7C00ECC5E7 /* ProfileSelectionTableViewController.xib in Resources */,
 				5099C204200622C600898B0A /* English.plist in Resources */,
 				5099C21120063EAB00898B0A /* SettingsViewController.xib in Resources */,
 				50E7B32420078A7000DB9DB0 /* good_night.wav in Resources */,
@@ -1482,6 +1511,7 @@
 				5001F79D208CB30E00451031 /* getPracticeUnits.txt in Resources */,
 				500327BB204D666F00D39194 /* ProfileViewController.xib in Resources */,
 				50A325CE206D082B0003FF5C /* getAssignments.txt in Resources */,
+				50FCAF1420F7644800DC7D12 /* InfoTableViewCell.xib in Resources */,
 				50E7B32C2008CDD200DB9DB0 /* SignUpViewController.xib in Resources */,
 				50E76AD820037E2A009420F9 /* Assets.xcassets in Resources */,
 				50D8ABA1206A4E3600BA5F85 /* UnitListViewController.xib in Resources */,
@@ -1491,6 +1521,7 @@
 				5095C6AD20064396003207AD /* ChapterContentCell.xib in Resources */,
 				50BEA27C201DE31B007F1899 /* ThemeCell.xib in Resources */,
 				50E79DD620050CF200327016 /* TabBarControllerViewController.xib in Resources */,
+				5037B94A20F776BE00ECC5E7 /* NameTableViewCell.xib in Resources */,
 				5095C6AA20064396003207AD /* ReportCell.xib in Resources */,
 				5077BAF120986E6D0091CBCC /* StartRecording.aiff in Resources */,
 				50E7B349200DD2A100DB9DB0 /* LanguageTableViewCell.xib in Resources */,
@@ -1681,6 +1712,7 @@
 				50E4DA74206A388200C17A12 /* AssignmnetDasboardViewController.swift in Sources */,
 				50D8ABA0206A4E3600BA5F85 /* UnitListViewController.swift in Sources */,
 				508FE5A620568C710051941F /* GRPCServiceManager.swift in Sources */,
+				50FCAF0C20F5F75200DC7D12 /* SignUpDetails.swift in Sources */,
 				5077BA9A2097765C0091CBCC /* Matched.swift in Sources */,
 				5095C6B0200643BF003207AD /* serviceProtocols.swift in Sources */,
 				5099C21320063EAB00898B0A /* WordsViewController.swift in Sources */,
@@ -1704,6 +1736,7 @@
 				5077BAF7209B2F990091CBCC /* HTTPError.swift in Sources */,
 				50FCAEF720F35FB400DC7D12 /* FeedbackViewController.swift in Sources */,
 				50C9C9152095BAD000161635 /* ContinueButton.swift in Sources */,
+				5037B95920F78C7C00ECC5E7 /* ProfileSelectionTableViewController.swift in Sources */,
 				50DC3A0120919DA000CDA113 /* PracticeViewModel.swift in Sources */,
 				5080144F20C6B3E7005A3100 /* CrumTitle_Cell.swift in Sources */,
 				5095C6B7200643E5003207AD /* Pronunciation_Prediction.swift in Sources */,
@@ -1715,6 +1748,7 @@
 				5077BAEE20986AD30091CBCC /* RecordButton.swift in Sources */,
 				508987BE206D13DD004566B4 /* Assignment.swift in Sources */,
 				50E76B292004BB2F009420F9 /* ViewControllerExtensions.swift in Sources */,
+				50FCAF1320F7644800DC7D12 /* InfoTableViewCell.swift in Sources */,
 				5099C2002005F13A00898B0A /* Helper.swift in Sources */,
 				5095C69E2006433A003207AD /* TranslationVC_DataModel.swift in Sources */,
 				50E76AD120037E2A009420F9 /* AppDelegate.swift in Sources */,
@@ -1722,6 +1756,7 @@
 				5099C21420063EAB00898B0A /* TransDetailViewController.swift in Sources */,
 				50F83CDB2014D8F300690DCF /* Constants.swift in Sources */,
 				5095C6B5200643E5003207AD /* Word_Prediction.swift in Sources */,
+				5037B94920F776BE00ECC5E7 /* NameTableViewCell.swift in Sources */,
 				50CBA0EA2032FEE1001ABC95 /* UserInfo.swift in Sources */,
 				5080145420C90E3A005A3100 /* UnitsAnswers.swift in Sources */,
 				50E7B340200DD09D00DB9DB0 /* LogOutCell.swift in Sources */,
@@ -1763,6 +1798,7 @@
 				50C8D7E2204811E50028F05D /* ViewControllerProtocols.swift in Sources */,
 				50E7B31C2007829300DB9DB0 /* UIImageView.swift in Sources */,
 				5095C6AC20064396003207AD /* ReportCell.swift in Sources */,
+				50FCAF0F20F731F500DC7D12 /* SettingSelectionTableViewController.swift in Sources */,
 				50CBA0BB20307555001ABC95 /* TestManager.swift in Sources */,
 				50C8D76C20429B240028F05D /* ForgotPassword.swift in Sources */,
 				5077BA9C2097765C0091CBCC /* Prediction_result_json.swift in Sources */,

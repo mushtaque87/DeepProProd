@@ -128,6 +128,10 @@ class LoginViewController: UIViewController {
                 self?.passwordTextField.text = details.password
             }).disposed(by: rootVc.disposeBag)
         }
+        
+      
+        
+       
    
     }
     

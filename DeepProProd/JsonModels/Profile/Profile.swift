@@ -12,10 +12,12 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 */
 
 import Foundation
+import UIKit
 struct Profile : Codable {
 	var email : String?
 	var first_name : String?
 	var last_name : String?
+    var profile_image : UIImage?
 	var user_attributes : User_attributes?
 
 	enum CodingKeys: String, CodingKey {
@@ -34,9 +36,10 @@ struct Profile : Codable {
 		user_attributes = try values.decodeIfPresent(User_attributes.self, forKey: .user_attributes)
 	}
 
-    init(first_name: String, last_name: String , user_attributes: User_attributes) {
+    init(first_name: String, last_name: String ,email: String , user_attributes: User_attributes) {
         self.first_name = first_name
         self.last_name = last_name
+        self.email = email
         self.user_attributes = user_attributes
     }
 

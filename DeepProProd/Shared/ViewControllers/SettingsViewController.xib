@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -28,9 +28,9 @@
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zLM-S1-Zt5">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                 </imageView>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="c5w-Ci-nx8">
-                    <rect key="frame" x="0.0" y="40" width="320" height="528"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="c5w-Ci-nx8">
+                    <rect key="frame" x="5" y="20" width="310" height="548"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <connections>
                         <outlet property="dataSource" destination="MJ6-V7-y0U" id="UrK-8R-gHd"/>
@@ -41,11 +41,11 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="zLM-S1-Zt5" secondAttribute="trailing" id="ApL-9d-Zbq"/>
-                <constraint firstItem="c5w-Ci-nx8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="topMargin" constant="20" id="GGH-fO-o2X"/>
+                <constraint firstItem="c5w-Ci-nx8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="topMargin" id="GGH-fO-o2X"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="zLM-S1-Zt5" secondAttribute="top" constant="20" id="WLl-PU-fbs"/>
-                <constraint firstItem="c5w-Ci-nx8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="Wpl-wb-K4H"/>
+                <constraint firstItem="c5w-Ci-nx8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="5" id="Wpl-wb-K4H"/>
                 <constraint firstItem="zLM-S1-Zt5" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="XhF-aZ-ArU"/>
-                <constraint firstItem="c5w-Ci-nx8" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="YhY-e8-k5i"/>
+                <constraint firstItem="c5w-Ci-nx8" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-5" id="YhY-e8-k5i"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="zLM-S1-Zt5" secondAttribute="bottom" id="ewF-e8-CzJ"/>
                 <constraint firstItem="zLM-S1-Zt5" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="jfb-OT-5xx"/>
                 <constraint firstItem="c5w-Ci-nx8" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="vW3-au-4bZ"/>

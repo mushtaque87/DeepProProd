@@ -10,11 +10,23 @@ import Foundation
 import UIKit
 
 enum DetailType : Int  {
+    case email
     case dob
     case gender
     case standard
     case section
     case contact
+}
+
+enum InfoType : Int  {
+    case firstName
+    case lastName
+    
+}
+
+enum ScreenType : Int  {
+    case signUp
+    case edit
 }
 
 
@@ -26,12 +38,62 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
     weak var delegate: ProfileViewDelegate? 
     var isKeyboardOnScreen : Bool = false
     var currentTextField : UITextField?
+    var screenType : ScreenType = .edit
+    
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        if (section == 0) {
+            return 1
+        } else {
+            return 8
+        }
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 2
+    }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+        switch indexPath.section {
+        case 0:
+            switch indexPath.row {
+            case 0 :
+                let cell  = tableView.dequeueReusableCell(withIdentifier: "profileCell", for: indexPath) as! InfoTableViewCell
+                
+                cell.firstName.text = details?.first_name
+                cell.lastName.text = details?.last_name
+//                cell.firstName.isUserInteractionEnabled = false
+//                cell.lastName.isUserInteractionEnabled = false
+                cell.contentView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                cell.profileImageButton.addTarget(self , action: #selector(editProfilePic), for: .touchUpInside)
+                cell.profileImageButton.setImage(details?.profile_image, for: .normal)
+                return cell
+            default:
+               break
+            }
+        default:
         if let detailtype = DetailType(rawValue: indexPath.row) {
+           let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
             switch detailtype {
+                case .email:
+                        cell.valueTextField.isEnabled = isEditEnabled
+                        cell.valueTextField.textColor = UIColor.white
+                        cell.valueTextField.delegate = self
+                        cell.valueTextField.autocorrectionType = .no
+                        cell.valueTextField.tag = indexPath.row
+                        cell.valueTextField.text = details?.email
+                        cell.titleLabel.text = "Email"
+                        cell.titleLabel.textColor = UIColor.white
+                        cell.titleLabel.textAlignment = .left
+                        cell.backgroundColor = UIColor.clear
+                        cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                        cell.titleLabel.backgroundColor = UIColor.clear
+                        return cell
                 case .dob:
-                        let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
+                       // let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
                         cell.valueTextField.isEnabled = isEditEnabled
                         cell.titleLabel.text = "Date of Birth"
                         cell.valueTextField.delegate = self
@@ -47,11 +109,11 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                         return cell
                 case .gender:
-                        let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
+                        //let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
                         cell.valueTextField.isEnabled = isEditEnabled
                         cell.valueTextField.delegate = self
                         cell.valueTextField.autocorrectionType = .no
-                         cell.valueTextField.tag = indexPath.row
+                        cell.valueTextField.tag = indexPath.row
                         cell.valueTextField.text = "Male"
                         cell.titleLabel.text = "Gender"
                         cell.titleLabel.textColor = UIColor.white
@@ -61,7 +123,7 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         cell.titleLabel.backgroundColor = UIColor.clear
                         return cell
             case .standard:
-                        let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
+                       // let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
                         cell.valueTextField.isEnabled = isEditEnabled
                         cell.valueTextField.delegate = self
                         cell.valueTextField.autocorrectionType = .no
@@ -75,7 +137,7 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         cell.titleLabel.backgroundColor = UIColor.clear
                         return cell
             case .section:
-                        let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
+                        // let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
                         cell.valueTextField.isEnabled = isEditEnabled
                         cell.valueTextField.delegate = self
                         cell.valueTextField.autocorrectionType = .no
@@ -89,7 +151,7 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         cell.titleLabel.backgroundColor = UIColor.clear
                         return cell
             case .contact:
-                        let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
+                       // let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
                         cell.valueTextField.isEnabled = isEditEnabled
                         cell.valueTextField.delegate = self
                         cell.valueTextField.autocorrectionType = .no
@@ -102,23 +164,49 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                         cell.titleLabel.backgroundColor = UIColor.clear
                         return cell
+                }
             }
-            
         }
         return UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80.0
+        if (indexPath.section == 0) {
+            return 100.0
+        } else {
+            return 70.0
+        }
+        
+    }
+ 
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+//    {
+//        if indexPath.section == 0 {
+//            delegate?.showEditNameScreen()
+//        } else {
+//            if indexPath.row == 2 {
+//                delegate?.showEditGenderScreen()
+//            }
+//        }
+//    }
+//
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.section == 0 {
+                        delegate?.showEditNameScreen()
+                    } else {
+                        if indexPath.row == 2 {
+                            delegate?.showEditGenderScreen()
+                        }
+                }
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+    
+    @objc func editProfilePic() {
+        delegate?.editProfilePic()
     }
     
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
+    
+    
     
     @objc func controlKeyboard (sender:UITapGestureRecognizer){
         guard sender.numberOfTapsRequired == 1 else {
@@ -140,7 +228,7 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         currentTextField = textField
         
-        if textField.tag == 0 {
+        if textField.tag == 1 {
             let currentDate = Date()
             var dateComponents = DateComponents()
             dateComponents.year = 100
@@ -164,14 +252,10 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                                 }
             }
             return false
-        } else if (textField.tag == 100) || (textField.tag == 101){
-            return true
+        } else if (textField.tag == 0){
+            return false
         }
-        else {
-            if (isKeyboardOnScreen == false) {
-            //delegate?.moveTextField(up: true)
-            }
-        }
+      
         return true
     }
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {  //delegate method

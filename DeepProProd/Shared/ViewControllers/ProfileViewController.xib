@@ -6,27 +6,13 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="Poppins-Bold.ttf">
-            <string>Poppins-Bold</string>
-        </array>
-        <array key="Poppins-SemiBold.ttf">
-            <string>Poppins-SemiBold</string>
-        </array>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProfileViewController" customModule="DeepProProd" customModuleProvider="target">
             <connections>
                 <outlet property="detailsTable" destination="ssg-7B-lMv" id="4wC-U7-amn"/>
-                <outlet property="emailField" destination="552-AC-DV5" id="EYJ-sa-qw8"/>
-                <outlet property="firstNameField" destination="46w-wO-8wK" id="9yV-cs-A3f"/>
-                <outlet property="lastNameField" destination="MNe-G4-CAo" id="1oh-w5-UyG"/>
-                <outlet property="profileImage" destination="tJz-gw-xhK" id="WcQ-7e-UgV"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -38,71 +24,23 @@
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="meJ-79-ut4" userLabel="Root Stack View">
                     <rect key="frame" x="0.0" y="25" width="375" height="632"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="748" verticalCompressionResistancePriority="748" image="male_student" translatesAutoresizingMaskIntoConstraints="NO" id="tJz-gw-xhK">
-                            <rect key="frame" x="124.5" y="0.0" width="126" height="126"/>
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="tJz-gw-xhK" secondAttribute="height" multiplier="1:1" id="elr-La-sgx"/>
-                            </constraints>
-                        </imageView>
                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="kgp-eR-qlP" userLabel="Header Stack View">
-                            <rect key="frame" x="0.0" y="141" width="375" height="491"/>
+                            <rect key="frame" x="0.0" y="0.0" width="375" height="632"/>
                             <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" axis="vertical" distribution="fillProportionally" alignment="center" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="oFf-Hx-rit" userLabel="Details Stack View">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="82"/>
-                                    <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="6bU-TG-Veb" userLabel="Name Stack View">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="56"/>
-                                            <subviews>
-                                                <textField opaque="NO" tag="100" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="249" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="46w-wO-8wK">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="27"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <color key="textColor" red="0.35430148369999998" green="0.44488243840000002" blue="0.63096843270000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                    <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="19"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                                <textField opaque="NO" tag="101" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MNe-G4-CAo">
-                                                    <rect key="frame" x="0.0" y="29" width="375" height="27"/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <color key="textColor" red="0.35430148369999998" green="0.44488243840000002" blue="0.63096843270000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                    <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits"/>
-                                                </textField>
-                                            </subviews>
-                                        </stackView>
-                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kSc-JT-5Bu">
-                                            <rect key="frame" x="0.0" y="58" width="375" height="24"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="552-AC-DV5">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="24"/>
-                                                    <fontDescription key="fontDescription" name="Poppins-SemiBold" family="Poppins" pointSize="17"/>
-                                                    <color key="textColor" red="0.35430148369999998" green="0.44488243840000002" blue="0.63096843270000003" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </stackView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="kSc-JT-5Bu" firstAttribute="width" secondItem="oFf-Hx-rit" secondAttribute="width" id="4hD-7I-JNH"/>
-                                        <constraint firstItem="6bU-TG-Veb" firstAttribute="leading" secondItem="oFf-Hx-rit" secondAttribute="leading" id="dSI-AF-yVp"/>
-                                        <constraint firstAttribute="trailing" secondItem="6bU-TG-Veb" secondAttribute="trailing" id="svU-iL-XjC"/>
-                                    </constraints>
-                                </stackView>
-                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ssg-7B-lMv">
-                                    <rect key="frame" x="10" y="102" width="355" height="389"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" allowsSelection="NO" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="ssg-7B-lMv">
+                                    <rect key="frame" x="10" y="0.0" width="355" height="632"/>
+                                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 </tableView>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="ds2-wj-WLd" firstAttribute="trailing" secondItem="ssg-7B-lMv" secondAttribute="trailing" constant="10" id="Rz3-zy-Xlv"/>
                                 <constraint firstItem="ssg-7B-lMv" firstAttribute="leading" secondItem="ds2-wj-WLd" secondAttribute="leading" constant="10" id="uYc-ak-LMo"/>
-                                <constraint firstAttribute="trailingMargin" secondItem="oFf-Hx-rit" secondAttribute="trailing" id="zBk-KY-RbU"/>
                             </constraints>
                             <viewLayoutGuide key="safeArea" id="ds2-wj-WLd"/>
                         </stackView>
                     </subviews>
                     <constraints>
                         <constraint firstItem="kgp-eR-qlP" firstAttribute="width" secondItem="meJ-79-ut4" secondAttribute="width" id="4S3-zc-Zfh"/>
-                        <constraint firstItem="tJz-gw-xhK" firstAttribute="width" secondItem="meJ-79-ut4" secondAttribute="height" multiplier="1:5" id="eSU-n7-5X4"/>
                     </constraints>
                 </stackView>
             </subviews>
@@ -118,7 +56,4 @@
             <point key="canvasLocation" x="34.5" y="100.5"/>
         </view>
     </objects>
-    <resources>
-        <image name="male_student" width="512" height="512"/>
-    </resources>
 </document>

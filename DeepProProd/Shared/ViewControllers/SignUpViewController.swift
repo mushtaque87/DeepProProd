@@ -9,20 +9,12 @@
 import UIKit
 import RxSwift
 import MBProgressHUD
-class SignUpViewController: UIViewController {
+class SignUpViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate , SignUpViewDelegate{
 
+    @IBOutlet weak var profileImageButton: UIButton!
     @IBOutlet weak var closeBtn: UIButton!
-    @IBOutlet weak var backgroundImage: UIImageView!
-    @IBOutlet weak var informationLbl: UILabel!
-    @IBOutlet weak var firstNameTxtField: UITextField!
-    @IBOutlet weak var lastNameTxtField: UITextField!
-    @IBOutlet weak var emailTxtField: UITextField!
-    @IBOutlet weak var passordTextField: UITextField!
-    @IBOutlet weak var confirmPasswordTxtField: UITextField!
-    @IBOutlet weak var ageTxtField: UITextField!
-    @IBOutlet weak var genderSwitch: UISegmentedControl!
-    @IBOutlet weak var signupBtn: UIButton!
     @IBOutlet var viewModel: SignupViewModel!
+    @IBOutlet weak var detailsTableView: UITableView!
     
     //RxSwift
     private var userinfo = Variable(user())
@@ -41,20 +33,196 @@ class SignUpViewController: UIViewController {
         //_ =  ageTxtField.rx.text.map {$0 ?? ""}.bind(to:viewModel.dob)
 
             viewModel.dobObserver.subscribe(onNext: { [weak self] details in
-                self?.ageTxtField.text = details
                 print("Dob : \(details)")
                 //self?.login(nil)
             }).disposed(by: disposeBag)
-        
+        viewModel.delegate = self
          Helper.lockOrientation(.portrait)
-        self.backgroundImage.isHidden = true
-        self.view.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+        //self.backgroundImage.isHidden = true
+        self.view.backgroundColor = UIColor.white
+        
+        
+        self.detailsTableView.register(UINib(nibName: "DetailCell", bundle: nil), forCellReuseIdentifier: "details")
+        self.detailsTableView.register(UINib(nibName: "LabelTableViewCell", bundle: nil), forCellReuseIdentifier: "labelCell")
+        self.detailsTableView.delegate = viewModel
+        self.detailsTableView.dataSource = viewModel
+        self.detailsTableView.backgroundColor = UIColor.white
+        
+        profileImageButton.layer.borderColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9).cgColor
+        profileImageButton.layer.borderWidth = 2
+        profileImageButton.layer.cornerRadius = profileImageButton.frame.size.width/2
+        profileImageButton.clipsToBounds = true
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardShown), name:NSNotification.Name.UIKeyboardDidShow, object: nil);
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardHidden), name:NSNotification.Name.UIKeyboardDidHide, object: nil);
+
 
     }
     
         // Do any additional setup after loading the view.
+    @objc func keyboardShown(notification: NSNotification) {
+        let info = notification.userInfo!
+        let keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        print("keyboardFrame: \(keyboardFrame)")
+        moveTextField(up: true, by: keyboardFrame.height)
+    }
     
+    @objc func keyboardHidden(notification: NSNotification) {
+        let info = notification.userInfo!
+        let keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        print("keyboardFrame: \(keyboardFrame)")
+        moveTextField(up: false, by: keyboardFrame.height)
+        
+    }
 
+    func moveTextField(up movedUp: Bool ,by height:CGFloat) {
+        //detailsTable.setContentOffset(CGPoint(x: 0, y: textField.center.y - 160), animated: true)
+        //[UIView beginAnimations:nil context:NULL];
+        //[UIView setAnimationDuration:0.3]; // if you want to slide up the view
+        guard ((viewModel.currentTextField?.tag) != signUpDetails.dob.rawValue) else {
+            return
+        }
+        
+        if (movedUp)
+        {
+        var contentInset:UIEdgeInsets = self.detailsTableView.contentInset
+        contentInset.bottom = height
+        detailsTableView.contentInset = contentInset
+        } else {
+            let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+            detailsTableView.contentInset = contentInset
+        }
+        return
+            
+        UIView.beginAnimations(nil, context: nil)
+        UIView.setAnimationDuration(0.3)
+        
+        var rect = self.view.frame;
+        if (movedUp)
+        {
+            // 1. move the view's origin up so that the text field that will be hidden come above the keyboard
+            // 2. increase the size of the view so that the area behind the keyboard is covered up.
+            if  (self.view.frame.origin.y >= 0)
+            {
+                //viewModel.isKeyboardOnScreen = true
+                if(Helper.getCurrentDevice() == .phone) {
+                    rect.origin.y -= height;
+                    rect.size.height += height;
+                }
+                
+            }
+        }
+        else
+        {
+            // revert back to the normal state.
+            //viewModel.isKeyboardOnScreen = false
+            if(Helper.getCurrentDevice() == .phone) {
+                rect.origin.y += height;
+                rect.size.height -= height;
+            }
+        }
+        self.view.frame = rect;
+        
+        //[UIView commitAnimations];
+        UIView.commitAnimations()
+    }
+    
+    @IBAction func editProfilePic(_ sender: Any) {
+        
+        guard viewModel.isEditEnabled == true else {
+            return
+        }
+        
+        let actionsheet = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
+        
+        actionsheet.addAction(UIAlertAction(title: "Take a Photo", style: UIAlertActionStyle.default, handler: { (action) -> Void in
+            self.pickImage(from: true)
+        }))
+        
+        actionsheet.addAction(UIAlertAction(title: "Choose Exisiting Photo", style: UIAlertActionStyle.default, handler: { (action) -> Void in
+            self.pickImage(from: false)
+        }))
+        actionsheet.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.cancel, handler: { (action) -> Void in
+            
+        }))
+        if(Helper.getCurrentDevice() == .pad) {
+            if let popoverController = actionsheet.popoverPresentationController {
+                popoverController.sourceView = self.view
+                popoverController.permittedArrowDirections = []
+                popoverController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+            }
+        }
+        self.present(actionsheet, animated: true, completion: nil)
+    }
+    
+    
+    func pickImage(from camera:Bool){
+        
+        if(camera) {
+            if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)){
+                let picker = UIImagePickerController()
+                picker.delegate = self
+                picker.sourceType = UIImagePickerControllerSourceType.camera
+                picker.mediaTypes = UIImagePickerController.availableMediaTypes(for: picker.sourceType)!
+                //var mediaTypes: Array<AnyObject> = [kUTTypeImage]
+                // picker.mediaTypes = mediaTypes
+                picker.modalPresentationStyle = .custom;
+                // picker.showsCameraControls = true
+                // picker.isNavigationBarHidden = false
+                // picker.isToolbarHidden = false
+                picker.allowsEditing = true
+                self.present(picker, animated: true, completion: nil)
+                
+            }
+            else{
+                NSLog("No Camera.")
+            }
+        } else {
+            if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)){
+                let picker = UIImagePickerController()
+                picker.delegate = self
+                picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+                picker.mediaTypes = UIImagePickerController.availableMediaTypes(for: picker.sourceType)!
+                //var mediaTypes: Array<AnyObject> = [kUTTypeImage]
+                // picker.mediaTypes = mediaTypes
+                picker.modalPresentationStyle = .custom;
+                // picker.showsCameraControls = true
+                // picker.isNavigationBarHidden = false
+                // picker.isToolbarHidden = false
+                picker.allowsEditing = true
+                self.present(picker, animated: true, completion: nil)
+            } else {
+                NSLog("No Gallery.")
+            }
+        }
+        
+    }
+    
+    
+    
+    func imagePickerController(picker: UIImagePickerController!, didFinishPickingImage image: UIImage!, editingInfo: NSDictionary!){
+        //        self.dismiss(animated: true, completion: { () -> Void in
+        //
+        //        })
+        
+        profileImageButton.setImage(image, for: .normal)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        self.dismiss(animated: true, completion: { () -> Void in
+            self.profileImageButton.setImage((info["UIImagePickerControllerOriginalImage"] as! UIImage), for: .normal)
+            
+        })
+    }
+    
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true, completion: { () -> Void in
+            
+        })
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -76,7 +244,7 @@ class SignUpViewController: UIViewController {
     }
     
     
-    @IBAction func signUp(_ sender: Any) {
+    func signUp() {
        
         //RxSwift
         //self.userinfo.value = user(username: self.emailTxtField.text!, password: self.passordTextField.text!)
@@ -88,9 +256,8 @@ class SignUpViewController: UIViewController {
             hud.mode = MBProgressHUDMode.indeterminate
             hud.label.text = "Signing up. Please wait"
             
-            
             //FIXME: - Use it when real network is available as parameter in request
-          let  requestBody = viewModel.createSignUpBody(firstname: firstNameTxtField.text!, lastname: lastNameTxtField.text!, email: emailTxtField.text!, password: passordTextField.text!, age: ageTxtField.text!, dob: ageTxtField.text!, gender: genderSwitch.selectedSegmentIndex)
+          let  requestBody = viewModel.createSignUpBody(firstname: viewModel.details.firstname!, lastname: viewModel.details.lastname!, email: viewModel.details.email!, password: viewModel.details.password!,  dob: viewModel.details.dob!, gender: viewModel.details.gender!)
             
             ServiceManager().doSignUp(withBody: requestBody, onSuccess: { result in
                /* if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
@@ -99,7 +266,7 @@ class SignUpViewController: UIViewController {
                     rootVc.remove(viewController: rootVc.signUp_ViewController, from: rootVc)
                     //rootVc.addTabBarControllers()
                 }*/
-                self.clearData()
+                //self.clearData()
                 hud.mode = MBProgressHUDMode.text
                 hud.label.text = "Account created ! Please Login now."
             } , onHTTPError: { httperror in
@@ -115,6 +282,8 @@ class SignUpViewController: UIViewController {
         
         print("end of signup")
     }
+   
+    
     
     /*
     // MARK: - Navigation
@@ -129,12 +298,13 @@ class SignUpViewController: UIViewController {
     // MARK: - UI Update
     func refreshUI() {
         
-        backgroundImage.setBackGroundimage()
+        //backgroundImage.setBackGroundimage()
         
         //loginTitleLbl.alignText()
         
     }
     
+    /*
     func clearData()
     {
         self.firstNameTxtField.text = ""
@@ -145,7 +315,7 @@ class SignUpViewController: UIViewController {
         self.ageTxtField.text = ""
         
     }
-    
+    */
     
     override var shouldAutorotate: Bool {
         return false
@@ -155,15 +325,14 @@ class SignUpViewController: UIViewController {
         return .portrait
     }
     
-    
+  
     func isDetailsFilled() -> Bool {
         
-        guard passordTextField.text?.count != 0 &&
-            passordTextField.text?.count != 0 &&
-            confirmPasswordTxtField.text?.count != 0 &&
-            emailTxtField.text?.count != 0 &&
-            firstNameTxtField.text?.count != 0 &&
-            lastNameTxtField.text?.count != 0
+        guard viewModel.details.password != nil && viewModel.details.password?.count != 0 &&
+            viewModel.details.confirmpassword != nil && viewModel.details.confirmpassword?.count != 0 &&
+            viewModel.details.email != nil && viewModel.details.email?.count != 0 &&
+            viewModel.details.firstname != nil && viewModel.details.firstname?.count != 0 &&
+            viewModel.details.lastname != nil && viewModel.details.lastname?.count != 0
             else {
                 if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
                 {
@@ -186,7 +355,7 @@ class SignUpViewController: UIViewController {
             return false
         }
         
-        guard passordTextField.text == confirmPasswordTxtField.text else {
+        guard viewModel.details.password == viewModel.details.confirmpassword else {
             
             /*
             if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
@@ -200,11 +369,12 @@ class SignUpViewController: UIViewController {
             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
             hud.mode = MBProgressHUDMode.text
             hud.label.text = "Password and Confirm password field are not same"
-            
+            hud.hide(animated: true, afterDelay: 1.5)
             return false
         }
         
         return true
     }
-
+ 
+    
 }

@@ -8,12 +8,7 @@
 
 import UIKit
 
-protocol SettingProtocols: class {
-    func showProfileScreen()
-    func logOut(_ sender: Any)
-    func reloadTable()
-    
-}
+
 
 class SettingsViewController: UIViewController,SettingProtocols {
 
@@ -35,7 +30,7 @@ class SettingsViewController: UIViewController,SettingProtocols {
         self.settingTableView.register(UINib(nibName: "ThemeCell", bundle: nil), forCellReuseIdentifier: "theme")
         self.settingTableView.backgroundColor = UIColor.clear
         viewModel.delegate = self
-        self.view.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+       // self.view.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
         self.backgroundImage.isHidden = true
         
     }
@@ -55,6 +50,12 @@ class SettingsViewController: UIViewController,SettingProtocols {
         self.navigationController?.pushViewController(profileViewController, animated: true)
     }
    
+    func showSettingSelectionScreen(for settingType : SettingType) {
+        let settingSelectionViewController =     SettingSelectionTableViewController(nibName: "SettingSelectionTableViewController", bundle: nil)
+        settingSelectionViewController.settingtype = settingType
+        self.navigationController?.pushViewController(settingSelectionViewController, animated: true)
+    }
+    
      func logOut(_ sender: Any) {
         
         Settings.sharedInstance.setValue(key: "isLoggedIn", value: false as AnyObject)

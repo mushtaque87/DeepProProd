@@ -142,11 +142,17 @@ class MainViewController: UIViewController, MainViewControllerProtocols {
     }
     
     func showSignUpViewController() -> Void {
-        let signUp_ViewController: SignUpViewController = SignUpViewController(nibName: "SignUpzViewController", bundle: nil)
-        //self.navigationController?.pushViewController(signUp_ViewController, animated: true)
+        let signUp_ViewController: SignUpViewController = SignUpViewController(nibName: "SignUpViewController", bundle: nil)
         self.present(signUp_ViewController, animated: true, completion: nil)
+        
         //self.addSubView(addChildViewController: signUp_ViewController, on: self)
-
+        
+        /*
+        let signUpViewController =     ProfileViewController(nibName: "ProfileViewController", bundle: nil)
+        signUpViewController.viewModel.isEditEnabled = true
+        signUpViewController.viewModel.screenType = .signUp
+        self.present(signUpViewController, animated: true, completion: nil)
+         */
     }
     
     func showForgetPasswordViewController() -> Void {
