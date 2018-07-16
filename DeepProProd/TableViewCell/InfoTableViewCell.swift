@@ -16,7 +16,7 @@ class InfoTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
+       
         profileImageButton.layer.borderColor = UIColor.white.cgColor
         profileImageButton.layer.borderWidth = 2
         profileImageButton.layer.cornerRadius = 5

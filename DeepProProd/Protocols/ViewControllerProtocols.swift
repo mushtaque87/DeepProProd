@@ -37,9 +37,11 @@ protocol ProfileViewDelegate: class {
  //func moveTextField(up movedUp: Bool)
     func moveTextField(up movedUp: Bool ,by height:CGFloat)
     func editProfilePic()
+    func showEditInfoScreen(for detailType:EditProfileType)
     func showEditNameScreen()
     func showEditGenderScreen()
-    
+    func showEditStandardScreen()
+    func saveEditedDetails(for editType: EditProfileType, with details:Profile)
 }
 
 protocol SignUpViewDelegate: class {

@@ -28,15 +28,17 @@ class SettingsViewController: UIViewController,SettingProtocols {
         self.settingTableView.register(UINib(nibName: "LabelTableViewCell", bundle: nil), forCellReuseIdentifier: "labelCell")
         self.settingTableView.register(UINib(nibName: "LanguageTableViewCell", bundle: nil), forCellReuseIdentifier: "language")
         self.settingTableView.register(UINib(nibName: "ThemeCell", bundle: nil), forCellReuseIdentifier: "theme")
+        self.settingTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+
         self.settingTableView.backgroundColor = UIColor.clear
         viewModel.delegate = self
-       // self.view.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+        self.view.backgroundColor = UIColor.clear
         self.backgroundImage.isHidden = true
         
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        refreshUI()
+         reloadTable()
          backgroundImage.setBackGroundimage()
     }
 
@@ -84,6 +86,6 @@ class SettingsViewController: UIViewController,SettingProtocols {
     }
     
     func refreshUI() {
-       
+        self.settingTableView.reloadData()
     }
 }

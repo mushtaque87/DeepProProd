@@ -12,11 +12,16 @@ enum EditProfileType : Int  {
     case name
     case gender
     case standard
+    case section
     case contact
 }
 
-class ProfileSelectionTableViewController: UITableViewController {
+class ProfileSelectionTableViewController: UITableViewController, UITextFieldDelegate {
     var editProfileType : EditProfileType?
+    weak var delegate: ProfileViewDelegate?
+    var details : Profile?
+    var profileTypeDetails = ["Gender":["Male" ,"Female"],"Standard":["1","2","3","4","5","6","7","8","9"],"Section":["A","B","C","D"]]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -24,9 +29,13 @@ class ProfileSelectionTableViewController: UITableViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+         //self.navigationItem.rightBarButtonItem = self.editButtonItem
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(saveDetails(_:)))
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancel(_:)))
         
         self.tableView.register(UINib(nibName: "NameTableViewCell", bundle: nil), forCellReuseIdentifier: "nameCell")
+        self.tableView.register(UINib(nibName: "LabelTableViewCell", bundle: nil), forCellReuseIdentifier: "labelCell")
     }
 
     override func didReceiveMemoryWarning() {
@@ -35,7 +44,24 @@ class ProfileSelectionTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            if let editProfileType = self.editProfileType {
+            switch editProfileType {
+            case .name:
+                return 60
+            case .gender:
+                return 60
+            case .standard:
+                return 60
+            case .contact:
+                return 60
+            case .section:
+                return 80
+                }
+        }
+        return 80
+    }
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
         return 1
@@ -46,13 +72,15 @@ class ProfileSelectionTableViewController: UITableViewController {
         if let editProfileType = self.editProfileType {
             switch editProfileType {
             case .name:
-               return 1
+               return 2
             case .gender:
-                return 2
+                return profileTypeDetails["Gender"]!.count
             case .standard:
-                return 10
+                return  profileTypeDetails["Standard"]!.count
             case .contact:
                 return 1
+            case .section:
+                return profileTypeDetails["Section"]!.count
             }
         }
         return 1
@@ -66,20 +94,99 @@ class ProfileSelectionTableViewController: UITableViewController {
             switch editProfileType {
             case .name:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "nameCell", for: indexPath) as! NameTableViewCell
+                cell.textFieldOne.tag = indexPath.row
+                cell.textFieldOne.delegate = self
+                cell.textFieldOne.placeholder = (indexPath.row == 0 ? "First Name" : "Last Name")
+                cell.textFieldOne.text = (indexPath.row == 0 ? details?.first_name : details?.last_name)
+                
                 return cell
             case .gender:
-               break
+                let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
+                cell.titleLbl.text = profileTypeDetails["Gender"]?[indexPath.row]
+                cell.contentView.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                return cell
+              
             case .standard:
-                break
+                let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
+                cell.titleLbl.text = profileTypeDetails["Standard"]?[indexPath.row]
+                cell.contentView.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                return cell
+                
             case .contact:
-                break
+                let cell = tableView.dequeueReusableCell(withIdentifier: "nameCell", for: indexPath) as! NameTableViewCell
+                cell.textFieldOne.tag = indexPath.row
+                cell.textFieldOne.delegate = self
+                return cell
+                
+            case .section:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
+                cell.titleLbl.text = profileTypeDetails["Section"]?[indexPath.row]
+                cell.contentView.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                return cell
             }
             
         }
         return UITableViewCell()
     }
     
+     @objc func cancel(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func saveDetails(_ sender: Any) {
+        
+        if let editProfileType = self.editProfileType {
+            switch editProfileType {
+            case .name:
+                delegate?.saveEditedDetails(for: .name, with: details!)
+                break
+            case .gender:
+                delegate?.saveEditedDetails(for: .gender, with: details!)
+                break
+            case .standard:
+                delegate?.saveEditedDetails(for: .standard, with:details!)
+                break
+            case .contact:
+                delegate?.saveEditedDetails(for: .contact, with: details!)
+                break
+            case .section:
+                delegate?.saveEditedDetails(for: .section , with: details!)
+            }
+        }
+        self.navigationController?.popViewController(animated: true)
+    }
 
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if let editProfileType = self.editProfileType {
+            switch editProfileType {
+            case .name: break
+            case .gender :
+                tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+                deselectOtherRows(except: indexPath.row)
+                details?.gender = profileTypeDetails["Gender"]?[indexPath.row]
+            case .standard:
+                tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+                deselectOtherRows(except: indexPath.row)
+                details?.standard = profileTypeDetails["Standard"]?[indexPath.row]
+            case .contact: break
+            case .section:
+                tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+                deselectOtherRows(except: indexPath.row)
+                details?.section = profileTypeDetails["Section"]?[indexPath.row]
+            }
+        }
+    }
+    
+    func deselectOtherRows (except selectedRow : Int) {
+        for row in 0...(tableView.numberOfRows(inSection: 0) - 1) {
+            if row != selectedRow {
+                let cell:UITableViewCell = tableView.cellForRow(at: IndexPath(row: row, section: 0))!
+                cell.accessoryType = .none
+            }
+        }
+    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -124,5 +231,47 @@ class ProfileSelectionTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    
+    // MARK: - TextField Delegate
+    func textFieldDidBeginEditing(_ textField: UITextField) {    //delegate method
+        
+    }
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
+   
+        return true
+    }
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {  //delegate method
+       
+        if let editProfileType = self.editProfileType {
+            switch editProfileType {
+            case .name:
+                if(textField.tag == 0 ){
+                    details?.first_name = textField.text
+                } else {
+                    details?.last_name = textField.text
+                }
+            case .gender:
+               break
+            case .standard:
+                break
+            case .contact:
+                if(textField.tag == 0 ){
+                    details?.contact = textField.text
+                }
+                break
+            case .section:
+                break
+            }
+        }
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {   //delegate method
+        textField.resignFirstResponder()
+        return true
+    }
+
     
 }

@@ -10,8 +10,8 @@ import UIKit
 
 class SettingSelectionTableViewController: UITableViewController {
     var settingtype : SettingType?
-    var settingTypeDetails = ["Language": ["English","Arabic"], "Theme":["Blue","Grey","Red"] , "Graph Type":["Bar","Line"] , "Gender":["Male" ,"Female"]]
-    
+    var settingTypeDetails = ["Language": ["English","Arabic"], "Theme":["Blue","Green","Pink"] , "Graph Type":["Bar","Line"] , "Gender":["Male" ,"Female"]]
+    var selectedIndex : IndexPath?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +21,10 @@ class SettingSelectionTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(saveDetails(_:)))
+        
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancel(_:)))
         
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
@@ -74,6 +78,14 @@ class SettingSelectionTableViewController: UITableViewController {
                 cell.textLabel?.text = settingTypeDetails["Language"]?[indexPath.row]
             case .themetype:
                 cell.textLabel?.text = settingTypeDetails["Theme"]?[indexPath.row]
+                if (indexPath.row == 0) {
+                    cell.backgroundColor  = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                } else if (indexPath.row == 1){
+                    cell.backgroundColor  = UIColor(red: 10/255, green: 197/255, blue: 98/255, alpha: 0.9)
+                    
+                } else {
+                    cell.backgroundColor  = UIColor(red: 255/255, green: 168/255, blue: 212/255, alpha: 0.9)
+                }
             case .graphtype:
                 cell.textLabel?.text = settingTypeDetails["Graph Type"]?[indexPath.row]
             case .logout:
@@ -102,6 +114,7 @@ class SettingSelectionTableViewController: UITableViewController {
                 break
             }
         }
+        selectedIndex = indexPath
     }
 
     func deselectOtherRows (except selectedRow : Int) {
@@ -113,7 +126,63 @@ class SettingSelectionTableViewController: UITableViewController {
         }
     }
     
+    @objc func cancel(_ sender: Any) {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func saveDetails(_ sender: Any) {
+        
+        if let settingtype = self.settingtype {
+            switch settingtype {
+            case .language:
+                languageSelected()
+               break
+            case .themetype:
+                selectThemeType()
+                break
+            case .graphtype:
+                selectGraphType()
+               break
+            case .logout:
+                break
+            }
+        }
+       self.navigationController?.popViewController(animated: true)
+    }
   
+    @objc func languageSelected() {
+        if(selectedIndex?.row == 0)
+        {
+            Settings.sharedInstance.language = "English"
+            Settings.sharedInstance.setValue(key: "Language", value: "English" as AnyObject)
+        }
+        else
+        {
+            Settings.sharedInstance.language = "Arabic"
+            Settings.sharedInstance.setValue(key: "Language", value: "Arabic" as AnyObject)
+            
+        }
+        Localizator.sharedInstance.reloadLocalisationDictionary()
+    }
+
+    @objc func selectGraphType() {
+        
+        Settings.sharedInstance.graphType = selectedIndex?.row
+        Settings.sharedInstance.setValue(key: "GraphType", value: selectedIndex?.row as AnyObject)
+        Localizator.sharedInstance.reloadLocalisationDictionary()
+        //delegate?.reloadTable()
+    }
+    
+    @objc func selectThemeType() {
+        
+        Settings.sharedInstance.themeType = selectedIndex?.row
+        Settings.sharedInstance.setValue(key: "ThemeType", value: selectedIndex?.row as AnyObject)
+        //Localizator.sharedInstance.reloadLocalisationDictionary()
+        //delegate?.reloadTable()
+    }
+    
+    
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

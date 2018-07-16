@@ -42,7 +42,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
        Helper.lockOrientation(.portrait)
         let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(controlKeyboard(sender:)))
         singleTapGesture.numberOfTapsRequired = 1
-        self.view.addGestureRecognizer(singleTapGesture)
+        //self.view.addGestureRecognizer(singleTapGesture)
         
         configureEditOptions(with: viewModel.isEditEnabled)
         viewModel.delegate = self
@@ -50,7 +50,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
        // firstNameField.delegate = viewModel
        // lastNameField.delegate = viewModel
         
-       self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editProfile(_:)))
+       //self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editProfile(_:)))
       
         self.view.backgroundColor = UIColor.white
             //UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
@@ -90,6 +90,9 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
             
         }
         
+        //self.viewModel.details = Profile(first_name: "Mush", last_name: "ahmed" ,email:"email.com", user_attributes: User_attributes(dob: "21-06-1987"))
+       // return
+        
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud.mode = MBProgressHUDMode.indeterminate
         hud.label.text = "Fetching Profile. Please wait."
@@ -111,8 +114,8 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
         })
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-       
+    override func viewDidAppear(_ animated: Bool) {
+       self.detailsTable.reloadData()
     }
     
     override func didReceiveMemoryWarning() {
@@ -136,6 +139,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
             viewModel.isEditEnabled = false
             configureEditOptions(with: viewModel.isEditEnabled)
             detailsTable.reloadData()
+            
             
             let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
             hud.mode = MBProgressHUDMode.indeterminate
@@ -202,7 +206,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
         let info = notification.userInfo!
         let keyboardFrame: CGRect = (info[UIKeyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         print("keyboardFrame: \(keyboardFrame)")
-        moveTextField(up: false, by: keyboardFrame.height)
+        //moveTextField(up: false, by: keyboardFrame.height)
         
     }
     
@@ -213,6 +217,17 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
         //detailsTable.setContentOffset(CGPoint(x: 0, y: textField.center.y - 160), animated: true)
         //[UIView beginAnimations:nil context:NULL];
         //[UIView setAnimationDuration:0.3]; // if you want to slide up the view
+        if (movedUp)
+        {
+        var contentInset:UIEdgeInsets = self.detailsTable.contentInset
+        contentInset.bottom = height
+        detailsTable.contentInset = contentInset
+        } else {
+        let contentInset:UIEdgeInsets = UIEdgeInsets.zero
+        detailsTable.contentInset = contentInset
+        }
+        return
+        
         guard ((viewModel.currentTextField?.tag)! < 99) else {
             return
         }
@@ -248,6 +263,84 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
         //[UIView commitAnimations];
         UIView.commitAnimations()
     }
+    
+    func showEditInfoScreen(for detailType:EditProfileType) {
+       
+        //        guard viewModel.isEditEnabled == true else {
+        //            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        //            hud.mode = MBProgressHUDMode.text
+        //            hud.label.text = "Please click Edit button to edit details."
+        //            hud.hide(animated: true, afterDelay: 1.5)
+        //            return
+        //        }
+        
+        let profileSelectionTableViewController =     ProfileSelectionTableViewController(nibName: "ProfileSelectionTableViewController", bundle: nil)
+        profileSelectionTableViewController.editProfileType = detailType
+        profileSelectionTableViewController.details = Profile(first_name: (viewModel.details?.first_name)!, last_name: (viewModel.details?.last_name)!, email: (viewModel.details?.email)!, user_attributes: User_attributes(dob: (viewModel.details?.user_attributes?.dob)!))
+        profileSelectionTableViewController.delegate = self
+        self.navigationController?.pushViewController(profileSelectionTableViewController, animated: true)
+        
+    }
+    func showEditNameScreen() {
+        
+//        guard viewModel.isEditEnabled == true else {
+//            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+//            hud.mode = MBProgressHUDMode.text
+//            hud.label.text = "Please click Edit button to edit details."
+//            hud.hide(animated: true, afterDelay: 1.5)
+//            return
+//        }
+        
+        let profileSelectionTableViewController =     ProfileSelectionTableViewController(nibName: "ProfileSelectionTableViewController", bundle: nil)
+        profileSelectionTableViewController.editProfileType = .name
+        profileSelectionTableViewController.details = Profile(first_name: (viewModel.details?.first_name)!, last_name: (viewModel.details?.last_name)!, email: (viewModel.details?.email)!, user_attributes: User_attributes(dob: (viewModel.details?.user_attributes?.dob)!))
+        profileSelectionTableViewController.delegate = self
+        self.navigationController?.pushViewController(profileSelectionTableViewController, animated: true)
+        
+    }
+    
+    func showEditGenderScreen() {
+        
+//        guard viewModel.isEditEnabled == true else {
+//            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+//            hud.mode = MBProgressHUDMode.text
+//            hud.label.text = "Please click Edit button to edit details."
+//            hud.hide(animated: true, afterDelay: 1.5)
+//            return
+//        }
+        
+        
+        let profileSelectionTableViewController =     ProfileSelectionTableViewController(nibName: "ProfileSelectionTableViewController", bundle: nil)
+        profileSelectionTableViewController.editProfileType = .gender
+         profileSelectionTableViewController.details = Profile(first_name: (viewModel.details?.first_name)!, last_name: (viewModel.details?.last_name)!, email: (viewModel.details?.email)!, user_attributes: User_attributes(dob: (viewModel.details?.user_attributes?.dob)!))
+        profileSelectionTableViewController.delegate = self
+        self.navigationController?.pushViewController(profileSelectionTableViewController, animated: true)
+    }
+    
+    func showEditStandardScreen() {
+        
+//        guard viewModel.isEditEnabled == true else {
+//            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+//            hud.mode = MBProgressHUDMode.text
+//            hud.label.text = "Please click Edit button to edit details."
+//            hud.hide(animated: true, afterDelay: 1.5)
+//            return
+//        }
+        
+        let profileSelectionTableViewController =     ProfileSelectionTableViewController(nibName: "ProfileSelectionTableViewController", bundle: nil)
+        profileSelectionTableViewController.editProfileType = .standard
+        profileSelectionTableViewController.details = Profile(first_name: (viewModel.details?.first_name)!, last_name: (viewModel.details?.last_name)!, email: (viewModel.details?.email)!, user_attributes: User_attributes(dob: (viewModel.details?.user_attributes?.dob)!))
+        profileSelectionTableViewController.delegate = self
+        self.navigationController?.pushViewController(profileSelectionTableViewController, animated: true)
+    }
+    
+    func saveEditedDetails(for editType: EditProfileType, with details:Profile) {
+        viewModel.details = details
+        self.detailsTable.reloadData()
+    }
+    
+    
+    
      @objc func editProfilePic() {
         
         guard viewModel.isEditEnabled == true else {
@@ -275,22 +368,6 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
         }
         self.present(actionsheet, animated: true, completion: nil)
     }
-    
-    
-    func showEditNameScreen() {
-        
-        let profileSelectionTableViewController =     ProfileSelectionTableViewController(nibName: "ProfileSelectionTableViewController", bundle: nil)
-        profileSelectionTableViewController.editProfileType = .name
-        self.navigationController?.pushViewController(profileSelectionTableViewController, animated: true)
-        
-    }
-    
-    func showEditGenderScreen() {
-        
-        
-    }
-    
-    
     
     func pickImage(from camera:Bool){
         

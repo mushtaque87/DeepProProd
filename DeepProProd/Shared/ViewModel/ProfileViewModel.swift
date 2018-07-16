@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import MBProgressHUD
 
 enum DetailType : Int  {
     case email
@@ -114,7 +115,9 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         cell.valueTextField.delegate = self
                         cell.valueTextField.autocorrectionType = .no
                         cell.valueTextField.tag = indexPath.row
-                        cell.valueTextField.text = "Male"
+                        if let gender = details?.gender{
+                            cell.valueTextField.text = gender
+                        }
                         cell.titleLabel.text = "Gender"
                         cell.titleLabel.textColor = UIColor.white
                         cell.titleLabel.textAlignment = .left
@@ -128,7 +131,9 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         cell.valueTextField.delegate = self
                         cell.valueTextField.autocorrectionType = .no
                          cell.valueTextField.tag = indexPath.row
-                        cell.valueTextField.text = "3"
+                        if let standard = details?.standard{
+                            cell.valueTextField.text = standard
+                        }
                         cell.titleLabel.text = "Class"
                         cell.titleLabel.textColor = UIColor.white
                         cell.titleLabel.textAlignment = .left
@@ -142,7 +147,7 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         cell.valueTextField.delegate = self
                         cell.valueTextField.autocorrectionType = .no
                          cell.valueTextField.tag = indexPath.row
-                        cell.valueTextField.text = "A"
+                        cell.valueTextField.text = details?.section
                         cell.titleLabel.text = "Section"
                         cell.titleLabel.textColor = UIColor.white
                         cell.titleLabel.textAlignment = .left
@@ -156,7 +161,7 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         cell.valueTextField.delegate = self
                         cell.valueTextField.autocorrectionType = .no
                          cell.valueTextField.tag = indexPath.row
-                        cell.valueTextField.text = "9886820824"
+                        cell.valueTextField.text = details?.contact
                         cell.titleLabel.text = "Contact"
                         cell.titleLabel.textColor = UIColor.white
                         cell.titleLabel.textAlignment = .left
@@ -191,12 +196,48 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
 //    }
 //
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+       
         if indexPath.section == 0 {
-                        delegate?.showEditNameScreen()
+                        delegate?.showEditInfoScreen(for: .name)
                     } else {
-                        if indexPath.row == 2 {
-                            delegate?.showEditGenderScreen()
+            if indexPath.row == 1 {
+                let currentDate = Date()
+                var dateComponents = DateComponents()
+                dateComponents.year = 100
+                let threeMonthAgo = Calendar.current.date(byAdding: dateComponents, to: currentDate)
+                
+                let datePicker = DatePickerDialog(textColor: .black,
+                                                  buttonColor: .black,
+                                                  font: UIFont.boldSystemFont(ofSize: 17),
+                                                  showCancelButton: true)
+                datePicker.show("Date of Birth",
+                                doneButtonTitle: "Done",
+                                cancelButtonTitle: "Cancel",
+                                minimumDate: threeMonthAgo,
+                                maximumDate: currentDate,
+                                datePickerMode: .date) { (date) in
+                                    if let dt = date {
+                                        let formatter = DateFormatter()
+                                        formatter.dateFormat = "dd-MM-YYYY"
+                                        let cell  = tableView.cellForRow(at: IndexPath(row: indexPath.row, section: indexPath.section))! as! DetailCell
+
+                                        cell.valueTextField.text = formatter.string(from: dt)
+                                        self.details?.user_attributes?.dob = formatter.string(from: dt)
+                                    }
+                }
+            }
+            else if indexPath.row == 2 {
+                            delegate?.showEditInfoScreen(for: .gender)
                         }
+            else if indexPath.row == 3 {
+                            delegate?.showEditInfoScreen(for: .standard)
+                    }
+            else if indexPath.row == 4 {
+                            delegate?.showEditInfoScreen(for: .section)
+            }
+            else if indexPath.row == 5 {
+                delegate?.showEditInfoScreen(for: .contact)
+            }
                 }
     }
     

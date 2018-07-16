@@ -81,15 +81,28 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
     }
     
     if let settingtype = SettingType(rawValue: indexPath.row) {
+       
             switch settingtype {
             case .language:
                 //let cell  = tableView.dequeueReusableCell(withIdentifier: "language", for: indexPath) as! LanguageTableViewCell
-                 let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
+               /*  let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
                  cell.titleLbl.text = "Language".localized
 
                 //cell.languageSwitch.addTarget(self, action: #selector(languageSelected), for: UIControlEvents.valueChanged)
                 cell.titleLbl.alignText()
                 cell.contentView.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                 */
+                
+                let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+                cell.accessoryType = .disclosureIndicator
+                cell.tintColor = UIColor.white
+                cell.textLabel?.font = UIFont(name: "Poppins-SemiBold", size: 17)
+                cell.textLabel?.textColor = UIColor.white
+                cell.textLabel?.backgroundColor = UIColor.clear
+                cell.backgroundColor  = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                cell.contentView.backgroundColor = UIColor.clear
+                 cell.textLabel?.text = "Language".localized
+               
                 return cell
              /*
             case .profile:
@@ -113,10 +126,22 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 return cell
                  */
             case .graphtype:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
+              /*  let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
                 cell.titleLbl.text = "GraphType".localized
                 cell.titleLbl.alignText()
                 cell.contentView.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                */
+                
+                let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+                cell.accessoryType = .disclosureIndicator
+                cell.tintColor = UIColor.white
+                cell.textLabel?.font = UIFont(name: "Poppins-SemiBold", size: 17)
+                cell.textLabel?.textColor = UIColor.white
+                cell.textLabel?.backgroundColor = UIColor.clear
+                cell.backgroundColor  = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                cell.contentView.backgroundColor = UIColor.clear
+                 cell.textLabel?.text = "GraphType".localized
+                
                 /*
                 let cell  = tableView.dequeueReusableCell(withIdentifier: "language", for: indexPath) as! LanguageTableViewCell
                 cell.titlLbl.text = "GraphType".localized
@@ -130,10 +155,23 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 
             case .themetype:
                 
+                /*
                 let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
                 cell.titleLbl.text = "Theme".localized
                 cell.titleLbl.alignText()
                 cell.contentView.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                */
+                
+                let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+                cell.accessoryType = .disclosureIndicator
+                cell.tintColor = UIColor.white
+                cell.textLabel?.font = UIFont(name: "Poppins-SemiBold", size: 17)
+                cell.textLabel?.textColor = UIColor.white
+                cell.textLabel?.backgroundColor = UIColor.clear
+                cell.backgroundColor  = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                cell.contentView.backgroundColor = UIColor.clear
+                cell.textLabel?.text = "Theme".localized
+                
                 
                 /*let cell  = tableView.dequeueReusableCell(withIdentifier: "language", for: indexPath) as! LanguageTableViewCell
                 cell.titlLbl.text = "GraphType".localized

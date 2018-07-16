@@ -20,6 +20,11 @@ struct Profile : Codable {
     var profile_image : UIImage?
 	var user_attributes : User_attributes?
 
+    var gender : String?
+    var standard : String?
+    var section : String?
+    var contact : String?
+    
 	enum CodingKeys: String, CodingKey {
 
 		case email = "email"
@@ -35,6 +40,8 @@ struct Profile : Codable {
 		last_name = try values.decodeIfPresent(String.self, forKey: .last_name)
 		user_attributes = try values.decodeIfPresent(User_attributes.self, forKey: .user_attributes)
 	}
+    
+   
 
     init(first_name: String, last_name: String ,email: String , user_attributes: User_attributes) {
         self.first_name = first_name
