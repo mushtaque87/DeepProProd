@@ -65,16 +65,18 @@ class LevelViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,    
             cell.assignmentName.text = name
             cell.detailsView.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
         }
+        cell.descriptionView.text = ""
          if let description = contentList[indexPath.row].base?.description {
          cell.descriptionView.text = description
         }
+        
         if let createdDate = contentList[indexPath.row].base?.creation_date {
             cell.creationDate.text = String(format:"Created on: %@",(Date().dateFromEpoc(Double(createdDate)).toString(dateFormat: "EEE, d MMM, yyyy")))
         }
-        cell.continueButton.isHidden = true
-        cell.assignmentStatus.isHidden = true
+        //cell.continueButton.isHidden = true
+        //cell.assignmentStatus.isHidden = true
         cell.submissionDate.isHidden = true
-        cell.unitCount.isHidden = true
+        //cell.unitCount.isHidden = true
         cell.backgroundColor = UIColor.clear
         cell.selectionStyle = UITableViewCellSelectionStyle.none
 

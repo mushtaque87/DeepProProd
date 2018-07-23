@@ -29,6 +29,7 @@ class ForgotPasswordViewController: UIViewController , CAAnimationDelegate {
             Helper.lockOrientation(.portrait)
         } 
         // Do any additional setup after loading the view.
+        self.navigationItem.title = "Forgot Password"
         refreshUI()
         _ =  emailTextField.rx.text.map {$0 ?? ""}.bind(to:forgotViewModel.email)
         _ = forgotViewModel.isValid.bind(to: resetBtn.rx.isEnabled)
@@ -70,7 +71,12 @@ class ForgotPasswordViewController: UIViewController , CAAnimationDelegate {
               
             }*/
             hud.mode = MBProgressHUDMode.text
+            if (result.success == true) {
+            
             hud.label.text = "Password Reset Successfully"
+            } else {
+                hud.label.text = "Password Reset Failed"
+            }
         }, onHTTPError: { httperror in
             hud.mode = MBProgressHUDMode.text
             hud.label.text = httperror.description

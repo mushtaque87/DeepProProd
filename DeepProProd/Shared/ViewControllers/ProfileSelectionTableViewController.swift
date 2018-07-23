@@ -16,22 +16,32 @@ enum EditProfileType : Int  {
     case contact
 }
 
+enum EditProfileScreenType : Int  {
+    case profile
+    case signUp
+   
+}
+
 class ProfileSelectionTableViewController: UITableViewController, UITextFieldDelegate {
     var editProfileType : EditProfileType?
+    var editProfileScreenType : EditProfileScreenType = .profile
     weak var delegate: ProfileViewDelegate?
+    weak var signUpDelegate: SignUpViewDelegate?
+    
     var details : Profile?
+    var signUpDetails : SignUpData?
     var profileTypeDetails = ["Gender":["Male" ,"Female"],"Standard":["1","2","3","4","5","6","7","8","9"],"Section":["A","B","C","D"]]
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        edgesForExtendedLayout = []
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
          //self.navigationItem.rightBarButtonItem = self.editButtonItem
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(saveDetails(_:)))
-        
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancel(_:)))
         
         self.tableView.register(UINib(nibName: "NameTableViewCell", bundle: nil), forCellReuseIdentifier: "nameCell")
@@ -44,6 +54,24 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
     }
 
     // MARK: - Table view data source
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if let editProfileType = self.editProfileType {
+            switch editProfileType {
+            case .name:
+                return "Enter First and Last Name"
+            case .gender:
+                return "Select Gender"
+            case .standard:
+                return "Select Class"
+            case .contact:
+                return "Enter Phone number"
+            case .section:
+                return "Select Section"
+            }
+        }
+        return ""
+    }
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
             if let editProfileType = self.editProfileType {
             switch editProfileType {
@@ -94,34 +122,58 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
             switch editProfileType {
             case .name:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "nameCell", for: indexPath) as! NameTableViewCell
+                if(indexPath.row == 0) {
+                cell.textFieldOne.becomeFirstResponder()
+                }
                 cell.textFieldOne.tag = indexPath.row
                 cell.textFieldOne.delegate = self
                 cell.textFieldOne.placeholder = (indexPath.row == 0 ? "First Name" : "Last Name")
                 cell.textFieldOne.text = (indexPath.row == 0 ? details?.first_name : details?.last_name)
-                
+                cell.textFieldOne.tintColor = UIColor.white
+                cell.selectionStyle = .none
                 return cell
             case .gender:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
                 cell.titleLbl.text = profileTypeDetails["Gender"]?[indexPath.row]
-                cell.contentView.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                cell.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                cell.contentView.backgroundColor = UIColor.clear
+                cell.tintColor = UIColor.white
+                cell.selectionStyle = .none
+                if(cell.titleLbl.text == details?.gender){
+                    cell.accessoryType = .checkmark
+                }
                 return cell
               
             case .standard:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
                 cell.titleLbl.text = profileTypeDetails["Standard"]?[indexPath.row]
-                cell.contentView.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                cell.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                cell.tintColor = UIColor.white
+                cell.contentView.backgroundColor = UIColor.clear
+                if(cell.titleLbl.text == details?.standard){
+                    cell.accessoryType = .checkmark
+                }
+                cell.selectionStyle = .none
                 return cell
                 
             case .contact:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "nameCell", for: indexPath) as! NameTableViewCell
                 cell.textFieldOne.tag = indexPath.row
                 cell.textFieldOne.delegate = self
+                cell.textFieldOne.becomeFirstResponder()
+               cell.selectionStyle = .none
                 return cell
                 
             case .section:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
                 cell.titleLbl.text = profileTypeDetails["Section"]?[indexPath.row]
-                cell.contentView.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                cell.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                cell.contentView.backgroundColor = UIColor.clear
+                cell.tintColor = UIColor.white
+                if(cell.titleLbl.text == details?.section){
+                    cell.accessoryType = .checkmark
+                }
+                cell.selectionStyle = .none
                 return cell
             }
             
@@ -135,6 +187,8 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
     
     @objc func saveDetails(_ sender: Any) {
         
+        switch editProfileScreenType {
+        case .profile:
         if let editProfileType = self.editProfileType {
             switch editProfileType {
             case .name:
@@ -153,11 +207,29 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
                 delegate?.saveEditedDetails(for: .section , with: details!)
             }
         }
+        default:
+            if let editProfileType = self.editProfileType {
+                switch editProfileType {
+                case .name:
+                    break
+                case .gender:
+                    signUpDelegate?.saveEditedDetails(for: .gender, with: signUpDetails!)
+                    break
+                case .standard:
+                    signUpDelegate?.saveEditedDetails(for: .standard, with: signUpDetails!)
+                    break
+                case .contact:
+                    break
+                case .section:
+                    signUpDelegate?.saveEditedDetails(for: .section, with: signUpDetails!)
+                }
+            }
+        }
         self.navigationController?.popViewController(animated: true)
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        self.navigationItem.rightBarButtonItem?.isEnabled = true
         if let editProfileType = self.editProfileType {
             switch editProfileType {
             case .name: break
@@ -165,15 +237,18 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
                 tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
                 deselectOtherRows(except: indexPath.row)
                 details?.gender = profileTypeDetails["Gender"]?[indexPath.row]
+                signUpDetails?.gender  = profileTypeDetails["Gender"]?[indexPath.row]
             case .standard:
                 tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
                 deselectOtherRows(except: indexPath.row)
                 details?.standard = profileTypeDetails["Standard"]?[indexPath.row]
+                signUpDetails?.standard = profileTypeDetails["Standard"]?[indexPath.row]
             case .contact: break
             case .section:
                 tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
                 deselectOtherRows(except: indexPath.row)
                 details?.section = profileTypeDetails["Section"]?[indexPath.row]
+                signUpDetails?.section =  profileTypeDetails["Section"]?[indexPath.row]
             }
         }
     }
@@ -232,6 +307,30 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
     }
     */
     
+    func updateDetails(from textField:UITextField) {
+        self.navigationItem.rightBarButtonItem?.isEnabled = true
+        if let editProfileType = self.editProfileType {
+            switch editProfileType {
+            case .name:
+                if(textField.tag == 0 ){
+                    details?.first_name = textField.text
+                } else {
+                    details?.last_name = textField.text
+                }
+            case .gender:
+                break
+            case .standard:
+                break
+            case .contact:
+                if(textField.tag == 0 ){
+                    details?.contact = textField.text
+                }
+                break
+            case .section:
+                break
+            }
+        }
+    }
     
     // MARK: - TextField Delegate
     func textFieldDidBeginEditing(_ textField: UITextField) {    //delegate method
@@ -244,29 +343,15 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
     }
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {  //delegate method
        
-        if let editProfileType = self.editProfileType {
-            switch editProfileType {
-            case .name:
-                if(textField.tag == 0 ){
-                    details?.first_name = textField.text
-                } else {
-                    details?.last_name = textField.text
-                }
-            case .gender:
-               break
-            case .standard:
-                break
-            case .contact:
-                if(textField.tag == 0 ){
-                    details?.contact = textField.text
-                }
-                break
-            case .section:
-                break
-            }
-        }
+        updateDetails(from: textField)
         return true
     }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        updateDetails(from: textField)
+        return true
+    }
+    
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {   //delegate method
         textField.resignFirstResponder()

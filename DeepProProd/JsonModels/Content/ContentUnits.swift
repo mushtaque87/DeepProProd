@@ -23,7 +23,8 @@ struct ContentUnits : Codable {
 	let audio_url : String?
 	let content_group_id : Int?
 	let root_content_group_id : Int?
-
+    let feedback : String?
+    
 	enum CodingKeys: String, CodingKey {
 
 		case id = "id"
@@ -36,6 +37,7 @@ struct ContentUnits : Codable {
 		case audio_url = "audio_url"
 		case content_group_id = "content_group_id"
 		case root_content_group_id = "root_content_group_id"
+        case feedback = "feedback"
 	}
 
 	init(from decoder: Decoder) throws {
@@ -50,6 +52,7 @@ struct ContentUnits : Codable {
 		audio_url = try values.decodeIfPresent(String.self, forKey: .audio_url)
 		content_group_id = try values.decodeIfPresent(Int.self, forKey: .content_group_id)
 		root_content_group_id = try values.decodeIfPresent(Int.self, forKey: .root_content_group_id)
+        feedback = try values.decodeIfPresent(String.self, forKey: .feedback)
 	}
 
 }

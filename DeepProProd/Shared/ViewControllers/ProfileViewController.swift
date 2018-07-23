@@ -9,7 +9,7 @@
 import UIKit
 import MBProgressHUD
 import RxSwift
-
+import RxCocoa
 
 
 
@@ -50,8 +50,11 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
        // firstNameField.delegate = viewModel
        // lastNameField.delegate = viewModel
         
-       //self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(editProfile(_:)))
-      
+       self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveProfile(_:)))
+        self.navigationItem.rightBarButtonItem?.isEnabled = false
+        
+       //_ = viewModel.isEnable.bind(to: navigationItem.rightBarButtonItem?.rx.isEnabled)
+        
         self.view.backgroundColor = UIColor.white
             //UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
         
@@ -124,8 +127,8 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
     }
     
 
-    @IBAction func editProfile(_ sender: Any) {
-        
+    @IBAction func saveProfile(_ sender: Any) {
+        /*
         if (!viewModel.isEditEnabled){
           // myProfileView.fadeOut()
             self.navigationItem.rightBarButtonItem?.title = "Save"
@@ -134,10 +137,14 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
             detailsTable.reloadData()
         }else
         {
+ 
            // myProfileView.fadeIn()
             self.navigationItem.rightBarButtonItem?.title = "Edit"
             viewModel.isEditEnabled = false
             configureEditOptions(with: viewModel.isEditEnabled)
+ 
+         */
+            shouldEnableSaveButton(enable: false)
             detailsTable.reloadData()
             
             
@@ -162,7 +169,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
                 hud.hide(animated: true)
             })
 
-        }
+        //}
     }
     
     func configureEditOptions(with editStatus: Bool) {
@@ -263,6 +270,9 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
         //[UIView commitAnimations];
         UIView.commitAnimations()
     }
+    func shouldEnableSaveButton(enable:Bool){
+        self.navigationItem.rightBarButtonItem?.isEnabled = enable
+    }
     
     func showEditInfoScreen(for detailType:EditProfileType) {
        
@@ -273,14 +283,19 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
         //            hud.hide(animated: true, afterDelay: 1.5)
         //            return
         //        }
-        
+        shouldEnableSaveButton(enable: true)
         let profileSelectionTableViewController =     ProfileSelectionTableViewController(nibName: "ProfileSelectionTableViewController", bundle: nil)
         profileSelectionTableViewController.editProfileType = detailType
         profileSelectionTableViewController.details = Profile(first_name: (viewModel.details?.first_name)!, last_name: (viewModel.details?.last_name)!, email: (viewModel.details?.email)!, user_attributes: User_attributes(dob: (viewModel.details?.user_attributes?.dob)!))
+        profileSelectionTableViewController.details?.gender = viewModel.details?.gender
+        profileSelectionTableViewController.details?.standard = viewModel.details?.standard
+        profileSelectionTableViewController.details?.section = viewModel.details?.section
         profileSelectionTableViewController.delegate = self
         self.navigationController?.pushViewController(profileSelectionTableViewController, animated: true)
         
     }
+    
+    /*
     func showEditNameScreen() {
         
 //        guard viewModel.isEditEnabled == true else {
@@ -330,9 +345,11 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
         let profileSelectionTableViewController =     ProfileSelectionTableViewController(nibName: "ProfileSelectionTableViewController", bundle: nil)
         profileSelectionTableViewController.editProfileType = .standard
         profileSelectionTableViewController.details = Profile(first_name: (viewModel.details?.first_name)!, last_name: (viewModel.details?.last_name)!, email: (viewModel.details?.email)!, user_attributes: User_attributes(dob: (viewModel.details?.user_attributes?.dob)!))
+
         profileSelectionTableViewController.delegate = self
         self.navigationController?.pushViewController(profileSelectionTableViewController, animated: true)
     }
+    */
     
     func saveEditedDetails(for editType: EditProfileType, with details:Profile) {
         viewModel.details = details
@@ -343,9 +360,9 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
     
      @objc func editProfilePic() {
         
-        guard viewModel.isEditEnabled == true else {
-            return
-        }
+//        guard viewModel.isEditEnabled == true else {
+//            return
+//        }
         
         let actionsheet = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertControllerStyle.actionSheet)
         
@@ -370,12 +387,13 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
     }
     
     func pickImage(from camera:Bool){
-        
+        shouldEnableSaveButton(enable: true)
         if(camera) {
             if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)){
                 let picker = UIImagePickerController()
                 picker.delegate = self
                 picker.sourceType = UIImagePickerControllerSourceType.camera
+                picker.cameraDevice = .front
                 picker.mediaTypes = UIImagePickerController.availableMediaTypes(for: picker.sourceType)!
                 //var mediaTypes: Array<AnyObject> = [kUTTypeImage]
                 // picker.mediaTypes = mediaTypes

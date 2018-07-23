@@ -9,7 +9,7 @@
 import UIKit
 import RxSwift
 
-enum signUpDetails : Int  {
+enum SignUpDetails : Int  {
     case firstName
     case lastName
     case email
@@ -38,7 +38,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
        
-        if let detailtype = signUpDetails(rawValue: indexPath.row) {
+        if let detailtype = SignUpDetails(rawValue: indexPath.row) {
             
             switch detailtype {
             case .firstName:
@@ -47,6 +47,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
                  cell.valueTextField.text = details.firstname
                  cell.titleLabel.text = "First Name"
                  cell.valueTextField.tag = detailtype.rawValue
+                 cell.selectionStyle = .none
                  configureCells(for: cell)
                  return cell
             case .lastName:
@@ -66,6 +67,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
                 cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                 cell.titleLabel.backgroundColor = UIColor.clear
                 */
+                cell.selectionStyle = .none
                 cell.valueTextField.tag = detailtype.rawValue
                 configureCells(for: cell)
                 return cell
@@ -86,6 +88,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
                 cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                 cell.titleLabel.backgroundColor = UIColor.clear
                 */
+               cell.selectionStyle = .none
                cell.valueTextField.tag = detailtype.rawValue
                configureCells(for: cell)
                return cell
@@ -93,6 +96,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
                 let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
                 cell.titleLabel.text = "Password"
                 cell.valueTextField.text = details.password
+                
                 /*
                 cell.valueTextField.isEnabled = isEditEnabled
                 cell.valueTextField.delegate = self
@@ -106,6 +110,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
                 cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                 cell.titleLabel.backgroundColor = UIColor.clear
                 */
+                cell.selectionStyle = .none
                 cell.valueTextField.tag = detailtype.rawValue
                 configureCells(for: cell)
                 return cell
@@ -125,6 +130,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
                 cell.backgroundColor = UIColor.clear
                 cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                 cell.titleLabel.backgroundColor = UIColor.clear */
+                cell.selectionStyle = .none
                 cell.valueTextField.tag = detailtype.rawValue
                 configureCells(for: cell)
                 return cell
@@ -148,6 +154,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
                 cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
  */
                 //return cell
+                cell.selectionStyle = .none
                 cell.valueTextField.tag = detailtype.rawValue
                 configureCells(for: cell)
                 return cell
@@ -156,6 +163,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
                 let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
                 cell.titleLabel.text = "Gender"
                 cell.valueTextField.text = details.gender
+                cell.valueTextField.isEnabled = false
                 /*
                 cell.valueTextField.isEnabled = isEditEnabled
                 cell.valueTextField.delegate = self
@@ -169,6 +177,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
                 cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                 cell.titleLabel.backgroundColor = UIColor.clear */
                 //return cell
+                cell.selectionStyle = .none
                 cell.valueTextField.tag = detailtype.rawValue
                 configureCells(for: cell)
                 return cell
@@ -177,6 +186,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
                 // let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
                 cell.titleLabel.text = "Class"
                 cell.valueTextField.text = details.standard
+                cell.valueTextField.isEnabled = false
                 /*
                 cell.valueTextField.isEnabled = isEditEnabled
                 cell.valueTextField.delegate = self
@@ -190,6 +200,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
                 cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                 cell.titleLabel.backgroundColor = UIColor.clear */
                 //return cell
+                cell.selectionStyle = .none
                 cell.valueTextField.tag = detailtype.rawValue
                 configureCells(for: cell)
                 return cell
@@ -198,6 +209,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
                 // let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
                 cell.titleLabel.text = "Section"
                 cell.valueTextField.text = details.section
+                cell.valueTextField.isEnabled = false
                 /*
                 cell.valueTextField.isEnabled = isEditEnabled
                 cell.valueTextField.delegate = self
@@ -211,6 +223,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
                 cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                 cell.titleLabel.backgroundColor = UIColor.clear */
                // return cell
+                cell.selectionStyle = .none
                 cell.valueTextField.tag = detailtype.rawValue
                 configureCells(for: cell)
                 return cell
@@ -232,6 +245,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
                 cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                 cell.titleLabel.backgroundColor = UIColor.clear */
                 //return cell
+                cell.selectionStyle = .none
                 cell.valueTextField.tag = detailtype.rawValue
                 configureCells(for: cell)
                 return cell
@@ -259,8 +273,19 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if indexPath.row == signUpDetails.logout.rawValue {
+       // let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
+        // cell.tintColor = UIColor.clear
+        
+        if indexPath.row == SignUpDetails.logout.rawValue {
             delegate?.signUp()
+        } else if indexPath.row == SignUpDetails.gender.rawValue {
+            delegate?.showEditInfoScreen(for: .gender)
+        }
+        else if indexPath.row == SignUpDetails.standard.rawValue {
+            delegate?.showEditInfoScreen(for: .standard)
+        }
+        else if indexPath.row == SignUpDetails.section.rawValue {
+            delegate?.showEditInfoScreen(for: .section)
         }
     }
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -280,6 +305,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
         cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
     }
     
+    
     func createSignUpBody(firstname:String , lastname:String, email:String , password:String , dob:String , gender: String) -> SignUpRequest
     {
         return SignUpRequest(email: email,
@@ -287,10 +313,11 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
                              password: password, user_attributes:User_attributes(dob: dob))
     }
     
+    
     // MARK: - TextField Delegate
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         currentTextField = textField
-        if(textField.tag == signUpDetails.dob.rawValue){
+        if(textField.tag == SignUpDetails.dob.rawValue){
 
             
                 let currentDate = Date()
@@ -340,7 +367,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
     
     func setData(from textField:UITextField) {
         
-        if let detailtype = signUpDetails(rawValue: textField.tag) {
+        if let detailtype = SignUpDetails(rawValue: textField.tag) {
             switch detailtype {
             case .firstName:
                 //cell.valueTextField.placeholder = "Male"

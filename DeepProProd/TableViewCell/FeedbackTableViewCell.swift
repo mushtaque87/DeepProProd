@@ -13,11 +13,13 @@ class FeedbackTableViewCell: UITableViewCell {
    
     @IBOutlet weak var backView: UIView!
     @IBOutlet weak var feedbackLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
        // backView.frame = CGRect(x: 5, y: 0, width: self.frame.width, height: self.frame.height - 5)
         // Initialization code
+        dateLabel.isHidden = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

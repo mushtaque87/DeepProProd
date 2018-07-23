@@ -15,7 +15,7 @@ class FeedbackViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        edgesForExtendedLayout = []
         self.feedbackTableView.register(UINib(nibName: "FeedbackTableViewCell", bundle: nil), forCellReuseIdentifier: "feedback")
         self.feedbackTableView.delegate = viewModel
         self.feedbackTableView.dataSource = viewModel

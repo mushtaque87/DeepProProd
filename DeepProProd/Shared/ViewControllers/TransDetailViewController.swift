@@ -60,7 +60,7 @@ class TransDetailViewController: UIViewController, AVAudioRecorderDelegate , AVA
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
+       edgesForExtendedLayout = []
         recordingSession = AVAudioSession.sharedInstance()
         
 //        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showPhenomeTable(sender:)))

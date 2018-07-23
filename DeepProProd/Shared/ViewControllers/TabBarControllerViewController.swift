@@ -14,7 +14,7 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        edgesForExtendedLayout = []
         // Do any additional setup after loading the view.
 //        let myFirstButton = UIButton()
 //        myFirstButton.setTitle("Hello", for: .normal)
@@ -38,7 +38,7 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
             let courseNavigationController = UINavigationController()
             let levelViewController : LevelViewController =  LevelViewController(nibName: "LevelViewController", bundle: nil)
             courseNavigationController.viewControllers = [levelViewController]
-            courseNavigationController.tabBarItem = UITabBarItem(title: "Contents", image: UIImage(named: "homeTab.png"), tag: 0)
+            courseNavigationController.tabBarItem = UITabBarItem(title: "Contents", image: UIImage(named: "home.png"), tag: 0)
             /*
             let studentAssignmentNavigationController = UINavigationController()
             let studentDashboard = AssignmnetDasboardViewController(nibName:"AssignmnetDasboardViewController",bundle:nil)
@@ -54,12 +54,12 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
             //transDetailViewController.boardType = BoardType.account
             transDetailViewController.tasktype = .freeText
             practiceBoardNavigationController.viewControllers = [transDetailViewController]
-            practiceBoardNavigationController.tabBarItem = UITabBarItem(title: "Board", image: UIImage(named: "assignmentTab.png"), tag: 2)
+            practiceBoardNavigationController.tabBarItem = UITabBarItem(title: "Practice", image: UIImage(named: "numbered-list.png"), tag: 2)
             
             let settingNavigationController = UINavigationController()
             let settingsViewController = SettingsViewController(nibName: "SettingsViewController", bundle: nil)
             settingNavigationController.viewControllers = [settingsViewController]
-            settingNavigationController.tabBarItem = UITabBarItem(title: "Settings", image:UIImage(named: "settingsTab.png"), tag: 3)
+            settingNavigationController.tabBarItem = UITabBarItem(title: "Settings", image:UIImage(named: "settings.png"), tag: 3)
             
             tabBarViewControllers  = [courseNavigationController,practiceBoardNavigationController,settingNavigationController]
             

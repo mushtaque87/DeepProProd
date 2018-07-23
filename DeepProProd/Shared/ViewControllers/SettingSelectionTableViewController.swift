@@ -15,7 +15,7 @@ class SettingSelectionTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        edgesForExtendedLayout = []
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -35,7 +35,22 @@ class SettingSelectionTableViewController: UITableViewController {
     }
 
     // MARK: - Table view data source
-
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if let settingtype = self.settingtype {
+            switch settingtype {
+            case .language:
+                return "Select language"
+            case .themetype:
+                return "Select Theme"
+            case .graphtype:
+                return "Select Graph Type"
+            case .logout:
+                break
+            }
+        }
+        return ""
+    }
+    
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60
     }

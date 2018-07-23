@@ -39,8 +39,10 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     @IBOutlet weak var textStackView: UIStackView!
     @IBOutlet weak var contentView: UIView!
     @IBOutlet weak var clearButton: UIButton!
+    @IBOutlet weak var closPhonemeTableButton: UIButton!
     
-   //Record Button
+    @IBOutlet weak var clearTextButton: UIButton!
+    //Record Button
     @IBOutlet weak var recordButton: RecordButton!
     var progressTimer : Timer!
     var progress : CGFloat! = 0
@@ -48,6 +50,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     
     //Bar Graph
     @IBOutlet weak var barChartView: BarChartView!
+    @IBOutlet weak var lineChartView: LineChartView!
     
     
     
@@ -121,13 +124,20 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         }
         //scoreCollectionView.isHidden = true
         setBarGraph()
+        setLinegraph()
         displayResultType(to: currentResultViewType, from: .graph)
         keyboard.setImage(UIImage(named: "pencil-edit.png"), for: .normal)
         audioFolderPath = Helper.getAudioDirectory(for: tasktype)
         
         let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(controlKeyboard(sender:)))
-        singleTapGesture.numberOfTapsRequired = 1
-       // textView.addGestureRecognizer(singleTapGesture)
+        singleTapGesture.numberOfTapsRequired = 2
+        textView.addGestureRecognizer(singleTapGesture)
+        
+        
+//        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(displayWordPhonemeSection(sender:)))
+//        longPress.minimumPressDuration = 0.1
+//        textView.addGestureRecognizer(longPress)
+        
         
         let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(displayWordPhonemeSection(sender:)))
         doubleTapGesture.numberOfTapsRequired = 1
@@ -135,7 +145,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         
         //singleTapGesture.require(toFail: doubleTapGesture)
         
-        // doubleTapGesture.require(toFail: singleTapGesture)
+         doubleTapGesture.require(toFail: singleTapGesture)
         
         
         //let longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(displayWordPhonemeSection(sender:)))
@@ -147,23 +157,24 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         guard tasktype != TaskType.freeText else {
             textView.text = "Type Here"
             keyboard.setImage(UIImage(named: "pencil-edit.png"), for: .normal)
-            textView.isEditable = false
-            keyboard.isHidden = false
+            textView.isEditable = true
+            keyboard.isHidden = true
             feedbackButton.isHidden = true
-            textView.isSelectable = false
+            textView.isSelectable = true
             textView.inputView?.resignFirstResponder()
             //textView.isUserInteractionEnabled = true
             clearButton.isHidden = false
-           
+           clearTextButton.isHidden = true
             return
         }
+        clearTextButton.isHidden = true
         feedbackButton.isHidden = false
          keyboard.isHidden = true
         textView.isEditable = false
         
 
-        let newBackButton = UIBarButtonItem(title: "< Back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(backFromPracticeBoard))
-        self.navigationItem.leftBarButtonItem = newBackButton
+//        let newBackButton = UIBarButtonItem(title: "< Back", style: UIBarButtonItemStyle.plain, target: self, action: #selector(backFromPracticeBoard))
+//        self.navigationItem.leftBarButtonItem = newBackButton
         
         //textView.isUserInteractionEnabled = false
         textView.text = viewModel.unitList[unitIndex].question_text
@@ -222,7 +233,8 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
             
             hud.hide(animated: true)
             self.reloadCollectionView()
-            self.updateGraph()
+            //self.updateGraph()
+            //self.showTheGraph()
             // self.navigationController?.pushViewController(practiceBoardVC, animated: true)
             
             
@@ -447,7 +459,8 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
                /* self.scoreCollectionView?.setContentOffset(CGPoint(x:
                 0,  y: self.scoreCollectionView.contentSize.height - self.scoreCollectionView.bounds.size.height), animated: true)
                  */
-                self.updateGraph()
+                //self.updateGraph()
+                  //  self.showTheGraph()
                 //self.clearData()
                // self.fetchUnitAnswers(for: self.unitIndex)
                 
@@ -592,6 +605,117 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     
     // MARK: -  Graphs
     
+    func setLineChartData(values: [Double])-> LineChartData {
+        //barChartView.noDataText = "You need to provide data for the chart."
+        
+        //var yVals1 : NSMutableArray = NSMutableArray()
+        
+        var dataEntries: [ChartDataEntry] = []
+        for i in 0..<values.count
+        {
+            // let mult:Double = 100.0 / 2.0;
+            // let val:Double = (Double) (arc4random_uniform(UInt32(mult))) + 50;
+            //yVals1.add(ChartDataEntry.init(x: Double(i), y: values[i]))
+            dataEntries.append(ChartDataEntry.init(x: Double(i), y: values[i]))
+        }
+        
+        //data set 1
+        let set1: LineChartDataSet = LineChartDataSet.init(values: dataEntries , label: "Accuracy")
+        set1.axisDependency = .left;
+        set1.setColor(UIColor(red: 31.0/255.0, green: 72.0/255.0, blue: 142.0/255.0, alpha: 1))
+        set1.setCircleColor(UIColor(red: 31.0/255.0, green: 72.0/255.0, blue: 142.0/255.0, alpha: 1))
+        set1.lineWidth = 4.0;
+        set1.circleRadius = 8.0;
+        set1.fillAlpha = 255.0/255.0;
+        set1.fillColor = UIColor(red: 31.0/255.0, green: 72.0/255.0, blue: 142.0/255.0, alpha: 1)
+            //UIColor(red:51.0/255.0, green:181.0/255.0 , blue:229.0/255.0, alpha:1.0)
+        set1.highlightColor = UIColor.white
+        set1.drawCircleHoleEnabled = true;
+        
+        
+        /*
+        let coloTop = UIColor.red.cgColor
+        let colorBottom = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.1).cgColor
+        let gradientColors = [coloTop, colorBottom] as CFArray // Colors of the gradient
+        let colorLocations:[CGFloat] = [0.7, 0.0] // Positioning of the gradient
+        let gradient = CGGradient.init(colorsSpace: CGColorSpaceCreateDeviceRGB(), colors: gradientColors, locations: colorLocations) // Gradient Object
+        set1.fill = Fill.fillWithLinearGradient(gradient!, angle: 90.0) // Set the Gradient
+        set1.drawFilledEnabled = true
+        */
+        
+        let data:LineChartData = LineChartData.init(dataSets: [set1])
+        data.setValueTextColor(UIColor.black)
+        data.setValueFont(UIFont.systemFont(ofSize: 9.0))
+        
+        return data
+    }
+    
+    func setLinegraph() -> Void {
+        
+        //barProgressView.isHidden = true
+        //graphProgressView.isHidden = false
+        lineChartView.backgroundColor = UIColor.white
+        let l: Legend = lineChartView.legend;
+        l.form = .line;
+        l.font = UIFont(name: "HelveticaNeue-Light", size: 11.0)!
+        l.textColor = UIColor.black;
+        l.horizontalAlignment = .left;
+        l.verticalAlignment = .bottom;
+        l.orientation = .horizontal;
+        l.drawInside = true;
+        lineChartView.rightAxis.enabled = false
+        
+        let xAxis:XAxis = lineChartView.xAxis;
+        xAxis.labelFont = UIFont(name: "HelveticaNeue-Light", size: 11.0)!
+        xAxis.labelPosition = .bottom
+        xAxis.labelTextColor = UIColor.black;
+        xAxis.drawGridLinesEnabled = false;
+        xAxis.drawAxisLineEnabled = true;
+        xAxis.labelFont = .systemFont(ofSize: 10)
+        xAxis.granularity = 1
+        xAxis.labelCount = 7
+        xAxis.valueFormatter = IntAxisValueFormatter()
+        
+        let leftAxisFormatter = NumberFormatter()
+        leftAxisFormatter.minimumFractionDigits = 0
+        leftAxisFormatter.maximumFractionDigits = 1
+        
+        
+        let leftAxis:YAxis = lineChartView.leftAxis;
+        leftAxis.labelTextColor = UIColor.black
+        leftAxis.axisMaximum = 100.0;
+        leftAxis.axisMinimum = 0.0;
+        leftAxis.valueFormatter = DefaultAxisValueFormatter(formatter: leftAxisFormatter)
+        leftAxis.drawGridLinesEnabled = true;
+        leftAxis.drawZeroLineEnabled = true;
+        
+        //lineChartView.
+        //lineChartView.leftAxis.gridColor = UIColor.white
+        //lineChartView.xAxis.gridColor = UIColor.white
+        
+       // leftAxis.granularityEnabled = false;
+        
+        
+        /*
+        let rightAxis:YAxis = lineChartView.rightAxis;
+        rightAxis.labelTextColor = UIColor.red;
+        rightAxis.axisMaximum = 100.0;
+        rightAxis.axisMinimum = 0.0;
+        rightAxis.drawGridLinesEnabled = false;
+        rightAxis.granularityEnabled = false;
+        */
+        
+        
+        
+        showTheGraph()
+    }
+    
+    func updateLineGraph()  {
+        
+        lineChartView.drawGridBackgroundEnabled = true;
+        lineChartView.data = setLineChartData(values: viewModel.scoreData)
+    }
+    
     func setBarChart(values: [Double])-> BarChartData {
         //barChartView.noDataText = "You need to provide data for the chart."
         
@@ -675,14 +799,49 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         let ll = ChartLimitLine(limit: 85.0, label: "")
         barChartView.leftAxis.addLimitLine(ll)
         barChartView.drawValueAboveBarEnabled = true
-        updateGraph()
-        
+        //updateGraph()
+        showTheGraph()
     }
     
-    func updateGraph()  {
+    func updateBarGraph()  {
+        
         barChartView.data = setBarChart(values: viewModel.scoreData)
         barChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
         barChartView.fitBars = true
+    }
+    
+   
+    func updateGraph()  {
+        if(Settings.sharedInstance.graphType == 0)
+        { updateBarGraph()
+        }
+        else {
+            updateLineGraph()
+        }
+    }
+    
+    func showTheGraph()
+    {
+        if(Settings.sharedInstance.graphType == 0)
+        {
+                updateBarGraph()
+                lineChartView.isHidden = true
+                barChartView.isHidden = false
+                //barChartView.slideInFromRight()
+                self.view.bringSubview(toFront: barChartView)
+        }
+        else{
+                updateLineGraph()
+                barChartView.isHidden = true
+                lineChartView.isHidden = false
+                //lineChartView.slideInFromRight()
+                self.view.bringSubview(toFront: lineChartView)
+        }
+    }
+    
+    func hideTheGraphs(){
+        barChartView.isHidden = true
+        lineChartView.isHidden = true
     }
     
     //MARK: - Protocols
@@ -732,20 +891,32 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         }
     }
     
+    func showCleanTextButton(isHidden:Bool) {
+         guard tasktype == TaskType.freeText else {
+            return
+        }
+        clearTextButton.isHidden = isHidden
+    }
+    
      // MARK: - Practice Board Action
 
+    @IBAction func clearText(_ sender: Any) {
+        
+        textView.text = ""
+    }
     @IBAction func showResultType(_ sender: Any) {
      
         //let title = showResultTypeButton.title(for: .normal)
         switch currentResultViewType {
         case .score:
-            displayResultType(to: .score, from: .graph)
+            displayResultType(to: .graph , from: .score)
             break
         case .phenomeTable:
-            displayResultType(to: .score, from: currentResultViewType)
+            //displayResultType(to: .score, from: currentResultViewType)
+            displayResultType(to: .graph, from: currentResultViewType)
             break
         default:
-            displayResultType(to: .graph, from: .score)
+            displayResultType(to: .score, from: .graph)
             break
         }
         
@@ -770,20 +941,50 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     }
     
     @IBAction func clearTheScores(_ sender: Any) {
-        viewModel.clearData()
-        refreshUI()
-    }
-    
-    @objc func controlKeyboard (sender:UITapGestureRecognizer){
-        guard sender.numberOfTapsRequired == 1 else {
+       
+        guard viewModel.answersList.count > 0 else {
             return
         }
+        
+        let alert = UIAlertController(title: "Warning", message: "Are you sure you want to delete all the attempts.", preferredStyle: UIAlertControllerStyle.alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.default, handler: nil))
+        alert.addAction(UIAlertAction(title: "Proceed", style: UIAlertActionStyle.default , handler: { (action) in
+            self.clearText(sender)
+            self.viewModel.clearData()
+            self.refreshUI()
+        }))
+            
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    /*
+    @objc func controlKeyboard (sender:UILongPressGestureRecognizer) {
+       
+        if(sender.state == .began ) {
+        if(textView.isFirstResponder) {
+            textView.isEditable = false
+            textView.resignFirstResponder()
+            } else {
+            textView.isEditable = true
+            textView.becomeFirstResponder()
+            }
+        }
+    }
+ */
+    
+
+    @objc func controlKeyboard (sender:UITapGestureRecognizer){
+        guard sender.numberOfTapsRequired == 2 else {
+            return
+        }
+        
         if(textView.isFirstResponder) {
             textView.resignFirstResponder()
         } else {
             textView.becomeFirstResponder()
         }
     }
+    
     
     @objc func displayWordPhonemeSection (sender:UITapGestureRecognizer){
        
@@ -793,54 +994,76 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
             return
         }
         
-       
         let tappedWord =  viewModel.tapResponse(recognizer: sender)
+        
+        guard tappedWord.wordtoshow.word.count > 0 else {
+            return
+        }
+        
         displayResultType(to: .phenomeTable, from: .score)
         self.phonemeTable.scrollToRow(at: IndexPath(row: 0, section: tappedWord.details.section), at: UITableViewScrollPosition.top, animated: true)
         
+    }
+   
+    @IBAction func closePhonemeTableView(_ sender: Any) {
+        
+        displayResultType(to: .score, from: .phenomeTable)
     }
     
     // MARK: - Operations
     
     func displayResultType(to resultType: ResultViewType  , from currentType:ResultViewType)
     {
-        currentResultViewType = currentType
+        currentResultViewType = resultType
+        textView.resignFirstResponder()
+        
+        /*
         switch currentType {
         case .score:
             //showResultTypeButton.setTitle("S", for: .normal)
              textView.resignFirstResponder()
-            clearButton.setImage(UIImage(named:"trash_black.png"), for: .normal)
-            showResultTypeButton.setImage(UIImage(named:"tiles-view"), for: .normal)
+            //clearButton.setImage(UIImage(named:"trash_black.png"), for: .normal)
+            //showResultTypeButton.setImage(UIImage(named:"tiles-view"), for: .normal)
             break
         case .phenomeTable:
              textView.resignFirstResponder()
-            clearButton.setImage(UIImage(named:"trash_black.png"), for: .normal)
-            showResultTypeButton.setImage(UIImage(named:"tiles-view"), for: .normal)
+            //clearButton.setImage(UIImage(named:"trash_black.png"), for: .normal)
+            //showResultTypeButton.setImage(UIImage(named:"tiles-view"), for: .normal)
             //showResultTypeButton.setTitle("P", for: .normal)
             break
         default:
             //showResultTypeButton.setTitle("G", for: .normal)
              textView.resignFirstResponder()
-            clearButton.setImage(UIImage(named:"trash_1"), for: .normal)
-            showResultTypeButton.setImage(UIImage(named:"bar-chart"), for: .normal)
+            //clearButton.setImage(UIImage(named:"trash_1"), for: .normal)
+            //showResultTypeButton.setImage(UIImage(named:"bar-chart"), for: .normal)
             break
         }
+        */
         
         switch resultType {
         case .score:
             scoreCollectionView.isHidden = false
             barChartView.isHidden = true
+            hideTheGraphs()
             phonemeTable.isHidden = true
+            closPhonemeTableButton.isHidden = true
+            showResultTypeButton.setImage(UIImage(named:"bar-chart"), for: .normal)
             break
         case .phenomeTable:
             scoreCollectionView.isHidden = true
             barChartView.isHidden = true
+            hideTheGraphs()
             phonemeTable.isHidden = false
+            closPhonemeTableButton.isHidden = false
+            showResultTypeButton.setImage(UIImage(named:"bar-chart"), for: .normal)
             break
         default:
             scoreCollectionView.isHidden = true
             barChartView.isHidden = false
+            showTheGraph()
             phonemeTable.isHidden = true
+            closPhonemeTableButton.isHidden = true
+            showResultTypeButton.setImage(UIImage(named:"tile"), for: .normal)
             break
         }
 
@@ -867,6 +1090,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
 
     @IBAction func showFeedback(_ sender: Any) {
         let feedbackViewController =     FeedbackViewController(nibName: "FeedbackViewController", bundle: nil)
+        feedbackViewController.viewModel.feedback = viewModel.unitList[unitIndex].feedback
         self.navigationController?.pushViewController(feedbackViewController, animated: true)
         
     }
@@ -948,6 +1172,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     
 
     func refreshUI(){
+        textView.textColor = UIColor.white
          updateGraph()
          reloadCollectionView()
          reloadtable()

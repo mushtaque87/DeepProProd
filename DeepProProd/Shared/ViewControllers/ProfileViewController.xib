@@ -21,35 +21,17 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="meJ-79-ut4" userLabel="Root Stack View">
-                    <rect key="frame" x="0.0" y="25" width="375" height="632"/>
-                    <subviews>
-                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="kgp-eR-qlP" userLabel="Header Stack View">
-                            <rect key="frame" x="0.0" y="0.0" width="375" height="632"/>
-                            <subviews>
-                                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="ssg-7B-lMv">
-                                    <rect key="frame" x="10" y="0.0" width="355" height="632"/>
-                                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                </tableView>
-                            </subviews>
-                            <constraints>
-                                <constraint firstItem="ds2-wj-WLd" firstAttribute="trailing" secondItem="ssg-7B-lMv" secondAttribute="trailing" constant="10" id="Rz3-zy-Xlv"/>
-                                <constraint firstItem="ssg-7B-lMv" firstAttribute="leading" secondItem="ds2-wj-WLd" secondAttribute="leading" constant="10" id="uYc-ak-LMo"/>
-                            </constraints>
-                            <viewLayoutGuide key="safeArea" id="ds2-wj-WLd"/>
-                        </stackView>
-                    </subviews>
-                    <constraints>
-                        <constraint firstItem="kgp-eR-qlP" firstAttribute="width" secondItem="meJ-79-ut4" secondAttribute="width" id="4S3-zc-Zfh"/>
-                    </constraints>
-                </stackView>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="ssg-7B-lMv">
+                    <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                </tableView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
-                <constraint firstItem="meJ-79-ut4" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="AB6-GM-Ny8"/>
-                <constraint firstAttribute="trailing" secondItem="meJ-79-ut4" secondAttribute="trailing" id="Bt7-Bk-A3W"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="meJ-79-ut4" secondAttribute="bottom" constant="10" id="qYB-mb-b3S"/>
-                <constraint firstItem="meJ-79-ut4" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="5" id="x67-1d-OGg"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="ssg-7B-lMv" secondAttribute="bottom" id="Jp5-ih-oPS"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="ssg-7B-lMv" secondAttribute="top" id="Soo-7C-wjb"/>
+                <constraint firstItem="ssg-7B-lMv" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="f5g-xD-f2B"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ssg-7B-lMv" secondAttribute="trailing" id="yly-V4-Y6q"/>
             </constraints>
             <nil key="simulatedTopBarMetrics"/>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>

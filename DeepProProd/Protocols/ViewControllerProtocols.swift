@@ -22,7 +22,7 @@ protocol PracticeBoardProtocols: class {
     func updateExpertAudioButton(isPlaying: Bool)
     func resetAudioButtonInCollectionView(at count:Int)
     func setAttributedText(with text:NSAttributedString)
-    //func setExpertSpeechButtonImage()
+    func showCleanTextButton(isHidden:Bool)
     func setExpertSpeechButtonImage(set isTTSSpeaking:Bool)
 }
 
@@ -37,14 +37,20 @@ protocol ProfileViewDelegate: class {
  //func moveTextField(up movedUp: Bool)
     func moveTextField(up movedUp: Bool ,by height:CGFloat)
     func editProfilePic()
-    func showEditInfoScreen(for detailType:EditProfileType)
-    func showEditNameScreen()
-    func showEditGenderScreen()
-    func showEditStandardScreen()
     func saveEditedDetails(for editType: EditProfileType, with details:Profile)
+    func showEditInfoScreen(for detailType:EditProfileType)
+    func shouldEnableSaveButton(enable:Bool)
 }
+
+/*
+extension ProfileViewDelegate {
+  
+}
+*/
 
 protocol SignUpViewDelegate: class {
     //func moveTextField(up movedUp: Bool)
+    func showEditInfoScreen(for detailType:EditProfileType)
+    func saveEditedDetails(for editType: EditProfileType, with details:SignUpData)
     func signUp()
 }

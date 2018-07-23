@@ -57,12 +57,21 @@
                             <constraint firstItem="Ojb-1U-uyx" firstAttribute="width" secondItem="O42-Yj-Tez" secondAttribute="height" multiplier="5:5" id="Kbo-mJ-Eci"/>
                         </constraints>
                     </stackView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="keyboard-right-arrow-button" translatesAutoresizingMaskIntoConstraints="NO" id="cOQ-r0-7Rq">
+                        <rect key="frame" x="300" y="48.5" width="15" height="15"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="15" id="3Gn-CR-woz"/>
+                            <constraint firstAttribute="height" constant="15" id="NMA-lS-TAi"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="cOQ-r0-7Rq" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="TrP-ZT-In4"/>
                     <constraint firstItem="O42-Yj-Tez" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="dgo-xV-1Sp"/>
                     <constraint firstItem="O42-Yj-Tez" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="fFj-3y-3kp"/>
                     <constraint firstAttribute="trailing" secondItem="O42-Yj-Tez" secondAttribute="trailing" id="gon-TJ-Zxj"/>
                     <constraint firstAttribute="bottom" secondItem="O42-Yj-Tez" secondAttribute="bottom" constant="6.5" id="u78-jd-SHd"/>
+                    <constraint firstAttribute="trailing" secondItem="cOQ-r0-7Rq" secondAttribute="trailing" constant="5" id="vOK-9d-ZW1"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -76,5 +85,6 @@
     </objects>
     <resources>
         <image name="graduate-student-avatar" width="64" height="64"/>
+        <image name="keyboard-right-arrow-button" width="24" height="24"/>
     </resources>
 </document>

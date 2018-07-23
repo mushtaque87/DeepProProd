@@ -9,15 +9,11 @@
 import UIKit
 import RxSwift
 
-protocol MainViewControllerProtocols {
-    
-
-    
-}
 
 
 
-class MainViewController: UIViewController, MainViewControllerProtocols {
+
+class MainViewController: UIViewController {
 
     
     open var currentViewController : UIViewController?
@@ -30,7 +26,7 @@ class MainViewController: UIViewController, MainViewControllerProtocols {
         return viewcontroller
     }()
     */
-   lazy var     login_ViewController: LoginViewController  = {
+   lazy var     login_ViewController: LoginViewController  = {    
      var viewcontroller   = LoginViewController(nibName: "LoginViewController", bundle: nil)
      return viewcontroller
     
@@ -136,15 +132,19 @@ class MainViewController: UIViewController, MainViewControllerProtocols {
         */
         //let login_ViewController  = Login_SH_ViewController(nibName: "Login_SH_ViewController", bundle: nil)
         //login_ViewController?.view.frame = self.view.frame
-        self.addSubView(addChildViewController: login_ViewController, on: self)
         
+        let navigationController = UINavigationController(rootViewController: login_ViewController)
+        //self.addChildViewController(navigationController)
+        self.addSubView(addChildViewController: navigationController, on: self)
+        //self.view.addSubview(navigationController.view)
         
     }
     
     func showSignUpViewController() -> Void {
         let signUp_ViewController: SignUpViewController = SignUpViewController(nibName: "SignUpViewController", bundle: nil)
-        self.present(signUp_ViewController, animated: true, completion: nil)
-        
+        login_ViewController.navigationController?.pushViewController(signUp_ViewController, animated: true)
+        //self.present(signUp_ViewController, animated: true, completion: nil)
+       // self.navigationController?.pushViewController(signUp_ViewController, animated: true)
         //self.addSubView(addChildViewController: signUp_ViewController, on: self)
         
         /*
@@ -157,7 +157,9 @@ class MainViewController: UIViewController, MainViewControllerProtocols {
     
     func showForgetPasswordViewController() -> Void {
         let forgot_ViewController : ForgotPasswordViewController = ForgotPasswordViewController(nibName: "ForgotPasswordViewController", bundle: nil)
-        self.present(forgot_ViewController, animated: true, completion: nil)
+        login_ViewController.navigationController?.pushViewController(forgot_ViewController, animated: true)
+
+        //self.present(forgot_ViewController, animated: true, completion: nil)
         
     }
     

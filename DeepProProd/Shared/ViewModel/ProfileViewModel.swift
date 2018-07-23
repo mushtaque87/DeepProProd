@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import MBProgressHUD
+import RxSwift
 
 enum DetailType : Int  {
     case email
@@ -40,8 +41,34 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
     var isKeyboardOnScreen : Bool = false
     var currentTextField : UITextField?
     var screenType : ScreenType = .edit
+    var isEdited = Variable<Bool>(false)
+//    var isEnable : Observable<Bool> {
+//        return Observable.subscribeOn(isEdited.value)
+//    }
+//
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let headerView = UIView()
+//        let title = UILabel(frame: CGRect(x: 0, y: 0, width: headerView.frame.size.width, height: headerView.frame.size.height))
+//        title.textColor = UIColor.black
+//        if (section == 0){
+//            title.text = "Profile Information"
+//        } else {
+//            title.text = "Detail Information"
+//        }
+//
+//        headerView.addSubview(title)
+//        headerView.translatesAutoresizingMaskIntoConstraints = false
+//        return headerView
+//    }
     
-    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if (section == 0){
+                        return "Profile Information"
+                    } else {
+                        return "Detail Information"
+                    }
+    }
+//
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if (section == 0) {
@@ -68,7 +95,8 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                 cell.lastName.text = details?.last_name
 //                cell.firstName.isUserInteractionEnabled = false
 //                cell.lastName.isUserInteractionEnabled = false
-                cell.contentView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                cell.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                cell.contentView.backgroundColor = UIColor.clear
                 cell.profileImageButton.addTarget(self , action: #selector(editProfilePic), for: .touchUpInside)
                 cell.profileImageButton.setImage(details?.profile_image, for: .normal)
                 return cell
@@ -92,6 +120,7 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         cell.backgroundColor = UIColor.clear
                         cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                         cell.titleLabel.backgroundColor = UIColor.clear
+                        cell.selectionStyle = .none
                         return cell
                 case .dob:
                        // let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
@@ -108,6 +137,7 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         cell.backgroundColor = UIColor.clear
                         cell.titleLabel.backgroundColor = UIColor.clear
                         cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                        cell.selectionStyle = .none
                         return cell
                 case .gender:
                         //let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
@@ -124,6 +154,7 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         cell.backgroundColor = UIColor.clear
                         cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                         cell.titleLabel.backgroundColor = UIColor.clear
+                        
                         return cell
             case .standard:
                        // let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
@@ -140,6 +171,7 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         cell.backgroundColor = UIColor.clear
                         cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                         cell.titleLabel.backgroundColor = UIColor.clear
+                        
                         return cell
             case .section:
                         // let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
@@ -154,6 +186,7 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         cell.backgroundColor = UIColor.clear
                         cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                         cell.titleLabel.backgroundColor = UIColor.clear
+                        
                         return cell
             case .contact:
                        // let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
@@ -168,6 +201,7 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         cell.backgroundColor = UIColor.clear
                         cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                         cell.titleLabel.backgroundColor = UIColor.clear
+                        
                         return cell
                 }
             }
@@ -268,7 +302,7 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         currentTextField = textField
-        
+        delegate?.shouldEnableSaveButton(enable: true)
         if textField.tag == 1 {
             let currentDate = Date()
             var dateComponents = DateComponents()

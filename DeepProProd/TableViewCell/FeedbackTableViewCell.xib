@@ -34,14 +34,14 @@
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="NZ1-R4-5do">
                         <rect key="frame" x="5" y="0.0" width="315" height="63.5"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Good Job Keep trying like this you will improve a lot. I wan to see more improvements." lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="diQ-MN-IjL">
-                                <rect key="frame" x="5" y="0.0" width="305" height="59"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="No feedback available" lineBreakMode="tailTruncation" numberOfLines="10" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="diQ-MN-IjL">
+                                <rect key="frame" x="5" y="0.0" width="305" height="46.5"/>
                                 <fontDescription key="fontDescription" name="Poppins-Medium" family="Poppins" pointSize="14"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="Thu,5 Jul, 2018" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1qn-Ik-Ds8">
-                                <rect key="frame" x="5" y="59" width="305" height="4.5"/>
+                                <rect key="frame" x="5" y="46.5" width="305" height="17"/>
                                 <fontDescription key="fontDescription" name="Poppins-Bold" family="Poppins" pointSize="12"/>
                                 <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -68,6 +68,7 @@
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="backView" destination="CbM-eF-fkX" id="H5y-Ih-igb"/>
+                <outlet property="dateLabel" destination="1qn-Ik-Ds8" id="3Ar-l1-NvC"/>
                 <outlet property="feedbackLabel" destination="diQ-MN-IjL" id="efd-ga-a1N"/>
             </connections>
             <point key="canvasLocation" x="50" y="135.5"/>

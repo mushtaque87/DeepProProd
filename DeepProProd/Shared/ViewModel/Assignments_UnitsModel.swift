@@ -12,6 +12,7 @@ import UIKit
 enum UnitStatus : String   {
     case assigned = "ASSIGNED"
     case submitted = "SUBMITTED"
+    case reviewed = "REVIEWED"
 }
 
 class Assignments_UnitsModel: NSObject, UITableViewDataSource, UITableViewDelegate {
@@ -44,13 +45,13 @@ class Assignments_UnitsModel: NSObject, UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 160.0
+        return 80.0
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard unitList.count != 0 else {
-            return 0
-        }
+//        guard unitList.count != 0 else {
+//            return 0
+//        }
         return unitList.count
     }
     
@@ -111,15 +112,21 @@ class Assignments_UnitsModel: NSObject, UITableViewDataSource, UITableViewDelega
             switch unitStatus {
             case .assigned:
                 cell.detailView.backgroundColor = UIColor(red: 201/255, green: 74/255, blue: 74/255, alpha: 0.9)
+                break
             case .submitted :
                 cell.detailView.backgroundColor = UIColor(red: 88/255, green: 153/255, blue: 95/255, alpha: 0.9)
-                
+                break
+            case .reviewed:
+                cell.detailView.backgroundColor = UIColor(red: 227/255, green: 183/255, blue: 225/255, alpha: 0.9)
+                break
+             default:
+                cell.detailView.backgroundColor = UIColor(red: 201/255, green: 74/255, blue: 74/255, alpha: 0.9)
             }
         }
         
-        cell.continueButton.tag = (unitList[indexPath.row].base?.id)!
-        cell.continueButton.indexPath = indexPath
-        cell.continueButton.addTarget(self, action:#selector(showUnitsScreen(_:)) , for: .touchUpInside)
+        //cell.continueButton.tag = (unitList[indexPath.row].base?.id)!
+        //cell.continueButton.indexPath = indexPath
+        //cell.continueButton.addTarget(self, action:#selector(showUnitsScreen(_:)) , for: .touchUpInside)
         cell.selectionStyle = UITableViewCellSelectionStyle.none
         //cell.detailView.backgroundColor = UIColor(red: 248/255, green: 182/255, blue: 130/255, alpha: 0.9)
         return cell
@@ -127,11 +134,12 @@ class Assignments_UnitsModel: NSObject, UITableViewDataSource, UITableViewDelega
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        guard indexPath.row < unitList.count - 1 else {
-            return
-        }
+//        guard indexPath.row < unitList.count - 1 else {
+//            return
+//        }
         
-        
+        delegate?.showPronunciationScreen(with: unitList, and: indexPath.row)
+
         //let unit = unitList[indexPath.row]
        
         /* ServiceManager().getAnswers(for: 1, for:(unit.base?.unit_id)! , of: UserDefaults.standard.string(forKey: "uid")! , onSuccess: {response in

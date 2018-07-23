@@ -73,10 +73,25 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     
     guard indexPath.section > 0  else {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
+       
+        /*let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
         cell.titleLbl.text = "My_Account".localized
         cell.titleLbl.alignText()
         cell.contentView.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+        return cell
+        */
+        
+        let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
+        cell.titleLabel.text = "My_Account".localized
+        cell.titleLabel.textColor = UIColor.white
+        cell.titleLabel.textAlignment = .left
+        cell.backgroundColor = UIColor.clear
+        cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+        cell.titleLabel.backgroundColor = UIColor.clear
+        cell.selectionStyle = .none
+        cell.valueTextField.isEnabled = false
+        cell.valueTextField.textColor = UIColor.white
+        cell.valueTextField.tag = indexPath.row
         return cell
     }
     
@@ -93,6 +108,7 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 cell.contentView.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                  */
                 
+                /*
                 let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
                 cell.accessoryType = .disclosureIndicator
                 cell.tintColor = UIColor.white
@@ -101,8 +117,21 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 cell.textLabel?.backgroundColor = UIColor.clear
                 cell.backgroundColor  = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                 cell.contentView.backgroundColor = UIColor.clear
-                 cell.textLabel?.text = "Language".localized
-               
+                cell.textLabel?.text = "Language".localized
+                 */
+                let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
+                cell.titleLabel.text = "Language".localized
+                cell.titleLabel.textColor = UIColor.white
+                cell.titleLabel.textAlignment = .left
+                cell.backgroundColor = UIColor.clear
+                cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                cell.titleLabel.backgroundColor = UIColor.clear
+                
+                cell.valueTextField.isEnabled = false
+                cell.valueTextField.textColor = UIColor.white
+                cell.valueTextField.tag = indexPath.row
+                cell.valueTextField.text = Settings.sharedInstance.language
+                cell.selectionStyle = .none
                 return cell
              /*
             case .profile:
@@ -132,6 +161,7 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 cell.contentView.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                 */
                 
+                /*
                 let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
                 cell.accessoryType = .disclosureIndicator
                 cell.tintColor = UIColor.white
@@ -141,7 +171,22 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 cell.backgroundColor  = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                 cell.contentView.backgroundColor = UIColor.clear
                  cell.textLabel?.text = "GraphType".localized
+                */
                 
+                let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
+                cell.titleLabel.text = "GraphType".localized
+                cell.titleLabel.textColor = UIColor.white
+                cell.titleLabel.textAlignment = .left
+                cell.backgroundColor = UIColor.clear
+                cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                cell.titleLabel.backgroundColor = UIColor.clear
+                
+                cell.valueTextField.isEnabled = false
+                cell.valueTextField.textColor = UIColor.white
+                cell.valueTextField.tag = indexPath.row
+                cell.valueTextField.text = (Settings.sharedInstance.graphType == 0 ? "Bar" : "Line")
+                
+                cell.selectionStyle = .none
                 /*
                 let cell  = tableView.dequeueReusableCell(withIdentifier: "language", for: indexPath) as! LanguageTableViewCell
                 cell.titlLbl.text = "GraphType".localized
@@ -162,6 +207,7 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 cell.contentView.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                 */
                 
+                /*
                 let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
                 cell.accessoryType = .disclosureIndicator
                 cell.tintColor = UIColor.white
@@ -171,7 +217,31 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 cell.backgroundColor  = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                 cell.contentView.backgroundColor = UIColor.clear
                 cell.textLabel?.text = "Theme".localized
+                */
                 
+                let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
+                cell.titleLabel.text = "Theme".localized
+                cell.titleLabel.textColor = UIColor.white
+                cell.titleLabel.textAlignment = .left
+                cell.backgroundColor = UIColor.clear
+                cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                cell.titleLabel.backgroundColor = UIColor.clear
+                
+                cell.valueTextField.isEnabled = false
+                cell.valueTextField.textColor = UIColor.white
+                cell.valueTextField.tag = indexPath.row
+                switch Settings.sharedInstance.themeType {
+                case 0:
+                    cell.valueTextField.text = "Blue"
+                    break
+                case 1:
+                    cell.valueTextField.text = "Green"
+                    break
+                default :
+                    cell.valueTextField.text = "Pink"
+                    break
+                }
+                cell.selectionStyle = .none
                 
                 /*let cell  = tableView.dequeueReusableCell(withIdentifier: "language", for: indexPath) as! LanguageTableViewCell
                 cell.titlLbl.text = "GraphType".localized
@@ -220,6 +290,7 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 cell.titleLbl.textAlignment = .center
                 cell.titleLbl.text = "Logout".localized
                 cell.contentView.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                cell.selectionStyle = .blue
                 return cell
             }
         }
@@ -229,6 +300,8 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
    
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
         {
+            
+            
             guard indexPath.section > 0 else {
                 delegate?.showProfileScreen()
                 return

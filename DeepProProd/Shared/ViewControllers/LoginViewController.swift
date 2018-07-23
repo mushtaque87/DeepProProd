@@ -39,7 +39,7 @@ class LoginViewController: UIViewController {
         //Configure Switch Design
         // languageSwitch.tintColor = UIColor.init(red: 121.0/255.0, green: 239.0/255.0, blue: 215.0/255.0, alpha: 1)
         // languageSwitch.onTintColor = UIColor.init(red: 121.0/255.0, green: 239.0/255.0, blue: 215.0/255.0, alpha: 1)
-       
+       self.navigationItem.title = "Login"
         languageSwitch.setOn(false, animated: false)
         languageSwitch.addTarget(self, action: #selector(changeLanguage(_:)), for: .valueChanged)
         
@@ -49,7 +49,7 @@ class LoginViewController: UIViewController {
             Helper.lockOrientation(.portrait)
         } 
         backgroundImg.isHidden = true
-        self.view.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+        self.view.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 1.0)
 
     }
 

@@ -28,6 +28,8 @@ class SettingsViewController: UIViewController,SettingProtocols {
         self.settingTableView.register(UINib(nibName: "LabelTableViewCell", bundle: nil), forCellReuseIdentifier: "labelCell")
         self.settingTableView.register(UINib(nibName: "LanguageTableViewCell", bundle: nil), forCellReuseIdentifier: "language")
         self.settingTableView.register(UINib(nibName: "ThemeCell", bundle: nil), forCellReuseIdentifier: "theme")
+        self.settingTableView.register(UINib(nibName: "DetailCell", bundle: nil), forCellReuseIdentifier: "details")
+
         self.settingTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 
         self.settingTableView.backgroundColor = UIColor.clear

@@ -10,9 +10,12 @@ import UIKit
 import Foundation
 
 class FeedbackModel: NSObject, UITableViewDelegate , UITableViewDataSource  {
-
+    var feedback : String?
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell  = tableView.dequeueReusableCell(withIdentifier: "feedback", for: indexPath) as! FeedbackTableViewCell
+        if let feedback = feedback {
+            cell.feedbackLabel.text = feedback
+        }
         return cell
     }
     

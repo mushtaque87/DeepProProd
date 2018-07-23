@@ -6,7 +6,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -29,7 +28,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                 </imageView>
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="c5w-Ci-nx8">
-                    <rect key="frame" x="5" y="20" width="310" height="548"/>
+                    <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <connections>
@@ -41,14 +40,14 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="zLM-S1-Zt5" secondAttribute="trailing" id="ApL-9d-Zbq"/>
-                <constraint firstItem="c5w-Ci-nx8" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="topMargin" id="GGH-fO-o2X"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="top" secondItem="zLM-S1-Zt5" secondAttribute="top" constant="20" id="WLl-PU-fbs"/>
-                <constraint firstItem="c5w-Ci-nx8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="5" id="Wpl-wb-K4H"/>
                 <constraint firstItem="zLM-S1-Zt5" firstAttribute="centerX" secondItem="fnl-2z-Ty3" secondAttribute="centerX" id="XhF-aZ-ArU"/>
-                <constraint firstItem="c5w-Ci-nx8" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-5" id="YhY-e8-k5i"/>
+                <constraint firstItem="c5w-Ci-nx8" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="YhY-e8-k5i"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="zLM-S1-Zt5" secondAttribute="bottom" id="ewF-e8-CzJ"/>
+                <constraint firstItem="c5w-Ci-nx8" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="ipE-09-bK9"/>
                 <constraint firstItem="zLM-S1-Zt5" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="jfb-OT-5xx"/>
                 <constraint firstItem="c5w-Ci-nx8" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="vW3-au-4bZ"/>
+                <constraint firstItem="c5w-Ci-nx8" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="wLv-nj-jfM"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <point key="canvasLocation" x="33" y="155"/>

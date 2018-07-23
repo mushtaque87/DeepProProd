@@ -10,6 +10,8 @@ import UIKit
 import RxSwift
 import MBProgressHUD
 class SignUpViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate , SignUpViewDelegate{
+    
+    
 
     @IBOutlet weak var profileImageButton: UIButton!
     @IBOutlet weak var closeBtn: UIButton!
@@ -29,7 +31,7 @@ class SignUpViewController: UIViewController, UINavigationControllerDelegate, UI
             Helper.lockOrientation(.portrait)
         } 
         refreshUI()
-
+        self.navigationItem.title = "Sign Up"
         //_ =  ageTxtField.rx.text.map {$0 ?? ""}.bind(to:viewModel.dob)
 
             viewModel.dobObserver.subscribe(onNext: { [weak self] details in
@@ -46,8 +48,9 @@ class SignUpViewController: UIViewController, UINavigationControllerDelegate, UI
         self.detailsTableView.register(UINib(nibName: "LabelTableViewCell", bundle: nil), forCellReuseIdentifier: "labelCell")
         self.detailsTableView.delegate = viewModel
         self.detailsTableView.dataSource = viewModel
-        self.detailsTableView.backgroundColor = UIColor.white
+        self.detailsTableView.backgroundColor = UIColor.clear
         
+       // profileImageButton.layer.borderColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9).cgColor
         profileImageButton.layer.borderColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9).cgColor
         profileImageButton.layer.borderWidth = 2
         profileImageButton.layer.cornerRadius = profileImageButton.frame.size.width/2
@@ -80,7 +83,7 @@ class SignUpViewController: UIViewController, UINavigationControllerDelegate, UI
         //detailsTable.setContentOffset(CGPoint(x: 0, y: textField.center.y - 160), animated: true)
         //[UIView beginAnimations:nil context:NULL];
         //[UIView setAnimationDuration:0.3]; // if you want to slide up the view
-        guard ((viewModel.currentTextField?.tag) != signUpDetails.dob.rawValue) else {
+        guard ((viewModel.currentTextField?.tag) != SignUpDetails.dob.rawValue) else {
             return
         }
         
@@ -128,6 +131,36 @@ class SignUpViewController: UIViewController, UINavigationControllerDelegate, UI
         UIView.commitAnimations()
     }
     
+    func showEditInfoScreen(for detailType:EditProfileType) {
+        
+        //        guard viewModel.isEditEnabled == true else {
+        //            let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
+        //            hud.mode = MBProgressHUDMode.text
+        //            hud.label.text = "Please click Edit button to edit details."
+        //            hud.hide(animated: true, afterDelay: 1.5)
+        //            return
+        //        }
+        
+        let profileSelectionTableViewController =     ProfileSelectionTableViewController(nibName: "ProfileSelectionTableViewController", bundle: nil)
+        profileSelectionTableViewController.editProfileType = detailType
+        profileSelectionTableViewController.editProfileScreenType = .signUp
+        profileSelectionTableViewController.signUpDetails = viewModel.details
+        profileSelectionTableViewController.signUpDelegate = self
+        self.navigationController?.pushViewController(profileSelectionTableViewController, animated: true)
+        //self.present(profileSelectionTableViewController, animated: true, completion: nil)
+
+        
+    }
+    
+//    func saveEditedDetails(for editType: EditProfileType, with details:Profile) {
+//      //  viewModel.details = details
+//
+//    }
+    
+    func saveEditedDetails(for editType: EditProfileType, with details: SignUpData) {
+        self.detailsTableView.reloadData()
+    }
+    
     @IBAction func editProfilePic(_ sender: Any) {
         
         guard viewModel.isEditEnabled == true else {
@@ -164,6 +197,7 @@ class SignUpViewController: UIViewController, UINavigationControllerDelegate, UI
                 let picker = UIImagePickerController()
                 picker.delegate = self
                 picker.sourceType = UIImagePickerControllerSourceType.camera
+                picker.cameraDevice = .front
                 picker.mediaTypes = UIImagePickerController.availableMediaTypes(for: picker.sourceType)!
                 //var mediaTypes: Array<AnyObject> = [kUTTypeImage]
                 // picker.mediaTypes = mediaTypes

@@ -384,14 +384,21 @@ class PracticeViewModel: NSObject,
        // let url = "http://192.168.71.11:7891/rec.wav"
        // let asset = AVURLAsset(url: URL(string: "http://192.168.71.11:7891/rec.wav")!)
        // asset.resourceLoader.setDelegate(self, queue: DispatchQueue.main)
-        let playerItem = AVPlayerItem(url: URL(string:url)!)
-        // let playerItem = AVPlayerItem(asset: asset)
-        streamPlayer = AVPlayer(playerItem:playerItem)
-        streamPlayer.rate = 1.0;
-        streamPlayer.volume = 1.0
-        streamPlayer.play()
-        isStreamPlaying = true
-        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setActive(true)
+            
+                let playerItem = AVPlayerItem(url: URL(string:url)!)
+                // let playerItem = AVPlayerItem(asset: asset)
+                streamPlayer = AVPlayer(playerItem:playerItem)
+                streamPlayer.rate = 1.0;
+                streamPlayer.volume = 1.0
+                streamPlayer.play()
+                isStreamPlaying = true
+        }  catch let error {
+            print(error.localizedDescription)
+            
+        }
         if let button = button {
             let row : Int = (button.layer.value(forKey: "row")) as! Int
             playingIndexPath  = IndexPath(row: row, section: 0)
@@ -567,6 +574,8 @@ class PracticeViewModel: NSObject,
             textView.text = ""
             textView.textColor = UIColor.white
         }
+        
+        delegate?.showCleanTextButton(isHidden: false)
         delegate?.resetTextViewContent(textView:textView)
         return true
      
@@ -584,6 +593,8 @@ class PracticeViewModel: NSObject,
             delegate?.resetTextViewContent(textView: textView)
             
         }
+        delegate?.resetTextViewContent(textView: textView)
+
     }
     
     
@@ -595,18 +606,24 @@ class PracticeViewModel: NSObject,
                 textView.text = "Type Here"
                 textView.textColor = UIColor.lightGray
             }
-            delegate?.resetTextViewContent(textView: textView)
+        delegate?.showCleanTextButton(isHidden: true)
+        delegate?.resetTextViewContent(textView: textView)
         
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+       
         if(text == "\n")
         {
-            textView.resignFirstResponder()
-            return false
+//            textView.resignFirstResponder()
+//            return false
+            delegate?.resetTextViewContent(textView: textView)
+
         }
+        delegate?.resetTextViewContent(textView: textView)
         return true
     }
+ 
    
 }
 
@@ -614,15 +631,18 @@ extension UITextView {
 
     override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
 
-        UIMenuController.shared.isMenuVisible = false
         
         /*
+        UIMenuController.shared.isMenuVisible = false
+        
+       
         if action == #selector(UIResponderStandardEditActions.paste(_:)) {
         print("paste")
         return true
         }
         */
-        return false
+        
+        return true
 }
     
 }
