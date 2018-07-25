@@ -12,6 +12,8 @@ import RxSwift
 import MBProgressHUD
 
 
+
+
 class LoginViewController: UIViewController {
 
 
@@ -40,6 +42,7 @@ class LoginViewController: UIViewController {
         // languageSwitch.tintColor = UIColor.init(red: 121.0/255.0, green: 239.0/255.0, blue: 215.0/255.0, alpha: 1)
         // languageSwitch.onTintColor = UIColor.init(red: 121.0/255.0, green: 239.0/255.0, blue: 215.0/255.0, alpha: 1)
        self.navigationItem.title = "Login"
+       // self.navigationController?.isNavigationBarHidden = true
         languageSwitch.setOn(false, animated: false)
         languageSwitch.addTarget(self, action: #selector(changeLanguage(_:)), for: .valueChanged)
         
@@ -49,10 +52,39 @@ class LoginViewController: UIViewController {
             Helper.lockOrientation(.portrait)
         } 
         backgroundImg.isHidden = true
-        self.view.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 1.0)
+        //self.view.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 1.0)
+        
+        
+        
+        
+        setTheme()
+        
+       
 
     }
-
+    
+    func setTheme() {
+        let colors = ThemeManager.sharedInstance.color
+        self.view.backgroundColor = UIColor.clear
+        let backgroundLayer = colors?.gl
+        backgroundLayer?.frame = view.frame
+        self.view.layer.insertSublayer(backgroundLayer!, at: 0)
+       // self.view.layoutSublayers(of: backgroundLayer!)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+       //setTheme()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setTheme()
+        
+        // Hide the navigation bar on the this view controller
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         refreshUI()
     }
@@ -61,7 +93,14 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Show the navigation bar on other view controllers
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
 
+    
     /*
     // MARK: - Navigation
 

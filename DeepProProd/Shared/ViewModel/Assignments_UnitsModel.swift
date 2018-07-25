@@ -111,13 +111,13 @@ class Assignments_UnitsModel: NSObject, UITableViewDataSource, UITableViewDelega
            // cell.assignmentStatus.text = (unit[indexPath.row].base?.unit_status)!
             switch unitStatus {
             case .assigned:
-                cell.detailView.backgroundColor = UIColor(red: 201/255, green: 74/255, blue: 74/255, alpha: 0.9)
+                cell.detailView.backgroundColor = UIColor(red: 216/255, green: 86/255, blue: 49/255, alpha: 0.9)
                 break
             case .submitted :
-                cell.detailView.backgroundColor = UIColor(red: 88/255, green: 153/255, blue: 95/255, alpha: 0.9)
+                cell.detailView.backgroundColor = UIColor(red: 64/255, green: 137/255, blue: 225/255, alpha: 0.9)
                 break
             case .reviewed:
-                cell.detailView.backgroundColor = UIColor(red: 227/255, green: 183/255, blue: 225/255, alpha: 0.9)
+                cell.detailView.backgroundColor = UIColor(red: 88/255, green: 153/255, blue: 95/255, alpha: 0.9)
                 break
              default:
                 cell.detailView.backgroundColor = UIColor(red: 201/255, green: 74/255, blue: 74/255, alpha: 0.9)

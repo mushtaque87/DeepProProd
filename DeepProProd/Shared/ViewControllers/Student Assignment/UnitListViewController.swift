@@ -45,6 +45,7 @@ class UnitListViewController: UIViewController,unitsProtocols {
         }
         */
         
+        setTheme()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -55,6 +56,15 @@ class UnitListViewController: UIViewController,unitsProtocols {
         fetchUnits(for: id!)
     }
     
+    
+    func setTheme() {
+        let colors = ThemeManager.sharedInstance.color
+        self.view.backgroundColor = UIColor.clear
+        let backgroundLayer = colors?.gl
+        backgroundLayer?.frame = view.frame
+        self.view.layer.insertSublayer(backgroundLayer!, at: 0)
+        // self.view.layoutSublayers(of: backgroundLayer!)
+    }
     
     
     /*

@@ -37,8 +37,28 @@ class ForgotPasswordViewController: UIViewController , CAAnimationDelegate {
         Helper.lockOrientation(.portrait)
         self.backgroundImage.isHidden = true
         self.view.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+        
+        setTheme()
     }
    
+    func setTheme() {
+        let colors = ThemeManager.sharedInstance.color
+        self.view.backgroundColor = UIColor.clear
+        let backgroundLayer = colors?.gl
+        backgroundLayer?.frame = self.view.frame
+        self.view.layer.insertSublayer(backgroundLayer!, at: 0)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //setTheme()
+        
+       
+    }
+    
+    override func viewDidLayoutSubviews() {
+        setTheme()
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

@@ -208,6 +208,7 @@
 		50E7B349200DD2A100DB9DB0 /* LanguageTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50E7B347200DD2A100DB9DB0 /* LanguageTableViewCell.xib */; };
 		50EF61AB207B7D0D00166162 /* UnitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50EF61A9207B7D0D00166162 /* UnitTableViewCell.swift */; };
 		50EF61AC207B7D0D00166162 /* UnitTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 50EF61AA207B7D0D00166162 /* UnitTableViewCell.xib */; };
+		50F0FE0A21061EAC0071634B /* ThemeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F0FE0921061EAC0071634B /* ThemeManager.swift */; };
 		50F83CDB2014D8F300690DCF /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F83CDA2014D8F300690DCF /* Constants.swift */; };
 		50F83CE320161BAC00690DCF /* level.txt in Resources */ = {isa = PBXBuildFile; fileRef = 50F83CE220161BAC00690DCF /* level.txt */; };
 		50F83CE620170DB600690DCF /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50F83CE520170DB600690DCF /* Course.swift */; };
@@ -602,6 +603,7 @@
 		50E7B347200DD2A100DB9DB0 /* LanguageTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LanguageTableViewCell.xib; sourceTree = "<group>"; };
 		50EF61A9207B7D0D00166162 /* UnitTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitTableViewCell.swift; sourceTree = "<group>"; };
 		50EF61AA207B7D0D00166162 /* UnitTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UnitTableViewCell.xib; sourceTree = "<group>"; };
+		50F0FE0921061EAC0071634B /* ThemeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeManager.swift; sourceTree = "<group>"; };
 		50F83CDA2014D8F300690DCF /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		50F83CE220161BAC00690DCF /* level.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = level.txt; sourceTree = "<group>"; };
 		50F83CE520170DB600690DCF /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
@@ -931,12 +933,12 @@
 		50E757E420612D4600DA0473 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				50E757F020612D4600DA0473 /* gRPC.framework */,
-				50E757F220612D4600DA0473 /* CgRPC.framework */,
 				50E757F420612D4600DA0473 /* BoringSSL.framework */,
-				50E757F620612D4600DA0473 /* SwiftProtobufPluginLibrary.framework */,
-				50E757F820612D4600DA0473 /* SwiftProtobuf.framework */,
+				50E757F220612D4600DA0473 /* CgRPC.framework */,
 				50E757FA20612D4600DA0473 /* Czlib.framework */,
+				50E757F820612D4600DA0473 /* SwiftProtobuf.framework */,
+				50E757F620612D4600DA0473 /* SwiftProtobufPluginLibrary.framework */,
+				50E757F020612D4600DA0473 /* gRPC.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1065,6 +1067,7 @@
 			isa = PBXGroup;
 			children = (
 				50E76B1D2003A121009420F9 /* Settings.swift */,
+				50F0FE0921061EAC0071634B /* ThemeManager.swift */,
 			);
 			path = Singleton;
 			sourceTree = "<group>";
@@ -1779,6 +1782,7 @@
 				508987CF206D4C0F004566B4 /* Units.swift in Sources */,
 				5077BA962097765C0091CBCC /* WordResults.swift in Sources */,
 				50E7B344200DD23C00DB9DB0 /* LabelTableViewCell.swift in Sources */,
+				50F0FE0A21061EAC0071634B /* ThemeManager.swift in Sources */,
 				500327C1204D8AD600D39194 /* NibView.swift in Sources */,
 				50E7B33B200CDD3E00DB9DB0 /* LocalJsonService.swift in Sources */,
 				50E7B332200B769C00DB9DB0 /* SignupViewModel.swift in Sources */,
@@ -1960,6 +1964,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SYSTEM_HEADER_SEARCH_PATHS = "/Users/mahmed/Downloads/grpc-swift-master/Sources/CgRPC/include /Users/mahmed/Downloads/grpc-swift-master/Sources/gRPC";
 			};
 			name = Debug;
 		};
@@ -2009,6 +2014,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SYSTEM_HEADER_SEARCH_PATHS = "/Users/mahmed/Downloads/grpc-swift-master/Sources/CgRPC/include /Users/mahmed/Downloads/grpc-swift-master/Sources/gRPC";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

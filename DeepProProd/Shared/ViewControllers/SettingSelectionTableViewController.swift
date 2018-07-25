@@ -10,7 +10,7 @@ import UIKit
 
 class SettingSelectionTableViewController: UITableViewController {
     var settingtype : SettingType?
-    var settingTypeDetails = ["Language": ["English","Arabic"], "Theme":["Blue","Green","Pink"] , "Graph Type":["Bar","Line"] , "Gender":["Male" ,"Female"]]
+    var settingTypeDetails = ["Language": ["English","Arabic"], "Theme":["Default Blue","Ocean Green","Red Fox", "Moonlight"] , "Graph Type":["Bar","Line"] , "Gender":["Male" ,"Female"]]
     var selectedIndex : IndexPath?
     
     override func viewDidLoad() {
@@ -94,12 +94,16 @@ class SettingSelectionTableViewController: UITableViewController {
             case .themetype:
                 cell.textLabel?.text = settingTypeDetails["Theme"]?[indexPath.row]
                 if (indexPath.row == 0) {
-                    cell.backgroundColor  = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                    //cell.backgroundColor  = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                    setCellGradient(for: cell, with: .blue)
                 } else if (indexPath.row == 1){
-                    cell.backgroundColor  = UIColor(red: 10/255, green: 197/255, blue: 98/255, alpha: 0.9)
-                    
-                } else {
-                    cell.backgroundColor  = UIColor(red: 255/255, green: 168/255, blue: 212/255, alpha: 0.9)
+                    //cell.backgroundColor  = UIColor(red: 10/255, green: 197/255, blue: 98/255, alpha: 0.9)
+                    setCellGradient(for: cell, with: .oceangreen)
+                } else if (indexPath.row == 2){
+                   // cell.backgroundColor  = UIColor(red: 255/255, green: 168/255, blue: 212/255, alpha: 0.9)
+                    setCellGradient(for: cell, with: .redfox)
+                }else {
+                    setCellGradient(for: cell, with: .moonlight)
                 }
             case .graphtype:
                 cell.textLabel?.text = settingTypeDetails["Graph Type"]?[indexPath.row]
@@ -192,10 +196,20 @@ class SettingSelectionTableViewController: UITableViewController {
         
         Settings.sharedInstance.themeType = selectedIndex?.row
         Settings.sharedInstance.setValue(key: "ThemeType", value: selectedIndex?.row as AnyObject)
+        ThemeManager.sharedInstance.getCurrentSetTheme()
         //Localizator.sharedInstance.reloadLocalisationDictionary()
         //delegate?.reloadTable()
     }
     
+    func setCellGradient(for cell:UITableViewCell , with theme:ThemeType)
+    {
+        let colors = Colors()
+        colors.setThemeColor(with: theme)
+        self.view.backgroundColor = UIColor.clear
+        let backgroundLayer = colors.gl
+        backgroundLayer.frame = cell.contentView.frame
+        cell.contentView.layer.insertSublayer(backgroundLayer, at: 0)
+    }
     
     
     /*

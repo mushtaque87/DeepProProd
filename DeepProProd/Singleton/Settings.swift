@@ -8,6 +8,8 @@
 
 import UIKit
 
+
+
 class Settings: NSObject {
     
     var language : String?
@@ -41,6 +43,7 @@ class Settings: NSObject {
         mainPage = settingsDict!["mainPage"] as? Int
         graphType = settingsDict!["GraphType"] as? Int
         themeType = settingsDict!["ThemeType"] as? Int
+       // ThemeConfiguration.sharedInstance.getCurrentSetTheme()
         print("Saved GameData.plist file is --> \(settingsDict?.description ?? "")")
         }
         else{

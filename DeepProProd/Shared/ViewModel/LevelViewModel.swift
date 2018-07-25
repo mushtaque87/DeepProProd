@@ -58,12 +58,30 @@ class LevelViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,    
         
        // let cell = tableView.dequeueReusableCell(withIdentifier: "content", for: indexPath) as! ChapterContentCell
        // cell.contentLabel.textColor = UIColor.white
-        let cell = tableView.dequeueReusableCell(withIdentifier: "assignmentListCell", for: indexPath) as! AssignmentTableViewCell
-       
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "assignmentListCell", for: indexPath) as!AssignmentTableViewCell
+        
+        // let cell = AssignmentTableViewCell.init(style: UITableViewCellStyle.default, reuseIdentifier: "assignmentListCell")
+        /*
+        let gradientView = UIView(frame: cell.detailsView.frame)
+        gradientView.setGradientBackground()
+        cell.detailsView.insertSubview(gradientView, at: 0)
+ */
+        
+//        let colors = ThemeConfiguration.sharedInstance.color
+//        cell.backgroundColor = UIColor.clear
+//        let backgroundLayer = colors?.gl
+//        backgroundLayer?.frame = cell.detailsView.frame
+//        cell.layer.insertSublayer(backgroundLayer!, at: 0)
+        //cell.setTheme()
+       // cell.setNeedsDisplay()
         if let name = contentList[indexPath.row].base?.name {
              print("Title : \(name)")
             cell.assignmentName.text = name
-            cell.detailsView.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+           // cell.detailsView.backgroundColor = UIColor.clear
+           // cell.backgroundColor = UIColor.clear
+            //cell.contentView.backgroundColor = UIColor.clear
+           // cell.detailsView.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
         }
         cell.descriptionView.text = ""
          if let description = contentList[indexPath.row].base?.description {
@@ -75,12 +93,22 @@ class LevelViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,    
         }
         //cell.continueButton.isHidden = true
         //cell.assignmentStatus.isHidden = true
+        //cell.detailsView.backgroundColor = UIColor.black
         cell.submissionDate.isHidden = true
         //cell.unitCount.isHidden = true
-        cell.backgroundColor = UIColor.clear
+        //cell.backgroundColor = UIColor.clear
         cell.selectionStyle = UITableViewCellSelectionStyle.none
-
+        
         return cell
+    }
+    private func tableView(_ tableView: UITableView, willDisplay cell: AssignmentTableViewCell, forRowAt indexPath: IndexPath) {
+        
+       // cell.setTheme()
+    
+    }
+    
+    func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+       // (cell as! AssignmentTableViewCell).setTheme()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -105,6 +133,7 @@ class LevelViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier , for: indexPath) as! CrumTitle_Cell
         cell.titleLbl.text = crumList[indexPath.row].title
+        cell.contentView.backgroundColor = UIColor.clear
         //cell.backgroundColor =  UIColor.red
         return cell
         
@@ -166,9 +195,17 @@ class LevelViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,    
         return sectionInsets.left
     }
     
-  
-
-    
+  /*
+    func setCellGradient(for cell:Any , with theme:ThemeType)
+    {
+        let colors = Colors()
+        colors.setThemeColor(with: theme)
+        cell.backgroundColor = UIColor.clear
+        let backgroundLayer = colors.gl
+        backgroundLayer.frame = cell.contentView.frame
+        cell.contentView.layer.insertSublayer(backgroundLayer, at: 0)
+    }
+    */
 }
 
 

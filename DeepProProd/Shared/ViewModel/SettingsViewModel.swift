@@ -44,6 +44,14 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
          return headerView
     }*/
     
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if (section == 0){
+            return "Account Information"
+        } else {
+            return "Settings"
+        }
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if let settingtype = SettingType(rawValue: indexPath.row) {
             switch settingtype {
@@ -83,6 +91,8 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
         
         let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
         cell.titleLabel.text = "My_Account".localized
+        
+        /*
         cell.titleLabel.textColor = UIColor.white
         cell.titleLabel.textAlignment = .left
         cell.backgroundColor = UIColor.clear
@@ -91,6 +101,10 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         cell.valueTextField.isEnabled = false
         cell.valueTextField.textColor = UIColor.white
+        */
+        
+        configureCells(for: cell)
+        
         cell.valueTextField.tag = indexPath.row
         return cell
     }
@@ -121,6 +135,8 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                  */
                 let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
                 cell.titleLabel.text = "Language".localized
+                
+                /*
                 cell.titleLabel.textColor = UIColor.white
                 cell.titleLabel.textAlignment = .left
                 cell.backgroundColor = UIColor.clear
@@ -129,9 +145,13 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 
                 cell.valueTextField.isEnabled = false
                 cell.valueTextField.textColor = UIColor.white
+                cell.selectionStyle = .none
+                */
+                configureCells(for: cell)
+                
                 cell.valueTextField.tag = indexPath.row
                 cell.valueTextField.text = Settings.sharedInstance.language
-                cell.selectionStyle = .none
+                
                 return cell
              /*
             case .profile:
@@ -175,6 +195,8 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 
                 let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
                 cell.titleLabel.text = "GraphType".localized
+                
+                /*
                 cell.titleLabel.textColor = UIColor.white
                 cell.titleLabel.textAlignment = .left
                 cell.backgroundColor = UIColor.clear
@@ -183,10 +205,14 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 
                 cell.valueTextField.isEnabled = false
                 cell.valueTextField.textColor = UIColor.white
+                cell.selectionStyle = .none
+                */
+                configureCells(for: cell)
+                
                 cell.valueTextField.tag = indexPath.row
                 cell.valueTextField.text = (Settings.sharedInstance.graphType == 0 ? "Bar" : "Line")
                 
-                cell.selectionStyle = .none
+                
                 /*
                 let cell  = tableView.dequeueReusableCell(withIdentifier: "language", for: indexPath) as! LanguageTableViewCell
                 cell.titlLbl.text = "GraphType".localized
@@ -221,7 +247,9 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 
                 let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
                 cell.titleLabel.text = "Theme".localized
-                cell.titleLabel.textColor = UIColor.white
+               
+                
+                /*cell.titleLabel.textColor = UIColor.white
                 cell.titleLabel.textAlignment = .left
                 cell.backgroundColor = UIColor.clear
                 cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
@@ -229,6 +257,10 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 
                 cell.valueTextField.isEnabled = false
                 cell.valueTextField.textColor = UIColor.white
+                */
+                configureCells(for: cell)
+                
+                
                 cell.valueTextField.tag = indexPath.row
                 switch Settings.sharedInstance.themeType {
                 case 0:
@@ -241,7 +273,7 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                     cell.valueTextField.text = "Pink"
                     break
                 }
-                cell.selectionStyle = .none
+               // cell.selectionStyle = .none
                 
                 /*let cell  = tableView.dequeueReusableCell(withIdentifier: "language", for: indexPath) as! LanguageTableViewCell
                 cell.titlLbl.text = "GraphType".localized
@@ -332,6 +364,19 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                     break
                 }
         }
+    }
+    
+    func configureCells(for cell:DetailCell) {
+        cell.valueTextField.isEnabled = false
+        cell.valueTextField.autocorrectionType = .no
+        //cell.valueTextField.placeholder = "Enter here"
+        cell.valueTextField.tintColor = UIColor.white
+        cell.titleLabel.textAlignment = .left
+        cell.titleLabel.backgroundColor = UIColor.clear
+        cell.titleLabel.textColor = UIColor.white
+        cell.selectionStyle = .none
+        cell.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+        cell.backView.backgroundColor = UIColor.clear
     }
     
     //MARK: - UIAction and Events

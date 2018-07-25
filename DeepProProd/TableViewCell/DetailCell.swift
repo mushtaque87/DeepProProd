@@ -18,6 +18,8 @@ class DetailCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         //backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+        self.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+        self.contentView.backgroundColor = UIColor.clear
         valueTextField.isEnabled = false
         
     }

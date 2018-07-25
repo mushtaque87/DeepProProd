@@ -17,10 +17,11 @@ enum SignUpDetails : Int  {
     case confirmPassword
     case dob
     case gender
-    case standard
-    case section
     case contact
     case logout
+    case standard
+    case section
+    
 }
 
 
@@ -180,6 +181,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
                 cell.selectionStyle = .none
                 cell.valueTextField.tag = detailtype.rawValue
                 configureCells(for: cell)
+                cell.valueTextField.isEnabled = false
                 return cell
             case .standard:
                 let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
@@ -269,7 +271,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 11
+        return 9
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -301,8 +303,8 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
         cell.titleLabel.textAlignment = .left
         cell.titleLabel.backgroundColor = UIColor.clear
         cell.titleLabel.textColor = UIColor.white
-        cell.backgroundColor = UIColor.clear
-        cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+        cell.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+        cell.backView.backgroundColor = UIColor.clear
     }
     
     

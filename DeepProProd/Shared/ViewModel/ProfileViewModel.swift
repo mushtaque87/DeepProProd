@@ -108,100 +108,136 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
            let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
             switch detailtype {
                 case .email:
+                    cell.titleLabel.text = "Email"
+                    cell.valueTextField.text = details?.email
+                    cell.valueTextField.tag = indexPath.row
+                    
+                    /*
                         cell.valueTextField.isEnabled = isEditEnabled
                         cell.valueTextField.textColor = UIColor.white
                         cell.valueTextField.delegate = self
                         cell.valueTextField.autocorrectionType = .no
                         cell.valueTextField.tag = indexPath.row
-                        cell.valueTextField.text = details?.email
-                        cell.titleLabel.text = "Email"
+                    
+                        
                         cell.titleLabel.textColor = UIColor.white
                         cell.titleLabel.textAlignment = .left
                         cell.backgroundColor = UIColor.clear
                         cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                         cell.titleLabel.backgroundColor = UIColor.clear
                         cell.selectionStyle = .none
+                    */
+                    configureCells(for: cell)
+                    
+                    
                         return cell
                 case .dob:
                        // let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
+                    cell.titleLabel.text = "Date of Birth"
+                    cell.valueTextField.delegate = self
+                    if let dob = details?.user_attributes?.dob {
+                        cell.valueTextField.text = dob
+                    }
+                    cell.valueTextField.tag = indexPath.row
+                    configureCells(for: cell)
+                    
+                    /*
                         cell.valueTextField.isEnabled = isEditEnabled
-                        cell.titleLabel.text = "Date of Birth"
+                        
                         cell.valueTextField.delegate = self
                         cell.valueTextField.autocorrectionType = .no
                         cell.valueTextField.tag = indexPath.row
-                        if let dob = details?.user_attributes?.dob {
-                            cell.valueTextField.text = dob
-                        }
+                    
                         cell.titleLabel.textColor = UIColor.white
                         cell.titleLabel.textAlignment = .left
                         cell.backgroundColor = UIColor.clear
                         cell.titleLabel.backgroundColor = UIColor.clear
                         cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                         cell.selectionStyle = .none
+ */
                         return cell
                 case .gender:
                         //let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
+                    cell.titleLabel.text = "Gender"
+                    cell.valueTextField.delegate = self
+                    if let gender = details?.gender{
+                        cell.valueTextField.text = gender
+                    }
+                    configureCells(for: cell)
+                    /*
                         cell.valueTextField.isEnabled = isEditEnabled
                         cell.valueTextField.delegate = self
                         cell.valueTextField.autocorrectionType = .no
                         cell.valueTextField.tag = indexPath.row
-                        if let gender = details?.gender{
-                            cell.valueTextField.text = gender
-                        }
-                        cell.titleLabel.text = "Gender"
+                    
+                    
                         cell.titleLabel.textColor = UIColor.white
                         cell.titleLabel.textAlignment = .left
                         cell.backgroundColor = UIColor.clear
                         cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                         cell.titleLabel.backgroundColor = UIColor.clear
-                        
+                        */
+                    
                         return cell
             case .standard:
                        // let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
+                if let standard = details?.standard{
+                    cell.valueTextField.text = standard
+                }
+                cell.titleLabel.text = "Class"
+                cell.valueTextField.delegate = self
+                cell.valueTextField.tag = indexPath.row
+                configureCells(for: cell)
+                /*
                         cell.valueTextField.isEnabled = isEditEnabled
-                        cell.valueTextField.delegate = self
+                
                         cell.valueTextField.autocorrectionType = .no
                          cell.valueTextField.tag = indexPath.row
-                        if let standard = details?.standard{
-                            cell.valueTextField.text = standard
-                        }
-                        cell.titleLabel.text = "Class"
+                    
                         cell.titleLabel.textColor = UIColor.white
                         cell.titleLabel.textAlignment = .left
                         cell.backgroundColor = UIColor.clear
                         cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                         cell.titleLabel.backgroundColor = UIColor.clear
-                        
+                        */
+                
                         return cell
             case .section:
                         // let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
+                cell.titleLabel.text = "Section"
+                cell.valueTextField.delegate = self
+                cell.valueTextField.tag = indexPath.row
+                cell.valueTextField.text = details?.section
+                configureCells(for: cell)
+                /*
                         cell.valueTextField.isEnabled = isEditEnabled
-                        cell.valueTextField.delegate = self
                         cell.valueTextField.autocorrectionType = .no
-                         cell.valueTextField.tag = indexPath.row
-                        cell.valueTextField.text = details?.section
-                        cell.titleLabel.text = "Section"
                         cell.titleLabel.textColor = UIColor.white
                         cell.titleLabel.textAlignment = .left
                         cell.backgroundColor = UIColor.clear
                         cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                         cell.titleLabel.backgroundColor = UIColor.clear
-                        
+                        */
+                
                         return cell
             case .contact:
                        // let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
+                cell.titleLabel.text = "Contact"
+                cell.valueTextField.delegate = self
+                cell.valueTextField.text = details?.contact
+                cell.valueTextField.tag = indexPath.row
+                configureCells(for: cell)
+                
+                /*
                         cell.valueTextField.isEnabled = isEditEnabled
-                        cell.valueTextField.delegate = self
                         cell.valueTextField.autocorrectionType = .no
-                         cell.valueTextField.tag = indexPath.row
-                        cell.valueTextField.text = details?.contact
-                        cell.titleLabel.text = "Contact"
                         cell.titleLabel.textColor = UIColor.white
                         cell.titleLabel.textAlignment = .left
                         cell.backgroundColor = UIColor.clear
                         cell.backView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                         cell.titleLabel.backgroundColor = UIColor.clear
-                        
+                        */
+                
                         return cell
                 }
             }
@@ -273,6 +309,21 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                 delegate?.showEditInfoScreen(for: .contact)
             }
                 }
+    }
+    
+    
+    
+    func configureCells(for cell:DetailCell) {
+        cell.valueTextField.isEnabled = isEditEnabled
+        cell.valueTextField.autocorrectionType = .no
+        //cell.valueTextField.placeholder = "Enter here"
+        cell.valueTextField.tintColor = UIColor.white
+        cell.titleLabel.textAlignment = .left
+        cell.titleLabel.backgroundColor = UIColor.clear
+        cell.titleLabel.textColor = UIColor.white
+        cell.selectionStyle = .none
+        cell.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+        cell.backView.backgroundColor = UIColor.clear
     }
     
     

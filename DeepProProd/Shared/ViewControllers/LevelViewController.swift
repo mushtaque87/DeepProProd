@@ -68,9 +68,27 @@ class LevelViewController: UIViewController, CategoriesProtocol {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    override func viewWillAppear(_ animated: Bool) {
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+         super.viewDidLayoutSubviews()
+        //setTheme()
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         refreshUI()
+        setTheme()
+        self.levelTableView.reloadData()
+    }
+    //https://stackoverflow.com/questions/48308863/gradient-layer-in-swift-uitableview
+    
+    func setTheme() {
+        let colors = ThemeManager.sharedInstance.color
+        let backgroundLayer = colors?.gl
+        backgroundLayer?.frame = bredCrumCollectionView.frame
+        bredCrumCollectionView.layer.insertSublayer(backgroundLayer!, at: 0)
     }
 
     func fetchRootContent()
@@ -82,6 +100,7 @@ class LevelViewController: UIViewController, CategoriesProtocol {
         
         ServiceManager().getRootContent(ofStudent: UserDefaults.standard.string(forKey: "uid")! , onSuccess: { assignmentlist in
             self.viewModel.contentList = assignmentlist
+            self.levelTableView.reloadData()
             self.levelTableView.reloadData()
             hud.hide(animated: true)
         }, onHTTPError: { httperror in
@@ -108,8 +127,8 @@ class LevelViewController: UIViewController, CategoriesProtocol {
         ServiceManager().getContentGroup(for: id, ofStudent: UserDefaults.standard.string(forKey: "uid")! , onSuccess: { assignmentlist in
             self.viewModel.contentList.removeAll()
             self.viewModel.contentList = assignmentlist
-            self.levelTableView.reloadData()
             self.levelTableView.scrollsToTop = true
+            self.levelTableView.reloadData()
             hud.hide(animated: true)
             successCompletionHandler()
         }, onHTTPError: { httperror in

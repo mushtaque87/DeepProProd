@@ -11,7 +11,6 @@ import AVFoundation
 import MBProgressHUD
 import Charts
 import  Alamofire
-import gRPC
 import RxSwift
 import RxCocoa
 
@@ -182,8 +181,31 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         clearAllAudioFile()
         
         expert_AudioButton.layer.setValue(1001, forKey: "row")
+        setTheme()
     }
 
+    
+    func setTheme() {
+        let colors = ThemeManager.sharedInstance.color
+        self.view.backgroundColor = UIColor.clear
+        let backgroundLayer = colors?.gl
+        backgroundLayer?.frame = self.view.frame
+        self.view.layer.insertSublayer(backgroundLayer!, at: 0)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+       //
+        
+        
+    }
+    
+    override func viewDidLayoutSubviews() {
+         super.viewDidLayoutSubviews()
+       // setTheme()
+    }
+    
+    
     override func viewDidAppear(_ animated: Bool) {
        // resetTextViewContent(textView: textView)
        /* guard tasktype != TaskType.freeSpeech else {
@@ -193,18 +215,17 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         
          */
         resetTextViewContent(textView: textView)
+        setTheme()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-      
-
-    }
+  
     
     override func viewDidDisappear(_ animated: Bool) {
         guard tasktype == TaskType.freeText else {
             //clearAllAudioFile()
             return
         }
+        
+        displayResultType(to: .score, from: .graph)
         
     }
     override func didReceiveMemoryWarning() {
@@ -459,7 +480,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
                /* self.scoreCollectionView?.setContentOffset(CGPoint(x:
                 0,  y: self.scoreCollectionView.contentSize.height - self.scoreCollectionView.bounds.size.height), animated: true)
                  */
-                //self.updateGraph()
+                self.updateGraph()
                   //  self.showTheGraph()
                 //self.clearData()
                // self.fetchUnitAnswers(for: self.unitIndex)

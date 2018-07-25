@@ -134,4 +134,12 @@ extension UIView {
 
     }
  
+    func setGradientBackground() {
+        let colors = ThemeManager.sharedInstance.color
+        self.backgroundColor = UIColor.clear
+        let backgroundLayer = colors?.gl
+        backgroundLayer?.frame = self.frame
+        self.layer.insertSublayer(backgroundLayer!, at: 0)
+    }
+    
 }
