@@ -43,7 +43,7 @@ struct Profile : Codable {
     
    
 
-    init(first_name: String, last_name: String ,email: String , user_attributes: User_attributes) {
+    init(first_name: String?, last_name: String? ,email: String?, user_attributes: User_attributes?) {
         self.first_name = first_name
         self.last_name = last_name
         self.email = email

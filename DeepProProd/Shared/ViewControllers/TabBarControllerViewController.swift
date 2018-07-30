@@ -30,6 +30,11 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
         
     }
     
+    func updateTabBarColor() {
+        self.tabBar.barTintColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
+        self.tabBar.unselectedItemTintColor = UIColor.white
+       
+    }
     
     func configureTabBar()
     {
@@ -50,10 +55,10 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
             let practiceBoardNavigationController = UINavigationController()
             //let transDetailViewController = TransDetailViewController(nibName: "TransDetailViewController", bundle: nil)
             //  transDetailViewController.boardType = .account
-            let transDetailViewController = PracticeBoardViewController(nibName:"PracticeBoardViewController",bundle:nil)
+            let practiceBoardViewController = PracticeBoardViewController(nibName:"PracticeBoardViewController",bundle:nil)
             //transDetailViewController.boardType = BoardType.account
-            transDetailViewController.tasktype = .freeText
-            practiceBoardNavigationController.viewControllers = [transDetailViewController]
+            practiceBoardViewController.tasktype = .freeText
+            practiceBoardNavigationController.viewControllers = [practiceBoardViewController]
             practiceBoardNavigationController.tabBarItem = UITabBarItem(title: "Practice", image: UIImage(named: "numbered-list.png"), tag: 2)
             
             let settingNavigationController = UINavigationController()
@@ -65,6 +70,7 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
             
         
         viewControllers = tabBarViewControllers
+        updateTabBarColor()
     }
     
     override func viewDidAppear(_ animated: Bool) {

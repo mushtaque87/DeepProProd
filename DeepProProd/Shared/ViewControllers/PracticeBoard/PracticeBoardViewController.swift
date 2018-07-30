@@ -186,12 +186,26 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
 
     
     func setTheme() {
-        let colors = ThemeManager.sharedInstance.color
+       
+        /*let colors = ThemeManager.sharedInstance.color
         self.view.backgroundColor = UIColor.clear
         let backgroundLayer = colors?.gl
-        backgroundLayer?.frame = self.view.frame
+        backgroundLayer?.frame = self.view.bounds
         self.view.layer.insertSublayer(backgroundLayer!, at: 0)
+        */
+        
+        self.view.backgroundColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!,alpha: 0.5)
+        
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)]
     }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        setTheme()
+    }
+
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -200,11 +214,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         
     }
     
-    override func viewDidLayoutSubviews() {
-         super.viewDidLayoutSubviews()
-       // setTheme()
-    }
-    
+   
     
     override func viewDidAppear(_ animated: Bool) {
        // resetTextViewContent(textView: textView)
@@ -445,13 +455,6 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
                 }
                 //self.textView.attributedText =
                 self.setAttributedText(with: self.viewModel.createAttributedText(forText: wordResult))
-                
-                //unitAnswer = UnitAnswers(score: Double(response.score) , predictJson: Prediction_result_json(wordResults: wordResult) )
-                
-                /*unitAnswer = UnitAnswers(score: Double(response.score), predictJson: Prediction_result_json(wordResults: wordResult) ,
-                                         audio_url: self.viewModel.getDocumentsDirectory().appendingPathComponent(String(format:"recording\(self.currentSessionRecordingCount).wav")).absoluteString,
-                                         submission_date:Date().timeIntervalSince1970 * 1000)
-                */
                     
                 
                 unitAnswer = UnitAnswers(score: Double(response.score), predictJson: Prediction_result_json(wordResults: wordResult) ,
@@ -750,7 +753,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         
         let chartDataSet = BarChartDataSet(values: dataEntries, label: "Accuracy")
        // chartDataSet.colors = ChartColorTemplates.material()
-        chartDataSet.colors = [UIColor(red: 31.0/255.0, green: 72.0/255.0, blue: 142.0/255.0, alpha: 1)]
+        chartDataSet.colors = [UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)]
         let chartData = BarChartData(dataSet: chartDataSet)
         if(values.count < 4){
             chartData.barWidth = 0.2
@@ -1186,7 +1189,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     func setAttributedText(with text:NSAttributedString) {
         self.textView.attributedText = text
         self.textView.textAlignment = NSTextAlignment.center
-        self.textView.font = UIFont.boldSystemFont(ofSize: 18.0)
+        self.textView.font = UIFont(name: ThemeManager.sharedInstance.font_Bold!, size: CGFloat(ThemeManager.sharedInstance.fontSize_Large!))
         self.resetTextViewContent(textView: self.textView)
     }
     

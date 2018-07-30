@@ -10,7 +10,6 @@ import UIKit
 import Charts
 import AVFoundation
 import  Alamofire
-import gRPC
 import MBProgressHUD
 
 enum BoardType  :  Int {

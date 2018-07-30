@@ -30,10 +30,7 @@ struct VoiceTime {
     let endTime : Double
 }
 
-struct TappedWord {
-    let word : String
-    let apperenceCount: Int
-}
+
 
 class TranslationVC_DataModel: NSObject, UITableViewDataSource,UITableViewDelegate, UITextFieldDelegate , UITextViewDelegate{
     

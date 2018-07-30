@@ -98,7 +98,7 @@ class LevelViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,    
         //cell.unitCount.isHidden = true
         //cell.backgroundColor = UIColor.clear
         cell.selectionStyle = UITableViewCellSelectionStyle.none
-        
+        configureCells(for: cell)
         return cell
     }
     private func tableView(_ tableView: UITableView, willDisplay cell: AssignmentTableViewCell, forRowAt indexPath: IndexPath) {
@@ -194,6 +194,22 @@ class LevelViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,    
                         minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return sectionInsets.left
     }
+    
+    func configureCells(for cell:AssignmentTableViewCell) {
+        cell.assignmentName.textColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)
+        //cell.assignmentStatus.textColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)
+        cell.descriptionView.textColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)
+        cell.creationDate.textColor =  UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)
+        cell.submissionDate.textColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)
+        
+        cell.assignmentName.font = UIFont(name: ThemeManager.sharedInstance.font_Bold!, size:CGFloat(ThemeManager.sharedInstance.fontSize_Large!) )
+       // cell.assignmentStatus.font = UIFont(name: ThemeManager.sharedInstance.font_Bold!, size:CGFloat(ThemeManager.sharedInstance.fontSize_Small!) )
+        cell.descriptionView.font = UIFont(name: ThemeManager.sharedInstance.font_Italic!, size:CGFloat(ThemeManager.sharedInstance.fontSize_Small!) )
+       // cell.backgroundColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
+        cell.creationDate.font =  UIFont(name: ThemeManager.sharedInstance.font_Bold!, size:CGFloat(ThemeManager.sharedInstance.fontSize_Small!) )
+        cell.submissionDate.font =  UIFont(name: ThemeManager.sharedInstance.font_Bold!, size:CGFloat(ThemeManager.sharedInstance.fontSize_Small!) )
+    }
+    
     
   /*
     func setCellGradient(for cell:Any , with theme:ThemeType)

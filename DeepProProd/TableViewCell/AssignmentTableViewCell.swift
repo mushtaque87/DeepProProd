@@ -65,6 +65,7 @@ class AssignmentTableViewCell: UITableViewCell {
         setNeedsUpdateConstraints()
         updateConstraintsIfNeeded()
         setTheme()
+        self.detailsView.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.detailsView.frame.height)
         backgroundLayer.frame = self.detailsView.frame
         self.detailsView.layer.insertSublayer(backgroundLayer, at: 0)
     }

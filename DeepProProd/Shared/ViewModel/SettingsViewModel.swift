@@ -264,13 +264,16 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 cell.valueTextField.tag = indexPath.row
                 switch Settings.sharedInstance.themeType {
                 case 0:
-                    cell.valueTextField.text = "Blue"
+                    cell.valueTextField.text = "Default Blue"
                     break
                 case 1:
-                    cell.valueTextField.text = "Green"
+                    cell.valueTextField.text = "Ocean Green"
+                    break
+                case 2:
+                    cell.valueTextField.text = "Red Fox"
                     break
                 default :
-                    cell.valueTextField.text = "Pink"
+                    cell.valueTextField.text = "Moonlight"
                     break
                 }
                // cell.selectionStyle = .none
@@ -321,7 +324,9 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
                 cell.titleLbl.textAlignment = .center
                 cell.titleLbl.text = "Logout".localized
-                cell.contentView.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                cell.contentView.backgroundColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
+                    
+                    //UIColor.colorFrom(hexString: ThemeManager.sharedInstance.backgroundColor_Regular!)
                 cell.selectionStyle = .blue
                 return cell
             }
@@ -370,12 +375,15 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
         cell.valueTextField.isEnabled = false
         cell.valueTextField.autocorrectionType = .no
         //cell.valueTextField.placeholder = "Enter here"
-        cell.valueTextField.tintColor = UIColor.white
+        cell.valueTextField.tintColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)
+        cell.valueTextField.font = UIFont(name: ThemeManager.sharedInstance.font_Bold!, size:CGFloat(ThemeManager.sharedInstance.fontSize_Medium!) )
         cell.titleLabel.textAlignment = .left
         cell.titleLabel.backgroundColor = UIColor.clear
-        cell.titleLabel.textColor = UIColor.white
+        cell.titleLabel.font = UIFont(name: ThemeManager.sharedInstance.font_Medium!, size:CGFloat(ThemeManager.sharedInstance.fontSize_Medium!) )
+        cell.titleLabel.textColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)
         cell.selectionStyle = .none
-        cell.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+        cell.backgroundColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
+            //UIColor.colorFrom(hexString: ThemeManager.sharedInstance.backgroundColor_Regular!)
         cell.backView.backgroundColor = UIColor.clear
     }
     

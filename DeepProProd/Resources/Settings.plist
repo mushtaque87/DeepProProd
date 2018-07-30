@@ -15,6 +15,16 @@
 	<key>GraphType</key>
 	<integer>0</integer>
 	<key>ThemeType</key>
-	<integer>0</integer>
+	<integer>2</integer>
+	<key>Theme_Blue</key>
+	<string>#264E8E</string>
+	<key>Theme_Green</key>
+	<string>#5FD0BF</string>
+	<key>Theme_Red</key>
+	<string>#EE6C68</string>
+	<key>Theme_Dark</key>
+	<string>#606C83</string>
+	<key>Theme_Bottom</key>
+	<string>#230202</string>
 </dict>
 </plist>

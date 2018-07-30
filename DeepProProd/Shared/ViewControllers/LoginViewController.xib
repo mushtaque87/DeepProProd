@@ -64,7 +64,7 @@
                     </subviews>
                 </stackView>
                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="zDX-q1-Prt" userLabel="Footer Stack View">
-                    <rect key="frame" x="16" y="521.66666666666663" width="343" height="130"/>
+                    <rect key="frame" x="16" y="521.66666666666663" width="343" height="80"/>
                     <subviews>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9AX-io-bgS">
                             <rect key="frame" x="0.0" y="0.0" width="343" height="30"/>
@@ -76,8 +76,8 @@
                                 <action selector="login:" destination="-1" eventType="touchUpInside" id="YiQ-Tl-YsQ"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0EB-gN-u3e">
-                            <rect key="frame" x="0.0" y="50" width="343" height="30"/>
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0EB-gN-u3e">
+                            <rect key="frame" x="0.0" y="40" width="343" height="0.0"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                             <state key="normal" title="SignUp">
                                 <color key="titleColor" red="0.98573304623620395" green="1" blue="0.98535126724598388" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -87,7 +87,7 @@
                             </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PgX-ZJ-ygC">
-                            <rect key="frame" x="0.0" y="100" width="343" height="30"/>
+                            <rect key="frame" x="0.0" y="50" width="343" height="30"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                             <state key="normal" title="Forgot Password ?">
                                 <color key="titleColor" red="0.9739989306986101" green="0.97145080826233099" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
@@ -97,7 +97,7 @@
                             </connections>
                         </button>
                         <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jPx-iq-SE7">
-                            <rect key="frame" x="0.0" y="130" width="343" height="0.0"/>
+                            <rect key="frame" x="0.0" y="80" width="343" height="0.0"/>
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                             <state key="normal" title="Practice Board">
                                 <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

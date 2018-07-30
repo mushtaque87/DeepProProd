@@ -67,14 +67,15 @@ class LoginViewController: UIViewController {
         let colors = ThemeManager.sharedInstance.color
         self.view.backgroundColor = UIColor.clear
         let backgroundLayer = colors?.gl
-        backgroundLayer?.frame = view.frame
+        backgroundLayer?.frame = self.view.bounds
         self.view.layer.insertSublayer(backgroundLayer!, at: 0)
        // self.view.layoutSublayers(of: backgroundLayer!)
+        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-       //setTheme()
+       setTheme()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -84,6 +85,7 @@ class LoginViewController: UIViewController {
         // Hide the navigation bar on the this view controller
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
+    
     
     override func viewDidAppear(_ animated: Bool) {
         refreshUI()

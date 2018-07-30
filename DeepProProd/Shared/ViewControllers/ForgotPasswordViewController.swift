@@ -36,8 +36,9 @@ class ForgotPasswordViewController: UIViewController , CAAnimationDelegate {
         
         Helper.lockOrientation(.portrait)
         self.backgroundImage.isHidden = true
-        self.view.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
-        
+        //self.view.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+        //self.navigationController?.navigationBar.barTintColor = UIColor.red
+
         setTheme()
     }
    
@@ -45,8 +46,20 @@ class ForgotPasswordViewController: UIViewController , CAAnimationDelegate {
         let colors = ThemeManager.sharedInstance.color
         self.view.backgroundColor = UIColor.clear
         let backgroundLayer = colors?.gl
-        backgroundLayer?.frame = self.view.frame
+        backgroundLayer?.frame = self.view.bounds
         self.view.layer.insertSublayer(backgroundLayer!, at: 0)
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)]
+            // self.navigationController?.navigationBar.layer.insertSublayer(barlayer, at: 1)
+  
+        
+        /*
+        let colorOne = colors?.copy() as! Colors
+        let barlayer = colorOne.gl
+        barlayer.frame = (self.navigationController?.navigationBar.bounds)!
+        self.navigationController?.navigationBar.layer.insertSublayer(barlayer, at: 1)
+ */
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -55,7 +55,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
         
        //_ = viewModel.isEnable.bind(to: navigationItem.rightBarButtonItem?.rx.isEnabled)
         
-        self.view.backgroundColor = UIColor.white
+       // self.view.backgroundColor = UIColor.white
             //UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
         
        // var viewArray : Array = (Bundle.main.loadNibNamed("MyProfileView", owner: self, options: nil))!
@@ -79,7 +79,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
         self.detailsTable.register(UINib(nibName: "DetailCell", bundle: nil), forCellReuseIdentifier: "details")
         self.detailsTable.delegate = viewModel
         self.detailsTable.dataSource = viewModel
-        self.detailsTable.backgroundColor = UIColor.white
+        self.detailsTable.backgroundColor = UIColor.clear
         
 
         
@@ -286,7 +286,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
         shouldEnableSaveButton(enable: true)
         let profileSelectionTableViewController =     ProfileSelectionTableViewController(nibName: "ProfileSelectionTableViewController", bundle: nil)
         profileSelectionTableViewController.editProfileType = detailType
-        profileSelectionTableViewController.details = Profile(first_name: (viewModel.details?.first_name)!, last_name: (viewModel.details?.last_name)!, email: (viewModel.details?.email)!, user_attributes: User_attributes(dob: (viewModel.details?.user_attributes?.dob)!))
+        profileSelectionTableViewController.details = Profile(first_name: viewModel.details?.first_name, last_name: viewModel.details?.last_name, email: viewModel.details?.email, user_attributes: User_attributes(dob: viewModel.details?.user_attributes?.dob))
         profileSelectionTableViewController.details?.gender = viewModel.details?.gender
         profileSelectionTableViewController.details?.standard = viewModel.details?.standard
         profileSelectionTableViewController.details?.section = viewModel.details?.section

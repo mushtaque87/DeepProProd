@@ -19,6 +19,10 @@ struct ColorVariance {
     let range : ClosedRange<Int>
 }
 
+struct TappedWord {
+    let word : String
+    let apperenceCount: Int
+}
 
 class PracticeViewModel: NSObject,
                             UITableViewDelegate , UITableViewDataSource ,
@@ -71,7 +75,7 @@ class PracticeViewModel: NSObject,
         //headerView.backgroundColor = UIColor(red: 196.0/255.0, green: 194.0/255.0, blue: 255.0/255.0, alpha: 1)
        
         let cell = tableView.dequeueReusableCell(withIdentifier: "report", for: IndexPath(row: 0, section: section)) as! ReportCell
-        cell.contentView.backgroundColor  = UIColor(red: 196.0/255.0, green: 194.0/255.0, blue: 255.0/255.0, alpha: 1)
+        cell.contentView.backgroundColor  = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
         cell.actual.text = selectedAnswer?.wordResults![section].word
         cell.actual.font = UIFont(name: "Poppins-Bold", size: 22.0)
         cell.actual.textColor = UIColor.white
@@ -468,13 +472,13 @@ class PracticeViewModel: NSObject,
             var color: UIColor = UIColor.white
             
             if let score = word.score {
-            if (score > 70.0) {
-                color = UIColor(red: 8.0/255.0, green: 206.0/255.0, blue: 2.0/255.0, alpha: 1.0)
+            if (score > 80.0) {
+                color = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.score_80!)
             } else if (score < 30.0) {
-                color = UIColor(red: 255.0/255.0, green: 69.0/255.0, blue: 40.0/255.0, alpha: 1.0)
+                color = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.score_30!)
             }
             else{
-                color = UIColor(red: 232.0/255.0, green: 224.0/255.0, blue: 0/255.0, alpha: 1.0)
+                color = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.score_30_80!)
                 
                 }
                 

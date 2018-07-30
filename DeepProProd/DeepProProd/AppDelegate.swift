@@ -22,10 +22,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //Copy Files to Document Directory
         Helper.updateFileFromBundle(to: Helper.getDocumentDirectory, filename: "Settings", ofType: "plist")
+        Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "Theme_Blue", ofType: "plist")
+        Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "Theme_Green", ofType: "plist")
+        Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "Theme_Red", ofType: "plist")
+        Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "Theme_Dark", ofType: "plist")
         Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "Arabic", ofType: "plist")
         Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "English", ofType: "plist")
         Helper.createDirectory(with: "PracticeBoard")
         Helper.createDirectory(with: "Assignments")
+        UITabBar.appearance().tintColor = UIColor.white
+
       //  Helper.readJsonFile(at: "LevelJson", ofType: "txt")
         
         /*do {

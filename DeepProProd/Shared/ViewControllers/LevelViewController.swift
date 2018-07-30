@@ -74,12 +74,12 @@ class LevelViewController: UIViewController, CategoriesProtocol {
     
     override func viewDidLayoutSubviews() {
          super.viewDidLayoutSubviews()
-        //setTheme()
+        setTheme()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         refreshUI()
-        setTheme()
+        viewDidLayoutSubviews()
         self.levelTableView.reloadData()
     }
     //https://stackoverflow.com/questions/48308863/gradient-layer-in-swift-uitableview
@@ -87,8 +87,15 @@ class LevelViewController: UIViewController, CategoriesProtocol {
     func setTheme() {
         let colors = ThemeManager.sharedInstance.color
         let backgroundLayer = colors?.gl
-        backgroundLayer?.frame = bredCrumCollectionView.frame
+        bredCrumCollectionView.frame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: bredCrumCollectionView.frame.height)
+        backgroundLayer?.frame = bredCrumCollectionView.bounds
         bredCrumCollectionView.layer.insertSublayer(backgroundLayer!, at: 0)
+        
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)]
+            // self.navigationController?.navigationBar.layer.insertSublayer(barlayer, at: 1)
+        
     }
 
     func fetchRootContent()

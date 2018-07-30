@@ -22,7 +22,7 @@
 //
 import Foundation
 import Dispatch
-import gRPC
+import SwiftGRPC
 import SwiftProtobuf
 
 internal protocol Pronounce_PronouncepredictCall: ClientCallUnary {}
@@ -55,43 +55,34 @@ internal final class Pronounce_PronounceServiceClient: ServiceClientBase, Pronou
 
 }
 
+/*
 /// To build a server, implement a class that conforms to this protocol.
-internal protocol Pronounce_PronounceProvider {
+/// If one of the methods returning `ServerStatus?` returns nil,
+/// it is expected that you have already returned a status to the client by means of `session.close`.
+internal protocol Pronounce_PronounceProvider: ServiceProvider {
   func predict(request: Pronounce_PronounceRequest, session: Pronounce_PronouncepredictSession) throws -> Pronounce_PronounceResponse
 }
+
+extension Pronounce_PronounceProvider {
+  internal var serviceName: String { return "pronounce.Pronounce" }
+
+  /// Determines and calls the appropriate request handler, depending on the request's method.
+  /// Throws `HandleMethodError.unknownMethod` for methods not handled by this service.
+  internal func handleMethod(_ method: String, handler: Handler) throws -> ServerStatus? {
+    switch method {
+    case "/pronounce.Pronounce/predict":
+      return try Pronounce_PronouncepredictSessionBase(
+        handler: handler,
+        providerBlock: { try self.predict(request: $0, session: $1 as! Pronounce_PronouncepredictSessionBase) })
+          .run()
+    default:
+      throw HandleMethodError.unknownMethod
+    }
+  }
+}
+*/
 
 internal protocol Pronounce_PronouncepredictSession: ServerSessionUnary {}
 
 fileprivate final class Pronounce_PronouncepredictSessionBase: ServerSessionUnaryBase<Pronounce_PronounceRequest, Pronounce_PronounceResponse>, Pronounce_PronouncepredictSession {}
-
-
-/// Main server for generated service
-internal final class Pronounce_PronounceServer: ServiceServer {
-  private let provider: Pronounce_PronounceProvider
-
-  internal init(address: String, provider: Pronounce_PronounceProvider) {
-    self.provider = provider
-    super.init(address: address)
-  }
-
-  internal init?(address: String, certificateURL: URL, keyURL: URL, provider: Pronounce_PronounceProvider) {
-    self.provider = provider
-    super.init(address: address, certificateURL: certificateURL, keyURL: keyURL)
-  }
-
-  /// Start the server.
-  internal override func handleMethod(_ method: String, handler: Handler, queue: DispatchQueue) throws -> Bool {
-    let provider = self.provider
-    switch method {
-    case "/pronounce.Pronounce/predict":
-      try Pronounce_PronouncepredictSessionBase(
-        handler: handler,
-        providerBlock: { try provider.predict(request: $0, session: $1 as! Pronounce_PronouncepredictSessionBase) })
-          .run(queue: queue)
-      return true
-    default:
-      return false
-    }
-  }
-}
 

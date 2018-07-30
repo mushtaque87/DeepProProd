@@ -45,7 +45,7 @@ class UnitListViewController: UIViewController,unitsProtocols {
         }
         */
         
-        setTheme()
+       // setTheme()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -56,13 +56,24 @@ class UnitListViewController: UIViewController,unitsProtocols {
         fetchUnits(for: id!)
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        setTheme()
+    }
     
     func setTheme() {
-        let colors = ThemeManager.sharedInstance.color
+        /*let colors = ThemeManager.sharedInstance.color
         self.view.backgroundColor = UIColor.clear
         let backgroundLayer = colors?.gl
-        backgroundLayer?.frame = view.frame
-        self.view.layer.insertSublayer(backgroundLayer!, at: 0)
+        backgroundLayer?.frame = self.view.bounds
+        self.view.layer.insertSublayer(backgroundLayer!, at: 0)*/
+        
+        self.view.backgroundColor = UIColor.hexStringToUIColor(hex:  ThemeManager.sharedInstance.backgroundColor_Regular!,alpha: 0.5)
+        
+        self.navigationController?.navigationBar.barTintColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
+        
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)]
+        
         // self.view.layoutSublayers(of: backgroundLayer!)
     }
     

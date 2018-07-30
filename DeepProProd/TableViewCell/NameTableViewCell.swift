@@ -16,7 +16,7 @@ class NameTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        self.contentView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+       // self.contentView.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
         
         textFieldOne.layer.borderColor = UIColor.white.cgColor
         textFieldOne.layer.borderWidth = 1

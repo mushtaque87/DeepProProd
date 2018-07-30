@@ -13,6 +13,8 @@ class InfoTableViewCell: UITableViewCell {
     @IBOutlet weak var profileImageButton: UIButton!
     @IBOutlet weak var firstName: UILabel!
     @IBOutlet weak var lastName: UILabel!
+    let backgroundLayer = CAGradientLayer()
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -22,6 +24,30 @@ class InfoTableViewCell: UITableViewCell {
         profileImageButton.layer.cornerRadius = 5
         profileImageButton.clipsToBounds = true
         
+    }
+    
+    func setTheme() {
+        print("setTheme")
+        let colors = ThemeManager.sharedInstance.color
+        // self.backgroundColor = UIColor.clear
+        
+        
+        //self.detailsView.layer.removeFromSuperlayer()
+        backgroundLayer.colors = [colors?.colorTop,colors?.colorBottom]
+        
+    }
+    
+    override func layoutIfNeeded() {
+        print("layoutIfNeeded")
+    }
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        print("layoutSubviews")
+        setNeedsUpdateConstraints()
+        updateConstraintsIfNeeded()
+        //setTheme()
+        backgroundLayer.frame = self.contentView.bounds
+        self.contentView.layer.insertSublayer(backgroundLayer, at: 0)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

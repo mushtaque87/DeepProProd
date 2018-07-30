@@ -129,8 +129,8 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
                 cell.textFieldOne.delegate = self
                 cell.textFieldOne.placeholder = (indexPath.row == 0 ? "First Name" : "Last Name")
                 cell.textFieldOne.text = (indexPath.row == 0 ? details?.first_name : details?.last_name)
-                cell.textFieldOne.tintColor = UIColor.white
                 cell.selectionStyle = .none
+                configureCells(for: cell)
                 return cell
             case .gender:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
@@ -142,6 +142,7 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
                 if(cell.titleLbl.text == details?.gender){
                     cell.accessoryType = .checkmark
                 }
+                configureCells(for: cell)
                 return cell
               
             case .standard:
@@ -154,6 +155,7 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
                     cell.accessoryType = .checkmark
                 }
                 cell.selectionStyle = .none
+                configureCells(for: cell)
                 return cell
                 
             case .contact:
@@ -162,6 +164,7 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
                 cell.textFieldOne.delegate = self
                 cell.textFieldOne.becomeFirstResponder()
                cell.selectionStyle = .none
+                configureCells(for: cell)
                 return cell
                 
             case .section:
@@ -174,6 +177,7 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
                     cell.accessoryType = .checkmark
                 }
                 cell.selectionStyle = .none
+                configureCells(for: cell)
                 return cell
             }
             
@@ -329,6 +333,24 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
             case .section:
                 break
             }
+        }
+    }
+    
+    func configureCells(for cell:AnyObject) {
+        
+        if let cell = cell as? UITableViewCell {
+            cell.textLabel?.textColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)
+            cell.textLabel?.font = UIFont(name: ThemeManager.sharedInstance.font_Regular!, size:CGFloat(ThemeManager.sharedInstance.fontSize_Medium!) )
+        cell.backgroundColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
+        }
+        if  let cell = cell as? NameTableViewCell
+        {
+            cell.contentView.backgroundColor = UIColor.clear
+            cell.textFieldOne.tintColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)
+            cell.backgroundColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
+        }
+        if let cell = cell as? LabelTableViewCell {
+            cell.backgroundColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
         }
     }
     

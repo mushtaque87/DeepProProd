@@ -95,8 +95,9 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                 cell.lastName.text = details?.last_name
 //                cell.firstName.isUserInteractionEnabled = false
 //                cell.lastName.isUserInteractionEnabled = false
-                cell.backgroundColor =  UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
-                cell.contentView.backgroundColor = UIColor.clear
+                cell.backgroundColor =  UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
+               // cell.contentView.backgroundColor = UIColor.clear
+                
                 cell.profileImageButton.addTarget(self , action: #selector(editProfilePic), for: .touchUpInside)
                 cell.profileImageButton.setImage(details?.profile_image, for: .normal)
                 return cell
@@ -317,13 +318,14 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
         cell.valueTextField.isEnabled = isEditEnabled
         cell.valueTextField.autocorrectionType = .no
         //cell.valueTextField.placeholder = "Enter here"
-        cell.valueTextField.tintColor = UIColor.white
+        cell.valueTextField.tintColor =  UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)
         cell.titleLabel.textAlignment = .left
         cell.titleLabel.backgroundColor = UIColor.clear
-        cell.titleLabel.textColor = UIColor.white
+        cell.titleLabel.textColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)
         cell.selectionStyle = .none
-        cell.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
-        cell.backView.backgroundColor = UIColor.clear
+        cell.backgroundColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
+            //UIColor(cgColor:(ThemeManager.sharedInstance.color?.colorTop)!)
+      //  cell.backView.backgroundColor = UIColor.clear
     }
     
     

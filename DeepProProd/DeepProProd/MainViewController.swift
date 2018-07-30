@@ -45,6 +45,12 @@ class MainViewController: UIViewController {
         
     }()
     
+   lazy var  tabBar_ViewController: TabBarControllerViewController = {
+       var viewcontroller   = TabBarControllerViewController(nibName: "TabBarControllerViewController", bundle: nil)
+        return viewcontroller
+    }()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -55,6 +61,7 @@ class MainViewController: UIViewController {
         
         //self.addSubView(addChildViewController: tabBar, on: self)
        
+        ThemeManager.sharedInstance.setGradientLayer(with: true)
         
         // Do any additional setup after loading the view, typically from a nib.
         if let firstLogin = Settings.sharedInstance.firstLogIn {
@@ -93,6 +100,7 @@ class MainViewController: UIViewController {
       
     }
     
+    
     func addTabBarControllers() {
         
        /* if let tabBarVC = tabBar_ViewController
@@ -105,7 +113,7 @@ class MainViewController: UIViewController {
             self.addSubView(addChildViewController: tabBar_ViewController!, on: self)
         }*/
         
-        let tabBar_ViewController = TabBarControllerViewController(nibName: "TabBarControllerViewController", bundle: nil)
+        tabBar_ViewController = TabBarControllerViewController(nibName: "TabBarControllerViewController", bundle: nil)
         self.addSubView(addChildViewController: tabBar_ViewController, on: self)
     }
     

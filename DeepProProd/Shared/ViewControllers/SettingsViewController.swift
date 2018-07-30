@@ -41,6 +41,7 @@ class SettingsViewController: UIViewController,SettingProtocols {
     
     override func viewDidAppear(_ animated: Bool) {
          reloadTable()
+         setTheme()
          backgroundImage.setBackGroundimage()
     }
 
@@ -72,7 +73,12 @@ class SettingsViewController: UIViewController,SettingProtocols {
         }
     }
     
-    
+    func setTheme() {
+        self.navigationController?.navigationBar.barTintColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)]
+       // self.navigationController?.navigationBar.layer.insertSublayer(barlayer, at: 1)
+
+    }
     
     /*
     // MARK: - Navigation

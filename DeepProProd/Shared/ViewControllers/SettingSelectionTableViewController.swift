@@ -83,7 +83,7 @@ class SettingSelectionTableViewController: UITableViewController {
         cell.textLabel?.font = UIFont(name: "Poppins-SemiBold", size: 14)
         cell.textLabel?.textColor = UIColor.white
         cell.textLabel?.backgroundColor = UIColor.clear
-        cell.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+        cell.backgroundColor = UIColor.colorFrom(hexString: ThemeManager.sharedInstance.backgroundColor_Regular!)
         cell.selectionStyle = .none
        // cell.accessoryView?.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
         cell.tintColor = UIColor.white
@@ -112,7 +112,7 @@ class SettingSelectionTableViewController: UITableViewController {
             }
         }
         // Configure the cell...
-        
+        configureCells(for: cell)
         return cell
     }
     
@@ -194,9 +194,21 @@ class SettingSelectionTableViewController: UITableViewController {
     
     @objc func selectThemeType() {
         
+        
+        
         Settings.sharedInstance.themeType = selectedIndex?.row
         Settings.sharedInstance.setValue(key: "ThemeType", value: selectedIndex?.row as AnyObject)
-        ThemeManager.sharedInstance.getCurrentSetTheme()
+        ThemeManager.sharedInstance.updateCurrentTheme()
+        ThemeManager.sharedInstance.reloadThemeDictionary()
+        ThemeManager.sharedInstance.setGradientLayer(with: true)
+        
+        if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
+        {
+            // rootVc.remove(viewController: rootVc.tabBar_ViewController , from: rootVc)
+            rootVc.tabBar_ViewController.updateTabBarColor()
+        }
+        
+        
         //Localizator.sharedInstance.reloadLocalisationDictionary()
         //delegate?.reloadTable()
     }
@@ -211,6 +223,13 @@ class SettingSelectionTableViewController: UITableViewController {
         cell.contentView.layer.insertSublayer(backgroundLayer, at: 0)
     }
     
+    func configureCells(for cell:UITableViewCell) {
+        cell.textLabel?.textColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)
+        cell.textLabel?.font = UIFont(name: ThemeManager.sharedInstance.font_Regular!, size:CGFloat(ThemeManager.sharedInstance.fontSize_Medium!) )
+        cell.backgroundColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
+        
+
+    }
     
     /*
     // Override to support conditional editing of the table view.
