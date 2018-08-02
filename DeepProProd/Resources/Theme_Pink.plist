@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BackgroundColor_Regular</key>
+	<string>#E86091</string>
+	<key>BackgroundColor_Dark</key>
+	<string>#EA6695</string>
+	<key>BackgroundColor_Light</key>
+	<string>#FDF3F7</string>
+	<key>GradientColor_Top</key>
+	<string>#EA6796</string>
+	<key>GradientColor_Bottom</key>
+	<string>#E85E90</string>
+	<key>Font_Bold</key>
+	<string>Poppins-Bold</string>
+	<key>Font_SemiBold</key>
+	<string>Poppins-SemiBold</string>
+	<key>Font_Medium</key>
+	<string>Poppins-Medium</string>
+	<key>Font_Regular</key>
+	<string>Poppins-Regular</string>
+	<key>Font_Italic</key>
+	<string>Poppins-Italic</string>
+	<key>FontSize_Large</key>
+	<integer>20</integer>
+	<key>FontSize_Medium</key>
+	<integer>16</integer>
+	<key>FontSize_Small</key>
+	<integer>12</integer>
+	<key>Font_Color</key>
+	<string>#FFFFFF</string>
+    <key>Score_25</key>
+    <string>#ff5656</string>
+    <key>Score_50</key>
+    <string>#fc9037</string>
+    <key>Score_75</key>
+    <string>#51a5ff</string>
+    <key>Score_100</key>
+    <string>#31a552</string>
+	<key>ContentCell_Backgroundcolor</key>
+	<string>#EA6695</string>
+    <key>Navigationbar_tintColor</key>
+    <string>#FFFFFF</string>
+    <key>Units_Assigned</key>
+    <string>#f46942</string>
+    <key>Units_Submitted</key>
+    <string>#9499a8</string>
+    <key>Units_Reviewed</key>
+    <string>#29c45f</string>
+    
+</dict>
+</plist>

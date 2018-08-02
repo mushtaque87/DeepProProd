@@ -7,7 +7,8 @@
 //
 
 import UIKit
-
+import Fabric
+import Crashlytics
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,14 +19,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         print("didFinishLaunchingWithOptions")
+        Fabric.with([Crashlytics.self])
+        //Crashlytics.sharedInstance().crash()
         
+//        (UIApplication.shared.value(forKey: "statusBar") as? UIView)?.backgroundColor = .clear
+//        (UIApplication.shared.value(forKey: "statusBar") as? UIView)?.tintColor = UIColor.white
         
         //Copy Files to Document Directory
         Helper.updateFileFromBundle(to: Helper.getDocumentDirectory, filename: "Settings", ofType: "plist")
+        Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "Theme", ofType: "plist")
+        Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "Theme_Default", ofType: "plist")
         Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "Theme_Blue", ofType: "plist")
-        Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "Theme_Green", ofType: "plist")
         Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "Theme_Red", ofType: "plist")
-        Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "Theme_Dark", ofType: "plist")
+        Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "Theme_Pink", ofType: "plist")
         Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "Arabic", ofType: "plist")
         Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "English", ofType: "plist")
         Helper.createDirectory(with: "PracticeBoard")

@@ -12,7 +12,10 @@ PODS:
   - ChartsRealm (3.1.1):
     - Charts (~> 3.1.1)
     - RealmSwift (~> 3.7.1)
+  - Crashlytics (3.10.5):
+    - Fabric (~> 1.7.9)
   - DatePickerDialog (2.0)
+  - Fabric (1.7.9)
   - gRPC-Core (1.11.0):
     - gRPC-Core/Implementation (= 1.11.0)
     - gRPC-Core/Interface (= 1.11.0)
@@ -42,7 +45,6 @@ PODS:
   - Realm/Headers (3.7.4)
   - RealmSwift (3.7.4):
     - Realm (= 3.7.4)
-  - RecordButton (1.0.2)
   - RxCocoa (4.2.0):
     - RxSwift (~> 4.0)
   - RxSwift (4.2.0)
@@ -57,13 +59,14 @@ DEPENDENCIES:
   - Alamofire (~> 4.5)
   - Charts
   - ChartsRealm
+  - Crashlytics
   - DatePickerDialog
+  - Fabric
   - MBProgressHUD (~> 1.1.0)
   - Mockingjay
   - Nimble
   - PRTween (~> 0.0.1)
   - Quick
-  - RecordButton
   - RxCocoa (~> 4.0)
   - RxSwift (~> 4.0)
   - SwiftGRPC
@@ -75,7 +78,9 @@ SPEC REPOS:
     - BoringSSL
     - Charts
     - ChartsRealm
+    - Crashlytics
     - DatePickerDialog
+    - Fabric
     - gRPC-Core
     - MBProgressHUD
     - Mockingjay
@@ -85,7 +90,6 @@ SPEC REPOS:
     - Quick
     - Realm
     - RealmSwift
-    - RecordButton
     - RxCocoa
     - RxSwift
     - SwiftGRPC
@@ -97,7 +101,9 @@ SPEC CHECKSUMS:
   BoringSSL: cf3f1793eb6e3c445c4d150456341f149c268a35
   Charts: 90a4d61da0f6e06684c591e3bcab11940fe61736
   ChartsRealm: 35728e98e8d365a45c54fa7a1fa47663d2539887
+  Crashlytics: 7f2e38d302d9da96475b3d64d86fb29e31a542b7
   DatePickerDialog: 5e1c24d9fe6506cd45dbc573eed7b0a251b1c09d
+  Fabric: a2917d3895e4c1569b9c3170de7320ea1b1e6661
   gRPC-Core: 164639cd8ae18ca8b65477fafb2efbaecf4f181a
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   Mockingjay: 11a621880d2887f1775bdcf824341eb68f218450
@@ -107,13 +113,12 @@ SPEC CHECKSUMS:
   Quick: d17304d58d0d169dd0bd1c6e5c28e3318de32a1a
   Realm: a469bb59e33f9926102ccaea4349822c53b9117e
   RealmSwift: a45861b21c180f5cf0f122144b9759fa8dde3e9e
-  RecordButton: 76677be0f4b94f8a387454a23b4b64bd9b6c0e51
   RxCocoa: 0b54909c902e1e581212a03e690bbd94032d8baa
   RxSwift: 99e10317ddfcc7fbe01356aafd118fde4a0be104
   SwiftGRPC: e582ede5791867075513a3757faa41be215b7e5a
   SwiftProtobuf: 5ccc0e4054e37c75800e5744acb2aa80bb72b39c
   URITemplate: ace0c4c46dcf8afe6e89b4060621852886b15c3b
 
-PODFILE CHECKSUM: 58dd2c326b7c4dde4edd6650d644cb7aeb1ea64e
+PODFILE CHECKSUM: 1f0fcec734a7f92040c219a4ad6cf59b11103939
 
 COCOAPODS: 1.5.3

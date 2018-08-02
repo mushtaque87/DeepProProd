@@ -81,5 +81,21 @@
 	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>We need access to your camera and galley to upload your profile picture.</string>
+	<key>Fabric</key>
+	<dict>
+		<key>APIKey</key>
+		<string>a9ba352fc1011cdcb9107ddaf34e240031578ff3</string>
+		<key>Kits</key>
+		<array>
+			<dict>
+				<key>KitInfo</key>
+				<dict/>
+				<key>KitName</key>
+				<string>Crashlytics</string>
+			</dict>
+		</array>
+	</dict>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<true/>
 </dict>
 </plist>

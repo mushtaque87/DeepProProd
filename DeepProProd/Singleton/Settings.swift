@@ -20,20 +20,26 @@ class Settings: NSObject {
     var graphType : Int?
     var themeType : Int?
     var theme_Red : String?
+    var theme_Default : String?
     var theme_Blue : String?
-    var theme_Green : String?
-    var theme_Dark : String?
+    var theme_Pink : String?
     var theme_Bottom : String?
     static let sharedInstance = Settings()
+    
     var settingsDict : NSMutableDictionary?
     private var settingsPath : String?
+    
+    private var themePath : String?
+    var themeDict : NSMutableDictionary?
     
     private override  init()  {
         settingsDict  = NSMutableDictionary();
         settingsPath = Helper.getDocumentDirectory().appendingPathComponent("Settings.plist")
+        themePath = Helper.getDocumentDirectory().appendingPathComponent("Theme.plist")
        // Helper.copyFileFromBundle(to: Helper.getDocumentDirectory, filename: "Settings", ofType: "plist")
         super.init()
         reloadSettingsDictionary()
+        readThemeFile()
         
     }
     
@@ -48,11 +54,7 @@ class Settings: NSObject {
         mainPage = settingsDict!["mainPage"] as? Int
         graphType = settingsDict!["GraphType"] as? Int
         themeType = settingsDict!["ThemeType"] as? Int
-        theme_Red = settingsDict!["Theme_Red"] as? String
-        theme_Blue = settingsDict!["Theme_Blue"] as? String
-        theme_Green = settingsDict!["Theme_Green"] as? String
-        theme_Dark = settingsDict!["Theme_Dark"] as? String
-        theme_Bottom = settingsDict!["Theme_Bottom"] as? String
+
        // ThemeConfiguration.sharedInstance.getCurrentSetTheme()
         print("Saved GameData.plist file is --> \(settingsDict?.description ?? "")")
         }
@@ -60,6 +62,16 @@ class Settings: NSObject {
             Helper.updateFileFromBundle(to: Helper.getDocumentDirectory, filename: "Settings", ofType: "plist")
             reloadSettingsDictionary()
         }
+    }
+    func readThemeFile() {
+      if let path = themePath {
+        themeDict = NSMutableDictionary(contentsOfFile: path)
+        theme_Red = themeDict!["Theme_Red"] as? String
+        theme_Default = themeDict!["Theme_Default"] as? String
+        theme_Blue = themeDict!["Theme_Blue"] as? String
+        theme_Pink = themeDict!["Theme_Pink"] as? String
+        theme_Bottom = themeDict!["Theme_Bottom"] as? String
+    }
     }
     
     func setValue(key:String , value:AnyObject) -> Void {

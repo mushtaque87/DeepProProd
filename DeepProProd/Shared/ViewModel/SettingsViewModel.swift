@@ -44,6 +44,7 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
          return headerView
     }*/
     
+    /*
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if (section == 0){
             return "Account Information"
@@ -51,18 +52,19 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
             return "Settings"
         }
     }
+    */
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if let settingtype = SettingType(rawValue: indexPath.row) {
             switch settingtype {
             case .language, .graphtype , .themetype:
-                return 80.0
+                return 50.0
             case .logout:
-                 return 80.0
+                 return 50.0
             }
 
         }
-        return 80.0
+        return 50.0
     }
     
     
@@ -324,7 +326,9 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
                 cell.titleLbl.textAlignment = .center
                 cell.titleLbl.text = "Logout".localized
-                cell.contentView.backgroundColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
+                cell.contentView.backgroundColor = UIColor.white
+                cell.titleLbl.textColor = UIColor.black
+                    //UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
                     
                     //UIColor.colorFrom(hexString: ThemeManager.sharedInstance.backgroundColor_Regular!)
                 cell.selectionStyle = .blue
@@ -374,17 +378,21 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
     func configureCells(for cell:DetailCell) {
         cell.valueTextField.isEnabled = false
         cell.valueTextField.autocorrectionType = .no
+        cell.valueTextField.textColor = UIColor.black
         //cell.valueTextField.placeholder = "Enter here"
         cell.valueTextField.tintColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)
-        cell.valueTextField.font = UIFont(name: ThemeManager.sharedInstance.font_Bold!, size:CGFloat(ThemeManager.sharedInstance.fontSize_Medium!) )
+        cell.valueTextField.font = UIFont(name: ThemeManager.sharedInstance.font_Regular!, size:CGFloat(ThemeManager.sharedInstance.fontSize_Medium!) )
         cell.titleLabel.textAlignment = .left
         cell.titleLabel.backgroundColor = UIColor.clear
-        cell.titleLabel.font = UIFont(name: ThemeManager.sharedInstance.font_Medium!, size:CGFloat(ThemeManager.sharedInstance.fontSize_Medium!) )
-        cell.titleLabel.textColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)
+        cell.titleLabel.font = UIFont(name: ThemeManager.sharedInstance.font_Regular!, size:CGFloat(ThemeManager.sharedInstance.fontSize_Medium!) )
+        cell.titleLabel.textColor = UIColor.black
+            //UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)
         cell.selectionStyle = .none
-        cell.backgroundColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
+        cell.backgroundColor = UIColor.white
+       // cell.backgroundColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
             //UIColor.colorFrom(hexString: ThemeManager.sharedInstance.backgroundColor_Regular!)
         cell.backView.backgroundColor = UIColor.clear
+        
     }
     
     //MARK: - UIAction and Events

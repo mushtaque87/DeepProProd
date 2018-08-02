@@ -61,6 +61,7 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
 //        return headerView
 //    }
     
+    /*
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         if (section == 0){
                         return "Profile Information"
@@ -68,13 +69,15 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         return "Detail Information"
                     }
     }
+ */
+    
 //
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if (section == 0) {
             return 1
         } else {
-            return 8
+            return 6
         }
     }
     
@@ -95,11 +98,13 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                 cell.lastName.text = details?.last_name
 //                cell.firstName.isUserInteractionEnabled = false
 //                cell.lastName.isUserInteractionEnabled = false
-                cell.backgroundColor =  UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
-               // cell.contentView.backgroundColor = UIColor.clear
-                
+               // cell.backgroundColor =  UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
+                cell.contentView.backgroundColor = UIColor.white
+                cell.firstName.textColor = UIColor.black
+                cell.lastName.textColor = UIColor.black
                 cell.profileImageButton.addTarget(self , action: #selector(editProfilePic), for: .touchUpInside)
                 cell.profileImageButton.setImage(details?.profile_image, for: .normal)
+                
                 return cell
             default:
                break
@@ -248,9 +253,9 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if (indexPath.section == 0) {
-            return 100.0
+            return 80.0
         } else {
-            return 70.0
+            return 50.0
         }
         
     }
@@ -318,12 +323,17 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
         cell.valueTextField.isEnabled = isEditEnabled
         cell.valueTextField.autocorrectionType = .no
         //cell.valueTextField.placeholder = "Enter here"
-        cell.valueTextField.tintColor =  UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)
+        cell.valueTextField.tintColor =  UIColor.black //UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)
+        cell.valueTextField.textColor = UIColor.black
+        cell.valueTextField.font = UIFont(name: ThemeManager.sharedInstance.font_Regular!, size:CGFloat(ThemeManager.sharedInstance.fontSize_Medium!) )
+        
         cell.titleLabel.textAlignment = .left
         cell.titleLabel.backgroundColor = UIColor.clear
-        cell.titleLabel.textColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)
+        cell.titleLabel.textColor = UIColor.black//UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)
         cell.selectionStyle = .none
-        cell.backgroundColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
+        cell.backgroundColor = UIColor.white
+        cell.titleLabel.font = UIFont(name: ThemeManager.sharedInstance.font_Regular!, size:CGFloat(ThemeManager.sharedInstance.fontSize_Medium!) )
+            //UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
             //UIColor(cgColor:(ThemeManager.sharedInstance.color?.colorTop)!)
       //  cell.backView.backgroundColor = UIColor.clear
     }

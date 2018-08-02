@@ -16,6 +16,7 @@ class FeedbackModel: NSObject, UITableViewDelegate , UITableViewDataSource  {
         if let feedback = feedback {
             cell.feedbackLabel.text = feedback
         }
+        configureCells(for: cell)
         return cell
     }
     
@@ -31,5 +32,8 @@ class FeedbackModel: NSObject, UITableViewDelegate , UITableViewDataSource  {
         return 1
     }
     
+    func configureCells(for cell:FeedbackTableViewCell) {
+        cell.backView.backgroundColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
+    }
     
 }

@@ -11,7 +11,7 @@ target 'DeepProProd' do
   pod 'Alamofire', '~> 4.5'
   pod 'RxSwift',    '~> 4.0'
   pod 'RxCocoa',    '~> 4.0'
-  pod 'RecordButton'
+ 
   pod 'DatePickerDialog'
   pod 'MBProgressHUD', '~> 1.1.0'
   pod 'PRTween', '~> 0.0.1'
@@ -19,6 +19,8 @@ target 'DeepProProd' do
   pod 'ChartsRealm'
   pod 'SwiftGRPC'
   pod 'SwiftProtobuf', '~> 1.0'
+  pod 'Crashlytics'
+  pod 'Fabric'
   
 end
 

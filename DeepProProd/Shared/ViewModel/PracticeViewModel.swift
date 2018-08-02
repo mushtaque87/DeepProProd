@@ -34,13 +34,17 @@ class PracticeViewModel: NSObject,
     
     var scoreData = Array<Double>()
     var phenomeData = Array<Int>()
-    let colors = [ColorVariance(color: UIColor(red: 254/255, green: 74/255, blue: 74/255, alpha: 0.9)  , range: 0...15),
-                                ColorVariance(color: UIColor(red: 255/255, green: 127/255, blue: 80/255, alpha: 0.9)  , range: 16...30),
-                                ColorVariance(color: UIColor(red: 0/255, green: 153/255, blue: 204/255, alpha: 0.9)  , range: 31...50),
-                                ColorVariance(color: UIColor(red: 143/255, green: 115/255, blue: 212/255, alpha: 0.9)  , range: 51...75),
-                                ColorVariance(color: UIColor(red: 22/255, green: 186/255, blue: 120/255, alpha: 0.9)  , range: 76...100)]
+//    let colors = [ColorVariance(color: UIColor(red: 254/255, green: 74/255, blue: 74/255, alpha: 0.9)  , range: 0...25),
+//                                ColorVariance(color: UIColor(red: 255/255, green: 127/255, blue: 80/255, alpha: 0.9)  , range: 26...50),
+//                                ColorVariance(color: UIColor(red: 143/255, green: 115/255, blue: 212/255, alpha: 0.9)  , range: 51...75),
+//                                ColorVariance(color: UIColor(red: 22/255, green: 186/255, blue: 120/255, alpha: 0.9)  , range: 76...100)]
     
+    let colors = [ColorVariance(color: UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.score_25!)  , range: 0...25),
+                  ColorVariance(color: UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.score_50!)  , range: 26...50),
+                  ColorVariance(color: UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.score_75!)   , range: 51...75),
+                  ColorVariance(color: UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.score_100!)   , range: 76...100)]
     
+    //
    // var wordResult : Word_Prediction?
     var predictionData : Pronunciation_Prediction = Pronunciation_Prediction.init()
     lazy var answersList = [UnitAnswers]()
@@ -71,9 +75,7 @@ class PracticeViewModel: NSObject,
     
     //MARK: - Table View Delegate and Data source
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        //let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width/2, height: 28))
-        //headerView.backgroundColor = UIColor(red: 196.0/255.0, green: 194.0/255.0, blue: 255.0/255.0, alpha: 1)
-       
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "report", for: IndexPath(row: 0, section: section)) as! ReportCell
         cell.contentView.backgroundColor  = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
         cell.actual.text = selectedAnswer?.wordResults![section].word
@@ -92,29 +94,6 @@ class PracticeViewModel: NSObject,
         cell.predicted.textColor = UIColor.white
         cell.predicted.textAlignment = NSTextAlignment.center
         cell.predicted.backgroundColor = UIColor.clear
-        
-        /*
-        let wordLabel = UILabel(frame: CGRect(x: cell.actual.frame.origin.x, y: 0, width: cell.actual.frame.size.width, height: 28))
-        wordLabel.text = selectedAnswer?.wordResults![section].word
-        wordLabel.font = UIFont(name: "Poppins-Bold", size: 22.0)
-        wordLabel.textColor = UIColor.white
-        wordLabel.textAlignment = NSTextAlignment.center
-        wordLabel.backgroundColor = UIColor.clear
-        headerView.addSubview(wordLabel)
- 
-        
-        let scoreLabel = UILabel(frame: CGRect(x: cell.predicted.frame.origin.x , y: 0, width: cell.predicted.frame.size.width , height: 28))
-        if let score = selectedAnswer?.wordResults![section].score {
-        scoreLabel.text = String(format:"%d",score)
-        } else{
-            scoreLabel.text = "--"
-        }
-        scoreLabel.font = UIFont(name: "Poppins-Bold", size: 22.0)
-        scoreLabel.textColor = UIColor.white
-        scoreLabel.textAlignment = NSTextAlignment.center
-        scoreLabel.backgroundColor = UIColor.clear
-        headerView.addSubview(scoreLabel)
-        */
         
         return cell
     }
@@ -271,7 +250,7 @@ class PracticeViewModel: NSObject,
                 return color.color
             }
         }
-        return UIColor(red: 56/255, green: 52/255, blue: 58/255, alpha: 0.9)
+        return UIColor.lightGray
     }
     
     func getDocumentsDirectory() -> URL {
@@ -469,11 +448,13 @@ class PracticeViewModel: NSObject,
         
         let attributedString = NSMutableAttributedString()
         for word in words_Result {
-            var color: UIColor = UIColor.white
+           // var color: UIColor = UIColor.white
+           // color = colorTheCell(score: Int(word.score))
             
+            /*
             if let score = word.score {
-            if (score > 80.0) {
-                color = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.score_80!)
+            if (score < 80.0) {
+                color = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.score_25!)
             } else if (score < 30.0) {
                 color = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.score_30!)
             }
@@ -481,14 +462,21 @@ class PracticeViewModel: NSObject,
                 color = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.score_30_80!)
                 
                 }
-                
-            }
-            let attributedSubString = NSAttributedString(string: word.word!, attributes: [NSAttributedStringKey.foregroundColor : color])
+             */
+           
             
-            attributedString.append(attributedSubString)
+            if let wordtext = word.word  {
+//                 var attributedSubString : NSMutableAttributedString?
+             let attributedSubString = NSMutableAttributedString(string: wordtext)
+                if let score = word.score {
+                    // NSAttributedString(string: wordtext, attributes: [NSAttributedStringKey.foregroundColor : colorTheCell(score: Int(score))])
+                    attributedSubString.setAttributes([NSAttributedStringKey.foregroundColor : colorTheCell(score: Int(score))], range: NSRange(location: 0, length: wordtext.count))
+                }
+                attributedString.append(attributedSubString)
+            }
             attributedString.append(NSAttributedString.init(string: " "))
+            
         }
-        
         return attributedString
         
     }
@@ -576,7 +564,7 @@ class PracticeViewModel: NSObject,
     {
         if(textView.text == "Type Here"){
             textView.text = ""
-            textView.textColor = UIColor.white
+            textView.textColor = UIColor.black
         }
         
         delegate?.showCleanTextButton(isHidden: false)
@@ -636,7 +624,7 @@ extension UITextView {
     override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
 
         
-        /*
+      
         UIMenuController.shared.isMenuVisible = false
         
        
@@ -644,9 +632,9 @@ extension UITextView {
         print("paste")
         return true
         }
-        */
+ 
         
-        return true
+        return false
 }
     
 }

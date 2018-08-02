@@ -27,8 +27,7 @@ typealias constant = Constants.ServerApi
 
     func getWordPredictionFromGRPC(for uid:String , unit unitId:Int = 0, with audio: Data, and text: String ,
                                    onSuccess successCompletionHandler: @escaping (Pronounce_PronounceResponse) -> Void ,
-                                   onFailure  failureCompletionHandler: @escaping (Any) -> Void,
-                                   onComplete completeCompletionHandler: @escaping ()-> Void )
+                                   onFailure  failureCompletionHandler: @escaping (Any) -> Void)
     {
        ServiceManager().verifyTokenAndProceed(of: uid, onSuccess: {
             
@@ -58,10 +57,6 @@ typealias constant = Constants.ServerApi
                         default :
                             failureCompletionHandler("Server Error. Please retry!!! ")
                             break
-                        }
-                        
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                            completeCompletionHandler()
                         }
                         
                     }

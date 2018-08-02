@@ -39,17 +39,22 @@ class MainViewController: UIViewController {
         
     }()
     
-    lazy var     infoAlertView: InfromationAlertViewController  = {
-        var viewcontroller   = InfromationAlertViewController(nibName: "InfromationAlertViewController", bundle: nil)
-        return viewcontroller
-        
-    }()
-    
    lazy var  tabBar_ViewController: TabBarControllerViewController = {
        var viewcontroller   = TabBarControllerViewController(nibName: "TabBarControllerViewController", bundle: nil)
         return viewcontroller
     }()
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return false
+    }
+    
+    override func setNeedsStatusBarAppearanceUpdate() {
+        
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -171,12 +176,7 @@ class MainViewController: UIViewController {
         
     }
     
-    func showInfoAlertView(with message:String) -> Void {
-        //let signUp_ViewController: SignUp_SH_ViewController = SignUp_SH_ViewController(nibName: "SignUp_SH_ViewController", bundle: nil)
-        self.addSubView(addChildViewController: infoAlertView, on: self)
-        infoAlertView.infoMessage = message
-    }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

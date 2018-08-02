@@ -6,17 +6,15 @@
 //  Copyright © 2017 Mushtaque Ahmed. All rights reserved.
 //
 
-import UIKit
+
 import Alamofire
 import Foundation
-import RxSwift
-import MBProgressHUD
+
 
 class ServiceManager: NSObject {
     
     typealias constant = Constants.ServerApi
-    let disposeBag = DisposeBag()
-    weak var delegate: ServiceProtocols?
+    //weak var delegate: ServiceProtocols?
     var manager : SessionManager? = Alamofire.SessionManager()
     
     
@@ -54,7 +52,7 @@ class ServiceManager: NSObject {
         }
     }
     
-    
+    /*
     func sendAudioForPrediction(file: URL , text: String) {
        // let urlString = "https://192.168.8.18:8500/audio/predict"
         ignoreSSL()
@@ -117,6 +115,7 @@ class ServiceManager: NSObject {
 })
 
 }
+    */
     
      //MARK: - Others
     func isValidJson(check data:Data) -> Bool
@@ -231,8 +230,7 @@ class ServiceManager: NSObject {
     func doSignUp(withBody body: SignUpRequest,
                   onSuccess successCompletionHandler: @escaping (SignUpResponse) -> Void,
                   onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
-                  onError errorHandler: @escaping (Error)-> Void  ,
-                  onComplete completeCompletionHandler: @escaping ()-> Void)
+                  onError errorHandler: @escaping (Error)-> Void)
     {
 
         Alamofire.request(createCustomeRequest(for: constant.signUp, withParameter: body, httpType: HTTPMethod.post, withAuth: false)).responseData(completionHandler:  { serverResponse in
@@ -246,9 +244,6 @@ class ServiceManager: NSObject {
                     guard self.isValidJson(check: serverResponse.result.value!) == true else {
                         print("❌ Invalid Json")
                         httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                            completeCompletionHandler()
-                        }
                         return
                     }
                     if serverResponse.response!.statusCode == 200 {
@@ -271,9 +266,7 @@ class ServiceManager: NSObject {
                     print("Request failed with error: \(error)")
                     errorHandler(error)
                 }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    completeCompletionHandler()
-                }
+               
             }
         })
 }
@@ -281,8 +274,7 @@ class ServiceManager: NSObject {
     func forgotPassword(for emailId:String ,
                         onSuccess successCompletionHandler: @escaping (ForgotPasswordResponse) -> Void,
                         onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
-                        onError errorHandler: @escaping (Error)-> Void  ,
-                        onComplete completeCompletionHandler: @escaping ()-> Void)
+                        onError errorHandler: @escaping (Error)-> Void)
     {
 
         Alamofire.request(constant.forgotpassword , method: .post, parameters: ["email":emailId], encoding: JSONEncoding.default, headers: nil)
@@ -296,9 +288,6 @@ class ServiceManager: NSObject {
                     guard self.isValidJson(check: serverResponse.result.value!) == true else {
                         print("❌ Invalid Json")
                         httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                            completeCompletionHandler()
-                        }
                         return
                     }
                     if serverResponse.response!.statusCode == 200 {
@@ -322,10 +311,6 @@ class ServiceManager: NSObject {
                      errorHandler(error)
                     //self.showInfoAlertScreen(with: serverResponse.result.error!.localizedDescription, oftype: "INFO")
                 }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        completeCompletionHandler()
-                    }
-                    
                 }
         }
     }
@@ -335,8 +320,7 @@ class ServiceManager: NSObject {
     func doLogin(for username: String, and password:String ,
                  onSuccess successCompletionHandler: @escaping (LoginResponse) -> Void,
                  onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
-                 onError errorHandler: @escaping (Error)-> Void  ,
-                 onComplete completeCompletionHandler: @escaping ()-> Void ) {
+                 onError errorHandler: @escaping (Error)-> Void) {
         
         manager?.request(constant.login, method: .post, parameters: ["username":username ,"password":password] , encoding: JSONEncoding.default, headers: nil)
             .responseData { serverResponse in
@@ -349,9 +333,6 @@ class ServiceManager: NSObject {
                     guard self.isValidJson(check: serverResponse.result.value!) == true else {
                         print("❌ Invalid Json")
                         httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                            completeCompletionHandler()
-                        }
                         return
                     }
                     if serverResponse.response!.statusCode == 200 {
@@ -375,9 +356,7 @@ class ServiceManager: NSObject {
                     errorHandler(error)
                     //self.showInfoAlertScreen(with: serverResponse.result.error!.localizedDescription, oftype: "INFO")
                 }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                         completeCompletionHandler()
-                    }
+                   
               
                 }
         }
@@ -387,8 +366,7 @@ class ServiceManager: NSObject {
     func getProfile(for uid : String ,
                     onSuccess completionHandler: @escaping (Profile) -> Void,
                     onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
-                    onError  errorHandler: @escaping (Any) -> Void,
-                    onComplete completeCompletionHandler: @escaping ()-> Void )
+                    onError  errorHandler: @escaping (Any) -> Void)
     {
         verifyTokenAndProceed(of: uid,
                               onSuccess: {
@@ -403,9 +381,6 @@ class ServiceManager: NSObject {
                                                 guard self.isValidJson(check: serverResponse.result.value!) == true else {
                                                     print("❌ Invalid Json")
                                                     httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
-                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                                        completeCompletionHandler()
-                                                    }
                                                     return
                                                 }
                                             if serverResponse.response!.statusCode == 200 {
@@ -426,10 +401,6 @@ class ServiceManager: NSObject {
                                             
                                         }
                                             
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                                completeCompletionHandler()
-                                            }
-                                            
                                         }
                                         
                                 }
@@ -444,8 +415,7 @@ class ServiceManager: NSObject {
                        with details: Profile,
                     onSuccess completionHandler: @escaping () -> Void,
                     onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
-                    onError  errorHandler: @escaping (Any) -> Void,
-                    onComplete completeCompletionHandler: @escaping ()-> Void )
+                    onError  errorHandler: @escaping (Any) -> Void )
     {
         verifyTokenAndProceed(of: uid,
                               onSuccess: {
@@ -466,9 +436,6 @@ class ServiceManager: NSObject {
                                                 guard self.isValidJson(check: serverResponse.result.value!) == true else {
                                                     print("❌ Invalid Json")
                                                     httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
-                                                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                                        completeCompletionHandler()
-                                                    }
                                                     return
                                                 }
                                                 if serverResponse.response!.statusCode == 200 {
@@ -487,10 +454,6 @@ class ServiceManager: NSObject {
                                                 print("Request failed with error: \(error)")
                                                 errorHandler(error)
                                                 
-                                            }
-                                            
-                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                                completeCompletionHandler()
                                             }
                                             
                                         }
@@ -1052,8 +1015,7 @@ func createBody(parameters: [String: String],
     func getRootContent(ofStudent uid:String,
                        onSuccess successCompletionHandler: @escaping ([FailableDecodable<ContentGroup>]) -> Void,
                        onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
-                       onError errorHandler: @escaping (Error)-> Void  ,
-                       onComplete completeCompletionHandler: @escaping ()-> Void)
+                       onError errorHandler: @escaping (Error)-> Void )
     {
     verifyTokenAndProceed(of: uid,
                               onSuccess: {
@@ -1067,9 +1029,6 @@ func createBody(parameters: [String: String],
                         guard self.isValidJson(check: serverResponse.result.value!) == true else {
                             print("❌ Invalid Json")
                             httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                completeCompletionHandler()
-                            }
                             return
                         }
                         
@@ -1090,10 +1049,6 @@ func createBody(parameters: [String: String],
                         errorHandler(error)
                         
                     }
-
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        completeCompletionHandler()
-                    }
                 }
         }
         } , onError: { error in
@@ -1106,8 +1061,7 @@ func createBody(parameters: [String: String],
                          ofStudent uid:String,
                          onSuccess successCompletionHandler: @escaping ([FailableDecodable<ContentGroup>]) -> Void,
                          onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
-                         onError errorHandler: @escaping (Error)-> Void  ,
-                         onComplete completeCompletionHandler: @escaping ()-> Void)
+                         onError errorHandler: @escaping (Error)-> Void)
     {
         verifyTokenAndProceed(of: uid,
                               onSuccess: {
@@ -1129,9 +1083,6 @@ func createBody(parameters: [String: String],
                         guard self.isValidJson(check: serverResponse.result.value!) == true else {
                             print("❌ Invalid Json")
                             httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                completeCompletionHandler()
-                            }
                             return
                         }
                         
@@ -1152,10 +1103,7 @@ func createBody(parameters: [String: String],
                         errorHandler(error)
                         
                     }
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        completeCompletionHandler()
-                    }
+                  
                 }
         }
         } , onError: { error in
@@ -1167,8 +1115,7 @@ func createBody(parameters: [String: String],
                          ofStudent uid:String,
                          onSuccess successCompletionHandler: @escaping ([FailableDecodable<ContentUnits>]) -> Void,
                          onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
-                         onError errorHandler: @escaping (Error)-> Void  ,
-                         onComplete completeCompletionHandler: @escaping ()-> Void)
+                         onError errorHandler: @escaping (Error)-> Void)
     {
         verifyTokenAndProceed(of: uid,
                               onSuccess: {
@@ -1182,9 +1129,7 @@ func createBody(parameters: [String: String],
                         guard self.isValidJson(check: serverResponse.result.value!) == true else {
                             print("❌ Invalid Json")
                             httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                completeCompletionHandler()
-                            }
+                           
                             return
                         }
                         
@@ -1205,10 +1150,7 @@ func createBody(parameters: [String: String],
                         errorHandler(error)
                         
                     }
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        completeCompletionHandler()
-                    }
+                 
                 }
         }
         } , onError: { error in
@@ -1220,8 +1162,7 @@ func createBody(parameters: [String: String],
                         ofStudent uid:String,
                         onSuccess successCompletionHandler: @escaping ([FailableDecodable<UnitAnswers>]) -> Void,
                         onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
-                        onError errorHandler: @escaping (Error)-> Void  ,
-                        onComplete completeCompletionHandler: @escaping ()-> Void)
+                        onError errorHandler: @escaping (Error)-> Void)
     {
         verifyTokenAndProceed(of: uid,
                               onSuccess: {
@@ -1235,9 +1176,6 @@ func createBody(parameters: [String: String],
                         guard self.isValidJson(check: serverResponse.result.value!) == true else {
                             print("❌ Invalid Json")
                             httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                completeCompletionHandler()
-                            }
                             return
                         }
                         
@@ -1258,10 +1196,7 @@ func createBody(parameters: [String: String],
                         errorHandler(error)
                         
                     }
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        completeCompletionHandler()
-                    }
+                   
                 }
         }
         } , onError: { error in

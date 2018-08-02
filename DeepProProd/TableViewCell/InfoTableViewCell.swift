@@ -19,7 +19,7 @@ class InfoTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
        
-        profileImageButton.layer.borderColor = UIColor.white.cgColor
+        profileImageButton.layer.borderColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!).cgColor
         profileImageButton.layer.borderWidth = 2
         profileImageButton.layer.cornerRadius = 5
         profileImageButton.clipsToBounds = true
@@ -46,8 +46,8 @@ class InfoTableViewCell: UITableViewCell {
         setNeedsUpdateConstraints()
         updateConstraintsIfNeeded()
         //setTheme()
-        backgroundLayer.frame = self.contentView.bounds
-        self.contentView.layer.insertSublayer(backgroundLayer, at: 0)
+       // backgroundLayer.frame = self.contentView.bounds
+        //self.contentView.layer.insertSublayer(backgroundLayer, at: 0)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
