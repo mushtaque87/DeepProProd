@@ -107,7 +107,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
            // self.firstNameField.text = response.first_name
            // self.lastNameField.text = response.last_name
            // self.emailField.text = response.email
-            self.viewModel.details = Profile(first_name: response.first_name!, last_name: response.last_name!,email: response.email!, user_attributes: User_attributes(dob: (response.user_attributes?.dob)!))
+            self.viewModel.details = Profile(first_name: response.first_name!, last_name: response.last_name,email: response.email!, user_attributes: User_attributes(address: response.user_attributes?.address, class_code: response.user_attributes?.class_code, gender: response.user_attributes?.gender, phone: response.user_attributes?.phone, dob: response.user_attributes?.dob))
             self.detailsTable.reloadData()
             //self.dobField.text = response.user_attributes?.dob
             hud.hide(animated: true)
@@ -159,7 +159,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
         //     dob =  cell.valueTextField.text
         // }
         
-        let profile = Profile(first_name: viewModel.details!.first_name!, last_name: viewModel.details!.last_name!, email: viewModel.details!.email!, user_attributes: User_attributes(dob:(viewModel.details?.user_attributes?.dob)!))
+        let profile = Profile(first_name: viewModel.details!.first_name!, last_name: viewModel.details!.last_name!, email: viewModel.details!.email!, user_attributes: User_attributes(address: viewModel.details!.user_attributes?.address, class_code: viewModel.details!.user_attributes?.class_code, gender: viewModel.details!.user_attributes?.gender, phone: viewModel.details!.user_attributes?.phone, dob: viewModel.details!.user_attributes?.dob))
         
         
         ServiceManager().updateProfile(for: UserDefaults.standard.string(forKey: "uid")! , with:profile,  onSuccess: {
@@ -363,10 +363,13 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
         shouldEnableSaveButton(enable: true)
         let profileSelectionTableViewController =     ProfileSelectionTableViewController(nibName: "ProfileSelectionTableViewController", bundle: nil)
         profileSelectionTableViewController.editProfileType = detailType
-        profileSelectionTableViewController.details = Profile(first_name: viewModel.details?.first_name, last_name: viewModel.details?.last_name, email: viewModel.details?.email, user_attributes: User_attributes(dob: viewModel.details?.user_attributes?.dob))
-        profileSelectionTableViewController.details?.gender = viewModel.details?.gender
-        profileSelectionTableViewController.details?.standard = viewModel.details?.standard
-        profileSelectionTableViewController.details?.section = viewModel.details?.section
+        profileSelectionTableViewController.details = Profile(first_name: viewModel.details?.first_name, last_name: viewModel.details?.last_name, email: viewModel.details?.email, user_attributes: User_attributes(address: viewModel.details?.user_attributes?.address, class_code: viewModel.details?.user_attributes?.class_code, gender: viewModel.details?.user_attributes?.gender, phone: viewModel.details?.user_attributes?.phone, dob: viewModel.details?.user_attributes?.dob))
+        /*
+        profileSelectionTableViewController.details?.user_attributes?.gender = viewModel.details?.user_attributes?.gender
+        profileSelectionTableViewController.details?.user_attributes?.class_code = viewModel.details?.user_attributes?.class_code
+        profileSelectionTableViewController.details?.user_attributes?.class_code = viewModel.details?.user_attributes?.class_code
+         */
+        
         profileSelectionTableViewController.delegate = self
         self.navigationController?.pushViewController(profileSelectionTableViewController, animated: true)
         
@@ -448,7 +451,7 @@ class ProfileViewController: UIViewController, ProfileViewDelegate,UINavigationC
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         self.dismiss(animated: true, completion: { () -> Void in
-            self.viewModel.details?.profile_image = info["UIImagePickerControllerOriginalImage"] as? UIImage
+           // self.viewModel.details?.profile_image = info["UIImagePickerControllerOriginalImage"] as? UIImage
             self.detailsTable.reloadData()
 //            self.profileButton.setImage((info["UIImagePickerControllerOriginalImage"] as! UIImage), for: .normal)
 //

@@ -45,6 +45,7 @@ class Settings: NSObject {
     
     func reloadSettingsDictionary()
     {
+        Helper.printLogs()
         if let path = settingsPath {
         settingsDict = NSMutableDictionary(contentsOfFile: path)
         language = settingsDict!["Language"] as? String

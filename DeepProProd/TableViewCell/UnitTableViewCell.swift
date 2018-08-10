@@ -20,6 +20,10 @@ class UnitTableViewCell: UITableViewCell {
         // Initialization code
         
         self.backgroundColor = UIColor.clear
+      
+        // self.layer.borderColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!,alpha:1).cgColor
+        //self.layer.borderWidth = 1
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

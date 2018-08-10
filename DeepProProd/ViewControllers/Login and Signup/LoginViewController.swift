@@ -137,8 +137,10 @@ class LoginViewController: UIViewController {
             hud.mode = MBProgressHUDMode.indeterminate
             hud.label.text = "Logging in. Please wait"
             
+            Helper.printLogs(with: "Logging in.")
             ServiceManager().doLogin(for: userNameTextField.text!, and: passwordTextField.text!,
                                      onSuccess: { response in
+                                        hud.hide(animated: true)
                                         Settings.sharedInstance.setValue(key: "isLoggedIn", value: true as AnyObject)
                                         if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
                                         {

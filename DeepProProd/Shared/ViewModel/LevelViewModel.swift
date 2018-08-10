@@ -19,6 +19,12 @@ enum CrumActionType  :  Int {
  
 }
 
+enum ContentType : Int  {
+    case content
+    case assignment
+}
+
+
 class LevelViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,                             UICollectionViewDelegate ,UICollectionViewDataSource,
             UICollectionViewDelegateFlowLayout{
     private let reuseIdentifier = "crumTitle"
@@ -27,6 +33,7 @@ class LevelViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,    
     var contentList =  Array<FailableDecodable<ContentGroup>>()
     var crumList = Array<Crums>()
     var currentGroupId = 0
+    var contentType : ContentType = .content
     // Mark: - UITable View Delegate and Data Source
     
     
@@ -160,6 +167,7 @@ class LevelViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,    
     }
     
     func configureCells(for cell:AssignmentTableViewCell) {
+        cell.backgroundColor = UIColor.clear
         cell.detailsView.backgroundColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.contentCell_Backgroundcolor!)
         
         cell.assignmentName.textColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)

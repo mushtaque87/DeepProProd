@@ -15,14 +15,18 @@ struct SignUpRequest: Codable {
     let first_name : String
     let last_name : String
     let password : String
-    let user_attributes : User_attributes
+    let user_attributes : User_attribute
     
     
 }
 
-struct User_attributes : Codable{
-    var dob: String?
+struct User_attribute : Codable{
+     var dob: String?
    // let gender : Gender?
+    
+    init(dob: String) {
+        self.dob = dob
+    }
 }
 
 enum Gender : String, Codable {
@@ -44,15 +48,17 @@ func toJSON() -> [String: Any] {
         "first_name": first_name as Any,
         "last_name": last_name as Any,
         "password": password as Any,
-        "user_attributes": user_attributes.toJSON() as Any
+       // "user_attributes": User_attribute.toJSON() as Any
     ]
 }
 }
 
-extension User_attributes {
-    func toJSON() -> [String: Any] {
+extension User_attribute {
+     func toJSON() -> [String: Any] {
         return [
             "dob": dob as Any,
         ]
     }
+    
+    
 }

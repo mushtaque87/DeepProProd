@@ -12,35 +12,44 @@ For support, please feel free to contact me at https://www.linkedin.com/in/syeda
 */
 
 import Foundation
-struct Profile : Codable {
-	var email : String?
-	var first_name : String?
-	var last_name : String?
-	var user_attributes : User_attributes?
-	var roles : [String]?
+struct LoginResponse : Codable {
+	let uid : String?
+	let access_token : String?
+	let expires_in : Double?
+	let refresh_expires_in : Double?
+	let refresh_token : String?
+	let token_type : String?
+	let not_before_policy : Int?
+	let session_state : String?
+	let first_name : String?
+	let last_name : String?
 
 	enum CodingKeys: String, CodingKey {
 
-		case email = "email"
+		case uid = "uid"
+		case access_token = "access_token"
+		case expires_in = "expires_in"
+		case refresh_expires_in = "refresh_expires_in"
+		case refresh_token = "refresh_token"
+		case token_type = "token_type"
+		case not_before_policy = "not-before-policy"
+		case session_state = "session_state"
 		case first_name = "first_name"
 		case last_name = "last_name"
-		case user_attributes = "user_attributes"
-		case roles = "roles"
 	}
 
 	init(from decoder: Decoder) throws {
 		let values = try decoder.container(keyedBy: CodingKeys.self)
-		email = try values.decodeIfPresent(String.self, forKey: .email)
+		uid = try values.decodeIfPresent(String.self, forKey: .uid)
+		access_token = try values.decodeIfPresent(String.self, forKey: .access_token)
+		expires_in = try values.decodeIfPresent(Double.self, forKey: .expires_in)
+		refresh_expires_in = try values.decodeIfPresent(Double.self, forKey: .refresh_expires_in)
+		refresh_token = try values.decodeIfPresent(String.self, forKey: .refresh_token)
+		token_type = try values.decodeIfPresent(String.self, forKey: .token_type)
+		not_before_policy = try values.decodeIfPresent(Int.self, forKey: .not_before_policy)
+		session_state = try values.decodeIfPresent(String.self, forKey: .session_state)
 		first_name = try values.decodeIfPresent(String.self, forKey: .first_name)
 		last_name = try values.decodeIfPresent(String.self, forKey: .last_name)
-		user_attributes = try values.decodeIfPresent(User_attributes.self, forKey: .user_attributes)
-		roles = try values.decodeIfPresent([String].self, forKey: .roles)
 	}
-    
-    init(first_name: String?, last_name: String? ,email: String?, user_attributes: User_attributes?) {
-        self.first_name = first_name
-        self.last_name = last_name
-        self.email = email
-        self.user_attributes = user_attributes
-    }
+
 }

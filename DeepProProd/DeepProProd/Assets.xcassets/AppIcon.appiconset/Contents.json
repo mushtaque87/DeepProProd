@@ -38,7 +38,7 @@
     {
       "size" : "60x60",
       "idiom" : "iphone",
-      "filename" : "Logo.jpeg",
+      "filename" : "Logo-2.jpeg",
       "scale" : "3x"
     },
     {
@@ -77,8 +77,9 @@
       "scale" : "1x"
     },
     {
-      "idiom" : "ipad",
       "size" : "76x76",
+      "idiom" : "ipad",
+      "filename" : "Logo-3.jpeg",
       "scale" : "2x"
     },
     {

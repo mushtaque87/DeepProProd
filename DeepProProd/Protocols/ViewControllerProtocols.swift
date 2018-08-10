@@ -42,6 +42,13 @@ protocol ProfileViewDelegate: class {
     func shouldEnableSaveButton(enable:Bool)
 }
 
+protocol CategoriesProtocol: class {
+    //func showPracticesScreen(for category:RootContent)
+    //func fetchContentGroup(for content:ContentGroup)
+    func fetchContentGroup(for content:ContentGroup , actionType:CrumActionType)
+}
+
+
 /*
 extension ProfileViewDelegate {
   

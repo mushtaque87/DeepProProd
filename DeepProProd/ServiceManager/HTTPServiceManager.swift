@@ -94,16 +94,16 @@ class ServiceManager: NSObject {
             case .success(let upload, _, _):
                 upload.responseJSON { response in
                     if((response.result.value) != nil) {
-                        print(response.result.value!)
+                         Helper.printLogs(with:response.result.value!)
                        // type(of: response.result.value)
                        // let pred: Prediction_Model = Prediction_Model.init(text: <#T##String#>, numPred: <#T##Int#>)
                        
                        // let JSON = response.result.value as! NSDictionary
-                       // print(JSON)
+                       //  Helper.printLogs(with:JSON)
                         self.delegate?.returnPredictionValue(response: response)
                         
                     } else {
-                        print(response)
+                         Helper.printLogs(with:response)
                         self.delegate?.returnPredictionValue(response: response)
 
                         
@@ -130,7 +130,7 @@ class ServiceManager: NSObject {
         }
         }
         catch let error as NSError {
-            print(error)
+             Helper.printLogs(with:"\(error.description)")
             return false
         }
         
@@ -160,7 +160,7 @@ class ServiceManager: NSObject {
         let jsonEncoder = JSONEncoder()
         do {
             jsonData = try jsonEncoder.encode(body)
-            print("body: " +  String(data: jsonData!, encoding: .utf8)!)
+             Helper.printLogs(with:"body: " +  String(data: jsonData!, encoding: .utf8)!)
         }
         catch {
         }
@@ -178,16 +178,18 @@ class ServiceManager: NSObject {
         
         Alamofire.request(String(format:constant.refreshtoken), method: .post, parameters: ["refresh-token":(UserDefaults.standard.string(forKey: "refresh_token"))!], encoding: JSONEncoding.default, headers: nil)
             .responseData { serverResponse in
-                debugPrint(serverResponse)
+                
                 switch serverResponse.result {
                 case .success(let data):
                     if serverResponse.response!.statusCode == 200 {
                         let decoder = JSONDecoder()
                         let userdetails = try! decoder.decode(LoginResponse.self, from: data)
                         TokenManager.shared.storeNewToken(with: userdetails)
+                        Helper.printLogs(with: "Success")
                         completionHandler()
                     }
                 case .failure(let error):
+                     Helper.printLogs(with: "Fail")
                     errorHandler(error)
                 }
         }
@@ -197,6 +199,7 @@ class ServiceManager: NSObject {
                                onSuccess successCompletionHandler: @escaping () -> Void ,
                                onError errorHandler: @escaping (Error) -> Void)
     {
+        Helper.printLogs()
         guard TokenManager.shared.isaccessTokenValid() else {
             guard TokenManager.shared.isRefreshTokenValid() else {
                 if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
@@ -209,7 +212,7 @@ class ServiceManager: NSObject {
             
             //FIXME: Change the condition from take(2) to actual condition on real time environment
             /*  UserInfo.shared.accessTokenObserver.take(2).subscribe(onNext: { [weak self] details in
-             // print("AccessToken : \(details!)")
+             //  Helper.printLogs(with:"AccessToken : \(details!)")
              completionHandler()
              
              }).disposed(by: disposeBag)
@@ -236,34 +239,32 @@ class ServiceManager: NSObject {
         Alamofire.request(createCustomeRequest(for: constant.signUp, withParameter: body, httpType: HTTPMethod.post, withAuth: false)).responseData(completionHandler:  { serverResponse in
              DispatchQueue.main.async {
                 
-         
-                debugPrint(serverResponse)
                 let decoder = JSONDecoder()
                 switch serverResponse.result {
                 case .success(let data):
                     guard self.isValidJson(check: serverResponse.result.value!) == true else {
-                        print("❌ Invalid Json")
+                         Helper.printLogs(with:"❌ Invalid Json")
                         httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
                         return
                     }
                     if serverResponse.response!.statusCode == 200 {
                        // let decoder = JSONDecoder()
                         let signupresponse = try! decoder.decode(SignUpResponse.self, from: data)
-                        print("signupresponse \(signupresponse)")
+                         Helper.printLogs(with:"signupresponse \(signupresponse)")
                          successCompletionHandler(signupresponse)
                          //completeCompletionHandler()
                     }
                     else
                     {
-                        print(serverResponse.result.value!)
+                        
                         let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: data)
                         if let description = httpError.description {
                             httpErrorHandler(httpError)
-                            print("HTTP error: \(description)")
+                             Helper.printLogs(with:"HTTP error: \(description)")
                         }
                     }
                 case .failure(let error):
-                    print("Request failed with error: \(error)")
+                     Helper.printLogs(with:"Request failed with error: \(error)")
                     errorHandler(error)
                 }
                
@@ -281,12 +282,12 @@ class ServiceManager: NSObject {
             .responseData { serverResponse in
                 DispatchQueue.main.async {
                     
-                debugPrint(serverResponse)
+                
                 let decoder = JSONDecoder()
                 switch serverResponse.result {
                 case .success(let data):
                     guard self.isValidJson(check: serverResponse.result.value!) == true else {
-                        print("❌ Invalid Json")
+                         Helper.printLogs(with:"❌ Invalid Json")
                         httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
                         return
                     }
@@ -303,11 +304,11 @@ class ServiceManager: NSObject {
                         let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
                         if let description = httpError.description {
                             httpErrorHandler(httpError)
-                            print("HTTP error: \(description)")
+                             Helper.printLogs(with:"HTTP error: \(description)")
                         }
                     }
                 case .failure(let error):
-                    print("Request failed with error: \(error)")
+                     Helper.printLogs(with:"Request failed with error: \(error)")
                      errorHandler(error)
                     //self.showInfoAlertScreen(with: serverResponse.result.error!.localizedDescription, oftype: "INFO")
                 }
@@ -321,24 +322,24 @@ class ServiceManager: NSObject {
                  onSuccess successCompletionHandler: @escaping (LoginResponse) -> Void,
                  onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
                  onError errorHandler: @escaping (Error)-> Void) {
-        
-        manager?.request(constant.login, method: .post, parameters: ["username":username ,"password":password] , encoding: JSONEncoding.default, headers: nil)
+        Helper.printLogs()
+        manager?.request(constant.login, method: .post, parameters: ["username":username ,"password":password] , encoding: JSONEncoding.default, headers: ["device-type":"mobile"])
             .responseData { serverResponse in
                 DispatchQueue.main.async {
-               
-                debugPrint(serverResponse)
+            
+                    
                 let decoder = JSONDecoder()
                 switch serverResponse.result {
                 case .success(let data):
                     guard self.isValidJson(check: serverResponse.result.value!) == true else {
-                        print("❌ Invalid Json")
+                         Helper.printLogs(with:"❌ Invalid Json")
                         httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
                         return
                     }
                     if serverResponse.response!.statusCode == 200 {
+                        Helper.printLogs(with: "Success")
                         let userdetails = try! decoder.decode(LoginResponse.self, from: data)
-                        print("userdetails \(userdetails)")
-                        
+                         Helper.printLogs(with:"userdetails \(userdetails)")
                             TokenManager.shared.storeNewToken(with: userdetails)
                             successCompletionHandler(userdetails)
                     }
@@ -346,13 +347,15 @@ class ServiceManager: NSObject {
                     {
                         //self.handleHTTPError(from: serverResponse)
                         let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
+                        Helper.printLogs(with: "HTTP Error")
                         if let description = httpError.description {
                             httpErrorHandler(httpError)
-                            print("HTTP error: \(description)")
+                             Helper.printLogs(with:"HTTP error: \(description)")
                         }
                     }
                 case .failure(let error):
-                    print("Request failed with error: \(error)")
+                    Helper.printLogs(with: "Error")
+                     Helper.printLogs(with:"Request failed with error: \(error)")
                     errorHandler(error)
                     //self.showInfoAlertScreen(with: serverResponse.result.error!.localizedDescription, oftype: "INFO")
                 }
@@ -379,7 +382,7 @@ class ServiceManager: NSObject {
                                         switch serverResponse.result {
                                             case .success(let data):
                                                 guard self.isValidJson(check: serverResponse.result.value!) == true else {
-                                                    print("❌ Invalid Json")
+                                                     Helper.printLogs(with:"❌ Invalid Json")
                                                     httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
                                                     return
                                                 }
@@ -392,11 +395,11 @@ class ServiceManager: NSObject {
                                                 let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
                                                 if let description = httpError.description {
                                                     httpErrorHandler(httpError)
-                                                    print("HTTP error: \(description)")
+                                                     Helper.printLogs(with:"HTTP error: \(description)")
                                                 }
                                             }
                                         case .failure(let error):
-                                            print("Request failed with error: \(error)")
+                                             Helper.printLogs(with:"Request failed with error: \(error)")
                                             errorHandler(error)
                                             
                                         }
@@ -422,7 +425,12 @@ class ServiceManager: NSObject {
                                 let parameters: [String: Any] = [
                                     "first_name": details.first_name as Any,
                                     "last_name": details.last_name as Any,
-                                    "user_attributes": ["dob" : details.user_attributes?.dob as Any]
+                                    "user_attributes": ["dob" : details.user_attributes?.dob as Any,
+                                                        "address" : details.user_attributes?.address as Any,
+                                                        "gender" : details.user_attributes?.gender as Any,
+                                                        "phone" : details.user_attributes?.phone as Any,
+                                                        "class_code" : details.user_attributes?.class_code as Any,
+                                    ]
                                     
                                 ]
                                 
@@ -434,7 +442,7 @@ class ServiceManager: NSObject {
                                             switch serverResponse.result {
                                             case .success(let data):
                                                 guard self.isValidJson(check: serverResponse.result.value!) == true else {
-                                                    print("❌ Invalid Json")
+                                                     Helper.printLogs(with:"❌ Invalid Json")
                                                     httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
                                                     return
                                                 }
@@ -447,11 +455,11 @@ class ServiceManager: NSObject {
                                                     let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
                                                     if let description = httpError.description {
                                                         httpErrorHandler(httpError)
-                                                        print("HTTP error: \(description)")
+                                                         Helper.printLogs(with:"HTTP error: \(description)")
                                                     }
                                                 }
                                             case .failure(let error):
-                                                print("Request failed with error: \(error)")
+                                                 Helper.printLogs(with:"Request failed with error: \(error)")
                                                 errorHandler(error)
                                                 
                                             }
@@ -477,7 +485,7 @@ class ServiceManager: NSObject {
         let verifyTime = Date()
         verifyTokenAndProceed(of: uid,
                               onSuccess: {
-                                print("Verify Time  \(Date().timeIntervalSince(verifyTime))")
+                                 Helper.printLogs(with:"Verify Time  \(Date().timeIntervalSince(verifyTime))")
                                 let startTime = Date()
                                 Alamofire.request(String(format: constant.assignments ,uid) , method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
                                     .responseData { serverResponse in
@@ -490,7 +498,7 @@ class ServiceManager: NSObject {
                                         case .success(let data):
                                             
                                             guard self.isValidJson(check: serverResponse.result.value!) == true else {
-                                                print("❌ Invalid Json")
+                                                 Helper.printLogs(with:"❌ Invalid Json")
                                                 httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
                                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                                     completeCompletionHandler()
@@ -499,10 +507,10 @@ class ServiceManager: NSObject {
                                             }
                                             
                                             if serverResponse.response!.statusCode == 200 {
-                                                 print("Response Time  \(Date().timeIntervalSince(startTime))")
+                                                  Helper.printLogs(with:"Response Time  \(Date().timeIntervalSince(startTime))")
                                                 let decodeTime = Date()
                                                 let assignments = try! decoder.decode([FailableDecodable<Assignment>].self, from: data)
-                                                print("Decode Time  \(Date().timeIntervalSince(decodeTime))")
+                                                 Helper.printLogs(with:"Decode Time  \(Date().timeIntervalSince(decodeTime))")
                                                 successCompletionHandler(assignments)
                                             }
                                             else
@@ -510,11 +518,11 @@ class ServiceManager: NSObject {
                                                 let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
                                                 if let description = httpError.description {
                                                     httpErrorHandler(httpError)
-                                                    print("HTTP error: \(description)")
+                                                     Helper.printLogs(with:"HTTP error: \(description)")
                                                 }
                                             }
                                         case .failure(let error):
-                                            print("Request failed with error: \(error)")
+                                             Helper.printLogs(with:"Request failed with error: \(error)")
                                             //self.showInfoAlertScreen(with: serverResponse.result.error!.localizedDescription, oftype: "INFO")
                                             errorHandler(error)
                                         }
@@ -554,7 +562,7 @@ class ServiceManager: NSObject {
                                         case .success(let data):
                                             
                                             guard self.isValidJson(check: serverResponse.result.value!) == true else {
-                                                print("❌ Invalid Json")
+                                                 Helper.printLogs(with:"❌ Invalid Json")
                                                 httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
                                                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                                     completeCompletionHandler()
@@ -572,11 +580,11 @@ class ServiceManager: NSObject {
                                                 let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
                                                 if let description = httpError.description {
                                                     httpErrorHandler(httpError)
-                                                    print("HTTP error: \(description)")
+                                                     Helper.printLogs(with:"HTTP error: \(description)")
                                                 }
                                             }
                                         case .failure(let error):
-                                            print("Request failed with error: \(error)")
+                                             Helper.printLogs(with:"Request failed with error: \(error)")
                                             errorHandler(error)
                                             
                                         }
@@ -614,7 +622,7 @@ class ServiceManager: NSObject {
                                             case .success(let data):
                                                 
                                                 guard self.isValidJson(check: serverResponse.result.value!) == true else {
-                                                    print("❌ Invalid Json")
+                                                     Helper.printLogs(with:"❌ Invalid Json")
                                                     httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
                                                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                                         completeCompletionHandler()
@@ -631,11 +639,11 @@ class ServiceManager: NSObject {
                                                     let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
                                                     if let description = httpError.description {
                                                         httpErrorHandler(httpError)
-                                                        print("HTTP error: \(description)")
+                                                         Helper.printLogs(with:"HTTP error: \(description)")
                                                     }
                                                 }
                                             case .failure(let error):
-                                                print("Request failed with error: \(error)")
+                                                 Helper.printLogs(with:"Request failed with error: \(error)")
                                                 errorHandler(error)
                                                 
                                             }
@@ -669,7 +677,7 @@ class ServiceManager: NSObject {
                     case .success(let data):
                         
                         guard self.isValidJson(check: serverResponse.result.value!) == true else {
-                            print("❌ Invalid Json")
+                             Helper.printLogs(with:"❌ Invalid Json")
                             httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                 completeCompletionHandler()
@@ -686,11 +694,11 @@ class ServiceManager: NSObject {
                             let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
                             if let description = httpError.description {
                                 httpErrorHandler(httpError)
-                                print("HTTP error: \(description)")
+                                 Helper.printLogs(with:"HTTP error: \(description)")
                             }
                         }
                     case .failure(let error):
-                        print("Request failed with error: \(error)")
+                         Helper.printLogs(with:"Request failed with error: \(error)")
                         errorHandler(error)
                         
                     }
@@ -719,7 +727,7 @@ class ServiceManager: NSObject {
                                             case .success(let data):
                                                 
                                                 guard self.isValidJson(check: serverResponse.result.value!) == true else {
-                                                    print("❌ Invalid Json")
+                                                     Helper.printLogs(with:"❌ Invalid Json")
                                                     httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
                                                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                                         completeCompletionHandler()
@@ -736,11 +744,11 @@ class ServiceManager: NSObject {
                                                     let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
                                                     if let description = httpError.description {
                                                         httpErrorHandler(httpError)
-                                                        print("HTTP error: \(description)")
+                                                         Helper.printLogs(with:"HTTP error: \(description)")
                                                     }
                                                 }
                                             case .failure(let error):
-                                                print("Request failed with error: \(error)")
+                                                 Helper.printLogs(with:"Request failed with error: \(error)")
                                                 errorHandler(error)
                                                 
                                                 }
@@ -773,7 +781,7 @@ class ServiceManager: NSObject {
                                             switch serverResponse.result {
                                             case .success(let data):
                                                 guard self.isValidJson(check: serverResponse.result.value!) == true else {
-                                                    print("❌ Invalid Json")
+                                                     Helper.printLogs(with:"❌ Invalid Json")
                                                     httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
                                                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                                         completeCompletionHandler()
@@ -791,11 +799,11 @@ class ServiceManager: NSObject {
                                                    
                                                     if let description = httpError.description {
                                                          httpErrorHandler(httpError)
-                                                        print("HTTP error: \(description)")
+                                                         Helper.printLogs(with:"HTTP error: \(description)")
                                                     }
                                                 }
                                             case .failure(let error):
-                                                print("Request failed with error: \(error)")
+                                                 Helper.printLogs(with:"Request failed with error: \(error)")
                                                 errorHandler(error)
                                                 
                                             }
@@ -828,7 +836,7 @@ class ServiceManager: NSObject {
                                             case .success(let data):
                                                 
                                                 guard self.isValidJson(check: serverResponse.result.value!) == true else {
-                                                    print("❌ Invalid Json")
+                                                     Helper.printLogs(with:"❌ Invalid Json")
                                                     httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
                                                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                                         completeCompletionHandler()
@@ -845,11 +853,11 @@ class ServiceManager: NSObject {
                                                     let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
                                                     if let description = httpError.description {
                                                         httpErrorHandler(httpError)
-                                                        print("HTTP error: \(description)")
+                                                         Helper.printLogs(with:"HTTP error: \(description)")
                                                     }
                                                 }
                                             case .failure(let error):
-                                                print("Request failed with error: \(error)")
+                                                 Helper.printLogs(with:"Request failed with error: \(error)")
                                                 errorHandler(error)
                                                 
                                             }
@@ -887,7 +895,7 @@ class ServiceManager: NSObject {
                                             case .success(let data):
                                                 
                                                 guard self.isValidJson(check: serverResponse.result.value!) == true else {
-                                                    print("❌ Invalid Json")
+                                                     Helper.printLogs(with:"❌ Invalid Json")
                                                     httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
                                                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                                         completeCompletionHandler()
@@ -904,11 +912,11 @@ class ServiceManager: NSObject {
                                                     let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
                                                     if let description = httpError.description {
                                                         httpErrorHandler(httpError)
-                                                        print("HTTP error: \(description)")
+                                                         Helper.printLogs(with:"HTTP error: \(description)")
                                                     }
                                                 }
                                             case .failure(let error):
-                                                print("Request failed with error: \(error)")
+                                                 Helper.printLogs(with:"Request failed with error: \(error)")
                                                 errorHandler(error)
                                                 
                                             }
@@ -1013,13 +1021,14 @@ func createBody(parameters: [String: String],
      //MARK: - Content Apis
     
     func getRootContent(ofStudent uid:String,
+                        for type:String,
                        onSuccess successCompletionHandler: @escaping ([FailableDecodable<ContentGroup>]) -> Void,
                        onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
                        onError errorHandler: @escaping (Error)-> Void )
     {
     verifyTokenAndProceed(of: uid,
                               onSuccess: {
-                                self.manager?.request(String(format:constant.content,uid) , method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
+                                self.manager?.request(String(format:constant.rootContent,uid,type) , method: .get, parameters: [:] , encoding: URLEncoding.default, headers:self.generateAuthHeaders())
             .responseData { serverResponse in
                 DispatchQueue.main.async {
                     let decoder = JSONDecoder()
@@ -1027,13 +1036,14 @@ func createBody(parameters: [String: String],
                     case .success(let data):
                         
                         guard self.isValidJson(check: serverResponse.result.value!) == true else {
-                            print("❌ Invalid Json")
+                             Helper.printLogs(with:"❌ Invalid Json")
                             httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
                             return
                         }
                         
                         if serverResponse.response!.statusCode == 200 {
                             let rootContent = try! decoder.decode([FailableDecodable<ContentGroup>].self, from: data)
+                            Helper.printLogs(with: "Success")
                             successCompletionHandler(rootContent)
                         }
                         else
@@ -1041,11 +1051,13 @@ func createBody(parameters: [String: String],
                             let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
                             if let description = httpError.description {
                                 httpErrorHandler(httpError)
-                                print("HTTP error: \(description)")
+                                Helper.printLogs(with: "HTTP Error")
+                                 Helper.printLogs(with:"HTTP error: \(description)")
                             }
                         }
                     case .failure(let error):
-                        print("Request failed with error: \(error)")
+                        Helper.printLogs(with: "Error")
+                         Helper.printLogs(with:"Request failed with error: \(error)")
                         errorHandler(error)
                         
                     }
@@ -1059,6 +1071,7 @@ func createBody(parameters: [String: String],
     
     func getContentGroup(for id: Int ,
                          ofStudent uid:String,
+                         for type:String,
                          onSuccess successCompletionHandler: @escaping ([FailableDecodable<ContentGroup>]) -> Void,
                          onHTTPError httpErrorHandler:@escaping (HTTPError)-> Void ,
                          onError errorHandler: @escaping (Error)-> Void)
@@ -1068,7 +1081,7 @@ func createBody(parameters: [String: String],
                                 
                                 var url: String?
                                 if id == 0 {
-                                    url = String(format:constant.rootContent,uid)
+                                    url = String(format:constant.rootContent,uid,type)
                                 } else {
                                     url = String(format:constant.contentGroup,uid,id)
                                 }
@@ -1081,25 +1094,28 @@ func createBody(parameters: [String: String],
                     case .success(let data):
                         
                         guard self.isValidJson(check: serverResponse.result.value!) == true else {
-                            print("❌ Invalid Json")
+                             Helper.printLogs(with:"❌ Invalid Json")
                             httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
                             return
                         }
                         
                         if serverResponse.response!.statusCode == 200 {
                             let rootContent = try! decoder.decode([FailableDecodable<ContentGroup>].self, from: data)
+                            Helper.printLogs(with: "Success")
                             successCompletionHandler(rootContent)
                         }
                         else
                         {
                             let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
+                            Helper.printLogs(with: "HTTP Error")
                             if let description = httpError.description {
                                 httpErrorHandler(httpError)
-                                print("HTTP error: \(description)")
+                                 Helper.printLogs(with:"HTTP error: \(description)")
                             }
                         }
                     case .failure(let error):
-                        print("Request failed with error: \(error)")
+                        Helper.printLogs(with: "Error")
+                         Helper.printLogs(with:"Request failed with error: \(error)")
                         errorHandler(error)
                         
                     }
@@ -1127,7 +1143,7 @@ func createBody(parameters: [String: String],
                     case .success(let data):
                         
                         guard self.isValidJson(check: serverResponse.result.value!) == true else {
-                            print("❌ Invalid Json")
+                             Helper.printLogs(with:"❌ Invalid Json")
                             httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
                            
                             return
@@ -1142,11 +1158,11 @@ func createBody(parameters: [String: String],
                             let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
                             if let description = httpError.description {
                                 httpErrorHandler(httpError)
-                                print("HTTP error: \(description)")
+                                 Helper.printLogs(with:"HTTP error: \(description)")
                             }
                         }
                     case .failure(let error):
-                        print("Request failed with error: \(error)")
+                         Helper.printLogs(with:"Request failed with error: \(error)")
                         errorHandler(error)
                         
                     }
@@ -1174,7 +1190,7 @@ func createBody(parameters: [String: String],
                     case .success(let data):
                         
                         guard self.isValidJson(check: serverResponse.result.value!) == true else {
-                            print("❌ Invalid Json")
+                             Helper.printLogs(with:"❌ Invalid Json")
                             httpErrorHandler(HTTPError(with: String(format:"%d", serverResponse.response!.statusCode), and: "Invalid Json"))
                             return
                         }
@@ -1188,11 +1204,11 @@ func createBody(parameters: [String: String],
                             let httpError: HTTPError = try! decoder.decode(HTTPError.self, from: serverResponse.result.value!)
                             if let description = httpError.description {
                                 httpErrorHandler(httpError)
-                                print("HTTP error: \(description)")
+                                 Helper.printLogs(with:"HTTP error: \(description)")
                             }
                         }
                     case .failure(let error):
-                        print("Request failed with error: \(error)")
+                         Helper.printLogs(with:"Request failed with error: \(error)")
                         errorHandler(error)
                         
                     }

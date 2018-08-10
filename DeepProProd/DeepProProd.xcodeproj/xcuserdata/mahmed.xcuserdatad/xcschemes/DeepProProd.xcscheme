@@ -89,14 +89,24 @@
             isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
+            key = "GRPCBASEURL"
+            value = "192.168.71.10:10007"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
+            key = "BASEURL"
+            value = "http://192.168.71.48:10010/api/"
+            isEnabled = "YES">
+         </EnvironmentVariable>
+         <EnvironmentVariable
             key = "REFRESHTOKENEXPIRYTEST"
             value = "0"
             isEnabled = "NO">
          </EnvironmentVariable>
          <EnvironmentVariable
             key = "GRPCON"
-            value = "1"
-            isEnabled = "YES">
+            value = "0"
+            isEnabled = "NO">
          </EnvironmentVariable>
       </EnvironmentVariables>
       <AdditionalOptions>

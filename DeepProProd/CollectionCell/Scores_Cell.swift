@@ -18,6 +18,7 @@ class Scores_Cell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
         print("awakeFromNib")
+        self.layer.cornerRadius = 10
         
     }
 

@@ -9,17 +9,18 @@
 import Foundation
 
 struct Constants {
-    struct api {
-        static let baseUrl = "https://ainfinity.dyndns.org"
-        static let engPort = ":8500"
-        static let speechApi = "/audio/predict"
-    }
+//    struct api {
+//        static let baseUrl = "https://ainfinity.dyndns.org"
+//        static let engPort = ":8500"
+//        static let speechApi = "/audio/predict"
+//    }
     
     struct ServerApi {
 
-        //static let baseUrl = "http://192.168.32.24:8777/v1"
-        
+        //static let baseUrl = "http://ainfinity.dyndns.org:10010/v1"
+       // static let baseUrl = BUILDSETTINGS.baseurl!
         static let baseUrl = "http://192.168.71.10:10010/api/"
+        
         static let userService = "aiuam/v1/"
         static let profile = baseUrl + userService + "users/%@"
         static let login = baseUrl + userService + "users/login"
@@ -27,8 +28,9 @@ struct Constants {
         static let forgotpassword = baseUrl + userService + "users/forget-password"
         static let refreshtoken = baseUrl + userService + "users/%@/token/refresh"
 
-        static let grpcBaseUrl = "192.168.71.10:10007"
-
+        static let grpcBaseUrl =  "192.168.71.10:10007"
+        //static let grpcBaseUrl =  "http://ainfinity.dyndns.org:10007"
+        
         //Assignment
         static let student = "students/"
         static let assignmentService = "assignment-service/v1/"
@@ -46,7 +48,7 @@ struct Constants {
         //Content
         static let contentService = "content-service/v1/"
         static let content  = baseUrl + contentService + "students/%@/contents"
-        static let rootContent  = baseUrl + contentService + "students/%@/contents/"
+        static let rootContent  = baseUrl + contentService + "students/%@/contents?is_assignment=%@"
         static let contentGroup  = baseUrl + contentService + "students/%@/contents/%d"
         static let contentUnit  = baseUrl  + contentService + "students/%@/contents/%d/units"
         static let unitAnswers  = baseUrl  + contentService + "students/%@/units/%d/answers"
@@ -60,7 +62,8 @@ struct Constants {
         static let tokenTest = ProcessInfo.processInfo.environment["TOKENEXPIRYTEST"]
         static let refreshTokenTest = ProcessInfo.processInfo.environment["REFRESHTOKENEXPIRYTEST"]
         static let grpcTest = ProcessInfo.processInfo.environment["GRPCON"]
-        
+        static let baseurl = ProcessInfo.processInfo.environment["BASEURL"]
+        static let grpcbaseurl = ProcessInfo.processInfo.environment["GRPCBASEURL"]
     }
     
     struct Path {

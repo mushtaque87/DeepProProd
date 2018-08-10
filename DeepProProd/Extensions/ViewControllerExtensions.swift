@@ -12,7 +12,8 @@ extension MainViewController
 {
     
     func addSubView(addChildViewController childViewController: UIViewController , on parentViewController: UIViewController   ) {
-      
+        
+        Helper.printLogs()    
         parentViewController.addChildViewController(childViewController)
         parentViewController.view.addSubview(childViewController.view)
         childViewController.didMove(toParentViewController: parentViewController)
@@ -23,6 +24,7 @@ extension MainViewController
 
     func bringViewController(toFront childViewController: UIViewController , on parentViewController: UIViewController)
     {
+        Helper.printLogs()
         parentViewController.view.bringSubview(toFront: childViewController.view)
         self.currentViewController = childViewController
        
@@ -30,6 +32,7 @@ extension MainViewController
     
     func remove(viewController childViewController: UIViewController , from parentViewController: UIViewController)
     {
+        Helper.printLogs()
         childViewController.view.layer.removeAllAnimations()
         childViewController.willMove(toParentViewController: nil)
         childViewController.view.removeFromSuperview()
@@ -37,7 +40,7 @@ extension MainViewController
     }
     
      func removeAllVCFromParentViewController() {
-        
+        Helper.printLogs()
         for childVc in self.childViewControllers
         {
             childVc.view.removeFromSuperview()

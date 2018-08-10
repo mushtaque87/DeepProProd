@@ -20,6 +20,11 @@ enum ResultViewType  :  Int {
     case phenomeTable
 }
 
+enum TaskType : String   {
+    case content
+    case freeText
+}
+
 class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , AVAudioPlayerDelegate, PracticeBoardProtocols {
    
 
@@ -68,6 +73,8 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     //MARK: - ViewLife Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        Helper.printLogs()
         edgesForExtendedLayout = []
         self.navigationItem.title = "Practice"
         phonemeTable.isHidden = true
@@ -103,10 +110,21 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         
         contentView.layer.borderWidth = 1
         resetTextViewContent(textView: textView)
-        
+        Helper.printLogs()
         scoreCollectionView.layer.borderColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!,alpha:1).cgColor
         scoreCollectionView.layer.borderWidth = 1
+    
+        barChartView.layer.borderColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!,alpha:1).cgColor
+        barChartView.layer.borderWidth = 1
         
+        phonemeTable.layer.borderColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!,alpha:1).cgColor
+        phonemeTable.layer.borderWidth = 1
+        
+        
+        lineChartView.layer.borderColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!,alpha:1).cgColor
+        lineChartView.layer.borderWidth = 1
+        
+        Helper.printLogs()
         recordingSession = AVAudioSession.sharedInstance()
         do {
             try recordingSession.setCategory(AVAudioSessionCategoryPlayAndRecord)
@@ -129,7 +147,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         displayResultType(to: currentResultViewType, from: .graph)
         keyboard.setImage(UIImage(named: "pencil-edit.png"), for: .normal)
         audioFolderPath = Helper.getAudioDirectory(for: tasktype)
-        
+        Helper.printLogs()
         let singleTapGesture = UITapGestureRecognizer(target: self, action: #selector(controlKeyboard(sender:)))
         singleTapGesture.numberOfTapsRequired = 2
         textView.addGestureRecognizer(singleTapGesture)
@@ -155,7 +173,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
        // _ = viewModel.isSpeaking.bind(to: expert_AudioButton.rx.image(for: .normal))
         //expert_AudioButton.rx.image().
        
-        
+        Helper.printLogs()
         shadow.shadowColor = UIColor.darkGray
         shadow.shadowBlurRadius = 1.0
         shadow.shadowOffset = CGSize(width: 1, height: 1)
@@ -189,7 +207,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         clearAllAudioFile()
         
         expert_AudioButton.layer.setValue(1001, forKey: "row")
-        setTheme()
+        //setTheme()
     }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -243,7 +261,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        setTheme()
+        //setTheme()
     }
 
     
@@ -857,7 +875,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         if isPlaying == true {
             expert_AudioButton.setImage(UIImage(named: "speakerstop"), for: .normal)
         } else {
-            expert_AudioButton.setImage(UIImage(named: "speakerup"), for: .normal)
+            expert_AudioButton.setImage(UIImage(named: "sound"), for: .normal)
         }
     }
     
@@ -895,7 +913,7 @@ class PracticeBoardViewController : UIViewController, AVAudioRecorderDelegate , 
         if (isTTSSpeaking){
             expert_AudioButton.setImage(UIImage(named: "speakerstop"), for: .normal)
         } else {
-            expert_AudioButton.setImage(UIImage(named: "speakerup"), for: .normal)
+            expert_AudioButton.setImage(UIImage(named: "sound"), for: .normal)
         }
     }
     

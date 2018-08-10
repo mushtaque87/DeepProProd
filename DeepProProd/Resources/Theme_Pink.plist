@@ -30,24 +30,23 @@
 	<integer>12</integer>
 	<key>Font_Color</key>
 	<string>#FFFFFF</string>
-    <key>Score_25</key>
-    <string>#ff5656</string>
-    <key>Score_50</key>
-    <string>#fc9037</string>
-    <key>Score_75</key>
-    <string>#51a5ff</string>
-    <key>Score_100</key>
-    <string>#31a552</string>
+	<key>Score_25</key>
+	<string>#ff5656</string>
+	<key>Score_50</key>
+	<string>#fc9037</string>
+	<key>Score_75</key>
+	<string>#51a5ff</string>
+	<key>Score_100</key>
+	<string>#31a552</string>
 	<key>ContentCell_Backgroundcolor</key>
 	<string>#EA6695</string>
-    <key>Navigationbar_tintColor</key>
-    <string>#FFFFFF</string>
-    <key>Units_Assigned</key>
-    <string>#f46942</string>
-    <key>Units_Submitted</key>
-    <string>#9499a8</string>
-    <key>Units_Reviewed</key>
-    <string>#29c45f</string>
-    
+	<key>Navigationbar_tintColor</key>
+	<string>#FFFFFF</string>
+	<key>Units_Assigned</key>
+	<string>#ff5656</string>
+	<key>Units_Submitted</key>
+	<string>#9499a8</string>
+	<key>Units_Reviewed</key>
+	<string>#29c45f</string>
 </dict>
 </plist>

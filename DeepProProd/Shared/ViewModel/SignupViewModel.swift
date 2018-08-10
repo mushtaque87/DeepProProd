@@ -286,9 +286,9 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
         else if indexPath.row == SignUpDetails.standard.rawValue {
             delegate?.showEditInfoScreen(for: .standard)
         }
-        else if indexPath.row == SignUpDetails.section.rawValue {
-            delegate?.showEditInfoScreen(for: .section)
-        }
+//        else if indexPath.row == SignUpDetails.section.rawValue {
+//            delegate?.showEditInfoScreen(for: .section)
+//        }
     }
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -312,7 +312,7 @@ class SignupViewModel: NSObject,UITextFieldDelegate , UITableViewDelegate , UITa
     {
         return SignUpRequest(email: email,
                              first_name: firstname, last_name: lastname,
-                             password: password, user_attributes:User_attributes(dob: dob))
+                             password: password, user_attributes:User_attribute(dob: ""))
     }
     
     

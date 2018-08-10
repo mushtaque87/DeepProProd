@@ -266,16 +266,16 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
                 cell.valueTextField.tag = indexPath.row
                 switch Settings.sharedInstance.themeType {
                 case 0:
-                    cell.valueTextField.text = "Default Blue"
+                    cell.valueTextField.text = "Default"
                     break
                 case 1:
-                    cell.valueTextField.text = "Ocean Green"
+                    cell.valueTextField.text = "Blue"
                     break
                 case 2:
-                    cell.valueTextField.text = "Red Fox"
+                    cell.valueTextField.text = "Red"
                     break
                 default :
-                    cell.valueTextField.text = "Moonlight"
+                    cell.valueTextField.text = "Pink"
                     break
                 }
                // cell.selectionStyle = .none
@@ -338,6 +338,7 @@ class SettingsViewModel: NSObject, UITableViewDelegate, UITableViewDataSource {
     return UITableViewCell()
     }
 
+   
    
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
         {

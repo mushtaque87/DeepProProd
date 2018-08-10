@@ -42,11 +42,11 @@
 	<string>#2C354B</string>
 	<key>Navigationbar_tintColor</key>
 	<string>#FFFFFF</string>
-    <key>Units_Assigned</key>
-    <string>#f46942</string>
-    <key>Units_Submitted</key>
-    <string>#9499a8</string>
-    <key>Units_Reviewed</key>
-    <string>#29c45f</string>
+	<key>Units_Assigned</key>
+	<string>#ff5656</string>
+	<key>Units_Submitted</key>
+	<string>#9499a8</string>
+	<key>Units_Reviewed</key>
+	<string>#29c45f</string>
 </dict>
 </plist>

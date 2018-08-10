@@ -16,10 +16,7 @@ enum AssignmentType : String   {
     case submitted = "SUBMITTED"
 }
 
-enum TaskType : String   {
-    case content
-    case freeText
-}
+
 
 
 class AssignmentModel: NSObject, UITableViewDataSource, UITableViewDelegate {

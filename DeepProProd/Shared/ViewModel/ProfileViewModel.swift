@@ -16,8 +16,8 @@ enum DetailType : Int  {
     case dob
     case gender
     case standard
-    case section
     case contact
+    case address
 }
 
 enum InfoType : Int  {
@@ -103,7 +103,7 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                 cell.firstName.textColor = UIColor.black
                 cell.lastName.textColor = UIColor.black
                 cell.profileImageButton.addTarget(self , action: #selector(editProfilePic), for: .touchUpInside)
-                cell.profileImageButton.setImage(details?.profile_image, for: .normal)
+               // cell.profileImageButton.setImage(details?.profile_image, for: .normal)
                 
                 return cell
             default:
@@ -166,7 +166,7 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         //let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
                     cell.titleLabel.text = "Gender"
                     cell.valueTextField.delegate = self
-                    if let gender = details?.gender{
+                    if let gender = details?.user_attributes?.gender{
                         cell.valueTextField.text = gender
                     }
                     configureCells(for: cell)
@@ -187,7 +187,7 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         return cell
             case .standard:
                        // let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
-                if let standard = details?.standard{
+                if let standard = details?.user_attributes?.class_code{
                     cell.valueTextField.text = standard
                 }
                 cell.titleLabel.text = "Class"
@@ -208,12 +208,12 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                         */
                 
                         return cell
-            case .section:
+            case .address:
                         // let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
-                cell.titleLabel.text = "Section"
+                cell.titleLabel.text = "Address"
                 cell.valueTextField.delegate = self
                 cell.valueTextField.tag = indexPath.row
-                cell.valueTextField.text = details?.section
+                cell.valueTextField.text = details?.user_attributes?.address
                 configureCells(for: cell)
                 /*
                         cell.valueTextField.isEnabled = isEditEnabled
@@ -230,7 +230,7 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
                        // let cell  = tableView.dequeueReusableCell(withIdentifier: "details", for: indexPath) as! DetailCell
                 cell.titleLabel.text = "Contact"
                 cell.valueTextField.delegate = self
-                cell.valueTextField.text = details?.contact
+                cell.valueTextField.text = details?.user_attributes?.phone
                 cell.valueTextField.tag = indexPath.row
                 configureCells(for: cell)
                 
@@ -273,35 +273,67 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
 //
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
        
-        if indexPath.section == 0 {
+        switch indexPath.section {
+        case 0:
+            switch indexPath.row {
+            case 0 :
                         delegate?.showEditInfoScreen(for: .name)
-                    } else {
-            if indexPath.row == 1 {
-                let currentDate = Date()
-                var dateComponents = DateComponents()
-                dateComponents.year = 100
-                let threeMonthAgo = Calendar.current.date(byAdding: dateComponents, to: currentDate)
-                
-                let datePicker = DatePickerDialog(textColor: .black,
-                                                  buttonColor: .black,
-                                                  font: UIFont.boldSystemFont(ofSize: 17),
-                                                  showCancelButton: true)
-                datePicker.show("Date of Birth",
-                                doneButtonTitle: "Done",
-                                cancelButtonTitle: "Cancel",
-                                minimumDate: threeMonthAgo,
-                                maximumDate: currentDate,
-                                datePickerMode: .date) { (date) in
-                                    if let dt = date {
-                                        let formatter = DateFormatter()
-                                        formatter.dateFormat = "dd-MM-YYYY"
-                                        let cell  = tableView.cellForRow(at: IndexPath(row: indexPath.row, section: indexPath.section))! as! DetailCell
-
-                                        cell.valueTextField.text = formatter.string(from: dt)
-                                        self.details?.user_attributes?.dob = formatter.string(from: dt)
-                                    }
-                }
+                break
+            default:
+                break
             }
+            default:
+            if let detailtype = DetailType(rawValue: indexPath.row) {
+                    switch detailtype {
+                    case .email:
+                        break
+                
+                    case .dob:
+                        /*
+                        let currentDate = Date()
+                        var dateComponents = DateComponents()
+                        dateComponents.year = 100
+                        let threeMonthAgo = Calendar.current.date(byAdding: dateComponents, to: currentDate)
+                        
+                        let datePicker = DatePickerDialog(textColor: .black,
+                                                          buttonColor: .black,
+                                                          font: UIFont.boldSystemFont(ofSize: 17),
+                                                          showCancelButton: true)
+                        datePicker.show("Date of Birth",
+                                        doneButtonTitle: "Done",
+                                        cancelButtonTitle: "Cancel",
+                                        minimumDate: threeMonthAgo,
+                                        maximumDate: currentDate,
+                                        datePickerMode: .date) { (date) in
+                                            if let dt = date {
+                                                let formatter = DateFormatter()
+                                                formatter.dateFormat = "dd-MM-YYYY"
+                                                let cell  = tableView.cellForRow(at: IndexPath(row: indexPath.row, section: indexPath.section))! as! DetailCell
+                                                
+                                                cell.valueTextField.text = formatter.string(from: dt)
+                                                self.details?.user_attributes?.dob = formatter.string(from: dt)
+                                            }
+                        }
+ */
+                                            break
+
+                    case .gender:
+                       // delegate?.showEditInfoScreen(for: .gender)
+                        break
+
+                    case .standard:
+                        //delegate?.showEditInfoScreen(for: .standard)
+                        break
+
+                    case .contact:
+                        delegate?.showEditInfoScreen(for: .contact)
+                        break
+
+                    case .address:
+                        delegate?.showEditInfoScreen(for: .address)
+                        break
+
+                 /*
             else if indexPath.row == 2 {
                             delegate?.showEditInfoScreen(for: .gender)
                         }
@@ -313,8 +345,12 @@ class ProfileViewModel: NSObject, UITableViewDelegate , UITableViewDataSource,  
             }
             else if indexPath.row == 5 {
                 delegate?.showEditInfoScreen(for: .contact)
-            }
+            }*/
                 }
+                
+            }
+            
+        }
     }
     
     

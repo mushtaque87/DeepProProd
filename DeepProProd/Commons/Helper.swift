@@ -35,6 +35,7 @@ class Helper: NSObject {
     }
     
     static func updateFileFromBundle(to directory:() -> NSString, filename file:String , ofType type:String) {
+       
         let path = directory().appendingPathComponent(String(format: "%@.%@",file, type))
         guard let bundlePath = Bundle.main.path(forResource: file, ofType: type) else { return }
 
@@ -145,6 +146,9 @@ static func createDirectory(with folderName:String)
     
     }
     
+    
+    
+    
     /*
  static func getAssignmentList() throws -> Assignments  {
         let filePath = Bundle.main.url(forResource: "AssignmentList", withExtension: "txt")
@@ -231,6 +235,10 @@ static func createDirectory(with folderName:String)
         
         print("Error \(String(describing: httpError))")
         // return httpError!
+    }
+    
+    static func printLogs(with value:String = " ", file: String = #file,  methodName:String = #function ,  line: Int = #line ) {
+        NSLog("NSLog %@|%@ - %d : %@",methodName,file,line,value)
     }
     
 }

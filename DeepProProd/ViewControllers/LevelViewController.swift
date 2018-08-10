@@ -12,7 +12,7 @@ import MBProgressHUD
 class LevelViewController: UIViewController, CategoriesProtocol {
 
     @IBOutlet weak var backgroundImage: UIImageView!
-    @IBOutlet var viewModel: LevelViewModel!
+    lazy var viewModel =  LevelViewModel()
     @IBOutlet weak var levelTableView: UITableView!
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -34,6 +34,8 @@ class LevelViewController: UIViewController, CategoriesProtocol {
         //fetchCategories()
         
         self.levelTableView.register(UINib(nibName: "AssignmentTableViewCell", bundle: nil), forCellReuseIdentifier: "assignmentListCell")
+        self.levelTableView.delegate = viewModel
+        self.levelTableView.dataSource = viewModel
         viewModel.delegate = self
         
         self.bredCrumCollectionView.register(UINib(nibName: "CrumTitle_Cell", bundle: nil), forCellWithReuseIdentifier: "crumTitle")
@@ -43,25 +45,23 @@ class LevelViewController: UIViewController, CategoriesProtocol {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         viewModel.currentGroupId = 0
-        viewModel.crumList.append(Crums(id: 0, title: "Root"))
+        viewModel.crumList.append(Crums(id: 0, title: (viewModel.contentType == .content ? "Contents" : "Assignments")))
         fetchRootContent()
         
         bredCrumCollectionView.collectionViewLayout = layout
-        //bredCrumCollectionView.contentSize = CGSize(width: 1000.0, height: bredCrumCollectionView.frame.size.height)
         bredCrumCollectionView.delegate = viewModel
         bredCrumCollectionView.dataSource = viewModel
-       // bredCrumCollectionView.backgroundColor = UIColor.white
         bredCrumCollectionView.layer.borderColor = UIColor.white.cgColor
         bredCrumCollectionView.layer.borderWidth = 4
         
         levelTableView.backgroundColor = UIColor.clear
         self.levelTableView.addSubview(self.refreshControl)
-        self.navigationItem.title = "Contents"
+        self.navigationItem.title = (viewModel.contentType == .content ? "   Contents" : "Assignments")
         refreshUI()
         
         self.backgroundImage.isHidden = true
         
-        
+        self.view.backgroundColor = UIColor.hexStringToUIColor(hex: "#EFEFF4")
         edgesForExtendedLayout = []
         
         
@@ -69,11 +69,13 @@ class LevelViewController: UIViewController, CategoriesProtocol {
         shadow.shadowBlurRadius = 1.0
         shadow.shadowOffset = CGSize(width: 1, height: 1)
         
+        Helper.printLogs()
     }
 
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+        Helper.printLogs()
         // Dispose of any resources that can be recreated.
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -114,7 +116,7 @@ class LevelViewController: UIViewController, CategoriesProtocol {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         
-        
+        Helper.printLogs(with: "Color Bar")
         let colors = ThemeManager.sharedInstance.color
         let barlayer = colors?.gl
         barlayer?.frame = CGRect(x: 0, y:0, width: UIApplication.shared.statusBarFrame.width, height: UIApplication.shared.statusBarFrame.height + (self.navigationController?.navigationBar.frame.height)!)
@@ -127,12 +129,12 @@ class LevelViewController: UIViewController, CategoriesProtocol {
 
     func fetchRootContent()
     {
-        
+        Helper.printLogs(with: "Fetch Root Content")
         let hud = MBProgressHUD.showAdded(to: self.view, animated: true)
         hud.mode = MBProgressHUDMode.indeterminate
         hud.label.text = "Fetching assignments. Please wait"
         
-        ServiceManager().getRootContent(ofStudent: UserDefaults.standard.string(forKey: "uid")! , onSuccess: { assignmentlist in
+        ServiceManager().getRootContent(ofStudent: UserDefaults.standard.string(forKey: "uid")!, for: (viewModel.contentType == .content ? "false" : "true") , onSuccess: { assignmentlist in
             self.viewModel.contentList = assignmentlist
             self.levelTableView.reloadData()
             self.levelTableView.reloadData()
@@ -158,7 +160,7 @@ class LevelViewController: UIViewController, CategoriesProtocol {
         hud.mode = MBProgressHUDMode.indeterminate
         hud.label.text = "Fetching Content. Please wait"
         
-        ServiceManager().getContentGroup(for: id, ofStudent: UserDefaults.standard.string(forKey: "uid")! , onSuccess: { assignmentlist in
+        ServiceManager().getContentGroup(for: id, ofStudent: UserDefaults.standard.string(forKey: "uid")!, for: (viewModel.contentType == .content ? "false" : "true") , onSuccess: { assignmentlist in
             self.viewModel.contentList.removeAll()
             self.viewModel.contentList = assignmentlist
             self.levelTableView.scrollsToTop = true

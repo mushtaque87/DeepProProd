@@ -94,6 +94,9 @@ class SettingSelectionTableViewController: UITableViewController {
             switch settingtype {
             case .language:
                 cell.textLabel?.text = settingTypeDetails["Language"]?[indexPath.row]
+                if(cell.textLabel?.text == Settings.sharedInstance.language){
+                    cell.accessoryType = .checkmark
+                }
             case .themetype:
                 cell.textLabel?.text = settingTypeDetails["Theme"]?[indexPath.row]
                 if (indexPath.row == 0) {
@@ -108,8 +111,16 @@ class SettingSelectionTableViewController: UITableViewController {
                 }else {
                     setCellGradient(for: cell, with: .pink)
                 }
+                if(indexPath.row ==  Settings.sharedInstance.themeType)
+                {
+                    cell.accessoryType = .checkmark
+                }
             case .graphtype:
                 cell.textLabel?.text = settingTypeDetails["Graph Type"]?[indexPath.row]
+                if(indexPath.row ==  Settings.sharedInstance.graphType)
+                {
+                    cell.accessoryType = .checkmark
+                }
             case .logout:
                 break
             }
@@ -209,7 +220,7 @@ class SettingSelectionTableViewController: UITableViewController {
         if let rootVc: MainViewController = UIApplication.rootViewController() as? MainViewController
         {
             // rootVc.remove(viewController: rootVc.tabBar_ViewController , from: rootVc)
-            rootVc.tabBar_ViewController.updateTabBarColor()
+            rootVc.tabBar_ViewController?.updateTabBarColor()
         }
         
         

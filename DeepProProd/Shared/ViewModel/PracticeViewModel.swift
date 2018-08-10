@@ -619,12 +619,13 @@ class PracticeViewModel: NSObject,
    
 }
 
+/*
 extension UITextView {
 
     override open func canPerformAction(_ action: Selector, withSender sender: Any?) -> Bool {
 
         
-      
+        
         UIMenuController.shared.isMenuVisible = false
         
        
@@ -636,5 +637,6 @@ extension UITextView {
         
         return false
 }
-    
+ 
 }
+ */

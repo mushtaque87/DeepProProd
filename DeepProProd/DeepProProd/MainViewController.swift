@@ -19,7 +19,7 @@ class MainViewController: UIViewController {
     open var currentViewController : UIViewController?
     open var previousViewController : UIViewController?
     let disposeBag = DisposeBag()
-    
+    var  tabBar_ViewController : TabBarControllerViewController?
     /*
     lazy var   tabBar_ViewController: TabBarControllerViewController = {
        var viewcontroller = TabBarControllerViewController(nibName: "TabBarControllerViewController", bundle: nil)
@@ -39,10 +39,10 @@ class MainViewController: UIViewController {
         
     }()
     
-   lazy var  tabBar_ViewController: TabBarControllerViewController = {
-       var viewcontroller   = TabBarControllerViewController(nibName: "TabBarControllerViewController", bundle: nil)
-        return viewcontroller
-    }()
+//   lazy var  tabBar_ViewController: TabBarControllerViewController = {
+//       var viewcontroller   = TabBarControllerViewController(nibName: "TabBarControllerViewController", bundle: nil)
+//        return viewcontroller
+//    }()
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -56,6 +56,7 @@ class MainViewController: UIViewController {
         
     }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -63,7 +64,7 @@ class MainViewController: UIViewController {
         
         
         
-        
+        Helper.printLogs()
         //self.addSubView(addChildViewController: tabBar, on: self)
        
         ThemeManager.sharedInstance.setGradientLayer(with: true)
@@ -86,14 +87,9 @@ class MainViewController: UIViewController {
                 showLoginViewController()
             } else {
                 print("Tab Bar Controller")
-               // let tabBar_ViewController: TabBarControllerViewController = TabBarControllerViewController(nibName: "TabBarControllerViewController", bundle: nil)
-                //self.addSubView(addChildViewController: tabBar_ViewController, on: self)
+               
                 addTabBarControllers()
-               // let menuViewController : Menu_SH_ViewController = Menu_SH_ViewController(nibName: "Menu_SH_ViewController", bundle: nil)
-               //  self.addSubView(addChildViewController: menuViewController, on: self)
-                
-                //let levelViewController : Level_SHViewController =  Level_SHViewController(nibName: "Level_SHViewController", bundle: nil)
-               // self.addSubView(addChildViewController: levelViewController, on: self)
+               
             }
         
         }
@@ -117,13 +113,13 @@ class MainViewController: UIViewController {
              tabBar_ViewController = TabBarControllerViewController(nibName: "TabBarControllerViewController", bundle: nil)
             self.addSubView(addChildViewController: tabBar_ViewController!, on: self)
         }*/
-        
+        Helper.printLogs(with: "Adding Tab Bar")
         tabBar_ViewController = TabBarControllerViewController(nibName: "TabBarControllerViewController", bundle: nil)
-        self.addSubView(addChildViewController: tabBar_ViewController, on: self)
+        self.addSubView(addChildViewController: tabBar_ViewController!, on: self)
     }
     
     func showLoginViewController() {
-        
+        Helper.printLogs()
         
        /*
         if let loginVC = login_ViewController, self.currentViewController ==  login_ViewController
@@ -146,6 +142,7 @@ class MainViewController: UIViewController {
         //let login_ViewController  = Login_SH_ViewController(nibName: "Login_SH_ViewController", bundle: nil)
         //login_ViewController?.view.frame = self.view.frame
         
+        Helper.printLogs()
         let navigationController = UINavigationController(rootViewController: login_ViewController)
         //self.addChildViewController(navigationController)
         self.addSubView(addChildViewController: navigationController, on: self)

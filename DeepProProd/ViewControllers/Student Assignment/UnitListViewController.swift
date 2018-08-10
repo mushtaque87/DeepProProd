@@ -49,7 +49,8 @@ class UnitListViewController: UIViewController,unitsProtocols {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-       setTheme()
+       //setTheme()
+        //viewDidLayoutSubviews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -62,8 +63,8 @@ class UnitListViewController: UIViewController,unitsProtocols {
     }
     
     func setTheme() {
-        /*let colors = ThemeManager.sharedInstance.color
-        self.view.backgroundColor = UIColor.clear
+        /* let colors = ThemeManager.sharedInstance.color
+       self.view.backgroundColor = UIColor.clear
         let backgroundLayer = colors?.gl
         backgroundLayer?.frame = self.view.bounds
         self.view.layer.insertSublayer(backgroundLayer!, at: 0)*/
@@ -71,11 +72,27 @@ class UnitListViewController: UIViewController,unitsProtocols {
         
        // self.view.backgroundColor = UIColor.hexStringToUIColor(hex:  ThemeManager.sharedInstance.backgroundColor_Light!)
         
-        self.navigationController?.navigationBar.barTintColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
+       // self.navigationController?.navigationBar.barTintColor = UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.backgroundColor_Regular!)
         
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!)]
         
         // self.view.layoutSublayers(of: backgroundLayer!)
+        
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        
+        //  let navcolor = colors?.copy() as! Colors
+         let colors = ThemeManager.sharedInstance.color
+         let navgradient = CAGradientLayer()
+        //let navgradient = ThemeManager.sharedInstance.color?.gl
+        // let barlayer = navcolors.gl
+         navgradient.colors = [colors?.colorTop,colors?.colorBottom]
+        navgradient.frame = CGRect(x: 0, y:0, width: UIApplication.shared.statusBarFrame.width, height: UIApplication.shared.statusBarFrame.height + (self.navigationController?.navigationBar.frame.height)!)
+        // (self.navigationController?.navigationBar.bounds)!
+        self.navigationController?.view.layer.insertSublayer(navgradient, at: 1)
+        
+        
     }
     
     

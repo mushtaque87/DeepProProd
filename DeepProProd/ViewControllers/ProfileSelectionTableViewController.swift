@@ -9,11 +9,11 @@
 import UIKit
 
 enum EditProfileType : Int  {
-    case name
-    case gender
-    case standard
-    case section
-    case contact
+    case name = 0
+    case gender = 2
+    case standard = 3
+    case contact = 4
+    case address = 5
 }
 
 enum EditProfileScreenType : Int  {
@@ -40,7 +40,7 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-         //self.navigationItem.rightBarButtonItem = self.editButtonItem
+        //self.navigationItem.rightBarButtonItem =varlf.editButtonItem
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(saveDetails(_:)))
         self.navigationItem.rightBarButtonItem?.isEnabled = false
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancel(_:)))
@@ -68,8 +68,8 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
                 return "Select Class"
             case .contact:
                 return "Enter Phone number"
-            case .section:
-                return "Select Section"
+            case .address:
+                return "Enter Address"
             }
         }
         return ""
@@ -86,7 +86,7 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
                 return 50
             case .contact:
                 return 60
-            case .section:
+            case .address:
                 return 50
                 }
         }
@@ -110,8 +110,8 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
                 return  profileTypeDetails["Standard"]!.count
             case .contact:
                 return 1
-            case .section:
-                return profileTypeDetails["Section"]!.count
+            case .address:
+                return 1
             }
         }
         return 1
@@ -138,11 +138,11 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
             case .gender:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
                 cell.titleLbl.text = profileTypeDetails["Gender"]?[indexPath.row]
-                cell.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                //cell.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                 cell.contentView.backgroundColor = UIColor.clear
                 cell.tintColor = UIColor.white
                 cell.selectionStyle = .none
-                if(cell.titleLbl.text == details?.gender){
+                if(cell.titleLbl.text == details?.user_attributes?.gender){
                     cell.accessoryType = .checkmark
                 }
                 configureCells(for: cell)
@@ -151,10 +151,10 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
             case .standard:
                 let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
                 cell.titleLbl.text = profileTypeDetails["Standard"]?[indexPath.row]
-                cell.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
+                //cell.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
                 cell.tintColor = UIColor.white
                 cell.contentView.backgroundColor = UIColor.clear
-                if(cell.titleLbl.text == details?.standard){
+                if(cell.titleLbl.text == details?.user_attributes?.class_code){
                     cell.accessoryType = .checkmark
                 }
                 cell.selectionStyle = .none
@@ -165,20 +165,18 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
                 let cell = tableView.dequeueReusableCell(withIdentifier: "nameCell", for: indexPath) as! NameTableViewCell
                 cell.textFieldOne.tag = indexPath.row
                 cell.textFieldOne.delegate = self
+                cell.textFieldOne.text = details?.user_attributes?.phone
                 cell.textFieldOne.becomeFirstResponder()
                cell.selectionStyle = .none
                 configureCells(for: cell)
                 return cell
                 
-            case .section:
-                let cell = tableView.dequeueReusableCell(withIdentifier: "labelCell", for: indexPath) as! LabelTableViewCell
-                cell.titleLbl.text = profileTypeDetails["Section"]?[indexPath.row]
-                cell.backgroundColor = UIColor(red: 38/255, green: 78/255, blue: 142/255, alpha: 0.9)
-                cell.contentView.backgroundColor = UIColor.clear
-                cell.tintColor = UIColor.white
-                if(cell.titleLbl.text == details?.section){
-                    cell.accessoryType = .checkmark
-                }
+            case .address:
+                let cell = tableView.dequeueReusableCell(withIdentifier: "nameCell", for: indexPath) as! NameTableViewCell
+                cell.textFieldOne.tag = indexPath.row
+                cell.textFieldOne.text = details?.user_attributes?.address
+                cell.textFieldOne.delegate = self
+                cell.textFieldOne.becomeFirstResponder()
                 cell.selectionStyle = .none
                 configureCells(for: cell)
                 return cell
@@ -198,19 +196,19 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
             case .gender :
                 tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
                 deselectOtherRows(except: indexPath.row)
-                details?.gender = profileTypeDetails["Gender"]?[indexPath.row]
+                details?.user_attributes?.gender = profileTypeDetails["Gender"]?[indexPath.row]
                 signUpDetails?.gender  = profileTypeDetails["Gender"]?[indexPath.row]
             case .standard:
                 tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
                 deselectOtherRows(except: indexPath.row)
-                details?.standard = profileTypeDetails["Standard"]?[indexPath.row]
+                details?.user_attributes?.class_code = profileTypeDetails["Standard"]?[indexPath.row]
                 signUpDetails?.standard = profileTypeDetails["Standard"]?[indexPath.row]
             case .contact: break
-            case .section:
-                tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-                deselectOtherRows(except: indexPath.row)
-                details?.section = profileTypeDetails["Section"]?[indexPath.row]
-                signUpDetails?.section =  profileTypeDetails["Section"]?[indexPath.row]
+            case .address:break
+//                tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+//                deselectOtherRows(except: indexPath.row)
+//                details?.user_attributes?.class_code = profileTypeDetails["Section"]?[indexPath.row]
+//                signUpDetails?.section =  profileTypeDetails["Section"]?[indexPath.row]
             }
         }
     }
@@ -286,10 +284,11 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
                 break
             case .contact:
                 if(textField.tag == 0 ){
-                    details?.contact = textField.text
+                    details?.user_attributes?.phone = textField.text
                 }
                 break
-            case .section:
+            case .address:
+                details?.user_attributes?.address = textField.text
                 break
             }
         }
@@ -343,8 +342,8 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
                 case .contact:
                     delegate?.saveEditedDetails(for: .contact, with: details!)
                     break
-                case .section:
-                    delegate?.saveEditedDetails(for: .section , with: details!)
+                case .address:
+                    delegate?.saveEditedDetails(for: .address  , with: details!)
                 }
             }
         default:
@@ -360,8 +359,8 @@ class ProfileSelectionTableViewController: UITableViewController, UITextFieldDel
                     break
                 case .contact:
                     break
-                case .section:
-                    signUpDelegate?.saveEditedDetails(for: .section, with: signUpDetails!)
+                case .address:
+                    signUpDelegate?.saveEditedDetails(for: .address, with: signUpDetails!)
                 }
             }
         }
