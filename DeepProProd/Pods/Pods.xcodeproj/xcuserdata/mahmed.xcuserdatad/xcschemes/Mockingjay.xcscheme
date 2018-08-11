@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5BAACC736A5215103E10E2DC0A74FDCD"
+               BlueprintIdentifier = "A23FDDD5CF5044DF8E748E9CECEC31FE"
                BlueprintName = "Mockingjay"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "Mockingjay.framework">

@@ -12,6 +12,8 @@ class SettingSelectionTableViewController: UITableViewController {
     var settingtype : SettingType?
     var settingTypeDetails = ["Language": ["English","Arabic"], "Theme":["Grey (Default)","Blue","Red", "Pink"] , "Graph Type":["Bar","Line"] , "Gender":["Male" ,"Female"]]
     var selectedIndex : IndexPath?
+    lazy var shadow = NSShadow()
+    
     
     // MARK: - View Life Cycle
     override func viewDidLoad() {
@@ -31,7 +33,28 @@ class SettingSelectionTableViewController: UITableViewController {
         
         self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
     }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        setTheme()
+    }
 
+    func setTheme() {
+
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.hexStringToUIColor(hex: ThemeManager.sharedInstance.font_Color!),NSAttributedStringKey.shadow:shadow]
+        
+        
+        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        
+        
+        let colors = ThemeManager.sharedInstance.color
+        let barlayer = colors?.gl
+        barlayer?.frame = CGRect(x: 0, y:0, width: UIApplication.shared.statusBarFrame.width, height: UIApplication.shared.statusBarFrame.height + (self.navigationController?.navigationBar.frame.height)!)
+        // (self.navigationController?.navigationBar.bounds)!
+        self.navigationController?.view.layer.insertSublayer(barlayer!, at: 1)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

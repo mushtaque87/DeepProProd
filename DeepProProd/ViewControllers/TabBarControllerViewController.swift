@@ -60,7 +60,7 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
         let assignmentViewController : LevelViewController =  LevelViewController(nibName: "LevelViewController", bundle: nil)
         assignmentViewController.viewModel.contentType = .assignment
         assignmemntNavigationController.viewControllers = [assignmentViewController]
-        assignmemntNavigationController.tabBarItem = UITabBarItem(title: "Assignment", image: UIImage(named: "list.png"), tag: 1)
+        assignmemntNavigationController.tabBarItem = UITabBarItem(title: "Assignments", image: UIImage(named: "list.png"), tag: 1)
         
             let practiceBoardNavigationController = UINavigationController()
 
@@ -70,7 +70,7 @@ class TabBarControllerViewController: UITabBarController , UITabBarControllerDel
             Helper.printLogs()
             practiceBoardNavigationController.viewControllers = [practiceBoardViewController]
             Helper.printLogs()
-            practiceBoardNavigationController.tabBarItem = UITabBarItem(title: "Practice", image: UIImage(named: "line-chart.png"), tag: 2)
+            practiceBoardNavigationController.tabBarItem = UITabBarItem(title: "Practices", image: UIImage(named: "line-chart.png"), tag: 2)
  
             let settingNavigationController = UINavigationController()
             let settingsViewController = SettingsViewController(nibName: "SettingsViewController", bundle: nil)

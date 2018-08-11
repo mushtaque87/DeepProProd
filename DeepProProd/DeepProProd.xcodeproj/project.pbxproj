@@ -237,6 +237,7 @@
 /* Begin PBXFileReference section */
 		16658320066D22BF5A1B9D18 /* Pods_DeepProProdTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DeepProProdTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		29281F83558DA47BDE96940E /* Pods-DeepProProd.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeepProProd.release.xcconfig"; path = "Pods/Target Support Files/Pods-DeepProProd/Pods-DeepProProd.release.xcconfig"; sourceTree = "<group>"; };
+		485F58EADE7D515D85639CA1 /* Pods-DeepProProdTests.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeepProProdTests.app store.xcconfig"; path = "Pods/Target Support Files/Pods-DeepProProdTests/Pods-DeepProProdTests.app store.xcconfig"; sourceTree = "<group>"; };
 		5001F788208CAD0F00451031 /* PracticeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PracticeTest.swift; sourceTree = "<group>"; };
 		5001F795208CB2F800451031 /* getPracticeUnits.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = getPracticeUnits.txt; sourceTree = "<group>"; };
 		5001F796208CB2F900451031 /* getCategory.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = getCategory.txt; sourceTree = "<group>"; };
@@ -421,9 +422,12 @@
 		50FCAF1220F7644800DC7D12 /* InfoTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoTableViewCell.xib; sourceTree = "<group>"; };
 		50FF20372091B09A0026199F /* Scores_Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scores_Cell.swift; sourceTree = "<group>"; };
 		50FF20382091B09A0026199F /* Scores_Cell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Scores_Cell.xib; sourceTree = "<group>"; };
+		712628F57A535C260B79D797 /* Pods-DeepProProdTests.prod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeepProProdTests.prod.xcconfig"; path = "Pods/Target Support Files/Pods-DeepProProdTests/Pods-DeepProProdTests.prod.xcconfig"; sourceTree = "<group>"; };
+		77E15386E7F4C04373AFEA2E /* Pods-DeepProProd.prod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeepProProd.prod.xcconfig"; path = "Pods/Target Support Files/Pods-DeepProProd/Pods-DeepProProd.prod.xcconfig"; sourceTree = "<group>"; };
 		799A9D798938B6A0F2C2BB87 /* Pods_DeepProProd.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DeepProProd.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8CD3FE42B982AC4DEFDBB233 /* Pods-DeepProProdTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeepProProdTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-DeepProProdTests/Pods-DeepProProdTests.release.xcconfig"; sourceTree = "<group>"; };
 		C027E58B1B6F4F7E8E7AFF1B /* Pods-DeepProProd.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeepProProd.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DeepProProd/Pods-DeepProProd.debug.xcconfig"; sourceTree = "<group>"; };
+		C345942732CB1E4DF4EDFD50 /* Pods-DeepProProd.app store.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeepProProd.app store.xcconfig"; path = "Pods/Target Support Files/Pods-DeepProProd/Pods-DeepProProd.app store.xcconfig"; sourceTree = "<group>"; };
 		E10CBF255A2D3D6FE4849140 /* Pods-DeepProProdTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeepProProdTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-DeepProProdTests/Pods-DeepProProdTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -462,6 +466,10 @@
 				29281F83558DA47BDE96940E /* Pods-DeepProProd.release.xcconfig */,
 				E10CBF255A2D3D6FE4849140 /* Pods-DeepProProdTests.debug.xcconfig */,
 				8CD3FE42B982AC4DEFDBB233 /* Pods-DeepProProdTests.release.xcconfig */,
+				C345942732CB1E4DF4EDFD50 /* Pods-DeepProProd.app store.xcconfig */,
+				77E15386E7F4C04373AFEA2E /* Pods-DeepProProd.prod.xcconfig */,
+				485F58EADE7D515D85639CA1 /* Pods-DeepProProdTests.app store.xcconfig */,
+				712628F57A535C260B79D797 /* Pods-DeepProProdTests.prod.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -1504,7 +1512,7 @@
 			};
 			name = Debug;
 		};
-		50E76AF420037E2A009420F9 /* Release */ = {
+		50E76AF420037E2A009420F9 /* App Store */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1553,19 +1561,22 @@
 				SYSTEM_HEADER_SEARCH_PATHS = "/Users/mahmed/Downloads/grpc-swift-master/Sources/CgRPC/include /Users/mahmed/Downloads/grpc-swift-master/Sources/gRPC";
 				VALIDATE_PRODUCT = YES;
 			};
-			name = Release;
+			name = "App Store";
 		};
 		50E76AF620037E2A009420F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C027E58B1B6F4F7E8E7AFF1B /* Pods-DeepProProd.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				API_BASE_URL = "http://192.168.71.10:10010/api/";
+				APP_DISPLAY_NAME = "DeepPro-Dev";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = DeepProProd/DeepProProd.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CADXD65CGY;
+				GRPC_BASE_URL = "192.168.71.10:10007";
 				INFOPLIST_FILE = DeepProProd/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -1580,28 +1591,31 @@
 			};
 			name = Debug;
 		};
-		50E76AF720037E2A009420F9 /* Release */ = {
+		50E76AF720037E2A009420F9 /* App Store */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 29281F83558DA47BDE96940E /* Pods-DeepProProd.release.xcconfig */;
+			baseConfigurationReference = C345942732CB1E4DF4EDFD50 /* Pods-DeepProProd.app store.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				API_BASE_URL = "http://ainfinity.dyndns.org:10010/api/";
+				APP_DISPLAY_NAME = DeepPro;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = DeepProProd/DeepProProd.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = CADXD65CGY;
+				GRPC_BASE_URL = "ainfinity.dyndns.org:10007";
 				INFOPLIST_FILE = DeepProProd/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_SWIFT_FLAGS = "$(inherited)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.aifinitypro.dev;
+				PRODUCT_BUNDLE_IDENTIFIER = com.aifinitypro.prod;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "DeepProProd-Bridging-Header.h";
 				SWIFT_VERSION = 4.0;
 				SYSTEM_HEADER_SEARCH_PATHS = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
-			name = Release;
+			name = "App Store";
 		};
 		50E76AF920037E2A009420F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -1610,7 +1624,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = C6UNXYYV66;
+				DEVELOPMENT_TEAM = CADXD65CGY;
 				INFOPLIST_FILE = DeepProProdTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = algorythma.DeepProProdTests;
@@ -1622,14 +1636,14 @@
 			};
 			name = Debug;
 		};
-		50E76AFA20037E2A009420F9 /* Release */ = {
+		50E76AFA20037E2A009420F9 /* App Store */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8CD3FE42B982AC4DEFDBB233 /* Pods-DeepProProdTests.release.xcconfig */;
+			baseConfigurationReference = 485F58EADE7D515D85639CA1 /* Pods-DeepProProdTests.app store.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = C6UNXYYV66;
+				DEVELOPMENT_TEAM = CADXD65CGY;
 				INFOPLIST_FILE = DeepProProdTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = algorythma.DeepProProdTests;
@@ -1639,14 +1653,14 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DeepProProd.app/DeepProProd";
 			};
-			name = Release;
+			name = "App Store";
 		};
 		50E76AFC20037E2A009420F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = C6UNXYYV66;
+				DEVELOPMENT_TEAM = CADXD65CGY;
 				INFOPLIST_FILE = DeepProProdUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = algorythma.DeepProProdUITests;
@@ -1657,12 +1671,12 @@
 			};
 			name = Debug;
 		};
-		50E76AFD20037E2A009420F9 /* Release */ = {
+		50E76AFD20037E2A009420F9 /* App Store */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = C6UNXYYV66;
+				DEVELOPMENT_TEAM = CADXD65CGY;
 				INFOPLIST_FILE = DeepProProdUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = algorythma.DeepProProdUITests;
@@ -1671,7 +1685,119 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = DeepProProd;
 			};
-			name = Release;
+			name = "App Store";
+		};
+		50F9C4ED211E0B85003501FD /* Prod */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SYSTEM_HEADER_SEARCH_PATHS = "/Users/mahmed/Downloads/grpc-swift-master/Sources/CgRPC/include /Users/mahmed/Downloads/grpc-swift-master/Sources/gRPC";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Prod;
+		};
+		50F9C4EE211E0B85003501FD /* Prod */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 77E15386E7F4C04373AFEA2E /* Pods-DeepProProd.prod.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				API_BASE_URL = "http://192.168.71.48:10010/api/";
+				APP_DISPLAY_NAME = "DeepPro-Prod";
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_ENTITLEMENTS = DeepProProd/DeepProProd.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CADXD65CGY;
+				GRPC_BASE_URL = "192.168.71.48:10007";
+				INFOPLIST_FILE = DeepProProd/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.aifinitypro.prod;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "DeepProProd-Bridging-Header.h";
+				SWIFT_VERSION = 4.0;
+				SYSTEM_HEADER_SEARCH_PATHS = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Prod;
+		};
+		50F9C4EF211E0B85003501FD /* Prod */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 712628F57A535C260B79D797 /* Pods-DeepProProdTests.prod.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CADXD65CGY;
+				INFOPLIST_FILE = DeepProProdTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = algorythma.DeepProProdTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				SYSTEM_HEADER_SEARCH_PATHS = "/Users/mahmed/Downloads/grpc-swift-master/Sources/CgRPC/include";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DeepProProd.app/DeepProProd";
+			};
+			name = Prod;
+		};
+		50F9C4F0211E0B85003501FD /* Prod */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = CADXD65CGY;
+				INFOPLIST_FILE = DeepProProdUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = algorythma.DeepProProdUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = DeepProProd;
+			};
+			name = Prod;
 		};
 /* End XCBuildConfiguration section */
 
@@ -1680,37 +1806,41 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50E76AF320037E2A009420F9 /* Debug */,
-				50E76AF420037E2A009420F9 /* Release */,
+				50E76AF420037E2A009420F9 /* App Store */,
+				50F9C4ED211E0B85003501FD /* Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "App Store";
 		};
 		50E76AF520037E2A009420F9 /* Build configuration list for PBXNativeTarget "DeepProProd" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50E76AF620037E2A009420F9 /* Debug */,
-				50E76AF720037E2A009420F9 /* Release */,
+				50E76AF720037E2A009420F9 /* App Store */,
+				50F9C4EE211E0B85003501FD /* Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "App Store";
 		};
 		50E76AF820037E2A009420F9 /* Build configuration list for PBXNativeTarget "DeepProProdTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50E76AF920037E2A009420F9 /* Debug */,
-				50E76AFA20037E2A009420F9 /* Release */,
+				50E76AFA20037E2A009420F9 /* App Store */,
+				50F9C4EF211E0B85003501FD /* Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "App Store";
 		};
 		50E76AFB20037E2A009420F9 /* Build configuration list for PBXNativeTarget "DeepProProdUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				50E76AFC20037E2A009420F9 /* Debug */,
-				50E76AFD20037E2A009420F9 /* Release */,
+				50E76AFD20037E2A009420F9 /* App Store */,
+				50F9C4F0211E0B85003501FD /* Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "App Store";
 		};
 /* End XCConfigurationList section */
 	};

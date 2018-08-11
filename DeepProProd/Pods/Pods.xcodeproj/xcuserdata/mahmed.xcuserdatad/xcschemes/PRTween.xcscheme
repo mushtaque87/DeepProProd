@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4B485AE3CDD1027015EDE27A8374E8C9"
+               BlueprintIdentifier = "D145160FDC86A39DB0B0B6E1BF71E3A7"
                BlueprintName = "PRTween"
                ReferencedContainer = "container:Pods.xcodeproj"
                BuildableName = "PRTween.framework">

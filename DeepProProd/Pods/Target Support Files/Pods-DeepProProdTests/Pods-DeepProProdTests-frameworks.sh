@@ -148,7 +148,13 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Quick/Quick.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/URITemplate/URITemplate.framework"
 fi
-if [[ "$CONFIGURATION" == "Release" ]]; then
+if [[ "$CONFIGURATION" == "App Store" ]]; then
+  install_framework "${BUILT_PRODUCTS_DIR}/Mockingjay/Mockingjay.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/Quick/Quick.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/URITemplate/URITemplate.framework"
+fi
+if [[ "$CONFIGURATION" == "Prod" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Mockingjay/Mockingjay.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Nimble/Nimble.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Quick/Quick.framework"

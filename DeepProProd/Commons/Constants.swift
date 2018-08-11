@@ -17,10 +17,10 @@ struct Constants {
     
     struct ServerApi {
 
-        //static let baseUrl = "http://ainfinity.dyndns.org:10010/v1"
+        //static let baseUrl = "http://ainfinity.dyndns.org:10010/api/"
        // static let baseUrl = BUILDSETTINGS.baseurl!
-        static let baseUrl = "http://192.168.71.10:10010/api/"
-        
+       // static let baseUrl = "http://192.168.71.10:10010/api/"
+        static let baseUrl = Bundle.main.infoDictionary!["API_BASE_URL"] as! String
         static let userService = "aiuam/v1/"
         static let profile = baseUrl + userService + "users/%@"
         static let login = baseUrl + userService + "users/login"
@@ -28,8 +28,8 @@ struct Constants {
         static let forgotpassword = baseUrl + userService + "users/forget-password"
         static let refreshtoken = baseUrl + userService + "users/%@/token/refresh"
 
-        static let grpcBaseUrl =  "192.168.71.10:10007"
-        //static let grpcBaseUrl =  "http://ainfinity.dyndns.org:10007"
+        //static let grpcBaseUrl =  "192.168.71.10:10007"
+        static let grpcBaseUrl =  Bundle.main.infoDictionary!["GRPC_BASE_URL"] as! String
         
         //Assignment
         static let student = "students/"
